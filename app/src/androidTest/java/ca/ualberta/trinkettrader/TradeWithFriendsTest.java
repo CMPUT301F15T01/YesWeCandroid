@@ -62,7 +62,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     }
 
     // Test rejecting a trade with sending a counter offer
-    public void testDeclineTradeNoCounter() {
+    public void testDeclineTradeWithCounter() {
         User user = new User();
         Trade trade = new Trade();
         // Send a trade to yourself as a test
