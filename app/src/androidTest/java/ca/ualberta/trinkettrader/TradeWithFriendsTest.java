@@ -23,4 +23,58 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         super(MainActivity.class);
     }
 
+    // Test method to see if user has a notification
+    public void testHasNotification() {
+        User user = new User();
+        Trade trade = new Trade();
+        // Send a trade to yourself as a test
+        user.sendTradeProposal(user, trade);
+        // Test if this trade has triggered a notification
+        assertTrue(user.hasNotification());
+    }
+
+    // Test accepting trade
+    public void testAcceptTrade() {
+        User user = new User();
+        Trade trade = new Trade();
+        // Send a trade to yourself as a test
+        user.sendTradeProposal(user, trade);
+        // Test if this trade has triggered a notification
+        assertTrue(user.hasNotification());
+        user.acceptTrade(trade);
+        assertTrue(trade.isClosed());
+        assertTrue(user.getPastTrade(trade).wasAccepted());
+    }
+
+    // Test rejecting a trade without sending a counter offer
+    public void testDeclineTradeNoCounter() {
+        User user = new User();
+        Trade trade = new Trade();
+        // Send a trade to yourself as a test
+        user.sendTradeProposal(user, trade);
+        // Test if this trade has triggered a notification
+        assertTrue(user.hasNotification());
+        user.declineTrade(trade);
+        // Send null instead of a counter trade
+        trade.sendCounterTrade(null);
+        assertTrue(trade.isClosed());
+        assertTrue(user.getPastTrade(trade).wasRejected());
+    }
+
+    // Test rejecting a trade with sending a counter offer
+    public void testDeclineTradeWithCounter() {
+        User user = new User();
+        Trade trade = new Trade();
+        // Send a trade to yourself as a test
+        user.sendTradeProposal(user, trade);
+        // Test if this trade has triggered a notification
+        assertTrue(user.hasNotification());
+        user.declineTrade(trade);
+        // Send a counter trade
+        Trade newTrade = new Trade();
+        trade.sendCounterTrade(newTrade);
+        assertFalse(trade.isClosed());
+
+    }
+
 }
