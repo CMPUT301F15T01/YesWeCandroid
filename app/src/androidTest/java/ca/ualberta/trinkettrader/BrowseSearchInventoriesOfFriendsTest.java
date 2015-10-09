@@ -17,7 +17,7 @@ package ca.ualberta.trinkettrader;
 import android.test.ActivityInstrumentationTestCase2;
 
 /**
- * Created by dashley on 2015-10-09.
+ * Testing file for "Browse Search Inventories Of Friends" use cases.
  */
 public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentationTestCase2 {
 
