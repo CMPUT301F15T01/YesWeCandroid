@@ -41,7 +41,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         user.sendTradeProposal(user, trade);
         // Test if this trade has triggered a notification
         assertTrue(user.hasNotification());
-        user.acceptTrade(trade);
+        user.acceptTrade(trade).setAcceptDetails("Test accept message");
         assertTrue(trade.isClosed());
         assertTrue(user.getPastTrade(trade).wasAccepted());
     }
