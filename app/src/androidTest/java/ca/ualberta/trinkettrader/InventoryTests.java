@@ -18,6 +18,39 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         assertTrue(inventory.hasItem(myItem));
     }
 
+    // Test if a user has an inventory
+    public void testHasInventory() {
+        User user = new User();
+        Inventory inventory = new Inventory();
+        user.setInventory(inventory);
+        assertTrue(user.hasInventory());
+    }
+
+    // Test method for getting the number of items in an inventory
+    public void testNumberOfItemsInInventory() {
+        Inventory inventory = new Inventory();
+        MyItem myItem1 = new MyItem();
+        inventory.addItem(myItem1);
+        MyItem myItem2 = new MyItem();
+        inventory.addItem(myItem2);
+        MyItem myItem3 = new MyItem();
+        inventory.addItem(myItem3);
+        assertTrue(inventory.size().equals(3));
+
+        inventory.removeItem(myItem1);
+        inventory.removeItem(myItem2);
+        assertTrue(inventory.size().equals(1));
+    }
+
+    // Test method to test if an inventory is empty
+    public void testNumberOfItemsInInventory() {
+        Inventory inventory = new Inventory();
+        assertTrue(inventory.isEmpty());
+        MyItem myItem = new MyItem();
+        inventory.addItem(myItem);
+        assertFalse(inventory.isEmpty());
+    }
+
     // Test method for adding an item to your inventory
     public void testAddItem() {
         Inventory inventory = new Inventory();
