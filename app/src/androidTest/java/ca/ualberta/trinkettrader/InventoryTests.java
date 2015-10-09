@@ -55,7 +55,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     }
 
     // Test method to test if an inventory is empty
-    public void testNumberOfItemsInInventory() {
+    public void testIsInventoryEmpty() {
         Inventory inventory = new Inventory();
         assertTrue(inventory.isEmpty());
         MyItem myItem = new MyItem();
