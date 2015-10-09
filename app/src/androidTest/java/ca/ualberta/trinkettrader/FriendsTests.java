@@ -168,7 +168,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
     }
 
     // Test method for checking how many tracked friends a user has
-    public void testNumberOfFriends() {
+    public void testNumberOfTrackedFriends() {
         TrackedFriendsList trackedFriendsList = new TrackedFriendsList();
         Friends friend1 = new Friends();
         trackedFriendsList.addTrackedFriend(friend1);
@@ -197,8 +197,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
     }
 
     // Test method for removing a friend from your friends list
-    public void testRemoveFriend() {
-        FriendsList friendsList = new FriendsList();
+    public void testRemoveTrackedFriend() {
+        TrackedFriendsList trackedFriendsList = new TrackedFriendsList();
         Friends friend = new Friends();
         trackedFriendsList.addTrackedFriend(friend);
         assertTrue(trackedFriendsList.hasTrackedFriend(friend));
