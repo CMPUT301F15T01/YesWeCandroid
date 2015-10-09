@@ -77,4 +77,66 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
 
     }
 
+    // Test that friend has the item that user is proposing in their offered trade
+    public void testFriendHasItem() {
+        User user = new User();
+        Trade trade = new Trade();
+        Item item = new Item();
+        Friend friend = new Friend();
+        assertTrue(friend.inventory.hasItem(item);
+    }
+
+    //check that the proposed trade shows up in the users current trades
+    public void testProposedTrade() {
+        User user = new User();
+        Trade trade = new Trade();
+        assertFalse(user.currentTrades(trade));
+        user.sendTradeProposal(user, trade);
+        assertTrue(user.currentTrades.hasTrade(trade));
+    }
+
+    //check that user can edit a current trade
+    public void testEditTrade() {
+        User user = new User();
+        Trade trade = new Trade();
+        trade.setNumberOfItems(1);
+        user.sendTradeProposal(user, trade);
+        user.trade.setNumberOfItems(2);
+        assertEquals(user.trade.getNumberOfItems() == 2);
+    }
+
+    //check that user can delete a proposed trade
+    public void testDeleteTrade() {
+        User user = new User();
+        Trade trade = new Trade();
+        user.sendTradeProposal(user, trade);
+        assertTrue(user.currentTrades.hasTrade(trade));
+        user.deleteTradeProposal(user, trade);
+        assertFalse(user.currentTrades.hasTrade(trade));
+    }
+
+    // Test that user has current trades they are involved in
+    public void testCurrentTrades() {
+        User user = new User();
+        Trade trade = new Trade();
+        Trade trade1 = new Trade();
+        user.sendTradeProposal(user, trade);
+        user.sendTradeProposal(user, trade);
+        assertTrue(user.currentTrades.hasTrade(trade));
+        assertTrue(user.currentTrades.hasTrade(trade1));
+    }
+    // Test that user can browse past trades that they were involved in
+    public void testPastTrades() {
+        User user = new User();
+        Trade trade = new Trade();
+        Trade trade1 = new Trade();
+        user.sendTradeProposal(user, trade);
+        user.sendTradeProposal(user, trade);
+        assertTrue(user.currentTrades.hasTrade(trade));
+        assertTrue(user.currentTrades.hasTrade(trade1));
+        user.deleteTradeProposal(user, trade);
+        assertFalse(user.currentTrades.hasTrade(trade));
+        assertTrue(user.pastTrades.hasTrade(trade));
+        assertFalse(user.pastTrades.hasTrade(trade1));
+    }
 }
