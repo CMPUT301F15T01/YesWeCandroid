@@ -17,3 +17,9 @@ allprojects {
         jcenter()
     }
 }
+
+// RaGe; http://stackoverflow.com/questions/29805622/could-not-find-or-load-main-class-org-gradle-wrapper-gradlewrappermain; 2015-10-10
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
