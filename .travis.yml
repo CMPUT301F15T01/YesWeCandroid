@@ -1,40 +1,27 @@
 # https://travis-ci.org
-
 language: android
 android:
   components:
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
-    # - platform-tools
-    # - tools
-
-    # The BuildTools version used by your project
-    - build-tools-22.0.1
-
-    # The SDK version used to compile your project
-    - android-18
-
-    # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
-    - addon-google_apis-google-18
-
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-18
-    - sys-img-x86-android-18
-
-# Emulator Management: Create, Start and Wait
+  - build-tools-22.0.1
+  - android-18
+  - extra-google-google_play_services
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - addon-google_apis-google-18
+  - sys-img-armeabi-v7a-android-18
+  - sys-img-x86-android-18
 before_script:
-  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
-
+- echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+- emulator -avd test -no-skin -no-audio -no-window &
+- android-wait-for-emulator
+- adb shell input keyevent 82 &
 before_cache:
-  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+notifications:
+  slack:
+    secure: p5LwrWZJDSfGmSbemIvUmAuYOGpLsQDf+qGEJIIR+sEoEv2AOk9slmN2I14crFircR3XH7+tTSxKNKoNZs6MK29y49XAoshBIgt0p8yPqkgo2+WVZS6DVwwj3CkK/V5LihRP+j3fRuFRfzN/hLrq8PvGWEKN7XoiiHFvpdSaWeLN0I02jjFxSm48TEChAhByoXjjmICvMnP8yUX0lNrjXTShHxPNai6GTEmpWgsZZ99Rgv0Q/FpeOPgGWB4DeJZeR0ROnduuK3Nd7iHFVu5iS753o8PXLysHkoa881G+yj1zEhl3bzFlF73j9XgInYqVR6n0yL1J8whUtpUI4WtWBGo+1lmjoasxdHwwDzC2GKOYngrzGtvfEYYpXGT3EWYjxxzuFSjtRKj5aNnh/klL/SRAVqGhPBDBnQm0LyPfP47g+D39tKW9e9UeYIG+jxR9GhDAKKBs2meUh103qtESVkB/nZvX1G5XgUEyJNVcojrRM49+TGoTrwj0ZGJpdFvglSQ9FqxUY0PWyYQIimf78PVjz2zkwXhFlFIxe3wL5zvQURKw2nG4oDPyI7Zv2y9H9xByzKD9G4edGVQznIv6685gbeLGcB0P04wB1U1kcbemQWfX+F16wNBHFyXonwQXz2MnvBiFw9syhk9wuSNcX9nDAH73LSvP7oohIxpJYx8=
+
