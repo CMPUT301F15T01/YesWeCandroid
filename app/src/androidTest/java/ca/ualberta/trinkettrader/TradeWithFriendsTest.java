@@ -82,7 +82,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         Trade trade = new Trade();
         Item item = new Item();
         Friend friend = new Friend();
-        assertTrue(friend.inventory.hasItem(item);
+        assertTrue(friend.inventory.hasItem(item));
     }
 
     //check that the proposed trade shows up in the users current trades
