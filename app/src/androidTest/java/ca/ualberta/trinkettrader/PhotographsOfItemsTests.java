@@ -23,29 +23,29 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testAttatchPhotoGraph(){
-        Photograph photograph = new Photograph('<path/to/photo>');
+        Photograph photograph = new Photograph("<path/to/photo>");
         ItemProfile profile = new Item().getProfile();
         profile.attatchPhoto(photograph);
-        assertTrue(profile.hasPhotograph('<path/to/photo>'));
+        assertTrue(profile.hasPhotograph("<path/to/photo>"));
     }
 
     public void testDeletePhotoGraph(){
-        Photograph photograph = new Photograph('<path/to/photo>');
+        Photograph photograph = new Photograph("<path/to/photo>");
         ItemProfile profile = new Item().getProfile();
         profile.deletePhoto(photograph);
-        assertFalse(profile.hasPhotograph('<path/to/photo>'));
+        assertFalse(profile.hasPhotograph("<path/to/photo>"));
     }
 
     public void testConstrainPhotographSize(){
         ItemProfile profile = new Item().getProfile();
-        Photograph photo = profile.getPhotographs('1');
+        Photograph photo = profile.getPhotographs("1");
         assertTrue(photo.getSize()<= 65536);
     }
 
 
     public void testViewPhotograph(){
         ItemProfile profile = new Item().getProfile();
-        Photograph photo = profile.getPhotographs('1');
+        Photograph photo = profile.getPhotographs("1");
         assertTrue(photo.isVisible());
     }
 

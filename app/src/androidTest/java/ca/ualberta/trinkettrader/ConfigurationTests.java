@@ -25,10 +25,10 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
     public void testEditProfile(){
         User user = new User();
         Profile profile = user.getProfile();
-        profile.setName('Name');
-        profile.setPostalCode('T6w 1K8');
-        assertTrue(profile.getName().equals('Name'));
-        assertTrue(profile.getPostalCode().equals('T6w 1K8'));
+        profile.setName("Name");
+        profile.setPostalCode("T6w 1K8");
+        assertTrue(profile.getName().equals("Name"));
+        assertTrue(profile.getPostalCode().equals("T6w 1K8"));
     }
 
     public void testEnablePhotoDownload(){
