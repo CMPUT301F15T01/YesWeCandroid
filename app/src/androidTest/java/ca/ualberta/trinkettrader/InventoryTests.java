@@ -14,9 +14,18 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+
+import java.util.List;
 
 public class InventoryTests extends ActivityInstrumentationTestCase2 {
+
+    int clickCount;
 
     public InventoryTests() {
         super(MainActivity.class);
@@ -34,6 +43,8 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     // Test if a user has an inventory
     public void testHasInventory() {
         User user = new User();
+        user.authenticate();
+        assertTrue(user.isLoggedIn());
         Inventory inventory = new Inventory();
         user.setInventory(inventory);
         assertTrue(user.hasInventory());
@@ -124,6 +135,8 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     // Test for changing item's category
     public void testChangeItemCategory() {
         MyItem myItem = new MyItem();
+        List<String> categories = new Inventory().getCategoriesList();
+        assertTrue(categories.size() == 10);
         myItem.setCategory("Bracelets");
         assertTrue(myItem.getCategory().equals("Bracelets"));
         myItem.setCategory("Rings");
@@ -152,5 +165,117 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         assertTrue(inventory.hasItem(myItem2));
         assertFalse(inventory.hasItem(myItem3));
         assertFalse(inventory.hasItem(myItem4));
+
+    }
+
+    // Test method for checking how quickly an item can be added to the inventory
+    public void testQuickAdd() {
+        clickCount = 0;
+        HomePageActivity activity = (HomePageActivity) getActivity();
+
+        User user = activity.getUser();
+        assertTrue(user.isLoggedIn());
+
+        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                        null, false);
+
+        // Click the button
+        Button inventoryButton = activity.getInventoryButton();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                inventoryButton.performClick();
+                clickCount += 1;
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        InventoryActivity receiverActivity = (InventoryActivity)
+                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", receiverActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, receiverActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                InventoryActivity.class, receiverActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        // test that editor starts up with the right tweet in it
+        InventoryActivity inventoryActivity = (InventoryActivity) getActivity();
+
+        // Move to add item activity
+        receiverActivityMonitor =
+                getInstrumentation().addMonitor(AddItemToInventoryActivity.class.getName(),
+                        null, false);
+
+        // Click the button
+        final Button addItemButton = activity.getAddItemButton();
+        inventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                addItemButton.performClick();
+                clickCount += 1;
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        AddItemToInventoryActivity nextReceiverActivity = (AddItemToInventoryActivity)
+                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", nextReceiverActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, receiverActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                AddItemToInventoryActivity.class, nextReceiverActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        // test that editor starts up with the right tweet in it
+        AddItemToInventoryActivity addItemtoInventoryActivity = (AddItemToInventoryActivity) getActivity();
+
+        // Click the button
+        final EditText editName = addItemtoInventoryActivity.getEditItemName();
+        addItemtoInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                editName.setText("test");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        final Spinner category = addItemtoInventoryActivity.getSelectCategory();
+        addItemtoInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                category.setSelection("Ring");
+                clickCount += 1;
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        final Spinner quality = addItemtoInventoryActivity.getSelectQuality();
+        addItemtoInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                quality.setSelection("Good");
+                clickCount += 1;
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Click the button
+        final Button saveItemButton = activity.getSaveItemButton();
+        inventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveItemButton.performClick();
+                clickCount += 1;
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        assertTrue(user.getInventory.hasItem("test"));
+        // 5 or less clicks
+        assertTrue(clickCount <= 5);
     }
 }
