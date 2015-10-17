@@ -40,7 +40,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         user.sendTradeProposal(user, trade);
         // Test if this trade has triggered a notification
         assertTrue(user.hasNotification());
-        user.acceptTrade(trade).setAcceptDetails("Test accept message");
+        user.acceptTrade(trade.setAcceptDetails("Test accept message"));
         assertTrue(trade.isClosed());
         assertTrue(user.getPastTrade(trade).wasAccepted());
     }
@@ -80,7 +80,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     public void testFriendHasItem() {
         User user = new User();
         Trade trade = new Trade();
-        Item item = new Item();
+        MyItem item = new MyItem();
         Friend friend = new Friend();
         assertTrue(friend.inventory.hasItem(item));
     }
@@ -89,9 +89,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     public void testProposedTrade() {
         User user = new User();
         Trade trade = new Trade();
-        assertFalse(user.currentTrades(trade));
+        assertFalse(user.hasCurrentTrade(trade));
         user.sendTradeProposal(user, trade);
-        assertTrue(user.currentTrades.hasTrade(trade));
+        assertTrue(user.hasCurrentTrade(trade));
     }
 
     //check that user can edit a current trade

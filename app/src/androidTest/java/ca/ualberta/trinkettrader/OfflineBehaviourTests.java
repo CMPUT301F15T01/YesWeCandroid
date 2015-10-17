@@ -25,10 +25,10 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
     public void testAddInventoryOffline(){
         Inventory inventory =  new Inventory();
         SystemState state = getState();
-        assertTrue(state.isffline());
+        assertTrue(state.isOffline());
         Item a = new Item();
         inventory.add(a);
-        assertFalse(state.isffline());
+        assertFalse(state.isOffline());
         assertTrue(getDataBaseOFInvetory.hasItem(a));
     }
 
@@ -45,7 +45,7 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
     public void testViewPreviouslyViewedInventories(){
         User u = new User();
         Inventory inventory = new Inventory();
-        ArrayList<Inventory> viewed = new ArrayList<Inventories>();
+        ArrayList<Inventory> viewed = new ArrayList<Inventory>();
         displayInventory(inventory);
         assertTrue(viewed.contains(inventory));
     }

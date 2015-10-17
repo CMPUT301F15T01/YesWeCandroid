@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
+import java.util.Collection;
 import java.util.List;
 
 public class InventoryTests extends ActivityInstrumentationTestCase2 {
@@ -159,8 +160,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         assertTrue(inventory.hasItem(myItem3));
         assertTrue(inventory.hasItem(myItem4));
 
+        Collection<MyItem> items = new Collection<MyItem>();
+        items.add(myItem1);
+        items.add(myItem3);
+        items.add(myItem4);
+
         // Remove items 1, 3, and 4 from inventory
-        inventory.batchRemoveItems(myItem1, myItem3, myItem4);
+        inventory.batchRemoveItems(items);
         assertFalse(inventory.hasItem(myItem1));
         assertTrue(inventory.hasItem(myItem2));
         assertFalse(inventory.hasItem(myItem3));
