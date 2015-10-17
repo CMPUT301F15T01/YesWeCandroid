@@ -75,7 +75,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         FriendsList friendsList = new FriendsList();
         Friends friend = new Friends();
         friendsList.addFriend(friend);
-        assertTrue(friendsList.hasFriend(friend));
+        assertTrue(friendsList.
+                hasFriend(friend));
     }
 
     // Test method for removing a friend from your friends list
@@ -156,7 +157,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         TrackedFriendsList trackedFriendsList = new TrackedFriendsList();
         Friends friend = new Friends();
         assertFalse(trackedFriendsList.hasTrackedFriend(friend));
-        trackedFriendsList.add(friend);
+        trackedFriendsList.addTrackedFriendg(friend);
         assertTrue(trackedFriendsList.hasTrackedFriend(friend));
     }
 
