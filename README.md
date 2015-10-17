@@ -2,4 +2,4 @@
 
 [![Build Status](https://travis-ci.org/CMPUT301F15T01/YesWeCandroid.svg?branch=master)](https://travis-ci.org/CMPUT301F15T01/YesWeCandroid)
 
-Candroid group repo for CMPUT 301 project
+Welcome to the University of Alberta's CMPUT 301 Fall 2015 Team 01 YesWeCandroid project repo!
