@@ -24,35 +24,45 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
     public void testAttatchPhotoGraph(){
         Photograph photograph = new Photograph("<path/to/photo>");
-        ItemProfile profile = new Item().getProfile();
-        profile.attatchPhoto(photograph);
-        assertTrue(profile.hasPhotograph("<path/to/photo>"));
+        Trinket trinket = new Trinket();
+        trinket.attatchPhoto(photograph);
+        assertTrue(trinket.photos.contains(photograph));
     }
 
     public void testDeletePhotoGraph(){
         Photograph photograph = new Photograph("<path/to/photo>");
-        ItemProfile profile = new Item().getProfile();
-        profile.deletePhoto(photograph);
-        assertFalse(profile.hasPhotograph("<path/to/photo>"));
+        Trinket trinket = new Trinket();
+        trinket.attatchPhoto(photograph);
+        assertTrue(trinket.photos.contains(photograph));
+        trinket.deletePhoto(photograph);
+        assertFalse(trinket.photos.contains(photograph));
     }
 
     public void testConstrainPhotographSize(){
-        ItemProfile profile = new Item().getProfile();
-        Photograph photo = profile.getPhotographs("1");
+
+        /*How to check that photograph is within 65536? */
+        Trinket profile = new Trinket();
+        trinket.attatchPhoto(photograph);
+        assertTrue(trinket.photos.contains(photograph));
+        Photograph photo = profile.getPhotographs("0");
         assertTrue(photo.getSize()<= 65536);
     }
 
 
     public void testViewPhotograph(){
-        ItemProfile profile = new Item().getProfile();
+        Trinket profile = new Trinket();
         Photograph photo = profile.getPhotographs("1");
         assertTrue(photo.isVisible());
     }
 
 
-    public void testEnablePhotoDownload(){
-        TTSettings settings = getTTSettings();
-        assertTrue(settings.getArePhotosDownloadable);
+    public void testManuallyChoosePhotosToDownloadIfPhotoDownloadDisabled(){
+     /*Assert that default photo download is disabled*/
+        User user = new User();
+        UserSettings settings = user.getUserSettings();
+        assertFalse(settings.arePhotosDownloadable);
+        
+
     }
 
     public void testDisablePhotoDownload(){
