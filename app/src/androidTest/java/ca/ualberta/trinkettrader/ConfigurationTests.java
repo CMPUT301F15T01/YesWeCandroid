@@ -22,22 +22,24 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         super(activityClass);
     }
 
-    public void testEditProfile(){
+    public void testEditProfile() {
         User user = new User();
-        Profile profile = user.getProfile();
+        UserProfile profile = user.getUserProfile();
         profile.setName("Name");
-        profile.setPostalCode("T6w 1K8");
+        profile.setPostalCode("T6W 1K8");
         assertTrue(profile.getName().equals("Name"));
-        assertTrue(profile.getPostalCode().equals("T6w 1K8"));
+        assertTrue(profile.getPostalCode().equals("T6W 1K8"));
     }
 
-    public void testEnablePhotoDownload(){
-        TTSettings settings = getTTSettings();
-        assertTrue(settings.getArePhotosDownloadable);
+    public void testEnablePhotoDownload() {
+        UserSettings settings = getUserSettings();
+        assertTrue(settings.arePhotosDownloadable);
     }
 
-    public void testDisablePhotoDownload(){
-        TTSettings settings = getTTSettings();
-        assertFalse(settings.getArePhotosDownloadable);
+    public void testDisablePhotoDownload() {
+        UserSettings settings = getUserSettings();
+        assertFalse(settings.arePhotosDownloadable);
     }
+
+
 }
