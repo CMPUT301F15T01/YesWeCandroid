@@ -39,17 +39,22 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testConstrainPhotographSize(){
-
+        /**
+         * How do we validly test this? This use case is specific to a sysadmin.
+         * Should a user extend that?
+         */
+        Photograph photograph = new Photograph("<path/to/photo>");
         /*How to check that photograph is within 65536? */
         Trinket profile = new Trinket();
         trinket.attatchPhoto(photograph);
         assertTrue(trinket.photos.contains(photograph));
-        Photograph photo = profile.getPhotographs("0");
-        assertTrue(photo.getSize()<= 65536);
+        assertTrue(photograph.getSize()<= 65536);
     }
 
 
     public void testViewPhotograph(){
+        /*This looks like it has to be an activity test...do all use cases have to be in
+        * 'model' tests when their functionality is better suited for the view? */
         Trinket profile = new Trinket();
         Photograph photo = profile.getPhotographs("1");
         assertTrue(photo.isVisible());
@@ -57,16 +62,25 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
 
     public void testManuallyChoosePhotosToDownloadIfPhotoDownloadDisabled(){
+        /**
+         * This is another test that looks like it should be an activity test.
+         * Changes will be made once those tests are underway.
+          */
+
      /*Assert that default photo download is disabled*/
         User user = new User();
         UserSettings settings = user.getUserSettings();
         assertFalse(settings.arePhotosDownloadable);
-        
+
+        /*Select photos to download*/
+
 
     }
 
     public void testDisablePhotoDownload(){
-        TTSettings settings = getTTSettings();
-        assertFalse(settings.getArePhotosDownloadable);
+     /*Assert that default photo download is disabled*/
+        User user = new User();
+        UserSettings settings = user.getUserSettings();
+        assertFalse(settings.arePhotosDownloadable);
     }
 }

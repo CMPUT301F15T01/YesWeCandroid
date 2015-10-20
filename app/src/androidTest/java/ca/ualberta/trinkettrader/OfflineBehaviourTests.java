@@ -23,28 +23,46 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testAddInventoryOffline(){
+
         Inventory inventory =  new Inventory();
-        SystemState state = getState();
-        assertTrue(state.isOffline());
-        Item a = new Item();
+        UserSettings state = new UserSettings();
+        assertTrue(state.hasActiveInternetConnection());
+        Trinket a = new Trinket();
         inventory.add(a);
         assertFalse(state.isOffline());
-        assertTrue(getDataBaseOFInvetory.hasItem(a));
+        assertTrue(getDataBaseOFInvetory.contains(a));
     }
 
     public void testMakeTradeOffline(){
-        SystemState state = getState();
-        assertTrue(state.isOffline());
+
+        /**
+         * Is there a way to turn off internet connection in unit tests?
+         */
+        /*Assert no internet connection*/
+        UserSettings state = new UserSettings();
+        assertFalse(state.hasActiveInternetConnection());
         Trade a = new Trade();
-        assertFalse(state.isOffline());
-        inventory.pushData();
+
+        /*Assert internet connection*/
+        assertTrue(state.hasActiveInternetConnection());
+
+        /*Push Data*/
+        /**
+         * We have to discuss what all the communication managers will do.
+         */
+        CommunicationsManager manager = new TradeCommunicationsManager();
+        manager.pushData();
         assertTrue(getDataBaseOfTrades.hasItem(a));
 
     }
 
     public void testViewPreviouslyViewedInventories(){
+
+        /**
+         * Another UI test ..therefore incomplete*/
         User u = new User();
         Inventory inventory = new Inventory();
+        u.addToPreviouslyViewedInventories(inventory);
         ArrayList<Inventory> viewed = new ArrayList<Inventory>();
         displayInventory(inventory);
         assertTrue(viewed.contains(inventory));
