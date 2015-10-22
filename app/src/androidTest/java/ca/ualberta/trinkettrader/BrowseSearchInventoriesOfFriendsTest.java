@@ -16,6 +16,8 @@ package ca.ualberta.trinkettrader;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import java.util.Iterator;
+
 /**
  * Testing file for "Browse Search Inventories Of Friends" use cases.
  */
@@ -30,25 +32,25 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
 
         User user2 = new User();
         Inventory user2Inventory = new Inventory();
-        Item item1 = new Item();
-        item1.setShareProperty("friend");
-        user2Inventory.addItem(item1);
-        Item item2 = new Item();
-        item2.setShareProperty("private");
-        user2Inventory.addItem(item2);
+        Trinket trinket1 = new Trinket();
+        trinket1.setAccessibility("public");
+        user2Inventory.add(trinket1);
+        Trinket trinket2 = new Trinket();
+        trinket2.setAccessibility("private");
+        user2Inventory.add(trinket2);
 
         User user3 = new User();
-        Item item3 = new Item();
-        item3.setShareProperty("friend");
-        user2Inventory.addItem(item3);
+        Trinket trinket3 = new Trinket();
+        trinket3.setAccessibility("public");
+        user2Inventory.add(trinket3);
 
-        user1.addFriend(user2);
-        user2.addFriend(user1);
+        user1.getFriendsList().add(user2);
+        user2.getFriendsList().add(user1);
 
-        Search search = new Search(user1, "friend");
-        Inventory inventory = search.getAllItems();
-        for (Item item: inventory) {
-            assertTrue(item == item1);
+        Inventory inventory = user1.getInventory();
+        Iterator iterator = inventory.iterator();
+        while (iterator.hasNext()) {
+            assertTrue(iterator.next() == trinket1);
         }
     }
 
@@ -57,28 +59,28 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
 
         User user2 = new User();
         Inventory user2Inventory = new Inventory();
-        Item item1 = new Item();
-        item1.setShareProperty("friend");
-        item2.setCategory("necklace");
-        user2Inventory.addItem(item1);
-        Item item2 = new Item();
-        item2.setShareProperty("friend");
-        item2.setCategory("ring");
-        user2Inventory.addItem(item2);
+        Trinket trinket1 = new Trinket();
+        trinket1.setAccessibility("public");
+        trinket1.setCategory("necklace");
+        user2Inventory.add(trinket1);
+        Trinket trinket2 = new Trinket();
+        trinket2.setAccessibility("public");
+        trinket2.setCategory("ring");
+        user2Inventory.add(trinket2);
 
         User user3 = new User();
-        Item item3 = new Item();
-        item3.setShareProperty("friend");
-        item3.setShareProperty("necklace");
-        user2Inventory.addItem(item3);
+        Trinket trinket3 = new Trinket();
+        trinket3.setAccessibility("public");
+        trinket3.setAccessibility("necklace");
+        user2Inventory.add(trinket3);
 
-        user1.addFriend(user2);
-        user2.addFriend(user1);
+        user1.getFriendsList().add(user2);
+        user2.getFriendsList().add(user1);
 
-        Search search = new Search(user1, "friend", "necklace");
-        Inventory inventory = search.getAllItems();
-        for (Item item: inventory) {
-            assertTrue(item == item1);
+        Inventory inventory = Searcher.searchInventoryByCategory(user1, "necklace");
+        Iterator iterator = inventory.iterator();
+        while (iterator.hasNext()) {
+            assertTrue(iterator.next() == trinket1);
         }
     }
 
@@ -87,54 +89,53 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
 
         User user2 = new User();
         Inventory user2Inventory = new Inventory();
-        Item item1 = new Item();
-        item1.setShareProperty("friend");
-        item1.setDescription("rose gold ring with a garnet");
-        user2Inventory.addItem(item1);
-        Item item2 = new Item();
-        item2.setDescription("rose gold ring with a ruby");
-        user2Inventory.addItem(item2);
+        Trinket trinket1 = new Trinket();
+        trinket1.setAccessibility("public");
+        trinket1.setDescription("rose gold ring with a garnet");
+        user2Inventory.add(trinket1);
+        Trinket trinket2 = new Trinket();
+        trinket2.setDescription("rose gold ring with a ruby");
+        user2Inventory.add(trinket2);
 
         User user3 = new User();
-        Item item3 = new Item();
-        item3.setShareProperty("friend");
-        user2Inventory.addItem(item3);
+        Trinket trinket3 = new Trinket();
+        trinket3.setAccessibility("public");
+        user2Inventory.add(trinket3);
 
-        user1.addFriend(user2);
-        user2.addFriend(user1);
+        user1.getFriendsList().add(user2);
+        user2.getFriendsList().add(user1);
 
-        Search search = new Search(user1, "friend");
-        search.searchByQuery("garnet");
-        Inventory inventory = search.getAllItems();
-        for (Item item: inventory) {
-            assertTrue(item == item1);
+        Inventory inventory = Searcher.searchInventoryByDescription(user1, "garnet");
+        Iterator iterator = inventory.iterator();
+        while (iterator.hasNext()) {
+            assertTrue(iterator.next() == trinket1);
         }
     }
 
-    public void testSharedItemsAreSearchableByFriends() {
+    public void testSharedtrinketsAreSearchableByFriends() {
         User user1 = new User();
 
         User user2 = new User();
         Inventory user2Inventory = new Inventory();
-        Item item1 = new Item();
-        item1.setShareProperty("friend");
-        user2Inventory.addItem(item1);
-        Item item2 = new Item();
-        item2.setShareProperty("private");
-        user2Inventory.addItem(item2);
+        Trinket trinket1 = new Trinket();
+        trinket1.setAccessibility("public");
+        user2Inventory.add(trinket1);
+        Trinket trinket2 = new Trinket();
+        trinket2.setAccessibility("private");
+        user2Inventory.add(trinket2);
 
         User user3 = new User();
-        Item item3 = new Item();
-        item3.setShareProperty("friend");
-        user2Inventory.addItem(item3);
+        Trinket trinket3 = new Trinket();
+        trinket3.setAccessibility("public");
+        user2Inventory.add(trinket3);
 
-        user1.addFriend(user2);
-        user2.addFriend(user1);
+        user1.getFriendsList().add(user2);
+        user2.getFriendsList().add(user1);
 
-        Search search = new Search(user1, "friend");
-        Inventory inventory = search.getAllItems();
-        for (Item item: inventory) {
-            assertTrue(item == item1);
+        Inventory inventory = user1.getInventory();
+        Iterator iterator = inventory.iterator();
+        while (iterator.hasNext()) {
+            assertTrue(iterator.next() == trinket1);
         }
     }
 }
