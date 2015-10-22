@@ -11,7 +11,7 @@ import java.util.Iterator;
  */
 public class FriendsList implements Collection {
 
-    private ArrayList<Friend> friends;
+    protected ArrayList<Friend> friends;
 
     public FriendsList() {
     }
