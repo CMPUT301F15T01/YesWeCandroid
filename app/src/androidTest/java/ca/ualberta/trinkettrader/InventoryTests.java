@@ -36,34 +36,32 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     public void testHasItem() {
         Inventory inventory = new Inventory();
         MyItem myItem = new MyItem();
-        assertFalse(inventory.hasItem(myItem));
-        inventory.addItem(myItem);
-        assertTrue(inventory.hasItem(myItem));
+        assertFalse(inventory.contains(myItem));
+        inventory.add(myItem);
+        assertTrue(inventory.contains(myItem));
     }
 
     // Test if a user has an inventory
     public void testHasInventory() {
         User user = new User();
-        user.authenticate();
-        assertTrue(user.isLoggedIn());
         Inventory inventory = new Inventory();
         user.setInventory(inventory);
-        assertTrue(user.hasInventory());
+        assertFalse(user.getInventory().equals(null));
     }
 
     // Test method for getting the number of items in an inventory
     public void testNumberOfItemsInInventory() {
         Inventory inventory = new Inventory();
         MyItem myItem1 = new MyItem();
-        inventory.addItem(myItem1);
+        inventory.add(myItem1);
         MyItem myItem2 = new MyItem();
-        inventory.addItem(myItem2);
+        inventory.add(myItem2);
         MyItem myItem3 = new MyItem();
-        inventory.addItem(myItem3);
+        inventory.add(myItem3);
         assertTrue(inventory.size().equals(3));
 
-        inventory.removeItem(myItem1);
-        inventory.removeItem(myItem2);
+        inventory.remove(myItem1);
+        inventory.remove(myItem2);
         assertTrue(inventory.size().equals(1));
     }
 
@@ -72,7 +70,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         Inventory inventory = new Inventory();
         assertTrue(inventory.isEmpty());
         MyItem myItem = new MyItem();
-        inventory.addItem(myItem);
+        inventory.add(myItem);
         assertFalse(inventory.isEmpty());
     }
 
@@ -80,18 +78,18 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     public void testAddItem() {
         Inventory inventory = new Inventory();
         MyItem myItem = new MyItem();
-        inventory.addItem(myItem);
-        assertTrue(inventory.hasItem(myItem));
+        inventory.add(myItem);
+        assertTrue(inventory.contains(myItem));
     }
 
     // Test method for removing an item from your inventory
     public void testRemoveItem() {
         Inventory inventory = new Inventory();
         MyItem myItem = new MyItem();
-        inventory.addItem(myItem);
-        assertTrue(inventory.hasItem(myItem));
-        inventory.removeItem(myItem);
-        assertFalse(inventory.hasItem(myItem));
+        inventory.add(myItem);
+        assertTrue(inventory.contains(myItem));
+        inventory.remove(myItem);
+        assertFalse(inventory.contains(myItem));
     }
 
     // Test method for changing the share settings of an item
@@ -148,17 +146,17 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     public void testBatchItemRemoval() {
         Inventory inventory = new Inventory();
         MyItem myItem1 = new MyItem();
-        inventory.addItem(myItem1);
+        inventory.add(myItem1);
         MyItem myItem2 = new MyItem();
-        inventory.addItem(myItem2);
+        inventory.add(myItem2);
         MyItem myItem3 = new MyItem();
-        inventory.addItem(myItem3);
+        inventory.add(myItem3);
         MyItem myItem4 = new MyItem();
-        inventory.addItem(myItem4);
-        assertTrue(inventory.hasItem(myItem1));
-        assertTrue(inventory.hasItem(myItem2));
-        assertTrue(inventory.hasItem(myItem3));
-        assertTrue(inventory.hasItem(myItem4));
+        inventory.add(myItem4);
+        assertTrue(inventory.contatins(myItem1));
+        assertTrue(inventory.contatins(myItem2));
+        assertTrue(inventory.contatins(myItem3));
+        assertTrue(inventory.contatins(myItem4));
 
         Collection<MyItem> items = new Collection<MyItem>();
         items.add(myItem1);
@@ -167,10 +165,10 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove items 1, 3, and 4 from inventory
         inventory.batchRemoveItems(items);
-        assertFalse(inventory.hasItem(myItem1));
-        assertTrue(inventory.hasItem(myItem2));
-        assertFalse(inventory.hasItem(myItem3));
-        assertFalse(inventory.hasItem(myItem4));
+        assertFalse(inventory.contatins(myItem1));
+        assertTrue(inventory.contatins(myItem2));
+        assertFalse(inventory.contatins(myItem3));
+        assertFalse(inventory.contatins(myItem4));
 
     }
 
