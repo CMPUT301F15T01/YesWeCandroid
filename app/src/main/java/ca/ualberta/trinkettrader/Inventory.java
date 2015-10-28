@@ -5,24 +5,38 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Observable;
 
 /**
  * Created by dashley on 2015-10-21.
  */
-public class Inventory implements Collection {
+public class Inventory extends Observable implements Collection {
 
     private ArrayList<Trinket> trinkets;
+    private ArrayList<String> categoriesList;
 
     public Inventory() {
     }
 
     public Inventory(ArrayList<Trinket> trinkets) {
         this.trinkets = trinkets;
+
+        // Create the 10 categories
+        this.categoriesList.add("ring");
+        this.categoriesList.add("earrings");
+        this.categoriesList.add("bracelet");
+        this.categoriesList.add("necklace");
+        this.categoriesList.add("anklet");
+        this.categoriesList.add("belt");
+        this.categoriesList.add("pendant");
+        this.categoriesList.add("headband");
+        this.categoriesList.add("barrett");
+        this.categoriesList.add("tiara");
     }
 
     @Override
     public boolean add(Object object) {
-        return false;
+        return trinkets.add((Trinket) object);
     }
 
     @Override
@@ -87,4 +101,10 @@ public class Inventory implements Collection {
     public Trinket[] toArray(Object[] array) {
         return new Trinket[0];
     }
+
+
+    public ArrayList<String> getCategoriesList() {
+        return categoriesList;
+    }
+
 }

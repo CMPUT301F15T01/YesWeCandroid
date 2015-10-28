@@ -15,8 +15,17 @@ public class Trinket {
     private String category;
     private String description;
     private String name;
+    private String quality;
 
     public Trinket() {
+    }
+
+    public String getQuality() {
+        return quality;
+    }
+
+    public void setQuality(String quality) {
+        this.quality = quality;
     }
 
     public String getAccessibility() {
