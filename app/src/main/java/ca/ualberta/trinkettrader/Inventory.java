@@ -13,25 +13,17 @@ import java.util.Observable;
 public class Inventory extends Observable implements Collection {
 
     private ArrayList<Trinket> trinkets;
-    private ArrayList<String> categoriesList;
+    private ArrayList<String> categoriesList = new ArrayList<String>();
+    private ArrayList<String> qualitiesList = new ArrayList<String>();
+
 
     public Inventory() {
+        setListValues();
     }
 
     public Inventory(ArrayList<Trinket> trinkets) {
         this.trinkets = trinkets;
-
-        // Create the 10 categories
-        this.categoriesList.add("ring");
-        this.categoriesList.add("earrings");
-        this.categoriesList.add("bracelet");
-        this.categoriesList.add("necklace");
-        this.categoriesList.add("anklet");
-        this.categoriesList.add("belt");
-        this.categoriesList.add("pendant");
-        this.categoriesList.add("headband");
-        this.categoriesList.add("barrett");
-        this.categoriesList.add("tiara");
+        setListValues();
     }
 
     @Override
@@ -41,7 +33,7 @@ public class Inventory extends Observable implements Collection {
 
     @Override
     public boolean addAll(Collection collection) {
-        return false;
+        return trinkets.addAll(collection);
     }
 
     @Override
@@ -51,17 +43,17 @@ public class Inventory extends Observable implements Collection {
 
     @Override
     public boolean contains(Object object) {
-        return false;
+        return trinkets.contains((object));
     }
 
     @Override
     public boolean containsAll(Collection collection) {
-        return false;
+        return trinkets.containsAll(collection);
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return trinkets.isEmpty();
     }
 
     @NonNull
@@ -72,39 +64,60 @@ public class Inventory extends Observable implements Collection {
 
     @Override
     public boolean remove(Object object) {
-        return false;
+        return trinkets.remove(object);
     }
 
     @Override
     public boolean removeAll(Collection collection) {
-        return false;
+        return trinkets.removeAll(collection);
     }
 
     @Override
     public boolean retainAll(Collection collection) {
-        return false;
+        return trinkets.retainAll(collection);
     }
 
     @Override
     public int size() {
-        return 0;
+        return trinkets.size();
     }
 
     @NonNull
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        return trinkets.toArray();
     }
 
     @NonNull
     @Override
     public Trinket[] toArray(Object[] array) {
-        return new Trinket[0];
+        return (Trinket[]) array;
     }
 
 
     public ArrayList<String> getCategoriesList() {
         return categoriesList;
+    }
+
+    public ArrayList<String> getQualitiesList() {
+        return qualitiesList;
+    }
+
+    private void setListValues() {
+        this.categoriesList.add("ring");
+        this.categoriesList.add("earrings");
+        this.categoriesList.add("bracelet");
+        this.categoriesList.add("necklace");
+        this.categoriesList.add("anklet");
+        this.categoriesList.add("belt");
+        this.categoriesList.add("pendant");
+        this.categoriesList.add("headband");
+        this.categoriesList.add("barrett");
+        this.categoriesList.add("tiara");
+
+        this.qualitiesList.add("Good");
+        this.qualitiesList.add("Average");
+        this.qualitiesList.add("Poor");
     }
 
 }

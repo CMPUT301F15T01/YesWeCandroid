@@ -196,7 +196,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+        final DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
                 receiverActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", receiverActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
@@ -252,7 +252,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         final Spinner category = addItemtoDisplayInventoryActivity.getItemCategory();
         addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
-                category.setSelection("Ring");
+                category.setSelection(receiverActivity.getInventory().getCategoriesList().indexOf("Ring"));
                 clickCount += 1;
             }
         });
@@ -261,7 +261,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         final Spinner quality = addItemtoDisplayInventoryActivity.getItemQuality();
         addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
-                quality.setSelection("Good");
+                quality.setSelection(receiverActivity.getInventory().getQualitiesList().indexOf("Good"));
                 clickCount += 1;
             }
         });
