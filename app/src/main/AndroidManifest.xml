@@ -24,6 +24,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.trinkettrader.MainActivity" />
         </activity>
+        <activity
+            android:name=".DisplayFriendsActivity"
+            android:label="@string/title_activity_display_friends" >
+        </activity>
     </application>
 
 </manifest>

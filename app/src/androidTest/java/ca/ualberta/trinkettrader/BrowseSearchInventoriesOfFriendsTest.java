@@ -18,7 +18,9 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -81,11 +83,17 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         instrumentation.startActivitySync(intent);
 
         //Wait for DisplayFriendsActivity to start
-        Activity currentActivity = getInstrumentation().waitForMonitorWithTimeout(monitor, 5);
+        DisplayFriendsActivity currentActivity = (DisplayFriendsActivity) getInstrumentation().waitForMonitorWithTimeout(monitor, 5);
         assertNotNull(currentActivity);
 
         //Select friend1
-        
+        FriendsList friendlist = currentActivity.getFriends();
+        currentActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                View v = friendlist;
+                friendlist.performItemClick(v, 0, v.getId());
+            }
+        });
 
     }
 
