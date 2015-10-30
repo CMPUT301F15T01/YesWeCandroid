@@ -14,17 +14,30 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.Iterator;
 
 /**
  * Testing file for "Browse Search Inventories Of Friends" use cases.
+ * Multiple-activity testing tutorial taken from:
+ * http://stackoverflow.com/questions/1759626/how-do-you-test-an-android-application-across-multiple-activities
  */
 public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentationTestCase2 {
 
     public BrowseSearchInventoriesOfFriendsTest(Class activityClass) {
         super(activityClass);
+    }
+
+    Instrumentation instrumentation = getInstrumentation();
+    private DisplayInventoryActivity inventoryActivity;
+    private DisplayFriendsActivity friendsActivity;
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        inventoryActivity
     }
 
     public void testSearchInventoriesOfFriends() {
