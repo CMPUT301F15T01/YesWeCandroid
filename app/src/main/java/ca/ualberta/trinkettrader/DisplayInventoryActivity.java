@@ -4,8 +4,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class DisplayInventoryActivity extends ActionBarActivity {
+
+    private Button addItemButton;
+    private Inventory inventory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,5 +37,13 @@ public class DisplayInventoryActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public Button getAddItemButton() {
+        return addItemButton;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }

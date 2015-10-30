@@ -23,6 +23,7 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 public class InventoryTests extends ActivityInstrumentationTestCase2 {
@@ -173,18 +174,15 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
     }
 
-/*    // Test method for checking how quickly an item can be added to the inventory
+    // Test method for checking how quickly an item can be added to the inventory
     public void testQuickAdd() {
         clickCount = 0;
         HomePageActivity activity = (HomePageActivity) getActivity();
 
-        User user = activity.getUser();
-        assertTrue(user.isLoggedIn());
-
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor =
-                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
                         null, false);
 
         // Click the button
@@ -198,27 +196,27 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        InventoryActivity receiverActivity = (InventoryActivity)
+        DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
                 receiverActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", receiverActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, receiverActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                InventoryActivity.class, receiverActivity.getClass());
+                DisplayInventoryActivity.class, receiverActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
         // test that editor starts up with the right tweet in it
-        InventoryActivity inventoryActivity = (InventoryActivity) getActivity();
+        DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity) getActivity();
 
         // Move to add item activity
         receiverActivityMonitor =
-                getInstrumentation().addMonitor(AddItemToInventoryActivity.class.getName(),
+                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
                         null, false);
 
         // Click the button
-        final Button addItemButton = activity.getAddItemButton();
+        final Button addItemButton = receiverActivity.getAddItemButton();
         inventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 addItemButton.performClick();
@@ -228,31 +226,31 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        AddItemToInventoryActivity nextReceiverActivity = (AddItemToInventoryActivity)
+        AddOrEditItemActivity nextReceiverActivity = (AddOrEditItemActivity)
                 receiverActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", nextReceiverActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, receiverActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                AddItemToInventoryActivity.class, nextReceiverActivity.getClass());
+                AddOrEditItemActivity.class, nextReceiverActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
         // test that editor starts up with the right tweet in it
-        AddItemToInventoryActivity addItemtoInventoryActivity = (AddItemToInventoryActivity) getActivity();
+        AddOrEditItemActivity addItemtoDisplayInventoryActivity = (AddOrEditItemActivity) getActivity();
 
         // Click the button
-        final EditText editName = addItemtoInventoryActivity.getEditItemName();
-        addItemtoInventoryActivity.runOnUiThread(new Runnable() {
+        final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 editName.setText("test");
             }
         });
         getInstrumentation().waitForIdleSync();
 
-        final Spinner category = addItemtoInventoryActivity.getSelectCategory();
-        addItemtoInventoryActivity.runOnUiThread(new Runnable() {
+        final Spinner category = addItemtoDisplayInventoryActivity.getItemCategory();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 category.setSelection("Ring");
                 clickCount += 1;
@@ -260,8 +258,8 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        final Spinner quality = addItemtoInventoryActivity.getSelectQuality();
-        addItemtoInventoryActivity.runOnUiThread(new Runnable() {
+        final Spinner quality = addItemtoDisplayInventoryActivity.getItemQuality();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 quality.setSelection("Good");
                 clickCount += 1;
@@ -270,7 +268,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Click the button
-        final Button saveItemButton = activity.getSaveItemButton();
+        final Button saveItemButton = addItemtoDisplayInventoryActivity.getSaveButton();
         inventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 saveItemButton.performClick();
@@ -279,9 +277,11 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        assertTrue(user.getInventory.hasItem("test"));
+        Iterator<Trinket> trinketIterator = inventoryActivity.getInventory().iterator();
+        while (trinketIterator.hasNext()) {
+            assertEquals(trinketIterator.next().getName(), "test");
+        }
         // 5 or less clicks
         assertTrue(clickCount <= 5);
     }
-*/
 }
