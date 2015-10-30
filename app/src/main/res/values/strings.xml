@@ -6,4 +6,5 @@
     <string name="title_activity_display_inventory">DisplayInventoryActivity</string>
     <string name="title_activity_home_page">HomePageActivity</string>
     <string name="title_activity_add_or_edit_item">AddOrEditItemActivity</string>
+    <string name="title_activity_display_friends">DisplayFriendsActivity</string>
 </resources>

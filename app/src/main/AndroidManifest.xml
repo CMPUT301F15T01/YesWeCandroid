@@ -32,6 +32,10 @@
             android:name=".AddOrEditItemActivity"
             android:label="@string/title_activity_add_or_edit_item" >
         </activity>
+        <activity
+            android:name=".DisplayFriendsActivity"
+            android:label="@string/title_activity_display_friends" >
+        </activity>
     </application>
 
 </manifest>
