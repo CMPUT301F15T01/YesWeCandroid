@@ -14,7 +14,9 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.Iterator;
@@ -37,34 +39,54 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        inventoryActivity
-    }
-
-    public void testSearchInventoriesOfFriends() {
-        User user1 = new User();
-
-        User user2 = new User();
+        User borrower = new User();
+        User friend1 = new User();
+        User friend2 = new User();
         Inventory user2Inventory = new Inventory();
         Trinket trinket1 = new Trinket();
+        Trinket trinket2 = new Trinket();
+        Trinket trinket3 = new Trinket();
+
         trinket1.setAccessibility("public");
         user2Inventory.add(trinket1);
-        Trinket trinket2 = new Trinket();
+
         trinket2.setAccessibility("private");
         user2Inventory.add(trinket2);
 
-        User user3 = new User();
-        Trinket trinket3 = new Trinket();
         trinket3.setAccessibility("public");
         user2Inventory.add(trinket3);
 
-        user1.getFriendsList().add(user2);
-        user2.getFriendsList().add(user1);
+        borrower.getFriendsList().add(friend1);
+        friend1.getFriendsList().add(borrower);
 
-        Inventory inventory = user1.getInventory();
+
+        Inventory inventory = borrower.getInventory();
         Iterator iterator = inventory.iterator();
         while (iterator.hasNext()) {
             assertTrue(iterator.next() == trinket1);
         }
+
+    }
+
+    public void testSearchInventoriesOfFriendsSingleFriend() {
+        Instrumentation instrumentation  = getInstrumentation();
+
+        //Set an activity monitor for DisplayFriendsActivity
+        Instrumentation.ActivityMonitor monitor = instrumentation.addMonitor(DisplayFriendsActivity.class.getName(), null, false);
+
+        //Start the activity that we set the monitor for
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setClassName(instrumentation.getTargetContext(), DisplayFriendsActivity.class.getName());
+        instrumentation.startActivitySync(intent);
+
+        //Wait for DisplayFriendsActivity to start
+        Activity currentActivity = getInstrumentation().waitForMonitorWithTimeout(monitor, 5);
+        assertNotNull(currentActivity);
+
+        //Select friend1
+        
+
     }
 
     public void testSearchInventoriesOfFriendsByCategory() {
