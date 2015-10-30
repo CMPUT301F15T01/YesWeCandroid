@@ -64,9 +64,8 @@ public class Inventory extends Observable implements Collection {
         return false;
     }
 
-    @NonNull
     @Override
-    public Iterator iterator() {
+    public Iterator<Trinket> iterator() {
         return null;
     }
 
