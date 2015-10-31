@@ -17,6 +17,7 @@ package ca.ualberta.trinkettrader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -26,6 +27,9 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     private EditText itemName;
     private Spinner itemCategory;
     private Spinner itemQuality;
+    private CheckBox accessibility;
+    private EditText itemQuantity;
+    private EditText itemDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,5 +63,21 @@ public class AddOrEditItemActivity extends AppCompatActivity {
 
     public void setItemQuality(Spinner quality) {
         this.itemQuality = quality;
+    }
+
+    public CheckBox getAccessibility() {
+        return accessibility;
+    }
+
+    public EditText getItemQuantity() {
+        return itemQuantity;
+    }
+
+    public EditText getItemDescription() {
+        return itemDescription;
+    }
+
+    public void setItemDescription(EditText itemDescription) {
+        this.itemDescription = itemDescription;
     }
 }

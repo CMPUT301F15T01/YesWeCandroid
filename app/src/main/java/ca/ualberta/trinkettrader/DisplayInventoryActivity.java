@@ -24,6 +24,7 @@ public class DisplayInventoryActivity extends AppCompatActivity {
     private Button addItemButton;
     private Inventory inventory;
     private ListView inventoryItemsList;
+    private Button deleteAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,5 +42,9 @@ public class DisplayInventoryActivity extends AppCompatActivity {
 
     public ListView getInventoryItemsList() {
         return inventoryItemsList;
+    }
+
+    public Button getDeleteAll() {
+        return deleteAll;
     }
 }

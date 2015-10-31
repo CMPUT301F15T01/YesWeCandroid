@@ -8,4 +8,5 @@
     <string name="title_activity_display_user_profile">DisplayUserProfileActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_item_details">ItemDetailsActivity</string>
 </resources>
