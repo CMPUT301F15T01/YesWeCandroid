@@ -197,7 +197,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+        final DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
                 receiverActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", receiverActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
@@ -254,24 +254,26 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         Resources resources = addItemtoDisplayInventoryActivity.getResources();
 
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
-        ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
-        final int ring = spinner_categories.indexOf("Ring");
+        // ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
+        // final int ring = spinner_categories.indexOf("Ring");
         final Spinner category = addItemtoDisplayInventoryActivity.getItemCategory();
         addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
-                category.setSelection(ring);
+                // category.setSelection(ring);
+                category.setSelection(receiverActivity.getInventory().getCategoriesList().indexOf("Ring"));
                 clickCount += 1;
             }
         });
         getInstrumentation().waitForIdleSync();
 
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
-        ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
-        final int good = spinner_categories.indexOf("Good");
+        // ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
+        // final int good = spinner_qualities.indexOf("Good");
         final Spinner quality = addItemtoDisplayInventoryActivity.getItemQuality();
         addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
-                quality.setSelection(good);
+                // quality.setSelection(good);
+                quality.setSelection(receiverActivity.getInventory().getQualitiesList().indexOf("Good"));
                 clickCount += 1;
             }
         });

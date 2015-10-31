@@ -23,7 +23,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testAttatchPhotoGraph(){
-        Photograph photograph = new Photograph("<path/to/photo>");
+        Picture picture = new Picture("<path/to/photo>");
         Trinket trinket = new Trinket();
         trinket.attatchPhoto(photograph);
         assertTrue(trinket.photos.contains(photograph));
