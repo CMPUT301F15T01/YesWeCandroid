@@ -1,3 +1,17 @@
+// Copyright 2015 Andrea McIntosh, Dylan Ashley, Anju Eappen, Jenna Hatchard, Kirsten Svidal, Raghav Vamaraju
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package ca.ualberta.trinkettrader;
 
 import android.support.annotation.NonNull;
@@ -7,23 +21,33 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Observable;
 
-/**
- * Created by dashley on 2015-10-21.
- */
 public class Inventory extends Observable implements Collection {
 
+    private ArrayList<String> categoriesList = new ArrayList<>();
+    private ArrayList<String> qualitiesList = new ArrayList<>();
     private ArrayList<Trinket> trinkets;
-    private ArrayList<String> categoriesList = new ArrayList<String>();
-    private ArrayList<String> qualitiesList = new ArrayList<String>();
-
 
     public Inventory() {
-        setListValues();
+        this(new ArrayList<Trinket>());
     }
 
     public Inventory(ArrayList<Trinket> trinkets) {
         this.trinkets = trinkets;
-        setListValues();
+
+        this.categoriesList.add("ring");
+        this.categoriesList.add("earrings");
+        this.categoriesList.add("bracelet");
+        this.categoriesList.add("necklace");
+        this.categoriesList.add("anklet");
+        this.categoriesList.add("belt");
+        this.categoriesList.add("pendant");
+        this.categoriesList.add("headband");
+        this.categoriesList.add("barrett");
+        this.categoriesList.add("tiara");
+
+        this.qualitiesList.add("Good");
+        this.qualitiesList.add("Average");
+        this.qualitiesList.add("Poor");
     }
 
     @Override
@@ -38,7 +62,6 @@ public class Inventory extends Observable implements Collection {
 
     @Override
     public void clear() {
-
     }
 
     @Override
@@ -56,6 +79,7 @@ public class Inventory extends Observable implements Collection {
         return trinkets.isEmpty();
     }
 
+    @NonNull
     @Override
     public Iterator<Trinket> iterator() {
         return null;
@@ -83,16 +107,15 @@ public class Inventory extends Observable implements Collection {
 
     @NonNull
     @Override
-    public Object[] toArray() {
-        return trinkets.toArray();
+    public Trinket[] toArray() {
+        return new Trinket[0];
     }
 
     @NonNull
     @Override
     public Trinket[] toArray(Object[] array) {
-        return (Trinket[]) array;
+        return new Trinket[0];
     }
-
 
     public ArrayList<String> getCategoriesList() {
         return categoriesList;
@@ -101,22 +124,4 @@ public class Inventory extends Observable implements Collection {
     public ArrayList<String> getQualitiesList() {
         return qualitiesList;
     }
-
-    private void setListValues() {
-        this.categoriesList.add("ring");
-        this.categoriesList.add("earrings");
-        this.categoriesList.add("bracelet");
-        this.categoriesList.add("necklace");
-        this.categoriesList.add("anklet");
-        this.categoriesList.add("belt");
-        this.categoriesList.add("pendant");
-        this.categoriesList.add("headband");
-        this.categoriesList.add("barrett");
-        this.categoriesList.add("tiara");
-
-        this.qualitiesList.add("Good");
-        this.qualitiesList.add("Average");
-        this.qualitiesList.add("Poor");
-    }
-
 }

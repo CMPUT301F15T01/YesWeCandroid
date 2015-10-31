@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="spinner_categories">
-        <item>Ring</item>
-        <item>Earrings</item>
-        <item>Bracelet</item>
-        <item>Necklace</item>
         <item>Anklet</item>
-        <item>Belt</item>
-        <item>Pendant</item>
-        <item>Headband</item>
         <item>Barrett</item>
+        <item>Belt</item>
+        <item>Bracelet</item>
+        <item>Earrings</item>
+        <item>Headband</item>
+        <item>Necklace</item>
+        <item>Pendant</item>
+        <item>Ring</item>
         <item>Tiara</item>
     </string-array>
 
     <string-array name="spinner_qualities">
-        <item>Good</item>
         <item>Average</item>
+        <item>Good</item>
         <item>Poor</item>
     </string-array>
 </resources>

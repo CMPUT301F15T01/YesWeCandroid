@@ -208,5 +208,4 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         trackedFriendsList.removeTrackedFriend(friend);
         assertFalse(trackedFriendsList.hasTrackedFriend(friend));
     }
-
 }

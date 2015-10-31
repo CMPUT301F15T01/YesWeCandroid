@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.ualberta.trinkettrader" >
 
     <application
@@ -18,11 +19,7 @@
         </activity>
         <activity
             android:name=".DisplayInventoryActivity"
-            android:label="@string/title_activity_display_inventory"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.ualberta.trinkettrader.MainActivity" />
+            android:label="@string/title_activity_display_inventory" >
         </activity>
         <activity
             android:name=".HomePageActivity"

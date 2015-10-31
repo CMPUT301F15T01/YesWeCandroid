@@ -40,6 +40,4 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         UserSettings settings = getUserSettings();
         assertFalse(settings.arePhotosDownloadable);
     }
-
-
 }

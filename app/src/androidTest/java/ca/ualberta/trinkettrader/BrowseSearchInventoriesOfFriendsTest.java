@@ -14,13 +14,11 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
