@@ -16,15 +16,23 @@ package ca.ualberta.trinkettrader;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ListView;
 
 public class DisplayFriendsActivity extends AppCompatActivity {
 
     private FriendsList friends;
 
+    public ListView getFriendsListView() {
+        return friendsListView;
+    }
+
+    private ListView friendsListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_friends);
+        friendsListView = (ListView)findViewById(R.id.friendsView);
     }
 
     public FriendsList getFriends() {

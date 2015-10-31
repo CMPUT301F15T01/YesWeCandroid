@@ -5,4 +5,7 @@
     <string name="title_activity_display_friends">DisplayFriendsActivity</string>
     <string name="title_activity_display_inventory">DisplayInventoryActivity</string>
     <string name="title_activity_home_page">HomePageActivity</string>
+    <string name="title_activity_display_user_profile">DisplayUserProfileActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

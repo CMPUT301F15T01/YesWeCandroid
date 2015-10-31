@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.ualberta.trinkettrader" >
 
     <application
@@ -32,6 +31,10 @@
         <activity
             android:name=".DisplayFriendsActivity"
             android:label="@string/title_activity_display_friends" >
+        </activity>
+        <activity
+            android:name=".DisplayUserProfileActivity"
+            android:label="@string/title_activity_display_user_profile" >
         </activity>
     </application>
 

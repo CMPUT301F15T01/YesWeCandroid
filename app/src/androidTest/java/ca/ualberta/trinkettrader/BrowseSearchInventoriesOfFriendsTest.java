@@ -17,8 +17,12 @@ package ca.ualberta.trinkettrader;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.TouchUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -32,29 +36,33 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         super(activityClass);
     }
 
-    Instrumentation instrumentation = getInstrumentation();
-    private DisplayInventoryActivity inventoryActivity;
-    private DisplayFriendsActivity friendsActivity;
+    User borrower;
+    User friend1;
+    User friend2;
+    Inventory friend1Inventory;
+    Trinket trinket1;
+    Trinket trinket2;
+    Trinket trinket3;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        User borrower = new User();
-        User friend1 = new User();
-        User friend2 = new User();
-        Inventory user2Inventory = new Inventory();
-        Trinket trinket1 = new Trinket();
-        Trinket trinket2 = new Trinket();
-        Trinket trinket3 = new Trinket();
+        borrower = new User();
+        friend1 = new User();
+        friend2 = new User();
+        friend1Inventory = new Inventory();
+        trinket1 = new Trinket();
+        trinket2 = new Trinket();
+        trinket3 = new Trinket();
 
         trinket1.setAccessibility("public");
-        user2Inventory.add(trinket1);
+        friend1Inventory.add(trinket1);
 
         trinket2.setAccessibility("private");
-        user2Inventory.add(trinket2);
+        friend1Inventory.add(trinket2);
 
         trinket3.setAccessibility("public");
-        user2Inventory.add(trinket3);
+        friend1Inventory.add(trinket3);
 
         borrower.getFriendsList().add(friend1);
         friend1.getFriendsList().add(borrower);
@@ -72,7 +80,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         Instrumentation instrumentation  = getInstrumentation();
 
         //Set an activity monitor for DisplayFriendsActivity
-        Instrumentation.ActivityMonitor monitor = instrumentation.addMonitor(DisplayFriendsActivity.class.getName(), null, false);
+        Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(DisplayFriendsActivity.class.getName(), null, false);
 
         //Start the activity that we set the monitor for
         Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -81,18 +89,61 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         instrumentation.startActivitySync(intent);
 
         //Wait for DisplayFriendsActivity to start
-        DisplayFriendsActivity currentActivity = (DisplayFriendsActivity) getInstrumentation().waitForMonitorWithTimeout(monitor, 5);
+        DisplayFriendsActivity currentActivity = (DisplayFriendsActivity) getInstrumentation().waitForMonitorWithTimeout(displayFriendsMonitor, 5);
         assertNotNull(currentActivity);
 
+        //set up monitor for User profile activity that should appear with button click below
+        Instrumentation.ActivityMonitor userProfileMonitor = instrumentation.addMonitor(DisplayUserProfileActivity.class.getName(), null, false);
+
         //Select friend1
-        FriendsList friendlist = currentActivity.getFriends();
+        final ListView friendsListView = currentActivity.getFriendsListView();
         currentActivity.runOnUiThread(new Runnable() {
             public void run() {
-                View v = friendlist;
-                friendlist.performItemClick(v, 0, v.getId());
+                View v = friendsListView.getChildAt(0);
+                friendsListView.performItemClick(v, 0, v.getId());
+                //TODO: assert that friend1 was selected
             }
         });
 
+        //Remove monitor for activity we no longer care about
+        instrumentation.removeMonitor(displayFriendsMonitor);
+
+        //Check that UserProfile Page started up
+        DisplayUserProfileActivity profileActivity = (DisplayUserProfileActivity) userProfileMonitor.waitForActivityWithTimeout(5);
+        assertNotNull("User profile activity for selected friend is Null", profileActivity);
+        assertEquals("User profile activity has not been called", 1, userProfileMonitor.getHits());
+        assertEquals("Activity of wrong type", DisplayUserProfileActivity.class, profileActivity.getClass());
+
+        //Setup monitor for DisplayInventoryActivity before clicking button
+        Instrumentation.ActivityMonitor inventoryMonitor = instrumentation.addMonitor(DisplayInventoryActivity.class.getName(), null, false);
+
+        //Click the 'View Inventory' button
+        Button inventoryButton = (Button) currentActivity.findViewById(R.id.view_inventory_button);
+        assertNotNull(inventoryButton);
+        assertEquals("View not a button", Button.class, inventoryButton.getClass());
+        TouchUtils.clickView(this, inventoryButton);
+
+        //Assert that DisplayInventoryActivity starts up
+        DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity) inventoryMonitor.waitForActivityWithTimeout(5);
+        assertNotNull("Inventory Activity is null", inventoryActivity);
+        assertEquals("Inventory activity has not been called", 1, inventoryMonitor.getHits());
+        assertEquals("Activity of wrong type", DisplayInventoryActivity.class, inventoryActivity.getClass());
+
+        //Check that correct inventory items are displayed
+        ListView displayedTrinkets = (ListView)  inventoryActivity.findViewById(R.id.displayedTrinkets);
+        ArrayList<Trinket> visibleTrinkets = this.getDisplayedItems(displayedTrinkets);
+        assertTrue(visibleTrinkets.contains(trinket1));
+        assertTrue(visibleTrinkets.contains(trinket3));
+        assertFalse(visibleTrinkets.contains(trinket2));
+    }
+
+    public ArrayList<Trinket> getDisplayedItems(ListView view){
+        int count = view.getAdapter().getCount();
+        ArrayList<Trinket> listData = new ArrayList<Trinket>();
+        for (int i = 0; i < count; i++) {
+            listData.add((Trinket) view.getAdapter().getItem(i));
+        }
+        return listData;
     }
 
     public void testSearchInventoriesOfFriendsByCategory() {
