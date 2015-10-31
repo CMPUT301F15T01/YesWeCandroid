@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="category_prompt">Filter by Category</string>
     <string-array name="spinner_categories">
         <item>Anklet</item>
         <item>Barrett</item>
