@@ -28,6 +28,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+// Running tests help: Janne Oksanen, http://stackoverflow.com/questions/19516289/exception-in-thread-main-java-lang-noclassdeffounderror-junit-textui-resultpr, 2015-10-31
+
 public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
     int clickCount;
@@ -48,35 +50,66 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         assertTrue(inventory.contains(Trinket));
     }
 
-    public void testUIHasItem() {
-        DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity) getActivity();
-        list = inventoryActivity.getInventoryItemsList();
+    public void testHasItemUI() {
+        HomePageActivity activity = (HomePageActivity) getActivity();
 
-        // Add an item
+        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor invActMon =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
+
+        // Click the button
+        inventoryButton = activity.getInventoryButton();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                inventoryButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        final DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity)
+                invActMon.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", inventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, invActMon.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, inventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(invActMon);
+
+        list = inventoryActivity.getInventoryItemsList();
+        assertNull(list.getChildAt(0));
+
+        // Move to add item activity
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
+                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                        null, false);
+
         // Click the button
         addItemButton = inventoryActivity.getAddItemButton();
         inventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 addItemButton.performClick();
-                clickCount += 1;
             }
         });
-        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
-        // Set up an ActivityMonitor
-        Instrumentation.ActivityMonitor eddEditMonitor =
-                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
-                        null, false);
         getInstrumentation().waitForIdleSync();
+
         // Validate that ReceiverActivity is started
-        AddOrEditItemActivity addItemtoDisplayInventoryActivity = (AddOrEditItemActivity)
-                eddEditMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", addItemtoDisplayInventoryActivity);
+        AddOrEditItemActivity nextReceiverActivity = (AddOrEditItemActivity)
+                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", nextReceiverActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, eddEditMonitor.getHits());
+                1, receiverActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                AddOrEditItemActivity.class, addItemtoDisplayInventoryActivity.getClass());
+                AddOrEditItemActivity.class, nextReceiverActivity.getClass());
+
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(eddEditMonitor);
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        AddOrEditItemActivity addItemtoDisplayInventoryActivity = (AddOrEditItemActivity) getActivity();
 
         // Click the button
         final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
@@ -86,8 +119,10 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
+
         // Get resources
         Resources resources = addItemtoDisplayInventoryActivity.getResources();
+
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
         ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
         final int ring = spinner_categories.indexOf("Ring");
@@ -98,6 +133,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
+
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
         ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
         final int good = spinner_qualities.indexOf("Good");
@@ -118,16 +154,45 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        Trinket trinket = (Trinket) list.getItemAtPosition(0);
-        assertTrue(trinket.getName().equals("test"));
+        assertNotNull(list.getChildAt(0));
+        Iterator<Trinket> trinketIterator = inventoryActivity.getInventory().iterator();
+        while (trinketIterator.hasNext()) {
+            assertEquals(trinketIterator.next().getName(), "test");
+        }
     }
 
     // Test if a user has an inventory
     public void testHasInventory() {
-        User user = new User();
-        Inventory inventory = new Inventory();
-        user.setInventory(inventory);
-        assertFalse(user.getInventory().equals(null));
+        HomePageActivity activity = (HomePageActivity) getActivity();
+
+        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor invActMon =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
+
+        // Click the button
+        inventoryButton = activity.getInventoryButton();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                inventoryButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        final DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity)
+                invActMon.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", inventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, invActMon.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, inventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(invActMon);
+
+        assertNotNull(inventoryActivity.getInventory());
     }
 
     // Test method for getting the number of items in an inventory
@@ -146,13 +211,217 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         assertTrue(inventory.size() == 1);
     }
 
+    public void testNumberOfItemsInInventoryUI() {
+        HomePageActivity activity = (HomePageActivity) getActivity();
+
+        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor invActMon =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
+
+        // Click the button
+        inventoryButton = activity.getInventoryButton();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                inventoryButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        final DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity)
+                invActMon.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", inventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, invActMon.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, inventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(invActMon);
+
+        assertTrue(inventoryActivity.getInventory().size() == 0);
+
+        // Move to add item activity
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
+                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                        null, false);
+
+        // Click the button
+        addItemButton = inventoryActivity.getAddItemButton();
+        inventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                addItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        AddOrEditItemActivity nextReceiverActivity = (AddOrEditItemActivity)
+                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", nextReceiverActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, receiverActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                AddOrEditItemActivity.class, nextReceiverActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        AddOrEditItemActivity addItemtoDisplayInventoryActivity = (AddOrEditItemActivity) getActivity();
+
+        // Click the button
+        final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                editName.setText("test");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Get resources
+        Resources resources = addItemtoDisplayInventoryActivity.getResources();
+
+        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
+        ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
+        final int ring = spinner_categories.indexOf("Ring");
+        final Spinner category = addItemtoDisplayInventoryActivity.getItemCategory();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                category.setSelection(ring);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
+        ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
+        final int good = spinner_qualities.indexOf("Good");
+        final Spinner quality = addItemtoDisplayInventoryActivity.getItemQuality();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                quality.setSelection(good);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Click the button
+        final Button saveItemButton = addItemtoDisplayInventoryActivity.getSaveButton();
+        inventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        assertTrue(inventoryActivity.getInventory().size() == 1);
+    }
+
     // Test method to test if an inventory is empty
     public void testIsInventoryEmpty() {
-        Inventory inventory = new Inventory();
-        assertTrue(inventory.isEmpty());
-        Trinket Trinket = new Trinket();
-        inventory.add(Trinket);
-        assertFalse(inventory.isEmpty());
+        HomePageActivity activity = (HomePageActivity) getActivity();
+
+        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor invActMon =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
+
+        // Click the button
+        inventoryButton = activity.getInventoryButton();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                inventoryButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        final DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity)
+                invActMon.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", inventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, invActMon.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, inventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(invActMon);
+
+        assertTrue(inventoryActivity.getInventory().isEmpty());
+
+        // Move to add item activity
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
+                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                        null, false);
+
+        // Click the button
+        addItemButton = inventoryActivity.getAddItemButton();
+        inventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                addItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        AddOrEditItemActivity nextReceiverActivity = (AddOrEditItemActivity)
+                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", nextReceiverActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, receiverActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                AddOrEditItemActivity.class, nextReceiverActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        AddOrEditItemActivity addItemtoDisplayInventoryActivity = (AddOrEditItemActivity) getActivity();
+
+        // Click the button
+        final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                editName.setText("test");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Get resources
+        Resources resources = addItemtoDisplayInventoryActivity.getResources();
+
+        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
+        ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
+        final int ring = spinner_categories.indexOf("Ring");
+        final Spinner category = addItemtoDisplayInventoryActivity.getItemCategory();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                category.setSelection(ring);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
+        ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
+        final int good = spinner_qualities.indexOf("Good");
+        final Spinner quality = addItemtoDisplayInventoryActivity.getItemQuality();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                quality.setSelection(good);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Click the button
+        final Button saveItemButton = addItemtoDisplayInventoryActivity.getSaveButton();
+        inventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        assertFalse(inventoryActivity.getInventory().isEmpty());
     }
 
     // Test method for adding an item to your inventory
@@ -210,7 +479,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         Trinket.setDescription("Test description.");
         assertTrue(Trinket.getDescription().equals("Test description."));
         Trinket.setDescription("New test description.");
-        assertTrue(Trinket.getDescription().equals("New test description"));
+        assertTrue(Trinket.getDescription().equals("New test description."));
     }
     // Test for changing item's category
     public void testChangeItemCategory() {
@@ -275,19 +544,16 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        final DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+        final DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity)
                 receiverActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", receiverActivity);
+        assertNotNull("ReceiverActivity is null", inventoryActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, receiverActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                DisplayInventoryActivity.class, receiverActivity.getClass());
+                DisplayInventoryActivity.class, inventoryActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
-
-        // test that editor starts up with the right tweet in it
-        DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity) getActivity();
 
         // Move to add item activity
         receiverActivityMonitor =
@@ -295,7 +561,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
                         null, false);
 
         // Click the button
-        addItemButton = receiverActivity.getAddItemButton();
+        addItemButton = inventoryActivity.getAddItemButton();
         inventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 addItemButton.performClick();
