@@ -24,7 +24,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
 
     public void testEditProfile() {
         User user = new User();
-        UserProfile profile = user.getProfile();
+        UserProfile profile = user.getUserProfile();
         profile.setName("Name");
         profile.setPostalCode("T6W 1K8");
         assertTrue(profile.getName().equals("Name"));

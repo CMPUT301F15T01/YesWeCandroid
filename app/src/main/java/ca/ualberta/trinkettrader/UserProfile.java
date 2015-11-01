@@ -20,6 +20,8 @@ public class UserProfile {
     private ContactInfo contactInfo;
     private String city;
     private String name;
+    private String postalCode;
+
 
     public UserProfile() {
     }
@@ -55,4 +57,10 @@ public class UserProfile {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getPostalCode() { return postalCode;}
+
+    public void setPostalCode(String postalCode) {this.postalCode = postalCode;
+    }
+
 }
