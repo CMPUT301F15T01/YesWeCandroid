@@ -21,6 +21,7 @@ public class TradeArchiver {
     private ArrayList<Trade> currentTrades;
     private ArrayList<Trade> pastTrades;
 
+
     public TradeArchiver() {
     }
 
@@ -32,7 +33,26 @@ public class TradeArchiver {
 
     }
 
+    // TODO implementation details: will only be used to update currentTrades
     public void deleteTrade(Trade trade) {
 
+    }
+
+    public ArrayList<Trade> getPastTrades() {
+        return pastTrades;
+    }
+
+
+    public ArrayList<Trade> getCurrentTrades() {
+        return currentTrades;
+    }
+
+    // will return trade from ArrayList of pastTrades
+    public Trade getPastTrade(Trade trade){
+        return trade;
+    }
+
+    public Boolean hasCurrentTrade(Trade trade){
+        return Boolean.TRUE;
     }
 }

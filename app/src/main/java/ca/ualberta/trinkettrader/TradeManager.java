@@ -41,4 +41,13 @@ public class TradeManager {
     public void deleteTrade(Trade trade) {
 
     }
+
+    public TradeArchiver getTradeArchiver() {
+        return tradeArchiver;
+    }
+
+    public NotificationManager getNotificationManager() {
+        return notificationManager;
+    }
+
 }
