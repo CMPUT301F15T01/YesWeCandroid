@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class ItemDetailsActivity extends ActionBarActivity {
 
     private Button deleteButton;
     private Button editButton;
+    private ImageView itemImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,5 +47,9 @@ public class ItemDetailsActivity extends ActionBarActivity {
 
     public Button getEditButton() {
         return editButton;
+    }
+
+    public ImageView getItemImage() {
+        return itemImage;
     }
 }

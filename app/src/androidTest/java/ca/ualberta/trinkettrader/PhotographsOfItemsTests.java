@@ -17,8 +17,11 @@ package ca.ualberta.trinkettrader;
 import android.app.Instrumentation;
 import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
 
@@ -32,9 +35,10 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         super(activityClass);
     }
 
-    public void testAttachPhotograph(){
+    public void testAttachPhotograph() {
         // Get the current activity
         HomePageActivity homePageActivity = (HomePageActivity) getActivity();
+
 
         /******** DisplayInventoryActivity ********/
         {
@@ -68,6 +72,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Get the new activity
         DisplayInventoryActivity displayInventoryActivity = (DisplayInventoryActivity) getActivity();
 
+
         /******** AddOrEditItemActivity ********/
         {
             // Set up an ActivityMonitor
@@ -99,6 +104,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
         // Get the new activity
         AddOrEditItemActivity addOrEditItemActivity = (AddOrEditItemActivity) getActivity();
+
 
         // Edit item name
         final EditText editName = addOrEditItemActivity.getItemName();
@@ -147,24 +153,183 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Make sure the item has an image
+        addOrEditItemActivity.finish();
         Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
         while (trinketIterator.hasNext()) {
             ArrayList<Picture> pictures = trinketIterator.next().getPictures();
             assertNotNull(trinketIterator.next().getPictures());
         }
+
+        // Close the activities
+        displayInventoryActivity.finish();
+        homePageActivity.finish();
     }
 
-    public void testViewPhotograph(){
-        /*
-        // This looks like it has to be an activity test...do all use cases have to be in
-        // 'model' tests when their functionality is better suited for the view?
-        Trinket profile = new Trinket();
-        Photograph photo = profile.getPhotographs("1");
-        assertTrue(photo.isVisible());
-        */
+    public void testViewPhotograph() {
+        // Get the current activity
+        HomePageActivity homePageActivity = (HomePageActivity) getActivity();
+
+
+        /******** DisplayInventoryActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            final Button inventoryButton = homePageActivity.getInventoryButton();
+            homePageActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    inventoryButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the new activity
+        DisplayInventoryActivity displayInventoryActivity = (DisplayInventoryActivity) getActivity();
+
+
+        /******** AddOrEditItemActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            final Button addItemButton = displayInventoryActivity.getAddItemButton();
+            homePageActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    addItemButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            AddOrEditItemActivity receiverActivity = (AddOrEditItemActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    AddOrEditItemActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the new activity
+        AddOrEditItemActivity addOrEditItemActivity = (AddOrEditItemActivity) getActivity();
+
+
+        // Edit item name
+        final EditText editName = addOrEditItemActivity.getItemName();
+        final String itemName = "Test";
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                editName.setText(itemName);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Get resources
+        Resources resources = addOrEditItemActivity.getResources();
+
+        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
+        ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
+        final int ring = spinner_categories.indexOf("Ring");
+        final Spinner category = addOrEditItemActivity.getItemCategory();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                category.setSelection(ring);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
+        ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
+        final int good = spinner_qualities.indexOf("Good");
+        final Spinner quality = addOrEditItemActivity.getItemQuality();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                quality.setSelection(good);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        /** HERE BE DRAGONS **/
+
+        // Save the item
+        final Button saveItemButton = addOrEditItemActivity.getSaveButton();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+
+        /******** ItemDetailsActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
+                            null, false);
+
+            // Start ItemDetailsActivity
+            final ListView inventoryItemsList = displayInventoryActivity.getInventoryItemsList();
+            Trinket trinket = (Trinket) inventoryItemsList.getItemAtPosition(0);
+            displayInventoryActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    View view = inventoryItemsList.getChildAt(0);
+                    inventoryItemsList.performItemClick(view, 0, view.getId());
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            ItemDetailsActivity receiverActivity = (ItemDetailsActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    ItemDetailsActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the new activity
+        ItemDetailsActivity itemDetailsActivity = (ItemDetailsActivity) getActivity();
+
+
+        // Check that the image is visible
+        ImageView itemImage = itemDetailsActivity.getItemImage();
+        // PC.; http://stackoverflow.com/questions/9113895/how-to-check-if-an-imageview-is-attached-with-image-in-android; 2015-11-01
+        assertNotNull(itemImage.getDrawable());
+
+        // Close the activities
+        itemDetailsActivity.finish();
+        displayInventoryActivity.finish();
+        homePageActivity.finish();
     }
 
-    public void testConstrainPhotographSize(){
+    public void testConstrainPhotographSize() {
         /*
         // How do we validly test this? This use case is specific to a sysadmin.
         // Should a user extend that?
@@ -177,18 +342,235 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         */
     }
 
-    public void testDeletePhotoGraph(){
-        /*
-        Photograph photograph = new Photograph("<path/to/photo>");
-        Trinket trinket = new Trinket();
-        trinket.attatchPhoto(photograph);
-        assertTrue(trinket.photos.contains(photograph));
-        trinket.deletePhoto(photograph);
-        assertFalse(trinket.photos.contains(photograph));
-        */
+    public void testDeletePhotoGraph() {
+        // Get the current activity
+        HomePageActivity homePageActivity = (HomePageActivity) getActivity();
+
+
+        /******** DisplayInventoryActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            final Button inventoryButton = homePageActivity.getInventoryButton();
+            homePageActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    inventoryButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the new activity
+        DisplayInventoryActivity displayInventoryActivity = (DisplayInventoryActivity) getActivity();
+
+
+        /******** AddOrEditItemActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            final Button addItemButton = displayInventoryActivity.getAddItemButton();
+            homePageActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    addItemButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            AddOrEditItemActivity receiverActivity = (AddOrEditItemActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    AddOrEditItemActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the new activity
+        AddOrEditItemActivity addOrEditItemActivity = (AddOrEditItemActivity) getActivity();
+
+
+        // Edit item name
+        final EditText editName = addOrEditItemActivity.getItemName();
+        final String itemName = "Test";
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                editName.setText(itemName);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Get resources
+        Resources resources = addOrEditItemActivity.getResources();
+
+        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
+        ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
+        final int ring = spinner_categories.indexOf("Ring");
+        final Spinner category = addOrEditItemActivity.getItemCategory();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                category.setSelection(ring);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
+        ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
+        final int good = spinner_qualities.indexOf("Good");
+        final Spinner quality = addOrEditItemActivity.getItemQuality();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                quality.setSelection(good);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        /** HERE BE DRAGONS **/
+
+        // Save the item
+        final Button saveItemButton = addOrEditItemActivity.getSaveButton();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Make sure the item has an image
+        addOrEditItemActivity.finish();
+        Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
+        while (trinketIterator.hasNext()) {
+            ArrayList<Picture> pictures = trinketIterator.next().getPictures();
+            assertNotNull(trinketIterator.next().getPictures());
+        }
+
+
+        /******** ItemDetailsActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
+                            null, false);
+
+            // Start ItemDetailsActivity
+            final ListView inventoryItemsList = displayInventoryActivity.getInventoryItemsList();
+            Trinket trinket = (Trinket) inventoryItemsList.getItemAtPosition(0);
+            displayInventoryActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    View view = inventoryItemsList.getChildAt(0);
+                    inventoryItemsList.performItemClick(view, 0, view.getId());
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            ItemDetailsActivity receiverActivity = (ItemDetailsActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    ItemDetailsActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the new activity
+        ItemDetailsActivity itemDetailsActivity = (ItemDetailsActivity) getActivity();
+
+
+        /******** AddOrEditItemActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            final Button editButton = itemDetailsActivity.getEditButton();
+            homePageActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    editButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            AddOrEditItemActivity receiverActivity = (AddOrEditItemActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    AddOrEditItemActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the new activity
+        AddOrEditItemActivity removeItemPictureActivity = (AddOrEditItemActivity) getActivity();
+
+
+        /******** TestDeleteImage ********/
+        {
+            // Delete the image
+            final Button removeImageButton = removeItemPictureActivity.getRemoveImageButton();
+            removeItemPictureActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    removeImageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Save the item
+            final Button saveItemButton = addOrEditItemActivity.getSaveButton();
+            addOrEditItemActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    saveItemButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+            itemDetailsActivity.finish();
+
+            // Make sure the item does not have an image
+            Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
+            while (trinketIterator.hasNext()) {
+                ArrayList<Picture> pictures = trinketIterator.next().getPictures();
+                assertEquals(trinketIterator.next().getPictures().size(), 0);
+            }
+        }
+
+        // Close the activities
+        displayInventoryActivity.finish();
+        homePageActivity.finish();
     }
 
-    public void testManuallyChoosePhotosToDownloadIfPhotoDownloadDisabled(){
+    public void testManuallyChoosePhotosToDownloadIfPhotoDownloadDisabled() {
         /*
         //This is another test that looks like it should be an activity test.
         // Changes will be made once those tests are underway.
@@ -200,7 +582,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         */
     }
 
-    public void testDisablePhotoDownload(){
+    public void testDisablePhotoDownload() {
         // Get the current activity
         HomePageActivity homePageActivity = (HomePageActivity) getActivity();
 
@@ -285,5 +667,9 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
         assertFalse(arePhotosDownloadableButton.isChecked());
         assertFalse(userProfile.getArePhotosDownloadable());
+
+        // Return to main menu
+        editProfileActivity.finish();
+        displayUserProfileActivity.finish();
     }
 }
