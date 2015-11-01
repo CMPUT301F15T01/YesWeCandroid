@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class Trinket {
 
-    private ArrayList<Photo> photos;
+    private ArrayList<Picture> pictures;
     private Integer quantity;
     private String accessibility;
     private String category;
@@ -63,12 +63,12 @@ public class Trinket {
         this.name = name;
     }
 
-    public ArrayList<Photo> getPhotos() {
-        return photos;
+    public ArrayList<Picture> getPictures() {
+        return pictures;
     }
 
-    public void setPhotos(ArrayList<Photo> photos) {
-        this.photos = photos;
+    public void setPictures(ArrayList<Picture> pictures) {
+        this.pictures = pictures;
     }
 
     public String getQuality() {

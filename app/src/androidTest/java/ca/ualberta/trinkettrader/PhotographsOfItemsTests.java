@@ -15,9 +15,16 @@
 package ca.ualberta.trinkettrader;
 
 import android.app.Instrumentation;
+import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.ToggleButton;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
 public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
@@ -93,12 +100,58 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Get the new activity
         AddOrEditItemActivity addOrEditItemActivity = (AddOrEditItemActivity) getActivity();
 
-        /*
-        Picture picture = new Picture("<path/to/photo>");
-        Trinket trinket = new Trinket();
-        trinket.attatchPhoto(photograph);
-        assertTrue(trinket.photos.contains(photograph));
-        */
+        // Edit item name
+        final EditText editName = addOrEditItemActivity.getItemName();
+        final String itemName = "Test";
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                editName.setText(itemName);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Get resources
+        Resources resources = addOrEditItemActivity.getResources();
+
+        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
+        ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
+        final int ring = spinner_categories.indexOf("Ring");
+        final Spinner category = addOrEditItemActivity.getItemCategory();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                category.setSelection(ring);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
+        ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
+        final int good = spinner_qualities.indexOf("Good");
+        final Spinner quality = addOrEditItemActivity.getItemQuality();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                quality.setSelection(good);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        /** HERE BE DRAGONS **/
+
+        // Save the item
+        final Button saveItemButton = addOrEditItemActivity.getSaveButton();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Make sure the item has an image
+        Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
+        while (trinketIterator.hasNext()) {
+            ArrayList<Picture> pictures = trinketIterator.next().getPictures();
+            assertNotNull(trinketIterator.next().getPictures());
+        }
     }
 
     public void testViewPhotograph(){
