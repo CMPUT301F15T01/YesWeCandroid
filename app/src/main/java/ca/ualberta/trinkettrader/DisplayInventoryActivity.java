@@ -17,11 +17,14 @@ package ca.ualberta.trinkettrader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.ListView;
 
 public class DisplayInventoryActivity extends AppCompatActivity {
 
     private Button addItemButton;
     private Inventory inventory;
+    private ListView inventoryItemsList;
+    private Button deleteAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +38,13 @@ public class DisplayInventoryActivity extends AppCompatActivity {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public ListView getInventoryItemsList() {
+        return inventoryItemsList;
+    }
+
+    public Button getDeleteAll() {
+        return deleteAll;
     }
 }
