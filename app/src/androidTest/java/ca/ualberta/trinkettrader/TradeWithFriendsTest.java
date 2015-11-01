@@ -110,11 +110,11 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     //check that user can delete a proposed trade
     public void testDeleteTrade() {
         User user = new User();
-        Trade trade = new Trade();
-        user.sendTradeProposal(user, trade);
-        assertTrue(user.currentTrades.hasTrade(trade));
-        user.deleteTradeProposal(user, trade);
-        assertFalse(user.currentTrades.hasTrade(trade));
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        user.getTradeManager().proposeTrade(trade);
+        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+        user.getTradeManager().deleteTrade(trade);
+        assertFalse(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
     }
 
     // Test that user has current trades they are involved in
@@ -132,14 +132,15 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         User user = new User();
         Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
         Trade trade1 = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        user.getTradeManager().proposeTrade(trade);
+        user.getTradeManager().proposeTrade(trade1);
 
-        user.sendTradeProposal(user, trade);
-        user.sendTradeProposal(user, trade);
-        assertTrue(user.currentTrades.hasTrade(trade));
-        assertTrue(user.currentTrades.hasTrade(trade1));
-        user.deleteTradeProposal(user, trade);
-        assertFalse(user.currentTrades.hasTrade(trade));
-        assertTrue(user.pastTrades.hasTrade(trade));
-        assertFalse(user.pastTrades.hasTrade(trade1));
+        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
+
+        user.getTradeManager().deleteTrade(trade);
+        assertFalse(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+        assertTrue(user.getTradeManager().getTradeArchiver().hasPastTrade(trade));
+        assertFalse(user.getTradeManager().getTradeArchiver().hasPastTrade(trade1));
     }
 }

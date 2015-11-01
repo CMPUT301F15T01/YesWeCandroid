@@ -55,4 +55,8 @@ public class TradeArchiver {
     public Boolean hasCurrentTrade(Trade trade){
         return Boolean.TRUE;
     }
+
+    public Boolean hasPastTrade(Trade trade){
+        return Boolean.TRUE;
+    }
 }
