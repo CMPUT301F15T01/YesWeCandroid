@@ -31,13 +31,16 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         assertTrue(profile.getPostalCode().equals("T6W 1K8"));
     }
 
+
     public void testEnablePhotoDownload() {
-        UserSettings settings = getUserSettings();
-        assertTrue(settings.arePhotosDownloadable);
+        UserProfile userProfile = new UserProfile();
+        userProfile.setArePhotosDownloadable(Boolean.TRUE);
+        assertTrue(userProfile.getArePhotosDownloadable());
     }
 
     public void testDisablePhotoDownload() {
-        UserSettings settings = getUserSettings();
-        assertFalse(settings.arePhotosDownloadable);
+        UserProfile userProfile = new UserProfile();
+        userProfile.setArePhotosDownloadable(Boolean.FALSE);
+        assertFalse(userProfile.getArePhotosDownloadable());
     }
 }
