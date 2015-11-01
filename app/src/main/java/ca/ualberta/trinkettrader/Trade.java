@@ -27,7 +27,7 @@ public class Trade {
         this.receiver = receiver;
         this.requestedItems = requestedItems;
         this.sender = sender;
-        this.status = "pending";
+        this.status = "pending"; // TODO need to clarify what status names will be
     }
 
     public Inventory getOfferedItems() {

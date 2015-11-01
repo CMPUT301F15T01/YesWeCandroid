@@ -41,19 +41,19 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Test if this trade has triggered a notification
         assertTrue(user.hasNotification());
         user.getTradeManager().acceptTrade(trade, "Test accept message");
-        assertTrue(trade.getStatus().equals("closed"));
+        assertTrue(trade.getStatus().equals("accepted"));  // TODO need to clarify what status names will be
         assertTrue(user.getPastTrade(trade).wasAccepted());
     }
 
     // Test rejecting a trade without sending a counter offer
     public void testDeclineTradeNoCounter() {
         User user = new User();
-        Trade trade = new Trade();
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
         // Send a trade to yourself as a test
-        user.sendTradeProposal(user, trade);
+        user.getTradeManager().proposeTrade(trade);
         // Test if this trade has triggered a notification
         assertTrue(user.hasNotification());
-        user.declineTrade(trade);
+        user.getTradeManager().declineTrade(trade);
         // Send null instead of a counter trade
         trade.sendCounterTrade(null);
         assertTrue(trade.isClosed());
@@ -63,15 +63,14 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     // Test rejecting a trade with sending a counter offer
     public void testDeclineTradeWithCounter() {
         User user = new User();
-        Trade trade = new Trade();
         // Send a trade to yourself as a test
-        user.sendTradeProposal(user, trade);
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        user.getTradeManager().proposeTrade(trade);
         // Test if this trade has triggered a notification
         assertTrue(user.hasNotification());
-        user.declineTrade(trade);
+        user.getTradeManager().declineTrade(trade);
         // Send a counter trade
-        Trade newTrade = new Trade();
-        trade.sendCounterTrade(newTrade);
+        Trade counterTrade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
         assertFalse(trade.isClosed());
 
     }
