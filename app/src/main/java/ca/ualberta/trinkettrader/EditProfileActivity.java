@@ -14,18 +14,26 @@
 
 package ca.ualberta.trinkettrader;
 
-public class UserSettings {
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ToggleButton;
 
-    private Boolean arePhotosDownloadable;
+public class EditProfileActivity extends AppCompatActivity {
 
-    public UserSettings() {
+    private ToggleButton arePhotosDownloadableButton;
+    private UserProfile userProfile;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_edit_profile);
     }
 
-    public Boolean getArePhotosDownloadable() {
-        return arePhotosDownloadable;
+    public ToggleButton getArePhotosDownloadableButton() {
+        return arePhotosDownloadableButton;
     }
 
-    public void setArePhotosDownloadable(Boolean arePhotosDownloadable) {
-        this.arePhotosDownloadable = arePhotosDownloadable;
+    public UserProfile getUserProfile() {
+        return userProfile;
     }
 }

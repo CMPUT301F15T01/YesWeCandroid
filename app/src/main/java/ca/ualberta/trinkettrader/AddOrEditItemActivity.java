@@ -60,4 +60,7 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     public void setItemQuality(Spinner quality) {
         this.itemQuality = quality;
     }
+
+    public void takePictureOfItem() {
+    }
 }

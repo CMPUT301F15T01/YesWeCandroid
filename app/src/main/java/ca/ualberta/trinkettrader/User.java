@@ -22,7 +22,6 @@ public class User {
     private TrackedFriendsList trackedFriends;
     private TradeManager tradeManager;
     private UserProfile profile;
-    private UserSettings userSettings;
 
     public User() {
     }
@@ -73,13 +72,5 @@ public class User {
 
     public void setTradeManager(TradeManager tradeManager) {
         this.tradeManager = tradeManager;
-    }
-
-    public UserSettings getUserSettings() {
-        return userSettings;
-    }
-
-    public void setUserSettings(UserSettings userSettings) {
-        this.userSettings = userSettings;
     }
 }
