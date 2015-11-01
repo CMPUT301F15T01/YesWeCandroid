@@ -15,4 +15,8 @@
 package ca.ualberta.trinkettrader;
 
 public class NotificationManager {
+
+    public Boolean hasNotification(){
+        return Boolean.TRUE;
+    }
 }

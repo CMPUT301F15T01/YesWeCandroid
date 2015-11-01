@@ -29,7 +29,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Send a trade to yourself as a test
         user.getTradeManager().proposeTrade(trade);
         // Test if this trade has triggered a notification
-        assertTrue(user.hasNotification());
+        assertTrue(user.getNotificationManager().hasNotification());
     }
 
     // Test accepting trade
@@ -39,10 +39,10 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Send a trade to yourself as a test
         user.getTradeManager().proposeTrade(trade);
         // Test if this trade has triggered a notification
-        assertTrue(user.hasNotification());
+        assertTrue(user.getNotificationManager().hasNotification());
         user.getTradeManager().acceptTrade(trade, "Test accept message");
         assertTrue(trade.getStatus().equals("accepted"));  // TODO need to clarify what status names will be
-        assertTrue(user.getPastTrade(trade).wasAccepted());
+        assertTrue(user.getTradeManager().getTradeArchiver().getPastTrade(trade).getStatus().equals("Accepted"));
     }
 
     // Test rejecting a trade without sending a counter offer
@@ -52,7 +52,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Send a trade to yourself as a test
         user.getTradeManager().proposeTrade(trade);
         // Test if this trade has triggered a notification
-        assertTrue(user.hasNotification());
+        assertTrue(user.getNotificationManager().hasNotification());
         user.getTradeManager().declineTrade(trade);
         // Send null instead of a counter trade
         trade.sendCounterTrade(null);
@@ -68,7 +68,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
         user.getTradeManager().proposeTrade(trade);
         // Test if this trade has triggered a notification
-        assertTrue(user.hasNotification());
+        assertTrue(user.getNotificationManager().hasNotification());
         user.getTradeManager().declineTrade(trade);
         // Send a counter trade
         Trade counterTrade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
@@ -80,7 +80,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     public void testFriendHasItem() {
         User user = new User();
         User user1 = new User();
-        // don't think the line below is needed
+        // right now, line below isn't used
         Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user1.getInventory(), user1.getTradeManager());
         Trinket item = new Trinket();
         item.setName("necklace");
@@ -91,10 +91,10 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     //check that the proposed trade shows up in the users current trades
     public void testProposedTrade() {
         User user = new User();
-        Trade trade = new Trade();
-        assertFalse(user.hasCurrentTrade(trade));
-        user.sendTradeProposal(user, trade);
-        assertTrue(user.hasCurrentTrade(trade));
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        assertFalse(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+        user.getTradeManager().proposeTrade(trade);
+        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
     }
 
     //check that user can edit a current trade
