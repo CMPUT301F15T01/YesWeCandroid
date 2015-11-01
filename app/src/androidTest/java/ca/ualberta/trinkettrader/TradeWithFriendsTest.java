@@ -25,9 +25,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     // Test method to see if user has a notification
     public void testHasNotification() {
         User user = new User();
-        Trade trade = new Trade();
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
         // Send a trade to yourself as a test
-        user.sendTradeProposal(user, trade);
+        user.getTradeManager().proposeTrade(trade);
         // Test if this trade has triggered a notification
         assertTrue(user.hasNotification());
     }
@@ -35,13 +35,13 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     // Test accepting trade
     public void testAcceptTrade() {
         User user = new User();
-        Trade trade = new Trade();
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
         // Send a trade to yourself as a test
-        user.sendTradeProposal(user, trade);
+        user.getTradeManager().proposeTrade(trade);
         // Test if this trade has triggered a notification
         assertTrue(user.hasNotification());
-        user.acceptTrade(trade.setAcceptDetails("Test accept message"));
-        assertTrue(trade.isClosed());
+        user.getTradeManager().acceptTrade(trade, "Test accept message");
+        assertTrue(trade.getStatus().equals("closed"));
         assertTrue(user.getPastTrade(trade).wasAccepted());
     }
 

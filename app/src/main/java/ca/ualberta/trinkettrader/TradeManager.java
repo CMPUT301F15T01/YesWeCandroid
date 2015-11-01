@@ -30,7 +30,7 @@ public class TradeManager {
 
     }
 
-    public void acceptTrade(Trade trade) {
+    public void acceptTrade(Trade trade, String comments) {
 
     }
 

@@ -19,10 +19,10 @@ public class Trade {
     private Inventory offeredItems;
     private Inventory requestedItems;
     private String status;
-    private User receiver;
-    private User sender;
+    private TradeManager receiver;
+    private TradeManager sender;
 
-    public Trade(Inventory offeredItems, User receiver, Inventory requestedItems, User sender) {
+    public Trade(Inventory offeredItems, TradeManager receiver, Inventory requestedItems, TradeManager sender) {
         this.offeredItems = offeredItems;
         this.receiver = receiver;
         this.requestedItems = requestedItems;
@@ -34,7 +34,7 @@ public class Trade {
         return offeredItems;
     }
 
-    public User getReceiver() {
+    public TradeManager getReceiver() {
         return receiver;
     }
 
@@ -42,7 +42,7 @@ public class Trade {
         return requestedItems;
     }
 
-    public User getSender() {
+    public TradeManager getSender() {
         return sender;
     }
 
