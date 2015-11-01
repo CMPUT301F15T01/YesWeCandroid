@@ -25,9 +25,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     // Test method to see if user has a notification
     public void testHasNotification() {
         User user = new User();
-        Trade trade = new Trade();
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
         // Send a trade to yourself as a test
-        user.sendTradeProposal(user, trade);
+        user.getTradeManager().proposeTrade(trade);
         // Test if this trade has triggered a notification
         assertTrue(user.hasNotification());
     }
@@ -35,53 +35,56 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     // Test accepting trade
     public void testAcceptTrade() {
         User user = new User();
-        Trade trade = new Trade();
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
         // Send a trade to yourself as a test
-        user.sendTradeProposal(user, trade);
+        user.getTradeManager().proposeTrade(trade);
         // Test if this trade has triggered a notification
         assertTrue(user.hasNotification());
-        user.acceptTrade(trade.setAcceptDetails("Test accept message"));
-        assertTrue(trade.isClosed());
+        user.getTradeManager().acceptTrade(trade, "Test accept message");
+        assertTrue(trade.getStatus().equals("accepted"));  // TODO need to clarify what status names will be
         assertTrue(user.getPastTrade(trade).wasAccepted());
     }
 
     // Test rejecting a trade without sending a counter offer
     public void testDeclineTradeNoCounter() {
         User user = new User();
-        Trade trade = new Trade();
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
         // Send a trade to yourself as a test
-        user.sendTradeProposal(user, trade);
+        user.getTradeManager().proposeTrade(trade);
         // Test if this trade has triggered a notification
         assertTrue(user.hasNotification());
-        user.declineTrade(trade);
+        user.getTradeManager().declineTrade(trade);
         // Send null instead of a counter trade
         trade.sendCounterTrade(null);
-        assertTrue(trade.isClosed());
-        assertTrue(user.getPastTrade(trade).wasRejected());
+        assertTrue(trade.getStatus().equals("declined"));
+        // don't think we need the line below?
+        assertTrue(user.getTradeManager().getTradeArchiver().getPastTrade(trade).getStatus().equals("rejected"));
     }
 
     // Test rejecting a trade with sending a counter offer
     public void testDeclineTradeWithCounter() {
         User user = new User();
-        Trade trade = new Trade();
         // Send a trade to yourself as a test
-        user.sendTradeProposal(user, trade);
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        user.getTradeManager().proposeTrade(trade);
         // Test if this trade has triggered a notification
         assertTrue(user.hasNotification());
-        user.declineTrade(trade);
+        user.getTradeManager().declineTrade(trade);
         // Send a counter trade
-        Trade newTrade = new Trade();
-        trade.sendCounterTrade(newTrade);
-        assertFalse(trade.isClosed());
+        Trade counterTrade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        assertFalse(trade.getStatus().equals("closed"));
 
     }
 
     // Test that friend has the item that user is proposing in their offered trade
     public void testFriendHasItem() {
         User user = new User();
-        Trade trade = new Trade();
-        MyItem item = new MyItem();
-        Friend friend = new Friend();
+        User user1 = new User();
+        // don't think the line below is needed
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user1.getInventory(), user1.getTradeManager());
+        Trinket item = new Trinket();
+        item.setName("necklace");
+        Friend friend = new Friend(user1);
         assertTrue(friend.inventory.hasItem(item));
     }
 
@@ -107,35 +110,37 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     //check that user can delete a proposed trade
     public void testDeleteTrade() {
         User user = new User();
-        Trade trade = new Trade();
-        user.sendTradeProposal(user, trade);
-        assertTrue(user.currentTrades.hasTrade(trade));
-        user.deleteTradeProposal(user, trade);
-        assertFalse(user.currentTrades.hasTrade(trade));
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        user.getTradeManager().proposeTrade(trade);
+        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+        user.getTradeManager().deleteTrade(trade);
+        assertFalse(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
     }
 
     // Test that user has current trades they are involved in
     public void testCurrentTrades() {
         User user = new User();
-        Trade trade = new Trade();
-        Trade trade1 = new Trade();
-        user.sendTradeProposal(user, trade);
-        user.sendTradeProposal(user, trade);
-        assertTrue(user.currentTrades.hasTrade(trade));
-        assertTrue(user.currentTrades.hasTrade(trade1));
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        Trade trade1 = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        user.getTradeManager().proposeTrade(trade);
+        user.getTradeManager().proposeTrade(trade1);
+        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
     }
     // Test that user can browse past trades that they were involved in
     public void testPastTrades() {
         User user = new User();
-        Trade trade = new Trade();
-        Trade trade1 = new Trade();
-        user.sendTradeProposal(user, trade);
-        user.sendTradeProposal(user, trade);
-        assertTrue(user.currentTrades.hasTrade(trade));
-        assertTrue(user.currentTrades.hasTrade(trade1));
-        user.deleteTradeProposal(user, trade);
-        assertFalse(user.currentTrades.hasTrade(trade));
-        assertTrue(user.pastTrades.hasTrade(trade));
-        assertFalse(user.pastTrades.hasTrade(trade1));
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        Trade trade1 = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        user.getTradeManager().proposeTrade(trade);
+        user.getTradeManager().proposeTrade(trade1);
+
+        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
+
+        user.getTradeManager().deleteTrade(trade);
+        assertFalse(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+        assertTrue(user.getTradeManager().getTradeArchiver().hasPastTrade(trade));
+        assertFalse(user.getTradeManager().getTradeArchiver().hasPastTrade(trade1));
     }
 }

@@ -28,17 +28,21 @@ public class DisplayInventoryActivity extends AppCompatActivity {
     private ListView inventoryItemsList;
     private Button deleteAll;
 
+    private InventoryController inventoryController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_inventory);
 
-        inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: open the DisplayItemDetails for the Trinket (list item) that was clicked
             }
         });
+        */
+        inventoryController = new InventoryController(this);
     }
 
     public Button getAddItemButton() {
@@ -55,5 +59,9 @@ public class DisplayInventoryActivity extends AppCompatActivity {
 
     public Button getDeleteAll() {
         return deleteAll;
+    }
+
+    public void clickAdd() {
+        inventoryController.onAddItemClick();
     }
 }

@@ -30,7 +30,7 @@ public class TradeManager {
 
     }
 
-    public void acceptTrade(Trade trade) {
+    public void acceptTrade(Trade trade, String comments) {
 
     }
 
@@ -41,4 +41,13 @@ public class TradeManager {
     public void deleteTrade(Trade trade) {
 
     }
+
+    public TradeArchiver getTradeArchiver() {
+        return tradeArchiver;
+    }
+
+    public NotificationManager getNotificationManager() {
+        return notificationManager;
+    }
+
 }
