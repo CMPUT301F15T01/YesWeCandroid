@@ -21,6 +21,7 @@ import android.test.TouchUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -256,7 +257,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         instrumentation.removeMonitor(inventoryMonitor);
         Instrumentation.ActivityMonitor refreshedInventoryMonitor = instrumentation.addMonitor(DisplayInventoryActivity.class.getName(), null, false);
 
-        //Click the 'View Inventory' button
+        //Click the 'Filter' button
         Button filterButton = (Button) displayedTrinkets.findViewById(R.id.filterButtton);
         assertNotNull(filterButton);
         assertEquals("View not a button", Button.class, filterButton.getClass());
@@ -277,37 +278,118 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         assertTrue(refreshedTrinkets.contains(trinket1));
         assertTrue(refreshedTrinkets.contains(trinket3));
 
+        instrumentation.removeMonitor(refreshedInventoryMonitor);
+        instrumentation.removeMonitor(displayFriendsMonitor);
+        instrumentation.removeMonitor(userProfileMonitor);
     }
 
     public void testSearchInventoriesOfFriendsByTextualQuery() {
-        User user1 = new User();
 
-        User user2 = new User();
-        Inventory user2Inventory = new Inventory();
-        Trinket trinket1 = new Trinket();
         trinket1.setAccessibility("public");
         trinket1.setDescription("rose gold ring with a garnet");
-        user2Inventory.add(trinket1);
-        Trinket trinket2 = new Trinket();
+        friend1Inventory.add(trinket1);
+
         trinket2.setDescription("rose gold ring with a ruby");
-        user2Inventory.add(trinket2);
+        friend1Inventory.add(trinket2);
 
-        User user3 = new User();
-        Trinket trinket3 = new Trinket();
         trinket3.setAccessibility("public");
-        user2Inventory.add(trinket3);
+        friend1Inventory.add(trinket3);
 
-        user1.getFriendsList().add(user2);
-        user2.getFriendsList().add(user1);
+        borrower.getFriendsList().add(friend1);
+        friend1.getFriendsList().add(borrower);
 
-        Inventory inventory = Searcher.searchInventoryByDescription(user1, "garnet");
+        //Set an activity monitor for DisplayFriendsActivity
+        Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(DisplayFriendsActivity.class.getName(), null, false);
+
+        //Start the activity that we set the monitor for
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setClassName(instrumentation.getTargetContext(), DisplayFriendsActivity.class.getName());
+        instrumentation.startActivitySync(intent);
+
+        //Wait for DisplayFriendsActivity to start
+        DisplayFriendsActivity displayFriendsActivity = (DisplayFriendsActivity) getInstrumentation().waitForMonitorWithTimeout(displayFriendsMonitor, 5);
+        assertNotNull(displayFriendsActivity);
+
+        //set up monitor for User profile activity that should appear with button click below
+        Instrumentation.ActivityMonitor userProfileMonitor = instrumentation.addMonitor(DisplayUserProfileActivity.class.getName(), null, false);
+
+        //Select friend1
+        final ListView friendsListView = displayFriendsActivity.getFriendsListView();
+        displayFriendsActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                View v = friendsListView.getChildAt(0);
+                friendsListView.performItemClick(v, 0, v.getId());
+                //TODO: assert that friend1 was selected
+            }
+        });
+
+        //Check that UserProfile Page started up
+        DisplayUserProfileActivity profileActivity = (DisplayUserProfileActivity) userProfileMonitor.waitForActivityWithTimeout(5);
+        assertNotNull("User profile activity for selected friend is Null", profileActivity);
+        assertEquals("User profile activity has not been called", 1, userProfileMonitor.getHits());
+        assertEquals("Activity of wrong type", DisplayUserProfileActivity.class, profileActivity.getClass());
+
+        //Setup monitor for DisplayInventoryActivity before clicking button
+        Instrumentation.ActivityMonitor inventoryMonitor = instrumentation.addMonitor(DisplayInventoryActivity.class.getName(), null, false);
+
+        //Click the 'View Inventory' button
+        Button inventoryButton = (Button) displayFriendsActivity.findViewById(R.id.view_inventory_button);
+        assertNotNull(inventoryButton);
+        assertEquals("View not a button", Button.class, inventoryButton.getClass());
+        TouchUtils.clickView(this, inventoryButton);
+
+        //Assert that DisplayInventoryActivity starts up
+        DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity) inventoryMonitor.waitForActivityWithTimeout(5);
+        assertNotNull("Inventory Activity is null", inventoryActivity);
+        assertEquals("Inventory activity has not been called", 1, inventoryMonitor.getHits());
+        assertEquals("Activity of wrong type", DisplayInventoryActivity.class, inventoryActivity.getClass());
+
+        //Check that correct inventory items are displayed
+        ListView displayedTrinkets = (ListView)  inventoryActivity.findViewById(R.id.displayedTrinkets);
+        ArrayList<Trinket> visibleTrinkets = this.getDisplayedItems(displayedTrinkets);
+        assertTrue(visibleTrinkets.contains(trinket1));
+        assertTrue(visibleTrinkets.contains(trinket3));
+        assertFalse(visibleTrinkets.contains(trinket2));
+
+        //Enter Search string into search box
+        EditText searchbox = (EditText) inventoryActivity.findViewById(R.id.searchByText);
+        searchbox.setText("garnet");
+
+        //Setup monitor for DisplayInventoryActivity restarting before clicking filter button
+        instrumentation.removeMonitor(inventoryMonitor);
+        Instrumentation.ActivityMonitor refreshedInventoryMonitor = instrumentation.addMonitor(DisplayInventoryActivity.class.getName(), null, false);
+
+        //Click the 'Filter' button
+        Button filterButton = (Button) displayedTrinkets.findViewById(R.id.filterButtton);
+        assertNotNull(filterButton);
+        assertEquals("View not a button", Button.class, filterButton.getClass());
+        TouchUtils.clickView(this, filterButton);
+
+
+        //Assert that DisplayInventoryActivity starts up
+        DisplayInventoryActivity refreshedInventoryActivity = (DisplayInventoryActivity) refreshedInventoryMonitor.waitForActivityWithTimeout(5);
+        assertNotNull("Inventory Activity is null", refreshedInventoryActivity);
+        assertEquals("Inventory activity has not been called", 1, refreshedInventoryMonitor.getHits());
+        assertEquals("Activity of wrong type", DisplayInventoryActivity.class, refreshedInventoryActivity.getClass());
+
+        //Check that correct inventory items are displayed
+        ListView refreshedInventory = (ListView)  refreshedInventoryActivity.findViewById(R.id.displayedTrinkets);
+        ArrayList<Trinket> refreshedTrinkets = this.getDisplayedItems(refreshedInventory);
+        assertTrue(refreshedTrinkets.contains(trinket1));
+
+        instrumentation.removeMonitor(refreshedInventoryMonitor);
+        instrumentation.removeMonitor(displayFriendsMonitor);
+        instrumentation.removeMonitor(userProfileMonitor);
+
+        Inventory inventory = Searcher.searchInventoryByDescription(borrower, "garnet");
         Iterator iterator = inventory.iterator();
         while (iterator.hasNext()) {
             assertTrue(iterator.next() == trinket1);
         }
     }
 
-    public void testSharedtrinketsAreSearchableByFriends() {
+    public void testSharedTrinketsAreSearchableByFriends() {
         User user1 = new User();
 
         User user2 = new User();
