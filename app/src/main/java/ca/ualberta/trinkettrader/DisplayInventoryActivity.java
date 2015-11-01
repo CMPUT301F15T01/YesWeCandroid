@@ -28,6 +28,8 @@ public class DisplayInventoryActivity extends AppCompatActivity {
     private ListView inventoryItemsList;
     private Button deleteAll;
 
+    private InventoryController inventoryController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,8 @@ public class DisplayInventoryActivity extends AppCompatActivity {
                 //TODO: open the DisplayItemDetails for the Trinket (list item) that was clicked
             }
         });
+
+        inventoryController = new InventoryController(this);
     }
 
     public Button getAddItemButton() {
@@ -55,5 +59,9 @@ public class DisplayInventoryActivity extends AppCompatActivity {
 
     public Button getDeleteAll() {
         return deleteAll;
+    }
+
+    public void clickAdd() {
+        inventoryController.onAddItemClick();
     }
 }

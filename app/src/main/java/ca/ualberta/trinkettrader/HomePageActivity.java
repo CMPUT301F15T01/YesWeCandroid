@@ -25,10 +25,14 @@ public class HomePageActivity extends AppCompatActivity {
     private Button profileButton;
     private Button tradeButton;
 
+    private HomePageController controller;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        controller = new HomePageController(this);
     }
 
     public Button getFriendsButton() {
@@ -45,5 +49,9 @@ public class HomePageActivity extends AppCompatActivity {
 
     public Button getTradeButton() {
         return tradeButton;
+    }
+
+    public void inventoryClick() {
+        controller.onInventoryClick();
     }
 }
