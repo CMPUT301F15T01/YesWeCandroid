@@ -10,13 +10,13 @@
     tools:context="ca.ualberta.trinkettrader.AddOrEditItemActivity">
 
     <Spinner
-        android:id="@+id/category_spinner"
+        android:id="@+id/accessibility_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/accessibility_options"
         android:prompt="@string/accessibility_prompt"
-        android:layout_marginTop="65dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="65dp" />
 
 </RelativeLayout>

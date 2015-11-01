@@ -21,11 +21,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Filter"
-        android:layout_below="@+id/category_spinner"
+        android:layout_below="@+id/accessibility_spinner"
         android:layout_centerHorizontal="true" />
 
     <Spinner
-        android:id="@+id/category_spinner"
+        android:id="@+id/accessibility_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/spinner_categories"
@@ -45,7 +45,7 @@
         android:textIsSelectable="true"
         android:inputType="text"
         android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/category_spinner" />
+        android:layout_alignEnd="@+id/accessibility_spinner" />
 
     <ListView
         android:layout_width="wrap_content"
