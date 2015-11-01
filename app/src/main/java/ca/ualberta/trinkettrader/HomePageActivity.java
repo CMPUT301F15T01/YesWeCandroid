@@ -16,6 +16,7 @@ package ca.ualberta.trinkettrader;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 
 public class HomePageActivity extends AppCompatActivity {
@@ -33,6 +34,8 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
         controller = new HomePageController(this);
+
+        inventoryButton = (Button) findViewById(R.id.inventoryButton);
     }
 
     public Button getFriendsButton() {
@@ -51,7 +54,7 @@ public class HomePageActivity extends AppCompatActivity {
         return tradeButton;
     }
 
-    public void inventoryClick() {
+    public void inventoryClick(View view) {
         controller.onInventoryClick();
     }
 }

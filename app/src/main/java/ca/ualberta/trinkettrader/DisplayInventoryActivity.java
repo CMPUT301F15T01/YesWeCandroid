@@ -35,13 +35,13 @@ public class DisplayInventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_inventory);
 
-        inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: open the DisplayItemDetails for the Trinket (list item) that was clicked
             }
         });
-
+        */
         inventoryController = new InventoryController(this);
     }
 
