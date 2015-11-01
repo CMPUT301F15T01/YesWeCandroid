@@ -29,6 +29,8 @@ public class Trinket {
     private String quality;
 
     public Trinket() {
+        quantity = 1;
+        accessibility = "public";
     }
 
     public String getAccessibility() {

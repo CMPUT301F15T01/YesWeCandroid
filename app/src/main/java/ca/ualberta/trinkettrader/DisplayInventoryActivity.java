@@ -16,17 +16,29 @@ package ca.ualberta.trinkettrader;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 
 public class DisplayInventoryActivity extends AppCompatActivity {
 
     private Button addItemButton;
     private Inventory inventory;
+    private ListView inventoryItemsList;
+    private Button deleteAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_inventory);
+
+        inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO: open the DisplayItemDetails for the Trinket (list item) that was clicked
+            }
+        });
     }
 
     public Button getAddItemButton() {
@@ -35,5 +47,13 @@ public class DisplayInventoryActivity extends AppCompatActivity {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public ListView getInventoryItemsList() {
+        return inventoryItemsList;
+    }
+
+    public Button getDeleteAll() {
+        return deleteAll;
     }
 }
