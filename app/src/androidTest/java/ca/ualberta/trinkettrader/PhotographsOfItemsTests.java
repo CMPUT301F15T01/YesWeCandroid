@@ -26,58 +26,125 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testAttachPhotograph(){
+        // Get the current activity
+        HomePageActivity homePageActivity = (HomePageActivity) getActivity();
 
+        /******** DisplayInventoryActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                            null, false);
 
+            // Start DisplayInventoryActivity
+            final Button inventoryButton = homePageActivity.getInventoryButton();
+            homePageActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    inventoryButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the new activity
+        DisplayInventoryActivity displayInventoryActivity = (DisplayInventoryActivity) getActivity();
+
+        /******** AddOrEditItemActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            final Button addItemButton = displayInventoryActivity.getAddItemButton();
+            homePageActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    addItemButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            AddOrEditItemActivity receiverActivity = (AddOrEditItemActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    AddOrEditItemActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the new activity
+        AddOrEditItemActivity addOrEditItemActivity = (AddOrEditItemActivity) getActivity();
+
+        /*
         Picture picture = new Picture("<path/to/photo>");
         Trinket trinket = new Trinket();
         trinket.attatchPhoto(photograph);
         assertTrue(trinket.photos.contains(photograph));
+        */
     }
 
     public void testViewPhotograph(){
-        /*This looks like it has to be an activity test...do all use cases have to be in
-        * 'model' tests when their functionality is better suited for the view? */
+        /*
+        // This looks like it has to be an activity test...do all use cases have to be in
+        // 'model' tests when their functionality is better suited for the view?
         Trinket profile = new Trinket();
         Photograph photo = profile.getPhotographs("1");
         assertTrue(photo.isVisible());
+        */
     }
 
     public void testConstrainPhotographSize(){
-        /**
-         * How do we validly test this? This use case is specific to a sysadmin.
-         * Should a user extend that?
-         */
+        /*
+        // How do we validly test this? This use case is specific to a sysadmin.
+        // Should a user extend that?
         Photograph photograph = new Photograph("<path/to/photo>");
-        /*How to check that photograph is within 65536? */
+        // How to check that photograph is within 65536?
         Trinket profile = new Trinket();
         trinket.attatchPhoto(photograph);
         assertTrue(trinket.photos.contains(photograph));
         assertTrue(photograph.getSize() <= 65536);
+        */
     }
 
     public void testDeletePhotoGraph(){
+        /*
         Photograph photograph = new Photograph("<path/to/photo>");
         Trinket trinket = new Trinket();
         trinket.attatchPhoto(photograph);
         assertTrue(trinket.photos.contains(photograph));
         trinket.deletePhoto(photograph);
         assertFalse(trinket.photos.contains(photograph));
+        */
     }
 
     public void testManuallyChoosePhotosToDownloadIfPhotoDownloadDisabled(){
-        /**
-         * This is another test that looks like it should be an activity test.
-         * Changes will be made once those tests are underway.
-          */
-
-     /*Assert that default photo download is disabled*/
+        /*
+        //This is another test that looks like it should be an activity test.
+        // Changes will be made once those tests are underway.
+        //  Assert that default photo download is disabled
         User user = new User();
         UserSettings settings = user.getUserSettings();
         assertFalse(settings.arePhotosDownloadable);
-
-        /*Select photos to download*/
-
-
+        // Select photos to download
+        */
     }
 
     public void testDisablePhotoDownload(){
@@ -117,7 +184,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Get the new activity
         DisplayUserProfileActivity displayUserProfileActivity = (DisplayUserProfileActivity) getActivity();
 
-
         /******** EditProfileActivity ********/
         {
             // Set up an ActivityMonitor
@@ -149,7 +215,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
         // Get the new activity
         EditProfileActivity editProfileActivity = (EditProfileActivity) getActivity();
-
 
         /******** Disable Photo Downloads ********/
         UserProfile userProfile = editProfileActivity.getUserProfile();
