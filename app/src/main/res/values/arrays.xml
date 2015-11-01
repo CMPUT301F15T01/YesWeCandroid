@@ -15,6 +15,12 @@
         <item>Tiara</item>
     </string-array>
 
+
+    <string name="accessibility_prompt">Set Accessibility</string>
+    <string-array name="accessibility_options">
+        <item>Public</item>
+        <item>Private</item>
+    </string-array>
     <string-array name="spinner_qualities">
         <item>Average</item>
         <item>Good</item>
