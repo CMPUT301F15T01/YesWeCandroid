@@ -43,8 +43,8 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
         /*Assert no internet connection*/
         //UserSettings state = new UserSettings();
         //assertFalse(state.hasActiveInternetConnection());
-        User user = new User();
-        User user1 = new User();
+        User user = LoggedInUser.getInstance();
+        User user1 = new Friend();
         Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user1.getInventory(), user1.getTradeManager());
 
 
@@ -65,7 +65,7 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
 
         /**
          * Another UI test ..therefore incomplete*/
-        User u = new User();
+        User u = LoggedInUser.getInstance();
         Inventory inventory = new Inventory();
         //u.addToPreviouslyViewedInventories(inventory);
         ArrayList<Inventory> viewed = new ArrayList<Inventory>();

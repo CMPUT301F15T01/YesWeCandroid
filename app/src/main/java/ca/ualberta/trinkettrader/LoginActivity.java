@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cancel = true;
         } else {
             User user = LoggedInUser.getInstance();
-            user.getUserProfile().setEmail(email);
+            user.getProfile().setEmail(email);
 
             // TODO Get user info from inet
             Intent intent = new Intent(this, HomePageActivity.class);

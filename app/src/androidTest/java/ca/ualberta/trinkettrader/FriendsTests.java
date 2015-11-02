@@ -241,7 +241,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
 
         Iterator<Friend> friendIterator = friendsActivity.getFriends().iterator();
         while (friendIterator.hasNext()) {
-            assertEquals(friendIterator.next().getName(), "test friend");
+            assertEquals(friendIterator.next().getProfile().getName(), "test friend");
         }
     }
     // Test method for adding a friend to your friends list
@@ -332,7 +332,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
 
         Iterator<Friend> friendIterator = friendsActivity.getFriends().iterator();
         while (friendIterator.hasNext()) {
-            assertEquals(friendIterator.next().getName(), "test friend");
+            assertEquals(friendIterator.next().getProfile().getName(), "test friend");
         }
 
         list = friendsActivity.getFriendsinFriendsList();
@@ -378,14 +378,14 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
 
     // Test method for checking if a user has a profile
     public void testHasProfile() {
-        User user = new User();
+        User user = LoggedInUser.getInstance();
         UserProfile userProfile = new UserProfile();
-        assertEquals(user.getUserProfile(), userProfile);
+        assertEquals(user.getProfile(), userProfile);
     }
 
     //test method for checking if a friend has a profile
     public void testFriendHasProfile(){
-        User user = new User();
+        User user = LoggedInUser.getInstance();
         FriendsList friendsList = new FriendsList();
         Friend friend = new Friend();
         friendsList.add(friend);
@@ -430,7 +430,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
 
     //Test method for checking if  user has a tracked friends list
     public void testHasTrackedFriendsList() {
-        User user = new User();
+        User user = LoggedInUser.getInstance();
         TrackedFriendsList trackedFriendsList = new TrackedFriendsList();
         assertEquals(user.getTrackedFriends(), trackedFriendsList);
     }
