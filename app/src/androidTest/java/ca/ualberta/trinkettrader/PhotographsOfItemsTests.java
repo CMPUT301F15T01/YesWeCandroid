@@ -331,6 +331,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
     public void testConstrainPhotographSize() {
         /******** Need to check that all the photos are under 65536 bytes ********/
+        assertNotNull(null);
     }
 
     public void testDeletePhotoGraph() {
@@ -649,6 +650,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         displayUserProfileActivity.finish();
 
         /******** Need to try and manually download a photo here ********/
+        assertNotNull(null);
     }
 
     public void testDisablePhotoDownload() {
@@ -742,5 +744,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         displayUserProfileActivity.finish();
 
         /******** Need to check here if the photos actually don't download ********/
+        assertNotNull(null);
     }
 }
