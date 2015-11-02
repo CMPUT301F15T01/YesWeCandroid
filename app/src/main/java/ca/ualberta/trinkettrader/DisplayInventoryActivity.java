@@ -21,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.List;
+
 public class DisplayInventoryActivity extends AppCompatActivity {
 
     private Button addItemButton;
@@ -42,7 +44,10 @@ public class DisplayInventoryActivity extends AppCompatActivity {
             }
         });
         */
-        inventoryController = new InventoryController(this);
+        this.inventoryController = new InventoryController(this);
+        this.inventory = new Inventory();
+        this.inventoryItemsList = (ListView) findViewById(R.id.displayedTrinkets);
+        this.addItemButton = (Button) findViewById(R.id.addItemButton);
     }
 
     public Button getAddItemButton() {
@@ -61,7 +66,7 @@ public class DisplayInventoryActivity extends AppCompatActivity {
         return deleteAll;
     }
 
-    public void clickAdd() {
+    public void clickAdd(View view) {
         inventoryController.onAddItemClick();
     }
 }
