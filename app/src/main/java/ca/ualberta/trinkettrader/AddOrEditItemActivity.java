@@ -33,7 +33,7 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     private Spinner itemCategory;
     private Spinner itemQuality;
 
-    AddOrEditItemController controller;
+    private AddOrEditItemController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -7,13 +7,25 @@ import android.app.Activity;
  */
 public class AddOrEditItemController {
 
-    Activity activity;
+    private AddOrEditItemActivity activity;
+    private Trinket trinket;
 
-    public AddOrEditItemController(Activity act) {
+    public AddOrEditItemController(AddOrEditItemActivity act) {
         this.activity = act;
     }
 
     public void onSaveClick() {
+        this.trinket = new Trinket();
+        if (this.activity.getAccessibility().isChecked()) {
+            this.trinket.setAccessibility("public");
+        } else {
+            this.trinket.setAccessibility("private");
+        }
+        this.trinket.setCategory(this.activity.getItemCategory().toString());
+        this.trinket.setDescription(this.activity.getItemDescription().getText().toString());
+        this.trinket.setName(this.activity.getItemName().getText().toString());
+        this.trinket.setQuantity(this.activity.getItemQuantity().getText().toString());
+        this.trinket.setQuality(this.activity.getItemQuality().toString());
 
     }
 }

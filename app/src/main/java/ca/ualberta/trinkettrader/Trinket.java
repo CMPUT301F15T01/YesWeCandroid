@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class Trinket {
 
     private ArrayList<Picture> pictures;
-    private Integer quantity;
+    private String quantity;
     private String accessibility;
     private String category;
     private String description;
@@ -29,7 +29,7 @@ public class Trinket {
     private String quality;
 
     public Trinket() {
-        quantity = 1;
+        quantity = "1";
         accessibility = "public";
     }
 
@@ -81,11 +81,11 @@ public class Trinket {
         this.quality = quality;
     }
 
-    public Integer getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 }
