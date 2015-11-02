@@ -16,9 +16,12 @@ package ca.ualberta.trinkettrader;
 
 public class Picture {
 
+    private Boolean isDownloaded;
+
     public Picture() {
     }
 
-    public void display() {
+    public Boolean getIsDownloaded() {
+        return isDownloaded;
     }
 }

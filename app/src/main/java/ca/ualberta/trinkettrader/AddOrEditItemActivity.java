@@ -24,13 +24,14 @@ import android.widget.Spinner;
 
 public class AddOrEditItemActivity extends AppCompatActivity {
 
+    private Button removeImageButton;
     private Button saveButton;
+    private CheckBox accessibility;
+    private EditText itemDescription;
     private EditText itemName;
+    private EditText itemQuantity;
     private Spinner itemCategory;
     private Spinner itemQuality;
-    private CheckBox accessibility;
-    private EditText itemQuantity;
-    private EditText itemDescription;
 
     AddOrEditItemController controller;
 
@@ -49,16 +50,12 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         this.saveButton = (Button) findViewById(R.id.saveItemButton);
     }
 
-    public Button getSaveButton() {
-        return saveButton;
+    public CheckBox getAccessibility() {
+        return accessibility;
     }
 
-    public EditText getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(EditText itemName) {
-        this.itemName = itemName;
+    public void setAccessibility(CheckBox accessibility) {
+        this.accessibility = accessibility;
     }
 
     public Spinner getItemCategory() {
@@ -69,31 +66,44 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         this.itemCategory = itemCategory;
     }
 
-    public Spinner getItemQuality() {
-        return itemQuality;
-    }
-
-    public void setItemQuality(Spinner quality) {
-        this.itemQuality = quality;
-    }
-
-    public void takePictureOfItem() {
-    }
-
-    public CheckBox getAccessibility() {
-        return accessibility;
-    }
-
-    public EditText getItemQuantity() {
-        return itemQuantity;
-    }
-
     public EditText getItemDescription() {
         return itemDescription;
     }
 
     public void setItemDescription(EditText itemDescription) {
         this.itemDescription = itemDescription;
+    }
+
+    public EditText getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(EditText itemName) {
+        this.itemName = itemName;
+    }
+
+    public Spinner getItemQuality() {
+        return itemQuality;
+    }
+
+    public void setItemQuality(Spinner itemQuality) {
+        this.itemQuality = itemQuality;
+    }
+
+    public EditText getItemQuantity() {
+        return itemQuantity;
+    }
+
+    public void setItemQuantity(EditText itemQuantity) {
+        this.itemQuantity = itemQuantity;
+    }
+
+    public Button getRemoveImageButton() {
+        return removeImageButton;
+    }
+
+    public Button getSaveButton() {
+        return saveButton;
     }
 
     public void saveClick(View view) {
