@@ -1,5 +1,8 @@
 package ca.ualberta.trinkettrader;
 
+import android.app.Activity;
+import android.content.Intent;
+
 /**
  * Created by Andrea McIntosh on 01/11/2015.
  */
@@ -9,8 +12,8 @@ public class AddOrEditItemController {
     private Trinket trinket;
     private User user = LoggedInUser.getInstance();
 
-    public AddOrEditItemController(AddOrEditItemActivity act) {
-        this.activity = act;
+    public AddOrEditItemController(AddOrEditItemActivity activity) {
+        this.activity = activity;
     }
 
     public void onSaveClick() {
@@ -26,5 +29,8 @@ public class AddOrEditItemController {
         this.trinket.setQuantity(this.activity.getItemQuantity().getText().toString());
         this.trinket.setQuality(this.activity.getItemQuality().toString());
         this.user.getInventory().add(this.trinket);
+
+        Intent intent = new Intent(activity, DisplayInventoryActivity.class);
+        activity.startActivity(intent);
     }
 }

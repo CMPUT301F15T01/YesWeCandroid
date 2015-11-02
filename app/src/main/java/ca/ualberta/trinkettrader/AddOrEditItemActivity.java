@@ -48,6 +48,7 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         this.itemQuantity = (EditText) findViewById(R.id.itemQuantityText);
         this.accessibility = (CheckBox) findViewById(R.id.accessibilityCheckbox);
         this.saveButton = (Button) findViewById(R.id.saveItemButton);
+        this.itemDescription = (EditText) findViewById(R.id.itemDescriptionText);
     }
 
     public CheckBox getAccessibility() {
