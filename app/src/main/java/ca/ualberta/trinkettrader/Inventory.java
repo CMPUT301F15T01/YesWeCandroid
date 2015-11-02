@@ -45,6 +45,7 @@ public class Inventory extends Observable implements Collection {
 
     @Override
     public void clear() {
+        trinkets.clear();
     }
 
     @Override
@@ -65,7 +66,7 @@ public class Inventory extends Observable implements Collection {
     @NonNull
     @Override
     public Iterator<Trinket> iterator() {
-        return null;
+        return trinkets.iterator();
     }
 
     @Override
@@ -91,7 +92,7 @@ public class Inventory extends Observable implements Collection {
     @NonNull
     @Override
     public Trinket[] toArray() {
-        return new Trinket[0];
+        return (Trinket[]) trinkets.toArray();
     }
 
     @NonNull

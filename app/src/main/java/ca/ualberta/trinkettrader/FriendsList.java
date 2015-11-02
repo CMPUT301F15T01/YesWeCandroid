@@ -27,71 +27,70 @@ public class FriendsList implements Collection {
     public FriendsList() {
     }
 
-    public FriendsList(ArrayList<Friend> friends) {
-        this.friends = friends;
+    public FriendsList(ArrayList<Friend> friendss) {
+        this.friends = friendss;
     }
 
     @Override
     public boolean add(Object object) {
-        return false;
+        return friends.add((Friend) object);
     }
 
     @Override
     public boolean addAll(Collection collection) {
-        return false;
+        return friends.addAll(collection);
     }
 
     @Override
     public void clear() {
+        friends.clear();
     }
 
     @Override
     public boolean contains(Object object) {
-        return false;
+        return friends.contains((object));
     }
 
     @Override
     public boolean containsAll(Collection collection) {
-        return false;
+        return friends.containsAll(collection);
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return friends.isEmpty();
     }
 
     @NonNull
     @Override
     public Iterator<Friend> iterator() {
-        return null;
+        return friends.iterator();
     }
 
     @Override
     public boolean remove(Object object) {
-        return false;
+        return friends.remove(object);
     }
 
     @Override
     public boolean removeAll(Collection collection) {
-        return false;
+        return friends.removeAll(collection);
     }
-
-    public void deleteFriend(String name) {}
 
     @Override
     public boolean retainAll(Collection collection) {
-        return false;
+        return friends.retainAll(collection);
     }
 
     @Override
     public int size() {
-        return 0;
+        return friends.size();
     }
 
     @NonNull
     @Override
     public Friend[] toArray() {
-        return new Friend[0];
+        return (Friend[]) friends.toArray();
     }
 
     @NonNull
