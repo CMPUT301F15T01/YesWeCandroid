@@ -4,15 +4,21 @@
     <string name="title_activity_add_or_edit_item">AddOrEditItemActivity</string>
     <string name="title_activity_display_friends">DisplayFriendsActivity</string>
     <string name="title_activity_display_inventory">Inventory</string>
+    <string name="title_activity_display_trades">DisplayTradesActivity</string>
     <string name="title_activity_display_user_profile">DisplayUserProfileActivity</string>
     <string name="title_activity_edit_friends_list">EditFriendsListActivity</string>
     <string name="title_activity_edit_profile">ItemDetailsActivity</string>
-    <string name="title_activity_home_page">HomePageActivity</string>
+    <string name="title_activity_home_page">Home</string>
     <string name="title_activity_item_details">ItemDetailsActivity</string>
 
     <string name="accessibility_prompt">Set Accessibility</string>
     <string name="category_prompt">Filter by Category</string>
     <string name="item_quantity_default">1</string>
+
+    <string name="activity_home_page_profile_button" >My Profile</string>
+    <string name="activity_home_page_inventory_button" >Inventory</string>
+    <string name="activity_home_page_friends_button" >Friends</string>
+    <string name="activity_home_page_trades_button" >Trades</string>
 
     <!-- Strings related to login -->
     <string name="action_sign_in">Sign in or register</string>

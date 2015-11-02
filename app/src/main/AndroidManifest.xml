@@ -23,7 +23,11 @@
         </activity>
         <activity
             android:name=".DisplayInventoryActivity"
-            android:label="@string/title_activity_display_inventory" >
+            android:label="@string/title_activity_display_inventory"
+            android:parentActivityName=".HomePageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.trinkettrader.HomePageActivity" />
         </activity>
         <activity
             android:name=".HomePageActivity"
@@ -39,11 +43,19 @@
         </activity>
         <activity
             android:name=".DisplayFriendsActivity"
-            android:label="@string/title_activity_display_friends" >
+            android:label="@string/title_activity_display_friends"
+            android:parentActivityName=".HomePageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.trinkettrader.HomePageActivity" />
         </activity>
         <activity
             android:name=".DisplayUserProfileActivity"
-            android:label="@string/title_activity_display_user_profile" >
+            android:label="@string/title_activity_display_user_profile"
+            android:parentActivityName=".HomePageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.trinkettrader.HomePageActivity" />
         </activity>
         <activity
             android:name=".EditProfileActivity"
@@ -56,6 +68,14 @@
         <activity
             android:name=".EditFriendsListActivity"
             android:label="@string/title_activity_edit_friends_list" >
+        </activity>
+        <activity
+            android:name=".DisplayTradesActivity"
+            android:label="@string/title_activity_display_trades"
+            android:parentActivityName=".HomePageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.trinkettrader.HomePageActivity" />
         </activity>
     </application>
 
