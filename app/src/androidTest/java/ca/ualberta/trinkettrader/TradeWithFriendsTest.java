@@ -55,10 +55,11 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertTrue(user.getNotificationManager().hasNotification());
         user.getTradeManager().declineTrade(trade);
         // Send null instead of a counter trade
-        trade.sendCounterTrade(null);
+        // trade.sendCounterTrade(null); TODO
         assertTrue(trade.getStatus().equals("declined"));
         // don't think we need the line below?
         assertTrue(user.getTradeManager().getTradeArchiver().getPastTrade(trade).getStatus().equals("rejected"));
+        assertNotNull(null);
     }
 
     // Test rejecting a trade with sending a counter offer
@@ -85,7 +86,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         Trinket item = new Trinket();
         item.setName("necklace");
         Friend friend = new Friend(user1);
-        assertTrue(friend.inventory.hasItem(item));
+        //assertTrue(friend.inventory.hasItem(item)); TODO
+        assertNotNull(null);
     }
 
     //check that the proposed trade shows up in the users current trades
