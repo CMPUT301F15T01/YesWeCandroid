@@ -5,9 +5,19 @@
     <string name="title_activity_display_friends">DisplayFriendsActivity</string>
     <string name="title_activity_display_inventory">Inventory</string>
     <string name="title_activity_display_user_profile">DisplayUserProfileActivity</string>
+    <string name="title_activity_edit_friends_list">EditFriendsListActivity</string>
     <string name="title_activity_edit_profile">ItemDetailsActivity</string>
     <string name="title_activity_home_page">HomePageActivity</string>
     <string name="title_activity_item_details">ItemDetailsActivity</string>
-    <string name="title_activity_addor_remove_friend">AddorRemoveFriendActivity</string>
-    <string name="title_activity_edit_friends_list">EditFriendsListActivity</string>
+
+    <string name="accessibility_prompt">Set Accessibility</string>
+    <string name="category_prompt">Filter by Category</string>
+
+    <!-- Strings related to login -->
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+    <string name="prompt_email">Email</string>
 </resources>

@@ -19,7 +19,7 @@ import android.test.ActivityInstrumentationTestCase2;
 public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
 
     public TradeWithFriendsTest() {
-        super(MainActivity.class);
+        super(HomePageActivity.class);
     }
 
     // Test method to see if user has a notification
