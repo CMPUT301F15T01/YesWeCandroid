@@ -15,7 +15,6 @@
 package ca.ualberta.trinkettrader;
 
 import android.test.ActivityInstrumentationTestCase2;
-
 import java.util.ArrayList;
 
 public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
