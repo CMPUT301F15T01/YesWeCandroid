@@ -17,15 +17,14 @@ package ca.ualberta.trinkettrader;
 public class Friend {
 
     private Boolean isTracked;
-    private User user;
+    //private User user;
+    private String name;
 
-    public Friend(User user) {
-        this.user = user;
-    }
+    public Friend() {}
 
-    public Friend(Boolean isTracked, User user) {
+    public Friend(Boolean isTracked) {
         this.isTracked = isTracked;
-        this.user = user;
+        //this.user = user;s
     }
 
     public Boolean getIsTracked() {
@@ -36,7 +35,9 @@ public class Friend {
         this.isTracked = isTracked;
     }
 
-    public User getUser() {
-        return user;
-    }
+    public String getName() {return name;}
+
+    //public User getUser() {
+       // return user;
+   // }
 }

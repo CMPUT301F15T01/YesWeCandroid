@@ -9,4 +9,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_item_details">ItemDetailsActivity</string>
+    <string name="title_activity_addor_remove_friend">AddorRemoveFriendActivity</string>
+    <string name="title_activity_edit_friends_list">EditFriendsListActivity</string>
 </resources>
