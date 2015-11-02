@@ -76,6 +76,8 @@ public class FriendsList implements Collection {
         return false;
     }
 
+    public void deleteFriend(String name) {}
+
     @Override
     public boolean retainAll(Collection collection) {
         return false;

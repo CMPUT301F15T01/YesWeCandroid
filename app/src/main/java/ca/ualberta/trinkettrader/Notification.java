@@ -14,18 +14,15 @@
 
 package ca.ualberta.trinkettrader;
 
-public class UserSettings {
 
-    private Boolean arePhotosDownloadable;
+public class Notification {
 
-    public UserSettings() {
+    private String message;
+    private String type;
+
+    public Notification(){
+
     }
 
-    public Boolean getArePhotosDownloadable() {
-        return arePhotosDownloadable;
-    }
 
-    public void setArePhotosDownloadable(Boolean arePhotosDownloadable) {
-        this.arePhotosDownloadable = arePhotosDownloadable;
-    }
 }

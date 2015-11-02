@@ -380,8 +380,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
     public void testHasProfile() {
         User user = new User();
         UserProfile userProfile = new UserProfile();
-        user.setProfile(userProfile);
-        assertEquals(user.getProfile(), userProfile);
+        assertEquals(user.getUserProfile(), userProfile);
     }
 
     //test method for checking if a friend has a profile

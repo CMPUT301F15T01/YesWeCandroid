@@ -14,5 +14,26 @@
 
 package ca.ualberta.trinkettrader;
 
-public class UserCommunicationsManager {
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ToggleButton;
+
+public class EditProfileActivity extends AppCompatActivity {
+
+    private ToggleButton arePhotosDownloadableButton;
+    private UserProfile userProfile;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_edit_profile);
+    }
+
+    public ToggleButton getArePhotosDownloadableButton() {
+        return arePhotosDownloadableButton;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
 }

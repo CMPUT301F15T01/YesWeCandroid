@@ -22,7 +22,7 @@ public class User {
     private TrackedFriendsList trackedFriends;
     private TradeManager tradeManager;
     private UserProfile profile;
-    private UserSettings userSettings;
+
 
     public User() {
     }
@@ -51,11 +51,11 @@ public class User {
         this.notificationManager = notificationManager;
     }
 
-    public UserProfile getProfile() {
+    public UserProfile getUserProfile() {
         return profile;
     }
 
-    public void setProfile(UserProfile profile) {
+    public void setUserProfile(UserProfile profile) {
         this.profile = profile;
     }
 
@@ -75,11 +75,6 @@ public class User {
         this.tradeManager = tradeManager;
     }
 
-    public UserSettings getUserSettings() {
-        return userSettings;
-    }
-
-    public void setUserSettings(UserSettings userSettings) {
-        this.userSettings = userSettings;
-    }
 }
+
+

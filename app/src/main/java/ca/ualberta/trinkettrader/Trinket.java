@@ -20,8 +20,8 @@ import java.util.ArrayList;
 
 public class Trinket {
 
-    private ArrayList<Photo> photos;
-    private Integer quantity;
+    private ArrayList<Picture> pictures;
+    private String quantity;
     private String accessibility;
     private String category;
     private String description;
@@ -29,7 +29,7 @@ public class Trinket {
     private String quality;
 
     public Trinket() {
-        quantity = 1;
+        quantity = "1";
         accessibility = "public";
     }
 
@@ -65,12 +65,12 @@ public class Trinket {
         this.name = name;
     }
 
-    public ArrayList<Photo> getPhotos() {
-        return photos;
+    public ArrayList<Picture> getPictures() {
+        return pictures;
     }
 
-    public void setPhotos(ArrayList<Photo> photos) {
-        this.photos = photos;
+    public void setPictures(ArrayList<Picture> pictures) {
+        this.pictures = pictures;
     }
 
     public String getQuality() {
@@ -81,11 +81,11 @@ public class Trinket {
         this.quality = quality;
     }
 
-    public Integer getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 }

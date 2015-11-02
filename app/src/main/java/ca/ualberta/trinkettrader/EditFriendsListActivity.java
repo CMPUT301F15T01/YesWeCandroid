@@ -47,4 +47,5 @@ public class EditFriendsListActivity extends ActionBarActivity {
         return saveButton;
     }
     public Button getDeleteButton() {return deleteButton;}
+
 }

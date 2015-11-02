@@ -21,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.List;
+
 public class DisplayInventoryActivity extends AppCompatActivity {
 
     private Button addItemButton;
@@ -28,17 +30,24 @@ public class DisplayInventoryActivity extends AppCompatActivity {
     private ListView inventoryItemsList;
     private Button deleteAll;
 
+    private InventoryController inventoryController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_inventory);
 
-        inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: open the DisplayItemDetails for the Trinket (list item) that was clicked
             }
         });
+        */
+        this.inventoryController = new InventoryController(this);
+        this.inventory = new Inventory();
+        this.inventoryItemsList = (ListView) findViewById(R.id.displayedTrinkets);
+        this.addItemButton = (Button) findViewById(R.id.addItemButton);
     }
 
     public Button getAddItemButton() {
@@ -55,5 +64,9 @@ public class DisplayInventoryActivity extends AppCompatActivity {
 
     public Button getDeleteAll() {
         return deleteAll;
+    }
+
+    public void clickAdd(View view) {
+        inventoryController.onAddItemClick();
     }
 }

@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader;
 
 import android.test.ActivityInstrumentationTestCase2;
+import java.util.ArrayList;
 
 public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
 
@@ -25,12 +26,13 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
     public void testAddInventoryOffline(){
 
         Inventory inventory =  new Inventory();
-        UserSettings state = new UserSettings();
-        assertTrue(state.hasActiveInternetConnection());
+        //UserSettings state = new UserSettings();
+        //assertTrue(state.hasActiveInternetConnection());
         Trinket a = new Trinket();
         inventory.add(a);
-        assertFalse(state.isOffline());
-        assertTrue(getDataBaseOFInvetory.contains(a));
+        //assertFalse(state.isOffline());
+        //assertTrue(getDataBaseOFInvetory.contains(a));
+        assertNotNull(null);
     }
 
     public void testMakeTradeOffline(){
@@ -39,21 +41,24 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
          * Is there a way to turn off internet connection in unit tests?
          */
         /*Assert no internet connection*/
-        UserSettings state = new UserSettings();
-        assertFalse(state.hasActiveInternetConnection());
-        Trade a = new Trade();
+        //UserSettings state = new UserSettings();
+        //assertFalse(state.hasActiveInternetConnection());
+        User user = new User();
+        User user1 = new User();
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user1.getInventory(), user1.getTradeManager());
+
 
         /*Assert internet connection*/
-        assertTrue(state.hasActiveInternetConnection());
+        //assertTrue(state.hasActiveInternetConnection());
 
         /*Push Data*/
         /**
          * We have to discuss what all the communication managers will do.
          */
-        CommunicationsManager manager = new TradeCommunicationsManager();
-        manager.pushData();
-        assertTrue(getDataBaseOfTrades.hasItem(a));
-
+        TradeCommunicationsManager manager = new TradeCommunicationsManager();
+        //manager.pushData();
+        //assertTrue(getDataBaseOfTrades.hasItem(a));
+        assertNotNull(null);
     }
 
     public void testViewPreviouslyViewedInventories(){
@@ -62,10 +67,11 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
          * Another UI test ..therefore incomplete*/
         User u = new User();
         Inventory inventory = new Inventory();
-        u.addToPreviouslyViewedInventories(inventory);
+        //u.addToPreviouslyViewedInventories(inventory);
         ArrayList<Inventory> viewed = new ArrayList<Inventory>();
-        displayInventory(inventory);
+        //displayInventory(inventory);
         assertTrue(viewed.contains(inventory));
+        assertNotNull(null);
     }
 }
 

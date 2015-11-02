@@ -36,6 +36,9 @@
             android:name=".DisplayUserProfileActivity"
             android:label="@string/title_activity_display_user_profile" >
         </activity>
+        <activity android:name=".EditProfileActivity"
+                  android:label="@string/title_activity_edit_profile" >
+        </activity>
         <activity
             android:name=".ItemDetailsActivity"
             android:label="@string/title_activity_item_details" >

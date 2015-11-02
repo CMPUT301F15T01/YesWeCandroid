@@ -16,11 +16,22 @@ package ca.ualberta.trinkettrader;
 
 public class UserProfile {
 
+    private Boolean arePhotosDownloadable;
     private ContactInfo contactInfo;
     private String city;
     private String name;
+    private String postalCode;
+
 
     public UserProfile() {
+    }
+
+    public Boolean getArePhotosDownloadable() {
+        return arePhotosDownloadable;
+    }
+
+    public void setArePhotosDownloadable(Boolean arePhotosDownloadable) {
+        this.arePhotosDownloadable = arePhotosDownloadable;
     }
 
     public String getCity() {
@@ -47,5 +58,9 @@ public class UserProfile {
         this.name = name;
     }
 
-    public void deleteFriend(String name) {}
+    public String getPostalCode() { return postalCode;}
+
+    public void setPostalCode(String postalCode) {this.postalCode = postalCode;
+    }
+
 }

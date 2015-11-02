@@ -14,15 +14,14 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+public class Picture {
 
-public class MainActivity extends AppCompatActivity {
+    private Boolean isDownloaded;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public Picture() {
+    }
+
+    public Boolean getIsDownloaded() {
+        return isDownloaded;
     }
 }
