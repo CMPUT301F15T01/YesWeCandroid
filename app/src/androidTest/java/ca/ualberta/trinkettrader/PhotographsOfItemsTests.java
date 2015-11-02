@@ -330,16 +330,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testConstrainPhotographSize() {
-        /*
-        // How do we validly test this? This use case is specific to a sysadmin.
-        // Should a user extend that?
-        Photograph photograph = new Photograph("<path/to/photo>");
-        // How to check that photograph is within 65536?
-        Trinket profile = new Trinket();
-        trinket.attatchPhoto(photograph);
-        assertTrue(trinket.photos.contains(photograph));
-        assertTrue(photograph.getSize() <= 65536);
-        */
+        /******** Need to check that all the photos are under 65536 bytes ********/
     }
 
     public void testDeletePhotoGraph() {
@@ -536,33 +527,30 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         AddOrEditItemActivity removeItemPictureActivity = (AddOrEditItemActivity) getActivity();
 
 
-        /******** TestDeleteImage ********/
-        {
-            // Delete the image
-            final Button removeImageButton = removeItemPictureActivity.getRemoveImageButton();
-            removeItemPictureActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    removeImageButton.performClick();
-                }
-            });
-            getInstrumentation().waitForIdleSync();
-
-            // Save the item
-            final Button saveItemButton = addOrEditItemActivity.getSaveButton();
-            addOrEditItemActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    saveItemButton.performClick();
-                }
-            });
-            getInstrumentation().waitForIdleSync();
-            itemDetailsActivity.finish();
-
-            // Make sure the item does not have an image
-            Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
-            while (trinketIterator.hasNext()) {
-                ArrayList<Picture> pictures = trinketIterator.next().getPictures();
-                assertEquals(trinketIterator.next().getPictures().size(), 0);
+        // Delete the image
+        final Button removeImageButton = removeItemPictureActivity.getRemoveImageButton();
+        removeItemPictureActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                removeImageButton.performClick();
             }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Save the item
+        final Button removeItemPictureSaveItemButton = removeItemPictureActivity.getSaveButton();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                removeItemPictureSaveItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+        itemDetailsActivity.finish();
+
+        // Make sure the item does not have an image
+        Iterator<Trinket> noPicturesTrinketIterator = displayInventoryActivity.getInventory().iterator();
+        while (noPicturesTrinketIterator.hasNext()) {
+            ArrayList<Picture> pictures = noPicturesTrinketIterator.next().getPictures();
+            assertEquals(noPicturesTrinketIterator.next().getPictures().size(), 0);
         }
 
         // Close the activities
