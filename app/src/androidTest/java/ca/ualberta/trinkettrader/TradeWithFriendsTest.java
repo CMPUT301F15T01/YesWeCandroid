@@ -85,7 +85,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user1.getInventory(), user1.getTradeManager());
         Trinket item = new Trinket();
         item.setName("necklace");
-        Friend friend = new Friend(user1);
+        Friend friend = new Friend(Boolean.TRUE);
         //assertTrue(friend.inventory.hasItem(item)); TODO
         assertNotNull(null);
     }
