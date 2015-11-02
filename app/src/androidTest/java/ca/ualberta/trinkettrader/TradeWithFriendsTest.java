@@ -21,7 +21,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     public TradeWithFriendsTest() {
         super(MainActivity.class);
     }
-
+    // TODO I think that all of the Users invloved in trades have to be made friends.
+    // TODO ask about how to incorporate FriendsListController
     // Test method to see if user has a notification
     public void testHasNotification() {
         User user = new User();
