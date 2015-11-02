@@ -14,5 +14,15 @@
 
 package ca.ualberta.trinkettrader;
 
-public class UserCommunicationsManager {
+
+public class Notification {
+
+    private String message;
+    private String type;
+
+    public Notification(){
+
+    }
+
+
 }

@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader;
 
 import android.test.ActivityInstrumentationTestCase2;
+import java.util.ArrayList;
 
 public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
 
@@ -41,7 +42,10 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
         /*Assert no internet connection*/
         UserSettings state = new UserSettings();
         assertFalse(state.hasActiveInternetConnection());
-        Trade a = new Trade();
+        User user = new User();
+        User user1 = new User();
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user1.getInventory(), user1.getTradeManager());
+
 
         /*Assert internet connection*/
         assertTrue(state.hasActiveInternetConnection());
@@ -50,7 +54,7 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
         /**
          * We have to discuss what all the communication managers will do.
          */
-        CommunicationsManager manager = new TradeCommunicationsManager();
+        TradeCommunicationsManager manager = new TradeCommunicationsManager();
         manager.pushData();
         assertTrue(getDataBaseOfTrades.hasItem(a));
 
