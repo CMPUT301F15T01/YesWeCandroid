@@ -6,9 +6,10 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="ca.ualberta.trinkettrader.DisplayUserProfileActivity">
 
-    <TextView android:text="" android:layout_width="wrap_content"
+    <TextView android:text="Photo Download: " android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:id="@+id/photo_download_setting"
+        android:phoneNumber="false" />
 
     <Button
         android:layout_width="wrap_content"
