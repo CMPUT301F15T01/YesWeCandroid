@@ -55,10 +55,11 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertTrue(user.getNotificationManager().hasNotification());
         user.getTradeManager().declineTrade(trade);
         // Send null instead of a counter trade
-        trade.sendCounterTrade(null);
+        // trade.sendCounterTrade(null); TODO
         assertTrue(trade.getStatus().equals("declined"));
         // don't think we need the line below?
         assertTrue(user.getTradeManager().getTradeArchiver().getPastTrade(trade).getStatus().equals("rejected"));
+        assertNotNull(null);
     }
 
     // Test rejecting a trade with sending a counter offer
@@ -85,7 +86,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         Trinket item = new Trinket();
         item.setName("necklace");
         Friend friend = new Friend(user1);
-        assertTrue(friend.inventory.hasItem(item));
+        //assertTrue(friend.inventory.hasItem(item)); TODO
+        assertNotNull(null);
     }
 
     //check that the proposed trade shows up in the users current trades
@@ -100,11 +102,11 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     //check that user can edit a current trade
     public void testEditTrade() {
         User user = new User();
-        Trade trade = new Trade();
-        trade.setNumberOfItems(1);
-        user.sendTradeProposal(user, trade);
-        user.trade.setNumberOfItems(2);
-        assertEquals(user.trade.getNumberOfItems() == 2);
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        trade.setNumberOfItems(1);  // TODO should this instead be a count of how many items included in the trade?
+        user.getTradeManager().proposeTrade(trade);
+        trade.setNumberOfItems(2);
+        assertEquals((Integer)2, trade.getNumberOfItems());
     }
 
     //check that user can delete a proposed trade

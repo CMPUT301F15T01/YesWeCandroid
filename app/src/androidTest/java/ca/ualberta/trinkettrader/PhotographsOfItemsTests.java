@@ -31,8 +31,13 @@ import java.util.Iterator;
 
 public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
-    public PhotographsOfItemsTests(Class activityClass) {
+    public PhotographsOfItemsTests(Class<HomePageActivity> activityClass) {
         super(activityClass);
+    }
+
+    // p e p; http://stackoverflow.com/questions/17600010/assertionfailederror-class-has-no-public-constructor; 2015-11-01
+    public PhotographsOfItemsTests() {
+        super(HomePageActivity.class);
     }
 
     public void testAttachPhotograph() {
@@ -141,7 +146,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        /** HERE BE DRAGONS **/
+        // TODO UI test the image capturing with the camera
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -271,7 +276,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        /** HERE BE DRAGONS **/
+        // TODO UI test the image capturing with the camera
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -330,16 +335,8 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testConstrainPhotographSize() {
-        /*
-        // How do we validly test this? This use case is specific to a sysadmin.
-        // Should a user extend that?
-        Photograph photograph = new Photograph("<path/to/photo>");
-        // How to check that photograph is within 65536?
-        Trinket profile = new Trinket();
-        trinket.attatchPhoto(photograph);
-        assertTrue(trinket.photos.contains(photograph));
-        assertTrue(photograph.getSize() <= 65536);
-        */
+        // TODO Need to check that all the photos are under 65536 bytes
+        assertNotNull(null);
     }
 
     public void testDeletePhotoGraph() {
@@ -448,7 +445,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        /** HERE BE DRAGONS **/
+        // TODO UI test the image capturing with the camera
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -536,33 +533,30 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         AddOrEditItemActivity removeItemPictureActivity = (AddOrEditItemActivity) getActivity();
 
 
-        /******** TestDeleteImage ********/
-        {
-            // Delete the image
-            final Button removeImageButton = removeItemPictureActivity.getRemoveImageButton();
-            removeItemPictureActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    removeImageButton.performClick();
-                }
-            });
-            getInstrumentation().waitForIdleSync();
-
-            // Save the item
-            final Button saveItemButton = addOrEditItemActivity.getSaveButton();
-            addOrEditItemActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    saveItemButton.performClick();
-                }
-            });
-            getInstrumentation().waitForIdleSync();
-            itemDetailsActivity.finish();
-
-            // Make sure the item does not have an image
-            Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
-            while (trinketIterator.hasNext()) {
-                ArrayList<Picture> pictures = trinketIterator.next().getPictures();
-                assertEquals(trinketIterator.next().getPictures().size(), 0);
+        // Delete the image
+        final Button removeImageButton = removeItemPictureActivity.getRemoveImageButton();
+        removeItemPictureActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                removeImageButton.performClick();
             }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Save the item
+        final Button removeItemPictureSaveItemButton = removeItemPictureActivity.getSaveButton();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                removeItemPictureSaveItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+        itemDetailsActivity.finish();
+
+        // Make sure the item does not have an image
+        Iterator<Trinket> noPicturesTrinketIterator = displayInventoryActivity.getInventory().iterator();
+        while (noPicturesTrinketIterator.hasNext()) {
+            ArrayList<Picture> pictures = noPicturesTrinketIterator.next().getPictures();
+            assertEquals(noPicturesTrinketIterator.next().getPictures().size(), 0);
         }
 
         // Close the activities
@@ -571,15 +565,97 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testManuallyChoosePhotosToDownloadIfPhotoDownloadDisabled() {
-        /*
-        //This is another test that looks like it should be an activity test.
-        // Changes will be made once those tests are underway.
-        //  Assert that default photo download is disabled
-        User user = new User();
-        UserSettings settings = user.getUserSettings();
-        assertFalse(settings.arePhotosDownloadable);
-        // Select photos to download
-        */
+        // Get the current activity
+        HomePageActivity homePageActivity = (HomePageActivity) getActivity();
+
+
+        /******** DisplayUserProfileActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(DisplayUserProfileActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            final Button profileButton = homePageActivity.getProfileButton();
+            homePageActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    profileButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayUserProfileActivity receiverActivity = (DisplayUserProfileActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayUserProfileActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the new activity
+        DisplayUserProfileActivity displayUserProfileActivity = (DisplayUserProfileActivity) getActivity();
+
+        /******** EditProfileActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(EditProfileActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            final Button editUserProfileButton = displayUserProfileActivity.getEditUserProfileButton();
+            homePageActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    editUserProfileButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            EditProfileActivity receiverActivity = (EditProfileActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    EditProfileActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the new activity
+        EditProfileActivity editProfileActivity = (EditProfileActivity) getActivity();
+
+
+        UserProfile userProfile = editProfileActivity.getUserProfile();
+        userProfile.setArePhotosDownloadable(Boolean.TRUE);
+        assertTrue(userProfile.getArePhotosDownloadable());
+
+        // Click the button
+        final ToggleButton arePhotosDownloadableButton = editProfileActivity.getArePhotosDownloadableButton();
+        assertTrue(arePhotosDownloadableButton.isChecked());
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                arePhotosDownloadableButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+        assertFalse(arePhotosDownloadableButton.isChecked());
+        assertFalse(userProfile.getArePhotosDownloadable());
+
+        // Return to main menu
+        editProfileActivity.finish();
+        displayUserProfileActivity.finish();
+
+        // TODO Need to try and manually download a photo here
+        assertNotNull(null);
     }
 
     public void testDisablePhotoDownload() {
@@ -651,7 +727,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Get the new activity
         EditProfileActivity editProfileActivity = (EditProfileActivity) getActivity();
 
-        /******** Disable Photo Downloads ********/
+
         UserProfile userProfile = editProfileActivity.getUserProfile();
         userProfile.setArePhotosDownloadable(Boolean.TRUE);
         assertTrue(userProfile.getArePhotosDownloadable());
@@ -671,5 +747,8 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Return to main menu
         editProfileActivity.finish();
         displayUserProfileActivity.finish();
+
+        // TODO Need to check here if the photos actually don't download
+        assertNotNull(null);
     }
 }
