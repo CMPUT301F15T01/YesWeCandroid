@@ -19,6 +19,7 @@ public class UserProfile {
     private Boolean arePhotosDownloadable;
     private ContactInfo contactInfo;
     private String city;
+    private String email;
     private String name;
     private String postalCode;
 
@@ -50,6 +51,14 @@ public class UserProfile {
         this.contactInfo = contactInfo;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getName() {
         return name;
     }
@@ -58,9 +67,11 @@ public class UserProfile {
         this.name = name;
     }
 
-    public String getPostalCode() { return postalCode;}
-
-    public void setPostalCode(String postalCode) {this.postalCode = postalCode;
+    public String getPostalCode() {
+        return postalCode;
     }
 
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
 }

@@ -23,8 +23,6 @@ import java.util.Observable;
 
 public class Inventory extends Observable implements Collection {
 
-    private ArrayList<String> categoriesList = new ArrayList<>();
-    private ArrayList<String> qualitiesList = new ArrayList<>();
     private ArrayList<Trinket> trinkets;
 
     public Inventory() {
@@ -33,21 +31,6 @@ public class Inventory extends Observable implements Collection {
 
     public Inventory(ArrayList<Trinket> trinkets) {
         this.trinkets = trinkets;
-
-        this.categoriesList.add("ring");
-        this.categoriesList.add("earrings");
-        this.categoriesList.add("bracelet");
-        this.categoriesList.add("necklace");
-        this.categoriesList.add("anklet");
-        this.categoriesList.add("belt");
-        this.categoriesList.add("pendant");
-        this.categoriesList.add("headband");
-        this.categoriesList.add("barrett");
-        this.categoriesList.add("tiara");
-
-        this.qualitiesList.add("Good");
-        this.qualitiesList.add("Average");
-        this.qualitiesList.add("Poor");
     }
 
     @Override
@@ -115,13 +98,5 @@ public class Inventory extends Observable implements Collection {
     @Override
     public Trinket[] toArray(Object[] array) {
         return new Trinket[0];
-    }
-
-    public ArrayList<String> getCategoriesList() {
-        return categoriesList;
-    }
-
-    public ArrayList<String> getQualitiesList() {
-        return qualitiesList;
     }
 }

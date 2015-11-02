@@ -13,11 +13,6 @@
         <item>Tiara</item>
     </string-array>
 
-    <string-array name="accessibility_options">
-        <item>Private</item>
-        <item>Public</item>
-    </string-array>
-
     <string-array name="spinner_qualities">
         <item>Average</item>
         <item>Good</item>
