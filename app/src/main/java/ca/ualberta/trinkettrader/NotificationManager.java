@@ -19,4 +19,8 @@ public class NotificationManager {
     public Boolean hasNotification(){
         return Boolean.TRUE;
     }
+
+    public void sendEmail(){
+
+    }
 }

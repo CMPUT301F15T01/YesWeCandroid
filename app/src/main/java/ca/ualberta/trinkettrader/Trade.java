@@ -22,6 +22,10 @@ public class Trade {
     private TradeManager receiver;
     private TradeManager sender;
 
+
+    private Integer numberOfItems;
+
+
     public Trade(Inventory offeredItems, TradeManager receiver, Inventory requestedItems, TradeManager sender) {
         this.offeredItems = offeredItems;
         this.receiver = receiver;
@@ -52,5 +56,11 @@ public class Trade {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getNumberOfItems() { return numberOfItems;
+    }
+
+    public void setNumberOfItems(Integer numberOfItems) { this.numberOfItems = numberOfItems;
     }
 }

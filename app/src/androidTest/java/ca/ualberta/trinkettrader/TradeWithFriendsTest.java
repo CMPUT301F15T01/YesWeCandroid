@@ -100,11 +100,11 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     //check that user can edit a current trade
     public void testEditTrade() {
         User user = new User();
-        Trade trade = new Trade();
-        trade.setNumberOfItems(1);
-        user.sendTradeProposal(user, trade);
-        user.trade.setNumberOfItems(2);
-        assertEquals(user.trade.getNumberOfItems() == 2);
+        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
+        trade.setNumberOfItems(1);  // TODO should this instead be a count of how many items included in the trade?
+        user.getTradeManager().proposeTrade(trade);
+        trade.setNumberOfItems(2);
+        assertEquals((Integer)2, trade.getNumberOfItems());
     }
 
     //check that user can delete a proposed trade
