@@ -141,7 +141,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        /** HERE BE DRAGONS **/
+        // TODO UI test the image capturing with the camera
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -271,7 +271,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        /** HERE BE DRAGONS **/
+        // TODO UI test the image capturing with the camera
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -330,7 +330,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testConstrainPhotographSize() {
-        /******** Need to check that all the photos are under 65536 bytes ********/
+        // TODO Need to check that all the photos are under 65536 bytes
         assertNotNull(null);
     }
 
@@ -440,7 +440,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        /** HERE BE DRAGONS **/
+        // TODO UI test the image capturing with the camera
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -649,7 +649,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         editProfileActivity.finish();
         displayUserProfileActivity.finish();
 
-        /******** Need to try and manually download a photo here ********/
+        // TODO Need to try and manually download a photo here
         assertNotNull(null);
     }
 
@@ -743,7 +743,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         editProfileActivity.finish();
         displayUserProfileActivity.finish();
 
-        /******** Need to check here if the photos actually don't download ********/
+        // TODO Need to check here if the photos actually don't download
         assertNotNull(null);
     }
 }
