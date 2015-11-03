@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
@@ -31,13 +32,14 @@ import java.util.Iterator;
 
 public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
-    public PhotographsOfItemsTests(Class<HomePageActivity> activityClass) {
-        super(activityClass);
-    }
-
     // p e p; http://stackoverflow.com/questions/17600010/assertionfailederror-class-has-no-public-constructor; 2015-11-01
     public PhotographsOfItemsTests() {
         super(HomePageActivity.class);
+    }
+
+    public void testStart() throws Exception {
+        Activity activity = getActivity();
+        activity.finish();
     }
 
     public void testAttachPhotograph() {
@@ -335,8 +337,14 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testConstrainPhotographSize() {
+        // Get the current activity
+        HomePageActivity homePageActivity = (HomePageActivity) getActivity();
+
         // TODO Need to check that all the photos are under 65536 bytes
         assertNotNull(null);
+
+        // Close the activities
+        homePageActivity.finish();
     }
 
     public void testDeletePhotoGraph() {
@@ -656,6 +664,9 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
         // TODO Need to try and manually download a photo here
         assertNotNull(null);
+
+        // Close the activities
+        homePageActivity.finish();
     }
 
     public void testDisablePhotoDownload() {
@@ -750,5 +761,8 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
         // TODO Need to check here if the photos actually don't download
         assertNotNull(null);
+
+        // Close the activities
+        homePageActivity.finish();
     }
 }

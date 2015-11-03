@@ -52,9 +52,9 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        borrower = new User();
-        friend1 = new User();
-        friend2 = new User();
+        borrower = LoggedInUser.getInstance();
+        friend1 = new Friend();
+        friend2 = new Friend();
         friend1Inventory = new Inventory();
         trinket1 = new Trinket();
         trinket2 = new Trinket();

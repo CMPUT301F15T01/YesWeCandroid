@@ -18,4 +18,19 @@ public class HomePageController {
         Intent intent = new Intent(this.activity, DisplayInventoryActivity.class);
         activity.startActivity(intent);
     }
+
+    public void onFriendsClick() {
+        Intent intent = new Intent(this.activity, DisplayFriendsActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public void onTradesClick() {
+        Intent intent = new Intent(this.activity, DisplayTradesActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public void onProfileClick() {
+        Intent intent = new Intent(this.activity, DisplayUserProfileActivity.class);
+        activity.startActivity(intent);
+    }
 }

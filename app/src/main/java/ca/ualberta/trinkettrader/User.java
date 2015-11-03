@@ -14,17 +14,31 @@
 
 package ca.ualberta.trinkettrader;
 
-public class User {
+public abstract class User {
 
-    private FriendsList friendsList;
-    private Inventory inventory;
-    private NotificationManager notificationManager;
-    private TrackedFriendsList trackedFriends;
-    private TradeManager tradeManager;
-    private UserProfile profile;
-
+    protected FriendsList friendsList;
+    protected Inventory inventory;
+    protected NotificationManager notificationManager;
+    protected TrackedFriendsList trackedFriends;
+    protected TradeManager tradeManager;
+    protected UserProfile profile;
 
     public User() {
+        this.friendsList = new FriendsList();
+        this.inventory = new Inventory();
+        this.notificationManager = new NotificationManager();
+        this.trackedFriends = new TrackedFriendsList();
+        this.tradeManager = new TradeManager();
+        this.profile = new UserProfile();
+    }
+
+    public User(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager) {
+        this.friendsList = friendsList;
+        this.inventory = inventory;
+        this.notificationManager = notificationManager;
+        this.profile = profile;
+        this.trackedFriends = trackedFriends;
+        this.tradeManager = tradeManager;
     }
 
     public FriendsList getFriendsList() {
@@ -51,11 +65,11 @@ public class User {
         this.notificationManager = notificationManager;
     }
 
-    public UserProfile getUserProfile() {
+    public UserProfile getProfile() {
         return profile;
     }
 
-    public void setUserProfile(UserProfile profile) {
+    public void setProfile(UserProfile profile) {
         this.profile = profile;
     }
 
@@ -74,7 +88,4 @@ public class User {
     public void setTradeManager(TradeManager tradeManager) {
         this.tradeManager = tradeManager;
     }
-
 }
-
-

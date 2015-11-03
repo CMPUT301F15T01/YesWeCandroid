@@ -1,0 +1,2 @@
+# Force gradlew to have lf line endings.
+gradlew text eol=lf

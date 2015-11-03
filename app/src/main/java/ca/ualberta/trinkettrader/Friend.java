@@ -14,17 +14,18 @@
 
 package ca.ualberta.trinkettrader;
 
-public class Friend {
+public class Friend extends User {
 
     private Boolean isTracked;
-    //private User user;
-    private String name;
 
-    public Friend() {}
-
-    public Friend(Boolean isTracked) {
+    public Friend(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager, Boolean isTracked) {
+        super(friendsList, inventory, notificationManager, profile, trackedFriends, tradeManager);
         this.isTracked = isTracked;
-        //this.user = user;s
+    }
+
+    public Friend() {
+        super();
+        isTracked = Boolean.FALSE;
     }
 
     public Boolean getIsTracked() {
@@ -34,10 +35,4 @@ public class Friend {
     public void setIsTracked(Boolean isTracked) {
         this.isTracked = isTracked;
     }
-
-    public String getName() {return name;}
-
-    //public User getUser() {
-       // return user;
-   // }
 }
