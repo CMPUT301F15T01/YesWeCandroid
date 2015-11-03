@@ -15,21 +15,15 @@
 package ca.ualberta.trinkettrader;
 
 import android.app.Instrumentation;
-import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 
 public class FriendsTests extends ActivityInstrumentationTestCase2{
 
-    int clickCount;
     ListView list;
     Button addFriendButton;
     Button friendsButton;
@@ -49,8 +43,6 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
     public void testHasFriendsList() {
         HomePageActivity activity = (HomePageActivity) getActivity();
 
-        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
-        // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor friendActMon =
                 getInstrumentation().addMonitor(DisplayFriendsActivity.class.getName(),
                         null, false);
@@ -79,16 +71,6 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         assertNotNull(friendsActivity.getFriends());
     }
 
-
-
-    // Test method to test if an friends list has no friends in it
-    public void testNoFriends() {
-        FriendsList friendsList = new FriendsList();
-        assertTrue(friendsList.isEmpty());
-        Friend friend1 = new Friend();
-        friendsList.add(friend1);
-        assertFalse(friendsList.isEmpty());
-    }
 
     public void testNumberOfFriendsUI(){
         HomePageActivity activity = (HomePageActivity) getActivity();
@@ -394,6 +376,9 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         //assertTrue(friend.);
     }
 
+    //CAN THEY DO THIS?? IS THIS EVEN AN OPTION??
+
+    /*
     // Test method for checking if profile has contact information stored
     public void testContactInformation() {
         UserProfile userProfile = new UserProfile();
@@ -419,7 +404,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         assertTrue(myProfile.hasContactInfo);
         myProfile.removeContactInfo(contactInfo);
         assertFalse(myProfile.hasContactInfo);
-    }*/
+    }
 
     // Test method for checking if user removes city info from profile
     public void testRemoveCityInformation() {
@@ -428,7 +413,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         assertEquals(userProfile.getCity(), "Edmonton");
         userProfile.setCity(null);
         assertNull(userProfile.getCity());
-    }
+    }*/
 
     //Test method for checking if  user has a tracked friends list
     public void testHasTrackedFriendsList() {
@@ -446,6 +431,9 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         assertTrue(trackedFriendsList.contains(friend));
     }
 
+
+    //COVERED IN OTHER CASES
+    /*
     // Test method to test if the tracked friends list is empty
     public void testNoTrackedFriends() {
         TrackedFriendsList trackedFriendsList = new TrackedFriendsList();
@@ -453,8 +441,10 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         Friend friend = new Friend();
         trackedFriendsList.add(friend);
         assertFalse(trackedFriendsList.isEmpty());
-    }
+    }*/
 
+    //CHECK WITH JOSH IF THIS IS NECESSARY
+    /*
     // Test method for checking how many tracked friends a user has
     public void testNumberOfTrackedFriends() {
         TrackedFriendsList trackedFriendsList = new TrackedFriendsList();
@@ -474,7 +464,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         assertEquals(trackedFriendsList.size(), 3);
         trackedFriendsList.remove(friend2);
         assertEquals(trackedFriendsList.size(), 2);
-    }
+    }*/
 
     // Test method for adding a friend to your friends list
     public void testAddTrackedFriend() {
@@ -484,6 +474,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         assertTrue(trackedFriendsList.contains(friend));
     }
 
+    //NEVER SAID ANYTHING ABOUT NEEDING
+    /*
     // Test method for removing a friend from your friends list
     public void testRemoveTrackedFriend() {
         TrackedFriendsList trackedFriendsList = new TrackedFriendsList();
@@ -493,4 +485,5 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         trackedFriendsList.remove(friend);
         assertFalse(trackedFriendsList.contains(friend));
     }
+    */
 }
