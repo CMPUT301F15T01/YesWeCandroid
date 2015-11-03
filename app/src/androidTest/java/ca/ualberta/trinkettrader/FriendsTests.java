@@ -376,6 +376,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         assertFalse(friendsList.contains(friend));
     }
 
+
+    // need to implement the ui testing still for beyond this point
     // Test method for checking if a user has a profile
     public void testHasProfile() {
         User user = new User();
