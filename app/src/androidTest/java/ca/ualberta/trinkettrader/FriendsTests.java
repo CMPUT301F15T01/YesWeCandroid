@@ -30,6 +30,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
 
     public FriendsTests() {super(HomePageActivity.class);}
 
+    //COVERED IN TEST NUMBER OF FRIENDS
+    /*
     // Test if friends list has a friend in it
     public void testHasFriends() {
         FriendsList friendsList = new FriendsList();
@@ -38,9 +40,10 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         friendsList.add(friend);
         assertTrue(friendsList.contains(friend));
     }
+    */
 
     // Test if a user has an inventory
-    public void testHasFriendsList() {
+    public void testHasFriendsListUI() {
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         Instrumentation.ActivityMonitor friendActMon =
@@ -422,6 +425,41 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         assertEquals(user.getTrackedFriends(), trackedFriendsList);
     }
 
+
+    // THIS NEEDS TO BE DONE BUT CANT UNTIL I PUT IN THE BUTTONS ON WHATEVER ACTIVITY WE DECIDE
+    /*
+    // Test if a user has an inventory
+    public void testHasTrackedFriendsListUI() {
+        HomePageActivity activity = (HomePageActivity) getActivity();
+
+        Instrumentation.ActivityMonitor trackedFriendActMon =
+                getInstrumentation().addMonitor(DisplayTrackedFriendsActivity.class.getName(),
+                        null, false);
+
+        // Click the button
+        trackedFriendsButton = activity.getFriendsButton();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                friendsButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        final DisplayFriendsActivity friendsActivity = (DisplayFriendsActivity)
+                friendActMon.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", friendsActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, friendActMon.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayFriendsActivity.class, friendsActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(friendActMon);
+
+        assertNotNull(friendsActivity.getFriends());
+    }
+
     // Test if tracked friends list has a friend in it
     public void testHasTrackedFriends() {
         TrackedFriendsList trackedFriendsList = new TrackedFriendsList();
@@ -430,7 +468,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         trackedFriendsList.add(friend);
         assertTrue(trackedFriendsList.contains(friend));
     }
-
+    */
 
     //COVERED IN OTHER CASES
     /*

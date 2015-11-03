@@ -81,6 +81,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.trinkettrader.HomePageActivity" />
         </activity>
+        <activity
+            android:name=".DisplayTrackedFriendsActivity"
+            android:label="@string/title_activity_display_tracked_friends" >
+        </activity>
     </application>
 
 </manifest>
