@@ -22,7 +22,7 @@ import android.widget.Button;
 public class HomePageActivity extends AppCompatActivity {
 
     private Button friendsButton;
-    private Button trackedFriendsButton;
+    //private Button trackedFriendsButton;
     private Button inventoryButton;
     private Button profileButton;
     private Button tradeButton;
