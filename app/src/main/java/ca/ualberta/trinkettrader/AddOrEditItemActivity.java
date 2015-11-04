@@ -24,7 +24,8 @@ import android.widget.Spinner;
 
 public class AddOrEditItemActivity extends AppCompatActivity {
 
-    private Button removeImageButton;
+    private Button addPictureButton;
+    private Button removePictureButton;
     private Button saveButton;
     private CheckBox accessibility;
     private EditText itemDescription;
@@ -55,56 +56,48 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         return accessibility;
     }
 
-    public void setAccessibility(CheckBox accessibility) {
-        this.accessibility = accessibility;
+    public Button getAddPictureButton() {
+        return addPictureButton;
+    }
+
+    public AddOrEditItemController getController() {
+        return controller;
     }
 
     public Spinner getItemCategory() {
         return itemCategory;
     }
 
-    public void setItemCategory(Spinner itemCategory) {
-        this.itemCategory = itemCategory;
-    }
-
     public EditText getItemDescription() {
         return itemDescription;
-    }
-
-    public void setItemDescription(EditText itemDescription) {
-        this.itemDescription = itemDescription;
     }
 
     public EditText getItemName() {
         return itemName;
     }
 
-    public void setItemName(EditText itemName) {
-        this.itemName = itemName;
-    }
-
     public Spinner getItemQuality() {
         return itemQuality;
-    }
-
-    public void setItemQuality(Spinner itemQuality) {
-        this.itemQuality = itemQuality;
     }
 
     public EditText getItemQuantity() {
         return itemQuantity;
     }
 
-    public void setItemQuantity(EditText itemQuantity) {
-        this.itemQuantity = itemQuantity;
-    }
-
-    public Button getRemoveImageButton() {
-        return removeImageButton;
+    public Button getRemovePictureButton() {
+        return removePictureButton;
     }
 
     public Button getSaveButton() {
         return saveButton;
+    }
+
+    public void addPictureClick(View view) {
+        controller.onAddPictureClick();
+    }
+
+    public void removePictureClick(View view) {
+        controller.onRemovePictureClick();
     }
 
     public void saveClick(View view) {

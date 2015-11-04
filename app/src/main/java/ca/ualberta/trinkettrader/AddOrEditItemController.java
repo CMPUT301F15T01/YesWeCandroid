@@ -1,6 +1,5 @@
 package ca.ualberta.trinkettrader;
 
-import android.app.Activity;
 import android.content.Intent;
 
 /**
@@ -14,6 +13,12 @@ public class AddOrEditItemController {
 
     public AddOrEditItemController(AddOrEditItemActivity activity) {
         this.activity = activity;
+    }
+
+    public void onAddPictureClick() {
+    }
+
+    public void onRemovePictureClick() {
     }
 
     public void onSaveClick() {

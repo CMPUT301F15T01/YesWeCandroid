@@ -11,13 +11,21 @@
     <string name="title_activity_home_page">Home</string>
     <string name="title_activity_item_details">Trinket Details</string>
 
-    <!--Prompts -->
-    <string name="accessibility_prompt">Set Accessibility</string>
-    <string name="category_prompt">Filter by Category</string>
+    <!-- activity_display_inventory -->
+    <string name="activity_display_inventory_category_prompt">Filter by Category</string>
 
+    <!-- activity_add_or_edit_item -->
+    <string name="activity_add_or_edit_item_accessibility_prompt">Set Accessibility</string>
+    <string name="activity_add_or_edit_item_add_picture_button_text">Add Picture</string>
+    <string name="activity_add_or_edit_item_description_text">Description</string>
+    <string name="activity_add_or_edit_item_name_prompt">Name</string>
+    <string name="activity_add_or_edit_item_public_check_box">Public</string>
+    <string name="activity_add_or_edit_item_quantity_default">1</string>
+    <string name="activity_add_or_edit_item_quantity_text">Quantity:</string>
+    <string name="activity_add_or_edit_item_remove_picture_button_text">Remove Picture</string>
+    <string name="activity_add_or_edit_item_save_button_text">Save</string>
 
-    <string name="item_quantity_default">1</string>
-
+    <!-- activity_home_page -->
     <string name="activity_home_page_profile_button" >My Profile</string>
     <string name="activity_home_page_inventory_button" >Inventory</string>
     <string name="activity_home_page_friends_button" >Friends</string>
@@ -31,6 +39,4 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="prompt_email">Email</string>
     <string name="title_activity_display_tracked_friends">DisplayTrackedFriendsActivity</string>
-
-    <string name="hello_world">Hello world!</string>
 </resources>
