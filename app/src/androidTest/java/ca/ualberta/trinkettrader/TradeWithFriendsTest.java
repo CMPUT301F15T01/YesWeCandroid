@@ -23,6 +23,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     }
     // TODO I think that all of the Users invloved in trades have to be made friends.
     // TODO ask about how to incorporate FriendsListController
+
+    // TODO : User Case - Be notified of a proposed trade
     // Test method to see if user has a notification
     public void testHasNotification() {
         User user = LoggedInUser.getInstance();
@@ -33,6 +35,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertTrue(user.getNotificationManager().hasNotification());
     }
 
+    // TODO User Case: Accept a proposed trade
     // Test accepting trade
     public void testAcceptTrade() {
         User user = LoggedInUser.getInstance();
@@ -46,6 +49,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertTrue(user.getTradeManager().getTradeArchiver().getPastTrade(trade).getStatus().equals("Accepted"));
     }
 
+    // TODO User Case: Decline a proposed trade
     // Test rejecting a trade without sending a counter offer
     public void testDeclineTradeNoCounter() {
         User user = LoggedInUser.getInstance();
@@ -63,6 +67,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertNotNull(null);
     }
 
+    // TODO User Case: Propose a counter-trade
     // Test rejecting a trade with sending a counter offer
     public void testDeclineTradeWithCounter() {
         User user = LoggedInUser.getInstance();
@@ -92,8 +97,10 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertNotNull(null);
     }
 
+    // TODO User Case: owner/borrower can browse all current trades involving them
+    // TODO Make one for someone who is not owner proposing a trade?
     //check that the proposed trade shows up in the users current trades
-    public void testProposedTrade() {
+    public void testProposedTradeAppearsInCurrentTrades() {
         User user = LoggedInUser.getInstance();
         Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
         assertFalse(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
@@ -101,6 +108,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
     }
 
+    // TODO USer Case: Edit a proposed trade
     //check that user can edit a current trade
     public void testEditTrade() {
         User user = LoggedInUser.getInstance();
@@ -111,6 +119,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals((Integer)2, trade.getNumberOfItems());
     }
 
+    // TODO User Case: delete a proposed trade
     //check that user can delete a proposed trade
     public void testDeleteTrade() {
         User user = LoggedInUser.getInstance();
@@ -121,6 +130,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertFalse(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
     }
 
+    // TODO is this redundant?
     // Test that user has current trades they are involved in
     public void testCurrentTrades() {
         User user = LoggedInUser.getInstance();
@@ -131,6 +141,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
         assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
     }
+    // TODO User Case: owner/ borrower can browse all past trade involving them
+    // TODO: need to test different statuses? owner/borrower cases?
     // Test that user can browse past trades that they were involved in
     public void testPastTrades() {
         User user = LoggedInUser.getInstance();
@@ -146,5 +158,10 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertFalse(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
         assertTrue(user.getTradeManager().getTradeArchiver().hasPastTrade(trade));
         assertFalse(user.getTradeManager().getTradeArchiver().hasPastTrade(trade1));
+    }
+
+    // TODO: User Case : Notify parties of accepted trade - email; could possibly be bundled with acceptTrade test
+    public void testNotifyPartiesOfAcceptedTrade(){
+
     }
 }
