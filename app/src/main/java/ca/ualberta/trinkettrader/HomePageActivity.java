@@ -22,6 +22,7 @@ import android.widget.Button;
 public class HomePageActivity extends AppCompatActivity {
 
     private Button friendsButton;
+    //private Button trackedFriendsButton;
     private Button inventoryButton;
     private Button profileButton;
     private Button tradeButton;
@@ -35,7 +36,11 @@ public class HomePageActivity extends AppCompatActivity {
 
         controller = new HomePageController(this);
 
-        inventoryButton = (Button) findViewById(R.id.inventoryButton);
+        this.friendsButton = (Button) findViewById(R.id.friends_button);
+        //this.trackedFriendsButton = (Button) findViewById(R.id.) NEED TO FIGURE OUT WHERE THIS IS GOING TO GO
+        this.inventoryButton = (Button) findViewById(R.id.inventory_button);
+        this.profileButton = (Button) findViewById(R.id.profile_button);
+        this.tradeButton = (Button) findViewById(R.id.trades_button);
     }
 
     public Button getFriendsButton() {
@@ -56,5 +61,17 @@ public class HomePageActivity extends AppCompatActivity {
 
     public void inventoryClick(View view) {
         controller.onInventoryClick();
+    }
+
+    public void friendsClick(View view) {
+        controller.onFriendsClick();
+    }
+
+    public void tradesClick(View view) {
+        controller.onTradesClick();
+    }
+
+    public void profileClick(View view) {
+        controller.onProfileClick();
     }
 }
