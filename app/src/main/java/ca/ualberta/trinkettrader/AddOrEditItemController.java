@@ -1,6 +1,9 @@
 package ca.ualberta.trinkettrader;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 
 /**
  * Created by Andrea McIntosh on 01/11/2015.
