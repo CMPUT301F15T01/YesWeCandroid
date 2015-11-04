@@ -16,7 +16,6 @@ package ca.ualberta.trinkettrader;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -26,8 +25,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.io.IOException;
+
 public class AddOrEditItemActivity extends AppCompatActivity {
 
+    private AddOrEditItemController controller;
     private Button addPictureButton;
     private Button removePictureButton;
     private Button saveButton;
@@ -37,8 +39,7 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     private EditText itemQuantity;
     private Spinner itemCategory;
     private Spinner itemQuality;
-
-    private AddOrEditItemController controller;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,12 +97,30 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         return saveButton;
     }
 
+    // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
     public void addPictureClick(View view) {
-        controller.onAddPictureClick();
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
 
-    public void removePictureClick(View view) {
-        controller.onRemovePictureClick();
+    // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            try {
+                controller.onAddPictureClick(imageBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void removePicturesClick(View view) {
+        controller.onRemovePicturesClick();
     }
 
     public void saveClick(View view) {

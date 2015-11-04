@@ -14,11 +14,17 @@
 
 package ca.ualberta.trinkettrader;
 
+import java.io.File;
+
 public class Picture {
 
     private Boolean isDownloaded;
+    private File file;
 
-    public Picture() {
+    public Picture(File file) {
+    }
+
+    public void delete() {
     }
 
     public Boolean getIsDownloaded() {

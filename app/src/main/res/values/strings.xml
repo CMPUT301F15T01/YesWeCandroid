@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">Settings</string>
-    <string name="app_name">TrinketTrader</string>
+    <string name="app_name">Trinket Trader</string>
     <string name="title_activity_add_or_edit_item">AddOrEditItemActivity</string>
     <string name="title_activity_display_friends">DisplayFriendsActivity</string>
     <string name="title_activity_display_inventory">Inventory</string>
@@ -23,21 +23,21 @@
     <string name="activity_add_or_edit_item_public_check_box">Public</string>
     <string name="activity_add_or_edit_item_quantity_default">1</string>
     <string name="activity_add_or_edit_item_quantity_text">Quantity:</string>
-    <string name="activity_add_or_edit_item_remove_picture_button_text">Remove Picture</string>
+    <string name="activity_add_or_edit_item_remove_pictures_button_text">Remove All Pictures</string>
     <string name="activity_add_or_edit_item_save_button_text">Save</string>
 
     <!-- activity_home_page -->
-    <string name="activity_home_page_friends_button" >Friends</string>
-    <string name="activity_home_page_inventory_button" >Inventory</string>
-    <string name="activity_home_page_profile_button" >My Profile</string>
-    <string name="activity_home_page_trades_button" >Trades</string>
+    <string name="activity_home_page_friends_button">Friends</string>
+    <string name="activity_home_page_inventory_button">Inventory</string>
+    <string name="activity_home_page_profile_button">My Profile</string>
+    <string name="activity_home_page_trades_button">Trades</string>
 
     <!-- Strings related to login -->
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_invalid_email">This email address is invalid</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+    <string name="permission_rationale">Contacts permissions are needed for providing email completions.</string>
     <string name="prompt_email">Email</string>
     <string name="title_activity_display_tracked_friends">DisplayTrackedFriendsActivity</string>
 </resources>

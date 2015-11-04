@@ -11,7 +11,7 @@ public class ItemDetailsActivity extends ActionBarActivity {
 
     private Button deleteButton;
     private Button editButton;
-    private ImageView itemImage;
+    private ImageView itemPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class ItemDetailsActivity extends ActionBarActivity {
         return editButton;
     }
 
-    public ImageView getItemImage() {
-        return itemImage;
+    public ImageView getItemPicture() {
+        return itemPicture;
     }
 }

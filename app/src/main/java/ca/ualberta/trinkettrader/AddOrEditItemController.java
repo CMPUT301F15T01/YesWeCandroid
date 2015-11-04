@@ -2,8 +2,13 @@ package ca.ualberta.trinkettrader;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
+import android.os.Environment;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Andrea McIntosh on 01/11/2015.
@@ -18,10 +23,32 @@ public class AddOrEditItemController {
         this.activity = activity;
     }
 
-    public void onAddPictureClick() {
+    // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
+    public void onAddPictureClick(Bitmap picture) throws IOException {
+        String mCurrentPhotoPath;
+
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+
+        trinket.getPictures().add(new Picture(image));
     }
 
-    public void onRemovePictureClick() {
+    public void onRemovePicturesClick() {
+        for (Picture picture: trinket.getPictures()) {
+            picture.delete();
+        }
+        trinket.setPictures(new ArrayList<Picture>());
     }
 
     public void onSaveClick() {
