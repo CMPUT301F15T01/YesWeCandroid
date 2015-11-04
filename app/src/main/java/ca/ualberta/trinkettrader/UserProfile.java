@@ -21,7 +21,6 @@ public class UserProfile {
     private String city;
     private String email;
     private String name;
-    private String postalCode;
 
 
     public UserProfile() {
@@ -68,10 +67,9 @@ public class UserProfile {
     }
 
     public String getPostalCode() {
-        return postalCode;
+        return contactInfo.getPostalCode();
     }
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
+    public void setPostalCode(String postalCode) { contactInfo.setPostalCode(postalCode);
     }
 }

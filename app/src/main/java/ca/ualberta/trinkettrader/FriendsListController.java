@@ -19,7 +19,7 @@ public class FriendsListController {
     }
 
 
-    public void onRemoveFrienClick() {
+    public void onRemoveFriendClick() {
 
     }
 

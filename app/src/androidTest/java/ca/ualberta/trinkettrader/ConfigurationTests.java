@@ -37,6 +37,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
     protected void setUp() throws Exception {
         super.setUp();
         user = LoggedInUser.getInstance();
+
         profile = user.getProfile();
         instrumentation = getInstrumentation();
     }
