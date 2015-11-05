@@ -19,6 +19,7 @@ import android.app.Instrumentation;
 import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -40,7 +41,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     public Button inventoryButton;
 
     public InventoryTests() {
-        super(HomePageActivity.class);
+        super(LoginActivity.class);
     }
 
     public void testStart() throws Exception {
@@ -58,6 +59,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testHasItemUI() {
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
@@ -168,6 +203,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
     // Test if a user has an inventory
     public void testHasInventory() {
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
@@ -217,6 +286,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testNumberOfItemsInInventoryUI() {
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
@@ -322,6 +425,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
     // Test method to test if an inventory is empty
     public void testIsInventoryEmpty() {
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
@@ -427,6 +564,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
     // Test method for adding an item to your inventory
     public void testAddItem() {
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
@@ -533,6 +704,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
     // Test method for removing an item from your inventory
     public void testRemoveItem() {
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
@@ -676,6 +881,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
     // Test method for changing the share settings of an item
     public void testShareSettings() {
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
@@ -846,6 +1085,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
     /* Test methods to edit an item's details */
     public void testChangeItemName() {
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
@@ -1005,6 +1278,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         }
     }
     public void testChangeItemQuantity() {
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
@@ -1165,6 +1472,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         }
     }
     public void testChangeItemQuality() {
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
@@ -1324,6 +1665,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         }
     }
     public void testChangeItemDescription() {
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
@@ -1485,6 +1860,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     }
     // Test for changing item's category
     public void testChangeItemCategory() {
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
@@ -1647,6 +2056,40 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     // Test method for checking how quickly an item can be added to the inventory
     public void testQuickAdd() {
         clickCount = 0;
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity activity = (HomePageActivity) getActivity();
 
         // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
