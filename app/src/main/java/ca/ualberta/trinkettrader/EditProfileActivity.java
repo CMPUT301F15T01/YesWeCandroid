@@ -56,7 +56,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         //Instantiate controller
-        controller = new EditProfileController(this, userProfile);
+        controller = new EditProfileController(this);
 
         //Populate the EditText fields with existing values
 
