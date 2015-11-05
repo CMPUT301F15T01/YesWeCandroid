@@ -14,7 +14,10 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -22,9 +25,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.io.IOException;
+
 public class AddOrEditItemActivity extends AppCompatActivity {
 
-    private Button removeImageButton;
+    private AddOrEditItemController controller;
+    private Button addPictureButton;
+    private Button removePictureButton;
     private Button saveButton;
     private CheckBox accessibility;
     private EditText itemDescription;
@@ -32,8 +39,7 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     private EditText itemQuantity;
     private Spinner itemCategory;
     private Spinner itemQuality;
-
-    private AddOrEditItemController controller;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,56 +61,66 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         return accessibility;
     }
 
-    public void setAccessibility(CheckBox accessibility) {
-        this.accessibility = accessibility;
+    public Button getAddPictureButton() {
+        return addPictureButton;
+    }
+
+    public AddOrEditItemController getController() {
+        return controller;
     }
 
     public Spinner getItemCategory() {
         return itemCategory;
     }
 
-    public void setItemCategory(Spinner itemCategory) {
-        this.itemCategory = itemCategory;
-    }
-
     public EditText getItemDescription() {
         return itemDescription;
-    }
-
-    public void setItemDescription(EditText itemDescription) {
-        this.itemDescription = itemDescription;
     }
 
     public EditText getItemName() {
         return itemName;
     }
 
-    public void setItemName(EditText itemName) {
-        this.itemName = itemName;
-    }
-
     public Spinner getItemQuality() {
         return itemQuality;
-    }
-
-    public void setItemQuality(Spinner itemQuality) {
-        this.itemQuality = itemQuality;
     }
 
     public EditText getItemQuantity() {
         return itemQuantity;
     }
 
-    public void setItemQuantity(EditText itemQuantity) {
-        this.itemQuantity = itemQuantity;
-    }
-
-    public Button getRemoveImageButton() {
-        return removeImageButton;
+    public Button getRemovePictureButton() {
+        return removePictureButton;
     }
 
     public Button getSaveButton() {
         return saveButton;
+    }
+
+    // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
+    public void addPictureClick(View view) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            try {
+                controller.onAddPictureClick(imageBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void removePicturesClick(View view) {
+        controller.onRemovePicturesClick();
     }
 
     public void saveClick(View view) {

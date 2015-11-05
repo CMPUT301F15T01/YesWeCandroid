@@ -20,13 +20,20 @@ import android.widget.ToggleButton;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    private ToggleButton arePhotosDownloadableButton;
+
     private UserProfile userProfile;
+    private EditProfileController controller;
+    private ToggleButton arePhotosDownloadableButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        //Instantiate controller
+        controller = new EditProfileController(this, userProfile);
+
+        //Populate the EditText fields with existing values
     }
 
     public ToggleButton getArePhotosDownloadableButton() {

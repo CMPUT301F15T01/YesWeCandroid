@@ -542,7 +542,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
 
         // Delete the image
-        final Button removeImageButton = removeItemPictureActivity.getRemoveImageButton();
+        final Button removeImageButton = removeItemPictureActivity.getRemovePictureButton();
         removeItemPictureActivity.runOnUiThread(new Runnable() {
             public void run() {
                 removeImageButton.performClick();

@@ -17,29 +17,54 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="86dp"
-        android:text="Fix name" />
+        android:text="Name" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_address"
+        android:layout_below="@+id/edit_name"
+        android:layout_alignParentStart="true"
+        android:text="Address" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_city"
+        android:layout_below="@+id/edit_address"
+        android:layout_alignParentStart="true"
+        android:text="City" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/edit_postal_code"
-        android:layout_below="@+id/edit_name"
+        android:layout_below="@+id/edit_city"
         android:layout_alignParentStart="true"
-        android:text="Fix Postal Code" />
+        android:text="Postal Code" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_phone_number"
+        android:layout_below="@+id/edit_postal_code"
+        android:layout_alignParentStart="true"
+        android:text="Phone Number" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/save_button"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/photo_download_checkbox"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="44dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Photo Download Enabled"
         android:id="@+id/photo_download_checkbox"
-        android:layout_below="@+id/edit_postal_code"
+        android:layout_below="@+id/edit_phone_number"
         android:layout_alignParentStart="true" />
 </RelativeLayout>

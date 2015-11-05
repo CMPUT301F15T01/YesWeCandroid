@@ -23,11 +23,17 @@ import android.widget.Button;
 public class DisplayUserProfileActivity extends ActionBarActivity {
 
     private Button editUserProfileButton;
+    private DisplayUserProfileController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_user_profile);
+
+        controller = new DisplayUserProfileController(this);
+
+        editUserProfileButton = (Button) findViewById(R.id.edit_button);
+        editUserProfileButton.setOnClickListener(controller.getEditButtonListener());
     }
 
     @Override
@@ -56,7 +62,4 @@ public class DisplayUserProfileActivity extends ActionBarActivity {
         return editUserProfileButton;
     }
 
-    public void setEditUserProfileButton(Button editUserProfileButton) {
-        this.editUserProfileButton = editUserProfileButton;
-    }
 }

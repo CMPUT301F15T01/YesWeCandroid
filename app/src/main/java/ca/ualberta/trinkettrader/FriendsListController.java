@@ -1,8 +1,6 @@
-import android.app.Activity;
-import android.content.Intent;
+package ca.ualberta.trinkettrader;
 
-import ca.ualberta.trinkettrader.AddOrEditItemActivity;
-import ca.ualberta.trinkettrader.EditFriendsListActivity;
+import android.app.Activity;
 
 /**
  * Created by Me on 2015-11-02.
@@ -21,7 +19,7 @@ public class FriendsListController {
     }
 
 
-    public void onRemoveFrienClick() {
+    public void onRemoveFriendClick() {
 
     }
 
