@@ -110,7 +110,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
             }
         });
         getInstrumentation().waitForIdleSync();
-        assertTrue(LoggedInUser.getInstance().getFriendsList().get(0).getProfile().getName().equals("test@gmail.com"));
+        assertTrue(LoggedInUser.getInstance().getFriendsList().get(0).getProfile().getUsername().equals("test@gmail.com"));
 
         // Click the newly-added friend to proceed to the friend's profile, confirming that the friend was added.
         friendsList = displayFriendsActivity.getFriendsListView();

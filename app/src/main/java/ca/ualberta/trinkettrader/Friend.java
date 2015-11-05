@@ -18,14 +18,21 @@ public class Friend extends User {
 
     private Boolean isTracked;
 
+    public Friend() {
+        super();
+        this.isTracked = Boolean.FALSE;
+    }
+
     public Friend(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager, Boolean isTracked) {
         super(friendsList, inventory, notificationManager, profile, trackedFriends, tradeManager);
         this.isTracked = isTracked;
     }
 
-    public Friend() {
+    public Friend(String username) {
+        // this constructor will probably be unnecessary and removed once the webservice is working
         super();
-        isTracked = Boolean.FALSE;
+        this.getProfile().setUsername(username);
+        this.isTracked = Boolean.FALSE;
     }
 
     public Boolean getIsTracked() {
@@ -34,5 +41,10 @@ public class Friend extends User {
 
     public void setIsTracked(Boolean isTracked) {
         this.isTracked = isTracked;
+    }
+
+    @Override
+    public String toString() {
+        return this.getProfile().getUsername();
     }
 }

@@ -21,11 +21,7 @@ public class UserProfile {
     private String city;
     private String email;
     private String name;
-
-    public Boolean getNeedToSave() {
-        return needToSave | this.contactInfo.getNeedToSave();
-    }
-
+    private String username;
     private Boolean needToSave;
 
     public UserProfile() {
@@ -82,8 +78,21 @@ public class UserProfile {
         return contactInfo.getPostalCode();
     }
 
+
     public void setPostalCode(String postalCode) {
         contactInfo.setPostalCode(postalCode);
         this.needToSave = Boolean.TRUE;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    protected void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Boolean getNeedToSave() {
+        return needToSave | this.contactInfo.getNeedToSave();
     }
 }
