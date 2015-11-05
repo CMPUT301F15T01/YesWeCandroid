@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -70,13 +71,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             getInstrumentation().waitForIdleSync();
 
             // Validate that ReceiverActivity is started
-            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+            LoginActivity receiverActivity = (LoginActivity)
                     receiverActivityMonitor.waitForActivityWithTimeout(1000);
             assertNotNull("ReceiverActivity is null", receiverActivity);
             assertEquals("Monitor for ReceiverActivity has not been called",
                     1, receiverActivityMonitor.getHits());
             assertEquals("Activity is of wrong type",
-                    DisplayInventoryActivity.class, receiverActivity.getClass());
+                    LoginActivity.class, receiverActivity.getClass());
 
             // Remove the ActivityMonitor
             getInstrumentation().removeMonitor(receiverActivityMonitor);
@@ -234,13 +235,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             getInstrumentation().waitForIdleSync();
 
             // Validate that ReceiverActivity is started
-            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+            LoginActivity receiverActivity = (LoginActivity)
                     receiverActivityMonitor.waitForActivityWithTimeout(1000);
             assertNotNull("ReceiverActivity is null", receiverActivity);
             assertEquals("Monitor for ReceiverActivity has not been called",
                     1, receiverActivityMonitor.getHits());
             assertEquals("Activity is of wrong type",
-                    DisplayInventoryActivity.class, receiverActivity.getClass());
+                    LoginActivity.class, receiverActivity.getClass());
 
             // Remove the ActivityMonitor
             getInstrumentation().removeMonitor(receiverActivityMonitor);
@@ -443,13 +444,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             getInstrumentation().waitForIdleSync();
 
             // Validate that ReceiverActivity is started
-            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+            LoginActivity receiverActivity = (LoginActivity)
                     receiverActivityMonitor.waitForActivityWithTimeout(1000);
             assertNotNull("ReceiverActivity is null", receiverActivity);
             assertEquals("Monitor for ReceiverActivity has not been called",
                     1, receiverActivityMonitor.getHits());
             assertEquals("Activity is of wrong type",
-                    DisplayInventoryActivity.class, receiverActivity.getClass());
+                    LoginActivity.class, receiverActivity.getClass());
 
             // Remove the ActivityMonitor
             getInstrumentation().removeMonitor(receiverActivityMonitor);
@@ -702,13 +703,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             getInstrumentation().waitForIdleSync();
 
             // Validate that ReceiverActivity is started
-            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+            LoginActivity receiverActivity = (LoginActivity)
                     receiverActivityMonitor.waitForActivityWithTimeout(1000);
             assertNotNull("ReceiverActivity is null", receiverActivity);
             assertEquals("Monitor for ReceiverActivity has not been called",
                     1, receiverActivityMonitor.getHits());
             assertEquals("Activity is of wrong type",
-                    DisplayInventoryActivity.class, receiverActivity.getClass());
+                    LoginActivity.class, receiverActivity.getClass());
 
             // Remove the ActivityMonitor
             getInstrumentation().removeMonitor(receiverActivityMonitor);
@@ -833,13 +834,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             getInstrumentation().waitForIdleSync();
 
             // Validate that ReceiverActivity is started
-            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+            LoginActivity receiverActivity = (LoginActivity)
                     receiverActivityMonitor.waitForActivityWithTimeout(1000);
             assertNotNull("ReceiverActivity is null", receiverActivity);
             assertEquals("Monitor for ReceiverActivity has not been called",
                     1, receiverActivityMonitor.getHits());
             assertEquals("Activity is of wrong type",
-                    DisplayInventoryActivity.class, receiverActivity.getClass());
+                    LoginActivity.class, receiverActivity.getClass());
 
             // Remove the ActivityMonitor
             getInstrumentation().removeMonitor(receiverActivityMonitor);
