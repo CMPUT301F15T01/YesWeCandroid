@@ -40,4 +40,7 @@
     <string name="permission_rationale">Contacts permissions are needed for providing email completions.</string>
     <string name="prompt_email">Email</string>
     <string name="title_activity_display_tracked_friends">DisplayTrackedFriendsActivity</string>
+    <string name="title_activity_display_friends_profile">DisplayFriendsProfileActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
