@@ -77,4 +77,13 @@
         android:layout_below="@+id/phoneText"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Username"
+        android:id="@+id/usernameText"
+        android:layout_above="@+id/nameText"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
