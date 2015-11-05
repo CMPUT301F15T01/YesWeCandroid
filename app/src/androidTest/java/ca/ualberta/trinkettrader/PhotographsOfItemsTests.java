@@ -51,7 +51,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         {
             // Set up an ActivityMonitor
             Instrumentation.ActivityMonitor receiverActivityMonitor =
-                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                    getInstrumentation().addMonitor(HomePageActivity.class.getName(),
                             null, false);
 
             // Start DisplayInventoryActivity
@@ -71,13 +71,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             getInstrumentation().waitForIdleSync();
 
             // Validate that ReceiverActivity is started
-            LoginActivity receiverActivity = (LoginActivity)
+            HomePageActivity receiverActivity = (HomePageActivity)
                     receiverActivityMonitor.waitForActivityWithTimeout(1000);
             assertNotNull("ReceiverActivity is null", receiverActivity);
             assertEquals("Monitor for ReceiverActivity has not been called",
                     1, receiverActivityMonitor.getHits());
             assertEquals("Activity is of wrong type",
-                    LoginActivity.class, receiverActivity.getClass());
+                    HomePageActivity.class, receiverActivity.getClass());
 
             // Remove the ActivityMonitor
             getInstrumentation().removeMonitor(receiverActivityMonitor);
@@ -220,12 +220,17 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         {
             // Set up an ActivityMonitor
             Instrumentation.ActivityMonitor receiverActivityMonitor =
-                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                    getInstrumentation().addMonitor(HomePageActivity.class.getName(),
                             null, false);
 
             // Start DisplayInventoryActivity
-            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
-            emailTextView.setText("test@test.test");
+            final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            loginActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    emailTextView.setText("test@test.test");
+                }
+            });
             final Button homePageButton = loginActivity.getLoginButton();
             loginActivity.runOnUiThread(new Runnable() {
                 public void run() {
@@ -235,13 +240,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             getInstrumentation().waitForIdleSync();
 
             // Validate that ReceiverActivity is started
-            LoginActivity receiverActivity = (LoginActivity)
+            HomePageActivity receiverActivity = (HomePageActivity)
                     receiverActivityMonitor.waitForActivityWithTimeout(1000);
             assertNotNull("ReceiverActivity is null", receiverActivity);
             assertEquals("Monitor for ReceiverActivity has not been called",
                     1, receiverActivityMonitor.getHits());
             assertEquals("Activity is of wrong type",
-                    LoginActivity.class, receiverActivity.getClass());
+                    HomePageActivity.class, receiverActivity.getClass());
 
             // Remove the ActivityMonitor
             getInstrumentation().removeMonitor(receiverActivityMonitor);
@@ -429,12 +434,17 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         {
             // Set up an ActivityMonitor
             Instrumentation.ActivityMonitor receiverActivityMonitor =
-                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                    getInstrumentation().addMonitor(HomePageActivity.class.getName(),
                             null, false);
 
             // Start DisplayInventoryActivity
-            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
-            emailTextView.setText("test@test.test");
+            final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            loginActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    emailTextView.setText("test@test.test");
+                }
+            });
             final Button homePageButton = loginActivity.getLoginButton();
             loginActivity.runOnUiThread(new Runnable() {
                 public void run() {
@@ -444,13 +454,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             getInstrumentation().waitForIdleSync();
 
             // Validate that ReceiverActivity is started
-            LoginActivity receiverActivity = (LoginActivity)
+            HomePageActivity receiverActivity = (HomePageActivity)
                     receiverActivityMonitor.waitForActivityWithTimeout(1000);
             assertNotNull("ReceiverActivity is null", receiverActivity);
             assertEquals("Monitor for ReceiverActivity has not been called",
                     1, receiverActivityMonitor.getHits());
             assertEquals("Activity is of wrong type",
-                    LoginActivity.class, receiverActivity.getClass());
+                    HomePageActivity.class, receiverActivity.getClass());
 
             // Remove the ActivityMonitor
             getInstrumentation().removeMonitor(receiverActivityMonitor);
@@ -688,12 +698,17 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         {
             // Set up an ActivityMonitor
             Instrumentation.ActivityMonitor receiverActivityMonitor =
-                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                    getInstrumentation().addMonitor(HomePageActivity.class.getName(),
                             null, false);
 
             // Start DisplayInventoryActivity
-            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
-            emailTextView.setText("test@test.test");
+            final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            loginActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    emailTextView.setText("test@test.test");
+                }
+            });
             final Button homePageButton = loginActivity.getLoginButton();
             loginActivity.runOnUiThread(new Runnable() {
                 public void run() {
@@ -703,13 +718,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             getInstrumentation().waitForIdleSync();
 
             // Validate that ReceiverActivity is started
-            LoginActivity receiverActivity = (LoginActivity)
+            HomePageActivity receiverActivity = (HomePageActivity)
                     receiverActivityMonitor.waitForActivityWithTimeout(1000);
             assertNotNull("ReceiverActivity is null", receiverActivity);
             assertEquals("Monitor for ReceiverActivity has not been called",
                     1, receiverActivityMonitor.getHits());
             assertEquals("Activity is of wrong type",
-                    LoginActivity.class, receiverActivity.getClass());
+                    HomePageActivity.class, receiverActivity.getClass());
 
             // Remove the ActivityMonitor
             getInstrumentation().removeMonitor(receiverActivityMonitor);
@@ -819,12 +834,17 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         {
             // Set up an ActivityMonitor
             Instrumentation.ActivityMonitor receiverActivityMonitor =
-                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                    getInstrumentation().addMonitor(HomePageActivity.class.getName(),
                             null, false);
 
             // Start DisplayInventoryActivity
-            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
-            emailTextView.setText("test@test.test");
+            final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            loginActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    emailTextView.setText("test@test.test");
+                }
+            });
             final Button homePageButton = loginActivity.getLoginButton();
             loginActivity.runOnUiThread(new Runnable() {
                 public void run() {
@@ -834,13 +854,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             getInstrumentation().waitForIdleSync();
 
             // Validate that ReceiverActivity is started
-            LoginActivity receiverActivity = (LoginActivity)
+            HomePageActivity receiverActivity = (HomePageActivity)
                     receiverActivityMonitor.waitForActivityWithTimeout(1000);
             assertNotNull("ReceiverActivity is null", receiverActivity);
             assertEquals("Monitor for ReceiverActivity has not been called",
                     1, receiverActivityMonitor.getHits());
             assertEquals("Activity is of wrong type",
-                    LoginActivity.class, receiverActivity.getClass());
+                    HomePageActivity.class, receiverActivity.getClass());
 
             // Remove the ActivityMonitor
             getInstrumentation().removeMonitor(receiverActivityMonitor);
