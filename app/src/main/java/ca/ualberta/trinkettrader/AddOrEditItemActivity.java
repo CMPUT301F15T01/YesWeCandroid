@@ -15,8 +15,9 @@
 package ca.ualberta.trinkettrader;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -25,7 +26,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class AddOrEditItemActivity extends AppCompatActivity {
 
@@ -39,6 +44,8 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     private EditText itemQuantity;
     private Spinner itemCategory;
     private Spinner itemQuality;
+    private Uri uri;
+    private ArrayList<Picture> pictures;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
@@ -47,6 +54,7 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_or_edit_item);
 
         this.controller = new AddOrEditItemController(this);
+        this.pictures = new ArrayList<>();
 
         this.itemName = (EditText) findViewById(R.id.itemNameText);
         this.itemCategory = (Spinner) findViewById(R.id.itemCategorySpinner);
@@ -99,7 +107,20 @@ public class AddOrEditItemActivity extends AppCompatActivity {
 
     // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
     public void addPictureClick(View view) {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+        this.uri = Uri.fromFile(image);
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, this.uri);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
@@ -109,10 +130,9 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
             try {
-                controller.onAddPictureClick(imageBitmap);
+                // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
+                controller.onAddPictureClick(uri);
             } catch (IOException e) {
                 e.printStackTrace();
             }
