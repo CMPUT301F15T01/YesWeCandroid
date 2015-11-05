@@ -23,6 +23,8 @@ public abstract class User {
     protected TradeManager tradeManager;
     protected UserProfile profile;
 
+    protected  Boolean needToSave;
+
     public User() {
         this.friendsList = new FriendsList();
         this.inventory = new Inventory();
@@ -41,12 +43,22 @@ public abstract class User {
         this.tradeManager = tradeManager;
     }
 
+    protected void setNeedToSave(Boolean needToSave) {
+        this.needToSave = needToSave;
+    }
+
+    public Boolean getNeedToSave() {
+        //TODO: need to implement needToSave for friendslist as well...
+        return needToSave | this.profile.getNeedToSave() | this.inventory.getNeedToSave();
+    }
+
     public FriendsList getFriendsList() {
         return friendsList;
     }
 
     public void setFriendsList(FriendsList friendsList) {
         this.friendsList = friendsList;
+        this.needToSave = Boolean.TRUE;
     }
 
     public Inventory getInventory() {
@@ -55,6 +67,7 @@ public abstract class User {
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+        this.needToSave = Boolean.TRUE;
     }
 
     public NotificationManager getNotificationManager() {
@@ -71,6 +84,7 @@ public abstract class User {
 
     public void setProfile(UserProfile profile) {
         this.profile = profile;
+        this.needToSave = Boolean.TRUE;
     }
 
     public TrackedFriendsList getTrackedFriends() {

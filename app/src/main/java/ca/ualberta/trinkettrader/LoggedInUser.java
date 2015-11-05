@@ -14,14 +14,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LoggedInUser extends User {
 
     private static String FILENAME = "profile.sav";
     private static LoggedInUser ourInstance = new LoggedInUser();
-    private boolean needToSave;
 
     public static LoggedInUser getInstance() {
         return ourInstance;
@@ -33,7 +30,7 @@ public class LoggedInUser extends User {
         /**
          * saves LoggedInUser Data to file
          */
-        if(!needToSave){
+        if(this.getNeedToSave()){
             return;
         }
         try {
@@ -61,14 +58,15 @@ public class LoggedInUser extends User {
 
             FileInputStream fis = c.openFileInput(FILENAME);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            //https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html, 2015-09-23
-            Type dataCollectionType = new TypeToken<HashMap<String, ArrayList<Long>>>() {}.getType();
+            //https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/dcom/google/gson/Gson.html, 2015-09-23
+            Type loggedInUserType = new TypeToken<LoggedInUser>(){}.getType();
             Gson gson = new Gson();
-            ourInstance = gson.fromJson(in, dataCollectionType);
+            ourInstance = gson.fromJson(in, loggedInUserType);
 
         } catch (FileNotFoundException e) {
             //TODO: Assumption: LoggedInUser instantiated upon login, no file == no previous data
             //TODO: Therefore do nothing
         }
+        this.setNeedToSave(Boolean.FALSE);
     }
 }

@@ -21,6 +21,13 @@ public class UserProfile {
     private String city;
     private String email;
     private String name;
+
+    public Boolean getNeedToSave() {
+        return needToSave | this.contactInfo.getNeedToSave();
+    }
+
+    private Boolean needToSave;
+
     public UserProfile() {
     }
 
@@ -37,7 +44,10 @@ public class UserProfile {
     }
 
     public void setCity(String city) {
+
         this.city = city;
+        this.contactInfo.setCity(city);
+        this.needToSave = Boolean.TRUE;
     }
 
     public ContactInfo getContactInfo() {
@@ -45,7 +55,9 @@ public class UserProfile {
     }
 
     public void setContactInfo(ContactInfo contactInfo) {
+
         this.contactInfo = contactInfo;
+        this.needToSave = Boolean.TRUE;
     }
 
     public String getEmail() {
@@ -54,6 +66,7 @@ public class UserProfile {
 
     public void setEmail(String email) {
         this.email = email;
+        this.needToSave = Boolean.TRUE;
     }
 
     public String getName() {
@@ -62,12 +75,15 @@ public class UserProfile {
 
     public void setName(String name) {
         this.name = name;
+        this.needToSave = Boolean.TRUE;
     }
 
     public String getPostalCode() {
         return contactInfo.getPostalCode();
     }
 
-    public void setPostalCode(String postalCode) { contactInfo.setPostalCode(postalCode);
+    public void setPostalCode(String postalCode) {
+        contactInfo.setPostalCode(postalCode);
+        this.needToSave = Boolean.TRUE;
     }
 }

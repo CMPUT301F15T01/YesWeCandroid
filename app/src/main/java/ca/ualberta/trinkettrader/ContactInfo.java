@@ -8,6 +8,11 @@ public class ContactInfo {
     private String phoneNumber;
     private String postalCode;
 
+    public Boolean getNeedToSave() {
+        return this.needToSave;
+    }
+
+    private Boolean needToSave;
     public ContactInfo() {
     }
 
@@ -17,6 +22,7 @@ public class ContactInfo {
 
     public void setName(String name) {
         this.name = name;
+        this.needToSave = Boolean.TRUE;
     }
 
     public String getAddress() {
@@ -25,6 +31,7 @@ public class ContactInfo {
 
     public void setAddress(String address) {
         this.address = address;
+        this.needToSave = Boolean.TRUE;
     }
 
     public String getCity() {
@@ -33,6 +40,7 @@ public class ContactInfo {
 
     public void setCity(String city) {
         this.city = city;
+        this.needToSave = Boolean.TRUE;
     }
 
     public String getPhoneNumber() {
@@ -41,6 +49,7 @@ public class ContactInfo {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        this.needToSave = Boolean.TRUE;
     }
 
     public String getPostalCode() {
@@ -49,5 +58,6 @@ public class ContactInfo {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+        this.needToSave = Boolean.TRUE;
     }
 }

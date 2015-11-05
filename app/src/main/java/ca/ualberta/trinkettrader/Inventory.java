@@ -24,9 +24,14 @@ import java.util.Observable;
 public class Inventory extends Observable implements Collection {
 
     private ArrayList<Trinket> trinkets;
+    private Boolean needToSave;
 
     public Inventory() {
         this(new ArrayList<Trinket>());
+    }
+
+    public Boolean getNeedToSave() {
+        return this.needToSave;
     }
 
     public Inventory(ArrayList<Trinket> trinkets) {
@@ -35,16 +40,20 @@ public class Inventory extends Observable implements Collection {
 
     @Override
     public boolean add(Object object) {
+        this.needToSave = Boolean.TRUE;
         return trinkets.add((Trinket) object);
+
     }
 
     @Override
     public boolean addAll(Collection collection) {
+        this.needToSave = Boolean.TRUE;
         return trinkets.addAll(collection);
     }
 
     @Override
     public void clear() {
+        this.needToSave = Boolean.TRUE;
         trinkets.clear();
     }
 
@@ -71,16 +80,19 @@ public class Inventory extends Observable implements Collection {
 
     @Override
     public boolean remove(Object object) {
+        this.needToSave = Boolean.TRUE;
         return trinkets.remove(object);
     }
 
     @Override
     public boolean removeAll(Collection collection) {
+        this.needToSave = Boolean.TRUE;
         return trinkets.removeAll(collection);
     }
 
     @Override
     public boolean retainAll(Collection collection) {
+        this.needToSave = Boolean.TRUE;
         return trinkets.retainAll(collection);
     }
 

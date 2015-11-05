@@ -15,11 +15,11 @@
 package ca.ualberta.trinkettrader;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ToggleButton;
-
-import java.util.logging.Handler;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -27,19 +27,18 @@ public class EditProfileActivity extends AppCompatActivity {
     public EditProfileActivity() {
     }
 
-    private UserProfile userProfile;
     private EditProfileController controller;
     private ToggleButton arePhotosDownloadableButton;
     private Handler handler;
 
-    private Runnable populateEditFieldsWithExistingValues =  new Runnable() {
+    private Runnable populateEditFieldsWithExistingValuesRunnable =  new Runnable() {
         @Override
         public void run() {
             EditText name = (EditText) findViewById(R.id.edit_name);
             EditText address = (EditText) findViewById(R.id.edit_address);
             EditText city = (EditText) findViewById(R.id.edit_city);
-            EditText postalCode = (EditText) name.findViewById(R.id.edit_postal_code);
-            EditText phoneNum = (EditText) name.findViewById(R.id.edit_phone_number);
+            EditText postalCode = (EditText) findViewById(R.id.edit_postal_code);
+            EditText phoneNum = (EditText) findViewById(R.id.edit_phone_number);
 
             name.setText(getUserProfile().getName());
             address.setText(getUserProfile().getContactInfo().getAddress());
@@ -55,12 +54,18 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
+        //setup handler
+        handler = new Handler();
+
         //Instantiate controller
         controller = new EditProfileController(this);
 
         //Populate the EditText fields with existing values
+        handler.post(populateEditFieldsWithExistingValuesRunnable);
 
-        //Set onClickListener for
+        //Set onClickListener for saveButton
+        Button saveButton = (Button) findViewById(R.id.save_button);
+        saveButton.setOnClickListener(controller.getSaveButtonListener());
     }
 
     public ToggleButton getArePhotosDownloadableButton() {
