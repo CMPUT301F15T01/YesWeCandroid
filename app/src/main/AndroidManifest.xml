@@ -99,6 +99,14 @@
                 android:value="ca.ualberta.trinkettrader.HomePageActivity" />
         </activity>
         <activity
+            android:name=".DisplayPastTradesActivity"
+            android:label="@string/title_activity_display_past_trades"
+            android:parentActivityName=".DisplayTradesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.trinkettrader.DisplayTradesActivity" />
+        </activity>
+        <activity
             android:name=".DisplayTrackedFriendsActivity"
             android:label="@string/title_activity_display_tracked_friends"
             android:parentActivityName=".DisplayFriendsActivity" >
@@ -113,10 +121,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.trinkettrader.DisplayFriendsActivity" />
-        </activity>
-        <activity
-            android:name=".DisplayPastTradesActivity"
-            android:label="@string/title_activity_display_past_trades" >
         </activity>
     </application>
 

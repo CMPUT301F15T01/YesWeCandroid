@@ -1,7 +1,9 @@
 package ca.ualberta.trinkettrader;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 public class DisplayTradesActivity extends AppCompatActivity {
 
@@ -12,5 +14,8 @@ public class DisplayTradesActivity extends AppCompatActivity {
     }
 
     // PastTrades Button click
-    
+    public void openPastTrades(View view){
+        Intent intent = new Intent(this, DisplayPastTradesActivity.class);
+        startActivity(intent);
+    }
 }
