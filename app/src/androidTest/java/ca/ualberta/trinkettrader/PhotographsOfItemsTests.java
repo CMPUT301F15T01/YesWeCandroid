@@ -19,6 +19,7 @@ import android.app.Instrumentation;
 import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,6 +44,40 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testAttachPhotograph() {
+        // Get the current activity
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
         // Get the current activity
         HomePageActivity homePageActivity = (HomePageActivity) getActivity();
 
@@ -173,6 +208,40 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testViewPhotograph() {
+        // Get the current activity
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
         // Get the current activity
         HomePageActivity homePageActivity = (HomePageActivity) getActivity();
 
@@ -348,6 +417,40 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testDeletePhotoGraph() {
+        // Get the current activity
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
         // Get the current activity
         HomePageActivity homePageActivity = (HomePageActivity) getActivity();
 
@@ -574,6 +677,40 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
     public void testManuallyChoosePhotosToDownloadIfPhotoDownloadDisabled() {
         // Get the current activity
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
+        // Get the current activity
         HomePageActivity homePageActivity = (HomePageActivity) getActivity();
 
 
@@ -670,6 +807,40 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
     }
 
     public void testDisablePhotoDownload() {
+        // Get the current activity
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** LoginActivity ********/
+        {
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                            null, false);
+
+            // Start DisplayInventoryActivity
+            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            emailTextView.setText("test@test.test");
+            final Button homePageButton = loginActivity.getLoginButton();
+            loginActivity.runOnUiThread(new Runnable() {
+                public void run() {
+                    homePageButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            // Validate that ReceiverActivity is started
+            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    DisplayInventoryActivity.class, receiverActivity.getClass());
+
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
+        }
+
         // Get the current activity
         HomePageActivity homePageActivity = (HomePageActivity) getActivity();
 
