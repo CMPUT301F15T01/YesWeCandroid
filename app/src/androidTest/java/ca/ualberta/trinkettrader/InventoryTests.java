@@ -203,7 +203,6 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     }
 
     // Test if a user has an inventory
-    @UiThreadTest
     public void testHasInventory() {
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
