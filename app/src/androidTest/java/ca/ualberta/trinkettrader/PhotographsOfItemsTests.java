@@ -33,9 +33,8 @@ import java.util.Iterator;
 
 public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
-    // p e p; http://stackoverflow.com/questions/17600010/assertionfailederror-class-has-no-public-constructor; 2015-11-01
     public PhotographsOfItemsTests() {
-        super(HomePageActivity.class);
+        super(LoginActivity.class);
     }
 
     public void testStart() throws Exception {
