@@ -24,6 +24,7 @@ public class DisplayUserProfileActivity extends ActionBarActivity {
 
     private Button editUserProfileButton;
     private DisplayUserProfileController controller;
+    private UserProfile profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,8 @@ public class DisplayUserProfileActivity extends ActionBarActivity {
         setContentView(R.layout.activity_display_user_profile);
 
         controller = new DisplayUserProfileController(this);
+
+        profile = LoggedInUser.getInstance().getProfile();
 
         editUserProfileButton = (Button) findViewById(R.id.edit_button);
         editUserProfileButton.setOnClickListener(controller.getEditButtonListener());
