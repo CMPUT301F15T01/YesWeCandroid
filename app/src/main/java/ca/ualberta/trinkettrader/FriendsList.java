@@ -31,4 +31,12 @@ public class FriendsList extends ArrayList<User> {
         super();
     }
 
+    public Friend getFriendByUsername(String username) {
+        for (User u : this) {
+            if (u.getProfile().getUsername().equals(username)) {
+                return (Friend) u;
+            }
+        }
+        return null;
+    }
 }
