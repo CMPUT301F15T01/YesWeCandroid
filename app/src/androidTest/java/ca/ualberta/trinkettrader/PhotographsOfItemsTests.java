@@ -33,9 +33,8 @@ import java.util.Iterator;
 
 public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
-    // p e p; http://stackoverflow.com/questions/17600010/assertionfailederror-class-has-no-public-constructor; 2015-11-01
     public PhotographsOfItemsTests() {
-        super(HomePageActivity.class);
+        super(LoginActivity.class);
     }
 
     public void testStart() throws Exception {
@@ -395,7 +394,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
 
         // Check that the image is visible
-        ImageView itemImage = itemDetailsActivity.getItemImage();
+        ImageView itemImage = itemDetailsActivity.getItemPicture();
         // PC.; http://stackoverflow.com/questions/9113895/how-to-check-if-an-imageview-is-attached-with-image-in-android; 2015-11-01
         assertNotNull(itemImage.getDrawable());
 
