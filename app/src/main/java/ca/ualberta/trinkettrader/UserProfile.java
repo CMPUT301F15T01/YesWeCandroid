@@ -21,7 +21,6 @@ public class UserProfile {
     private String city;
     private String email;
     private String name;
-
     public UserProfile() {
     }
 
