@@ -25,18 +25,20 @@ import java.util.List;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    private AutoCompleteTextView mEmailView;
+    private AutoCompleteTextView emailTextView;
+    private Button loginButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        emailTextView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button loginButton = (Button) findViewById(R.id.email_sign_in_button);
+        loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -50,22 +52,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void attemptLogin() {
         // Reset errors.
-        mEmailView.setError(null);
+        emailTextView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String email = emailTextView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+            emailTextView.setError(getString(R.string.error_field_required));
+            focusView = emailTextView;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+            emailTextView.setError(getString(R.string.error_invalid_email));
+            focusView = emailTextView;
             cancel = true;
         } else {
             User user = LoggedInUser.getInstance();
@@ -132,6 +134,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        emailTextView.setAdapter(adapter);
+    }
+
+    public AutoCompleteTextView getEmailTextView() {
+        return emailTextView;
+    }
+
+    public Button getLoginButton() {
+        return loginButton;
     }
 }
