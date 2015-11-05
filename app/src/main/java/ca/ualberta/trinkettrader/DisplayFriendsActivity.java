@@ -29,7 +29,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class DisplayFriendsActivity extends Activity {
+public class DisplayFriendsActivity extends AppCompatActivity {
 
     private Button findFriendsButton;
     private EditText findFriendTextField;
@@ -37,7 +37,6 @@ public class DisplayFriendsActivity extends Activity {
     private FriendsList userFriendList;
     private ArrayAdapter<User> friendAdapter;
     private FriendsListController controller;
-    private DisplayFriendsActivity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class DisplayFriendsActivity extends Activity {
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
                 Log.d("XXXXXXXXXX1", "about to start intent");
-                Intent intent = new Intent(activity, DisplayFriendsProfileActivity.class);
+                Intent intent = new Intent(DisplayFriendsActivity.this, DisplayFriendsProfileActivity.class);
                 Log.d("XXXXXXXXXX1", "made intent");
                 startActivity(intent);
                 Log.d("XXXXXXXXXX1", "done");
@@ -80,9 +79,7 @@ public class DisplayFriendsActivity extends Activity {
     }
 
     public void findFriendsOnClick(View v) {
-        Log.d("XXXXXXXXXX", "12332423432423432");
         controller.findFriendsOnClick();
-        Log.d("XXXXXXXXXX", "made it");
         friendAdapter.notifyDataSetChanged();
     }
 }

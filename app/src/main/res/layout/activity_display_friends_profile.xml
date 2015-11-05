@@ -14,6 +14,24 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Track Friend"
+        android:id="@+id/trackFriendButton"
+        android:layout_below="@+id/viewInventoryButton"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/viewInventoryButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove Friend"
+        android:id="@+id/removeFriendButton"
+        android:layout_below="@+id/trackFriendButton"
+        android:layout_alignEnd="@+id/trackFriendButton"
+        android:layout_alignStart="@+id/trackFriendButton" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,4 +76,5 @@
         android:id="@+id/postalCodeText"
         android:layout_below="@+id/phoneText"
         android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
