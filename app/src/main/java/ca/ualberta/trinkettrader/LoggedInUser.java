@@ -69,9 +69,6 @@ public class LoggedInUser extends User {
         } catch (FileNotFoundException e) {
             //TODO: Assumption: LoggedInUser instantiated upon login, no file == no previous data
             //TODO: Therefore do nothing
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
-
 }

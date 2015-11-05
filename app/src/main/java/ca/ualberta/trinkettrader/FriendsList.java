@@ -14,88 +14,21 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.support.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
-public class FriendsList implements Collection {
-
-    protected ArrayList<Friend> friends;
+public class FriendsList extends ArrayList<User> {
 
     public FriendsList() {
+        super();
     }
 
-    public FriendsList(ArrayList<Friend> friendss) {
-        this.friends = friendss;
+    public FriendsList(Collection<? extends User> c) {
+        super();
     }
 
-    @Override
-    public boolean add(Object object) {
-        return friends.add((Friend) object);
+    public FriendsList(int initialCapacity) {
+        super();
     }
 
-    @Override
-    public boolean addAll(Collection collection) {
-        return friends.addAll(collection);
-    }
-
-    @Override
-    public void clear() {
-        friends.clear();
-    }
-
-    @Override
-    public boolean contains(Object object) {
-        return friends.contains((object));
-    }
-
-    @Override
-    public boolean containsAll(Collection collection) {
-        return friends.containsAll(collection);
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return friends.isEmpty();
-    }
-
-    @NonNull
-    @Override
-    public Iterator<Friend> iterator() {
-        return friends.iterator();
-    }
-
-    @Override
-    public boolean remove(Object object) {
-        return friends.remove(object);
-    }
-
-    @Override
-    public boolean removeAll(Collection collection) {
-        return friends.removeAll(collection);
-    }
-
-    @Override
-    public boolean retainAll(Collection collection) {
-        return friends.retainAll(collection);
-    }
-
-    @Override
-    public int size() {
-        return friends.size();
-    }
-
-    @NonNull
-    @Override
-    public Friend[] toArray() {
-        return (Friend[]) friends.toArray();
-    }
-
-    @NonNull
-    @Override
-    public Friend[] toArray(Object[] array) {
-        return new Friend[0];
-    }
 }
