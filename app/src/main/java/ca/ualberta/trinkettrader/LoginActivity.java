@@ -38,11 +38,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         populateAutoComplete();
 
         loginButton = (Button) findViewById(R.id.email_sign_in_button);
-<<<<<<< HEAD
 
-        Button loginButton = (Button) findViewById(R.id.email_sign_in_button);
-=======
->>>>>>> c3631608c8bbdda69dde25ec02a36fde775d437c
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
