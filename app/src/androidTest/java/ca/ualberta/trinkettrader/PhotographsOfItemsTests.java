@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;

@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -46,7 +47,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
     public void testStart() throws Exception {
         Activity activity = getActivity();
-
+        activity.finish();
     }
 
     // Test method for checking if inventory contains a certain item
@@ -202,6 +203,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     }
 
     // Test if a user has an inventory
+    @UiThreadTest
     public void testHasInventory() {
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
@@ -209,8 +211,8 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         {
             // Set up an ActivityMonitor
             Instrumentation.ActivityMonitor receiverActivityMonitor =
-                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
-                            null, false);
+                getInstrumentation().addMonitor(LoginActivity.class.getName(),
+                                    null, false);
 
             // Start DisplayInventoryActivity
             AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
