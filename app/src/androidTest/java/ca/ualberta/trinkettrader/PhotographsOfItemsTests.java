@@ -53,11 +53,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                         null, false);
 
         // Start DisplayInventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                emailTextView.setText("test@test.test");
+                emailTextView.setText(test_email);
             }
         });
         final Button homePageButton = loginActivity.getLoginButton();
@@ -186,7 +187,10 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
         while (trinketIterator.hasNext()) {
             ArrayList<Picture> pictures = trinketIterator.next().getPictures();
-            assertNotNull(trinketIterator.next().getPictures());
+            Iterator<Picture> pictureIterator = pictures.iterator();
+            while (pictureIterator.hasNext()) {
+                assertNotNull(pictureIterator.next());
+            }
         }
 
         // Close the activities
@@ -206,11 +210,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                         null, false);
 
         // Start DisplayInventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                emailTextView.setText("test@test.test");
+                emailTextView.setText(test_email);
             }
         });
         final Button homePageButton = loginActivity.getLoginButton();
@@ -341,7 +346,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
         // Start ItemDetailsActivity
         final ListView inventoryItemsList = displayInventoryActivity.getInventoryItemsList();
-        Trinket trinket = (Trinket) inventoryItemsList.getItemAtPosition(0);
         displayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View view = inventoryItemsList.getChildAt(0);
@@ -397,11 +401,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                         null, false);
 
         // Start DisplayInventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                emailTextView.setText("test@test.test");
+                emailTextView.setText(test_email);
             }
         });
         final Button homePageButton = loginActivity.getLoginButton();
@@ -529,7 +534,10 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
         while (trinketIterator.hasNext()) {
             ArrayList<Picture> pictures = trinketIterator.next().getPictures();
-            assertNotNull(trinketIterator.next().getPictures());
+            Iterator<Picture> pictureIterator = pictures.iterator();
+            while (pictureIterator.hasNext()) {
+                assertNotNull(pictureIterator.next());
+            }
         }
 
         /******** ItemDetailsActivity ********/
@@ -540,7 +548,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
         // Start ItemDetailsActivity
         final ListView inventoryItemsList = displayInventoryActivity.getInventoryItemsList();
-        Trinket trinket = (Trinket) inventoryItemsList.getItemAtPosition(0);
         displayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View view = inventoryItemsList.getChildAt(0);
@@ -610,7 +617,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Make sure the item does not have an image
         Iterator<Trinket> noPicturesTrinketIterator = displayInventoryActivity.getInventory().iterator();
         while (noPicturesTrinketIterator.hasNext()) {
-            ArrayList<Picture> pictures = noPicturesTrinketIterator.next().getPictures();
             assertEquals(noPicturesTrinketIterator.next().getPictures().size(), 0);
         }
 
@@ -634,11 +640,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                         null, false);
 
         // Start DisplayInventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                emailTextView.setText("test@test.test");
+                emailTextView.setText(test_email);
             }
         });
         final Button homePageButton = loginActivity.getLoginButton();
@@ -756,11 +763,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                         null, false);
 
         // Start DisplayInventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                emailTextView.setText("test@test.test");
+                emailTextView.setText(test_email);
             }
         });
         final Button homePageButton = loginActivity.getLoginButton();
