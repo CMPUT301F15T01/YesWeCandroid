@@ -31,6 +31,7 @@ public class Trinket {
     public Trinket() {
         quantity = "1";
         accessibility = "public";
+        pictures = new ArrayList<>();git
     }
 
     public String getAccessibility() {

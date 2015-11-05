@@ -2,10 +2,13 @@ package ca.ualberta.trinkettrader;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +19,7 @@ import java.util.Date;
 public class AddOrEditItemController {
 
     private AddOrEditItemActivity activity;
-    private Trinket trinket;
+    private Trinket trinket = new Trinket();
     private User user = LoggedInUser.getInstance();
 
     public AddOrEditItemController(AddOrEditItemActivity activity) {
@@ -24,24 +27,10 @@ public class AddOrEditItemController {
     }
 
     // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
-    public void onAddPictureClick(Bitmap picture) throws IOException {
-        String mCurrentPhotoPath;
-
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
-
-        trinket.getPictures().add(new Picture(image));
+    // dfserrano; https://github.com/joshua2ua/BogoPicLab/blob/master/BogoPicGen/src/es/softwareprocess/bogopicgen/BogoPicGenActivity.java; 2015-11-04
+    public void onAddPictureClick(Uri uri) throws IOException {
+        File file = new File(uri.getPath());
+        trinket.getPictures().add(new Picture(file));
     }
 
     public void onRemovePicturesClick() {

@@ -14,20 +14,31 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class Picture {
 
-    private Boolean isDownloaded;
-    private File file;
+    private byte[] image;
+    private volatile File file;
 
-    public Picture(File file) {
+    public Picture(File file) throws IOException {
+        this.file = file;
+        FileInputStream fileInputStream = new FileInputStream(file);
+        // Óscar López; http://stackoverflow.com/questions/8721262/how-to-get-file-size-in-java; 2015-11-04
+        image = new byte[(int) file.length()];
+        fileInputStream.read(image);
     }
 
     public void delete() {
+        this.file.delete();
     }
 
-    public Boolean getIsDownloaded() {
-        return isDownloaded;
+    public Bitmap getBitmap() {
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 }
