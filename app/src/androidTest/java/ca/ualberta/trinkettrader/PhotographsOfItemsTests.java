@@ -55,8 +55,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                             null, false);
 
             // Start DisplayInventoryActivity
-            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
-            emailTextView.setText("test@test.test");
+            final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+            loginActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    emailTextView.setText("test@test.test");
+                }
+            });
             final Button homePageButton = loginActivity.getLoginButton();
             loginActivity.runOnUiThread(new Runnable() {
                 public void run() {
