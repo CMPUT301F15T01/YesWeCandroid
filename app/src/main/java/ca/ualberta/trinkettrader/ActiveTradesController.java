@@ -20,6 +20,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class ActiveTradesController {
     private DisplayTradesActivity activity;
 
@@ -27,12 +29,12 @@ public class ActiveTradesController {
         this.activity = activity;
     }
 
-
     public void setCurrentTradesListViewItemOnClick() {
         ListView currentTradesListView = activity.getCurrentTradesListView();
         currentTradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
-                Trade clickedTrade = LoggedInUser.getInstance().getFriendsList().get(position);
+                ArrayList<Trade> userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
+                Trade clickedTrade = userCurrentTradesList.get(position);
                 ApplicationState.getInstance().setClickedTrade(clickedTrade);
                 Intent intent = new Intent(activity, ViewTradeDetailsActivity.class);
                 activity.startActivity(intent);
@@ -40,15 +42,4 @@ public class ActiveTradesController {
         });
     }
 
-    public void setCurrentTradesListViewItemOnClick() {
-        ListView currentTradesListView = activity.getCurrentTradesListView();
-        currentTradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> v, View view, int position, long id) {
-                Trade clickedTrade = LoggedInUser.getInstance().getFriendsList().get(position);
-                ApplicationState.getInstance().setClickedTrade(clickedTrade);
-                Intent intent = new Intent(activity, ViewTradeDetailsActivity.class);
-                activity.startActivity(intent);
-            }
-        });
-    }
 }
