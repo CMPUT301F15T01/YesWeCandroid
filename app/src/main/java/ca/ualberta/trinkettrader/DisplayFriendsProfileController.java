@@ -33,6 +33,9 @@ public class DisplayFriendsProfileController {
         this.activity = activity;
     }
 
+    /**
+     * onClick method for removing friends.
+     */
     public void removeFriendButtonOnClick() {
         User exFriend = ApplicationState.getInstance().getClickedFriend();
         LoggedInUser.getInstance().getFriendsList().remove(exFriend);
@@ -40,6 +43,9 @@ public class DisplayFriendsProfileController {
         activity.startActivity(intent);
     }
 
+    /**
+     * onCLick method for tracking/untracking friends.
+     */
     public void trackedRadioButtonOnClick() {
         RadioButton tracked = activity.getTrackedRadioButton();
         Friend clickedFriend = ApplicationState.getInstance().getClickedFriend();
@@ -53,6 +59,9 @@ public class DisplayFriendsProfileController {
         }
     }
 
+    /**
+     * onClick method for returning to Friends List activity.
+     */
     public void backToFriendsListButtonFromProfileOnClick() {
         NavUtils.navigateUpFromSameTask(activity);
     }
