@@ -26,6 +26,7 @@ public class UserProfile {
         this.email = "";
         this.contactInfo = new ContactInfo();
         this.needToSave = Boolean.TRUE;
+        this.arePhotosDownloadable = Boolean.FALSE;
     }
 
     public Boolean getArePhotosDownloadable() {

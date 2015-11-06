@@ -42,4 +42,8 @@ public class Picture {
     public Bitmap getBitmap() {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
+
+    public Long size() {
+        return file.length();
+    }
 }

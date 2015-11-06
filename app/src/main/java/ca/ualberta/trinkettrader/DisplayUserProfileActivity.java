@@ -22,7 +22,10 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class DisplayUserProfileActivity extends AppCompatActivity {
+import java.util.Observable;
+import java.util.Observer;
+
+public class DisplayUserProfileActivity extends AppCompatActivity implements Observer {
 
     private Button editUserProfileButton;
     private DisplayUserProfileController controller;
@@ -35,13 +38,19 @@ public class DisplayUserProfileActivity extends AppCompatActivity {
             TextView city = (TextView) findViewById(R.id.city);
             TextView postalCode = (TextView) findViewById(R.id.postal_code);
             TextView phoneNum = (TextView) findViewById(R.id.phone_number);
+            TextView photoDownloadEnabled = (TextView) findViewById(R.id.photo_download_setting);
 
             name.setText(getUserProfile().getName());
             address.setText(getUserProfile().getContactInfo().getAddress());
             city.setText(getUserProfile().getCity());
             postalCode.setText(getUserProfile().getContactInfo().getPostalCode());
             phoneNum.setText(getUserProfile().getContactInfo().getPhoneNumber());
-
+            Boolean isPhotoDownloadEnabled = getUserProfile().getArePhotosDownloadable();
+            if(isPhotoDownloadEnabled){
+                photoDownloadEnabled.setText("Photo Download: Enabled");
+            }else{
+                photoDownloadEnabled.setText("Photo Download: Disabled");
+            }
         }
     };
 
@@ -87,9 +96,30 @@ public class DisplayUserProfileActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Returns profile object of current LoggedInUser.
+     * @return UserProfile
+     */
     public UserProfile getUserProfile(){return LoggedInUser.getInstance().getProfile();}
+
+    /**
+     * Returns button directing to edit user profile activity.
+     * @return Button
+     */
     public Button getEditUserProfileButton() {
         return editUserProfileButton;
     }
 
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
+    @Override
+    public void update(Observable observable, Object data) {
+
+    }
 }

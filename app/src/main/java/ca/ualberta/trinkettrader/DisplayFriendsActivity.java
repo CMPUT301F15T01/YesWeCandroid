@@ -22,7 +22,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-public class DisplayFriendsActivity extends AppCompatActivity {
+import java.util.Observable;
+import java.util.Observer;
+
+public class DisplayFriendsActivity extends AppCompatActivity implements Observer {
 
     private Button findFriendsButton;
     private EditText findFriendTextField;
@@ -52,10 +55,18 @@ public class DisplayFriendsActivity extends AppCompatActivity {
         friendsListView.setAdapter(friendAdapter);
     }
 
+    /**
+     *  Returns the find friend button.
+     * @return findFriendsButton
+     */
     public Button getFindFriendsButton() {
         return findFriendsButton;
     }
 
+    /**
+     *  Returns view tracked friends button
+     * @return viewTrackedFriendsButton
+     */
     public Button getViewTrackedFriendsButton() {
         return viewTrackedFriendsButton;
     }
@@ -68,12 +79,35 @@ public class DisplayFriendsActivity extends AppCompatActivity {
         return friendsListView;
     }
 
+    /**
+     * Sets the friends information so that their profile can be viewed
+     *
+     * @param v
+     */
     public void findFriendsOnClick(View v) {
         controller.findFriendsOnClick();
         friendAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * viewTrackedFriendsOnCLick navigates to tracked friends
+     * @param v tracked friends button view
+     */
+
     public void viewTrackedFriendsOnClick(View v){
         controller.viewTrackedFriendsOnClick();
+    }
+
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
+    @Override
+    public void update(Observable observable, Object data) {
+        
     }
 }

@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -30,9 +31,13 @@ import android.widget.Spinner;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 
-public class AddOrEditItemActivity extends AppCompatActivity {
+public class AddOrEditItemActivity extends AppCompatActivity implements Observer {
 
     private AddOrEditItemController controller;
     private Button pictureLibraryButton;
@@ -63,28 +68,79 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         this.accessibility = (CheckBox) findViewById(R.id.accessibilityCheckbox);
         this.saveButton = (Button) findViewById(R.id.saveItemButton);
         this.itemDescription = (EditText) findViewById(R.id.itemDescriptionText);
+
+        // Lalit Poptani, http://stackoverflow.com/questions/8119526/android-get-previous-activity, 2015-11-06
+        Intent intent = getIntent();
+        String prevActivity = intent.getStringExtra("activityName");
+        if (prevActivity.equals("edit")) {
+            Trinket edited = ApplicationState.getInstance().getClickedTrinket();
+            this.itemName.setText(edited.getName());
+            this.itemCategory.setSelection(new ArrayList<>(Arrays.asList(this.getResources().getStringArray(R.array.spinner_categories))).indexOf(edited.getCategory()));
+            this.itemQuality.setSelection(new ArrayList<>(Arrays.asList(this.getResources().getStringArray(R.array.spinner_qualities))).indexOf(edited.getQuality()));
+            this.itemQuantity.setText(edited.getQuantity());
+            this.accessibility.setChecked(edited.getAccessibility().equals("public"));
+            this.itemDescription.setText(edited.getDescription());
+
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    controller.onSaveEditClick();
+                }
+            });
+        } else {
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    controller.onSaveNewClick();
+                }
+            });
+        }
     }
 
+    /**
+     * Gets checkbox indicating if item is public or private.
+     * @return CheckBox
+     */
     public CheckBox getAccessibility() {
         return accessibility;
     }
 
+    /**
+     * Returns spinner indicating items category.
+     * @return Spinner
+     */
     public Spinner getItemCategory() {
         return itemCategory;
     }
 
+    /**
+     * Returns EditText for item's description.
+     * @return EditText
+     */
     public EditText getItemDescription() {
         return itemDescription;
     }
 
+    /**
+     * Returns EditText field for item's name
+     * @return EditText
+     */
     public EditText getItemName() {
         return itemName;
     }
 
+    /**
+     * Returns Spinner indicating item's quality.
+     * @return Spinner
+     */
     public Spinner getItemQuality() {
         return itemQuality;
     }
 
+    /**
+     * Returns EditText field for item's quantity.
+     * @return EditText
+     */
     public EditText getItemQuantity() {
         return itemQuantity;
     }
@@ -93,10 +149,18 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         return pictureLibraryButton;
     }
 
+    /**
+     * Returns Button that will remove an image attached to the item.
+     * @return Button
+     */
     public Button getRemovePictureButton() {
         return removePictureButton;
     }
 
+    /**
+     * Return Button that will save the item.
+     * @return Button
+     */
     public Button getSaveButton() {
         return saveButton;
     }
@@ -106,6 +170,11 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     }
 
     // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
+
+    /**
+     * Click method for taking a picture to attach to an item.
+     * @param view
+     */
     public void takePictureClick(View view) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -128,6 +197,11 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     }
 
     // hcpl; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05
+
+    /**
+     * Click method for selecting a picture from the android gallery.
+     * @param view
+     */
     public void pictureLibraryClick(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -169,19 +243,52 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         else return null;
     }
 
+    /**
+     * Click method directing controller to remove attached image.
+     * @param view
+     */
     public void removePictureClick(View view) {
         controller.removePicture();
     }
 
-    public void saveClick(View view) {
-        controller.onSaveClick();
-    }
-
+    /**
+     * Returns REQUEST_IMAGE_CAPTURE value.
+     * @return in
+     */
     public static int getRequestImageCapture() {
         return REQUEST_IMAGE_CAPTURE;
     }
 
     public static int getSelectPicture() {
         return SELECT_PICTURE;
+    }
+
+    /**
+     * Returns Uri.
+     * @return Uri
+     */
+    public Uri getUri() {
+        return uri;
+    }
+
+    /**
+     * Set Uri.
+     * @param uri
+     */
+    public void setUri(Uri uri) {
+        this.uri = uri;
+    }
+
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
+    @Override
+    public void update(Observable observable, Object data) {
+
     }
 }

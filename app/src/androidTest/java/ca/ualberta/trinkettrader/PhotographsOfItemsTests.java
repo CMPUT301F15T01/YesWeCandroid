@@ -17,7 +17,12 @@ package ca.ualberta.trinkettrader;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -28,14 +33,27 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
 public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
+    // richq; http://stackoverflow.com/questions/3668528/access-image-in-my-android-tests; 2015-11-06
+    private AssetManager assetManager;
+
     public PhotographsOfItemsTests() {
         super(LoginActivity.class);
+    }
+
+    public void setUp() throws Exception {
+        super.setUp();
+        assetManager = this.getActivity().getAssets();
     }
 
     public void testStart() throws Exception {
@@ -136,7 +154,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(addOrEditItemActivityMonitor);
 
-
         // Edit item name
         final EditText editName = addOrEditItemActivity.getItemName();
         final String itemName = "Test";
@@ -172,10 +189,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // Simulate selecting an image
-        Intent intent = new Intent();
-        //intent.setData();
-        addOrEditItemActivity.onActivityResult(addOrEditItemActivity.getSelectPicture(), Activity.RESULT_OK, intent);
+        // TODO UI test the image capturing with the camera
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -188,10 +202,10 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
         // Make sure the item has an image
         addOrEditItemActivity.finish();
-        Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
-        while (trinketIterator.hasNext()) {
-            Picture picture = trinketIterator.next().getPicture();
-            assertNotNull(picture);
+        Inventory trinkets = displayInventoryActivity.getInventory();
+        assertFalse(trinkets.isEmpty());
+        for (Trinket trinket: trinkets) {
+            assertFalse(trinket.getPictures().isEmpty());
         }
 
         // Close the activities
@@ -368,9 +382,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(itemDetailsActivityMonitor);
 
         // Check that the image is visible
-        ImageView itemImage = itemDetailsActivity.getImageView();
+        ArrayList<ImageView> imageViews = itemDetailsActivity.getImageViews();
         // PC.; http://stackoverflow.com/questions/9113895/how-to-check-if-an-imageview-is-attached-with-image-in-android; 2015-11-01
-        assertNotNull(itemImage.getDrawable());
+        assertFalse(imageViews.isEmpty());
+        for (ImageView imageView: imageViews) {
+            assertNotNull(imageView.getDrawable());
+        }
 
         // Close the activities
         itemDetailsActivity.finish();
@@ -384,11 +401,154 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
-        // TODO Need to check that all the photos are under 65536 bytes
-        assertNotNull(null);
+        /******** HomePageActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor homePageActivityMonitor =
+                getInstrumentation().addMonitor(HomePageActivity.class.getName(),
+                        null, false);
+
+        // Start DisplayInventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emailTextView.setText(test_email);
+            }
+        });
+        final Button homePageButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                homePageButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        HomePageActivity homePageActivity = (HomePageActivity)
+                homePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", homePageActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, homePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                HomePageActivity.class, homePageActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        /******** DisplayInventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor displayInventoryActivityMonitor =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
+
+        // Start DisplayInventoryActivity
+        final Button inventoryButton = homePageActivity.getInventoryButton();
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                inventoryButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity displayInventoryActivity = (DisplayInventoryActivity)
+                displayInventoryActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayInventoryActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, displayInventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayInventoryActivityMonitor);
+
+        /******** AddOrEditItemActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor addOrEditItemActivityMonitor =
+                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                        null, false);
+
+        // Start DisplayInventoryActivity
+        final Button addItemButton = displayInventoryActivity.getAddItemButton();
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                addItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        AddOrEditItemActivity addOrEditItemActivity = (AddOrEditItemActivity)
+                addOrEditItemActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", addOrEditItemActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, addOrEditItemActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                AddOrEditItemActivity.class, addOrEditItemActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(addOrEditItemActivityMonitor);
+
+        // Edit item name
+        final EditText editName = addOrEditItemActivity.getItemName();
+        final String itemName = "Test";
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                editName.setText(itemName);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Get resources
+        Resources resources = addOrEditItemActivity.getResources();
+
+        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
+        ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
+        final int ring = spinner_categories.indexOf("Ring");
+        final Spinner category = addOrEditItemActivity.getItemCategory();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                category.setSelection(ring);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
+        ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
+        final int good = spinner_qualities.indexOf("Good");
+        final Spinner quality = addOrEditItemActivity.getItemQuality();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                quality.setSelection(good);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // TODO UI test the image capturing with the camera
+
+        // Save the item
+        final Button saveItemButton = addOrEditItemActivity.getSaveButton();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Make sure the item's image is less than the limit
+        addOrEditItemActivity.finish();
+        Inventory trinkets = displayInventoryActivity.getInventory();
+        for (Trinket trinket: trinkets) {
+            for (Picture picture: trinket.getPictures()) {
+                assertTrue(picture.size() < 65536);
+            }
+        }
 
         // Close the activities
-        loginActivity.finish();
+        addOrEditItemActivity.finish();
+        displayInventoryActivity.finish();
+        homePageActivity.finish();
     }
 
     public void testDeletePhotoGraph() {
@@ -530,14 +690,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // Make sure the item has an image
-        addOrEditItemActivity.finish();
-        Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
-        while (trinketIterator.hasNext()) {
-            Picture picture = trinketIterator.next().getPicture();
-            assertNotNull(picture);
-        }
-
         /******** ItemDetailsActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor itemDetailsActivityMonitor =
@@ -613,9 +765,10 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         itemDetailsActivity.finish();
 
         // Make sure the item does not have an image
-        Iterator<Trinket> noPicturesTrinketIterator = displayInventoryActivity.getInventory().iterator();
-        while (noPicturesTrinketIterator.hasNext()) {
-            assertNull(noPicturesTrinketIterator.next().getPicture());
+        Inventory inventory = displayInventoryActivity.getInventory();
+        assertFalse(inventory.isEmpty());
+        for (Trinket trinket: inventory) {
+            assertTrue(trinket.getPictures().isEmpty());
         }
 
         // Close the activities

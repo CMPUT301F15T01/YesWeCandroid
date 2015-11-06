@@ -14,33 +14,25 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.widget.ArrayAdapter;
-
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ListView;
-import java.util.ArrayList;
+import android.widget.TextView;
+
 import java.util.Observable;
 import java.util.Observer;
 
-/**
- *
- *
- *
- */
+public class InventoryDetailsActivity extends AppCompatActivity implements Observer {
 
-public class DisplayPastTradesActivity extends AppCompatActivity implements Observer {
-    ListView pastTradesListView;
-    private PastTradesController controller;
-    private ArrayAdapter<Trade> pastTradesAdapter;
-    private ArrayList<Trade> userPastTradesList;
-
-
+    TextView numItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_past_trades);
+        setContentView(R.layout.activity_inventory_details);
+
+        numItems = (TextView) findViewById(R.id.numItemsText);
+        numItems.setText("Number of items: " + LoggedInUser.getInstance().getInventory().size());
     }
 
     /**

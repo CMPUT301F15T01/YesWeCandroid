@@ -30,6 +30,13 @@
         android:textIsSelectable="true"
         android:inputType="text" />
 
+    <Button
+        android:layout_width="355dp"
+        android:layout_height="wrap_content"
+        android:text="Inventory Details"
+        android:id="@+id/detailsButton"
+        android:onClick="detailsClick"/>
+
     <Spinner
         android:id="@+id/accessibility_spinner"
         android:layout_width="match_parent"

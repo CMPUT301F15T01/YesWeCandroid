@@ -93,6 +93,5 @@
         android:id="@+id/saveItemButton"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:onClick="saveClick"
         android:text="@string/activity_add_or_edit_item_save_button_text" />
 </LinearLayout>

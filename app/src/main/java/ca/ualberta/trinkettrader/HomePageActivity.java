@@ -19,7 +19,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class HomePageActivity extends AppCompatActivity {
+import java.util.Observable;
+import java.util.Observer;
+
+public class HomePageActivity extends AppCompatActivity implements Observer {
 
     private Button friendsButton;
     private Button inventoryButton;
@@ -71,5 +74,18 @@ public class HomePageActivity extends AppCompatActivity {
 
     public void profileClick(View view) {
         controller.onProfileClick();
+    }
+
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
+    @Override
+    public void update(Observable observable, Object data) {
+
     }
 }

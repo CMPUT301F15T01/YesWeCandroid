@@ -14,7 +14,6 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,13 +23,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class DisplayInventoryActivity extends AppCompatActivity {
+public class DisplayInventoryActivity extends AppCompatActivity implements Observer {
 
     private ArrayAdapter<Trinket> trinketArrayAdapter;
     private Button addItemButton;
-    private Button deleteAll;
     private Inventory inventory;
     private ListView inventoryItemsList;
 
@@ -41,13 +40,6 @@ public class DisplayInventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_inventory);
 
-        /*inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: open the DisplayItemDetails for the Trinket (list item) that was clicked
-            }
-        });
-        */
         this.inventoryController = new InventoryController(this);
         this.inventory = LoggedInUser.getInstance().getInventory();
         this.inventoryItemsList = (ListView) findViewById(R.id.displayedTrinkets);
@@ -73,23 +65,56 @@ public class DisplayInventoryActivity extends AppCompatActivity {
         trinketArrayAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Returns button for adding item.
+     * @return Button
+     */
     public Button getAddItemButton() {
         return addItemButton;
     }
 
+    /**
+     * Returns logged in user's inventory.
+     * @return Inventory
+     */
     public Inventory getInventory() {
         return inventory;
     }
 
+    /**
+     * Returns ListView c=holding the inventory.
+     * @return ListView
+     */
     public ListView getInventoryItemsList() {
         return inventoryItemsList;
     }
 
-    public Button getDeleteAll() {
-        return deleteAll;
-    }
-
+    /**
+     * Directs controller to add a new item.
+     * @param view
+     */
     public void clickAdd(View view) {
         inventoryController.onAddItemClick();
+    }
+
+    /**
+     * Directs controller to display inventory details.
+     * @param view
+     */
+    public void detailsClick(View view) {
+        inventoryController.onDetailsClick();
+    }
+
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
+    @Override
+    public void update(Observable observable, Object data) {
+
     }
 }

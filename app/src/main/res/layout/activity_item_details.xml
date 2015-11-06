@@ -14,7 +14,8 @@
         android:id="@+id/edit_button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="168dp" />
+        android:layout_marginBottom="168dp"
+        android:onClick="editClick" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,5 +34,15 @@
         android:layout_alignParentStart="true"
         android:layout_above="@+id/accessibility_textview"
         android:layout_alignParentEnd="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:id="@+id/deleteItemButton"
+        android:layout_alignTop="@+id/edit_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="82dp"
+        android:onClick="deleteClick" />
 
 </RelativeLayout>

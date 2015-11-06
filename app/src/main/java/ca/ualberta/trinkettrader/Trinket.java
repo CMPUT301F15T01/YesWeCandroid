@@ -14,13 +14,11 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.provider.ContactsContract.CommonDataKinds.Photo;
-
 import java.util.ArrayList;
 
 public class Trinket {
 
-    private Picture picture;
+    private ArrayList<Picture> pictures;
     private String accessibility;
     private String category;
     private String description;
@@ -29,8 +27,9 @@ public class Trinket {
     private String quantity;
 
     public Trinket() {
-        quantity = "1";
         accessibility = "public";
+        pictures = new ArrayList<>();
+        quantity = "1";
     }
 
     public String getAccessibility() {
@@ -65,12 +64,12 @@ public class Trinket {
         this.name = name;
     }
 
-    public Picture getPicture() {
-        return picture;
+    public ArrayList<Picture> getPictures() {
+        return this.pictures;
     }
 
-    public void setPicture(Picture picture) {
-        this.picture = picture;
+    public void setPictures(ArrayList<Picture> pictures) {
+        this.pictures = pictures;
     }
 
     public String getQuality() {

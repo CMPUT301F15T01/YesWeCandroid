@@ -16,7 +16,7 @@ tools:context="ca.ualberta.trinkettrader.DisplayTrackedFriendsActivity">
         android:layout_height="wrap_content"
         android:id="@+id/trackedFriendsListView"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/backToFriendsListButton" />
+        android:gravity="top" />
 
     <Button
         android:layout_width="wrap_content"
