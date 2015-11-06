@@ -346,11 +346,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         assertEquals("Activity is of wrong type; expected DisplayFriendsProfileActivity", DisplayFriendsProfileActivity.class, displayFriendsProfileActivity.getClass());
         getInstrumentation().removeMonitor(displayFriendsProfileActivityMonitor);
 
-<<<<<<< HEAD
-
-
         // we are in the friend's page....now we have to click track and add the friend to the track friends.
-=======
+
         //click the radio button to set the friend as tracked
         trackFriendButton = displayFriendsProfileActivity.getTrackedRadioButton();
         displayFriendsProfileActivity.runOnUiThread(new Runnable() {
@@ -407,7 +404,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         */
         // check that there is now a tracked friend in the tracked friends list
         assertFalse(LoggedInUser.getInstance().getTrackedFriends().isEmpty());
->>>>>>> 0768823ef11e38dbb4a98b3da486081f4b371795
+
         // we have to check that the friend was successfully added to the tracked friend list, and also check in the UI.
         // we have to make a tracked friends page or whatever, or somehow find a way to view tracked friends (or just leave it as is with this one button).
     }
