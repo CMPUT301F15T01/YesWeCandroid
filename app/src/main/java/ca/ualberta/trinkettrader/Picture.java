@@ -32,6 +32,7 @@ public class Picture {
         // Óscar López; http://stackoverflow.com/questions/8721262/how-to-get-file-size-in-java; 2015-11-04
         image = new byte[(int) file.length()];
         fileInputStream.read(image);
+        fileInputStream.close();
     }
 
     public void delete() {

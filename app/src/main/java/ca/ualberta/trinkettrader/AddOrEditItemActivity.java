@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -44,8 +45,9 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     private EditText itemQuantity;
     private Spinner itemCategory;
     private Spinner itemQuality;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int SELECT_PICTURE = 2;
     private Uri uri;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,19 +118,22 @@ public class AddOrEditItemActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        this.uri = Uri.fromFile(image);
+        uri = Uri.fromFile(image);
+
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, this.uri);
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
-    // nandeesh; http://stackoverflow.com/questions/11990945/android-sdk-let-user-choose-picture-from-gallery-or-camera; 2015-11-05
+    // hcpl; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05
     public void pictureLibraryClick(View view) {
-        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
-        galleryIntent.setType("image/*");
-        startActivityForResult(galleryIntent, REQUEST_IMAGE_CAPTURE);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,
+                "Select Picture"), SELECT_PICTURE);
     }
 
     // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
@@ -137,11 +142,31 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
                 // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
-                controller.addPicture(uri);
+                controller.addPicture(uri.getPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK) {
+            try {
+                controller.addPicture(getPath(data.getData()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    // mad; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05
+    private String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if(cursor!=null)
+        {
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        else return null;
     }
 
     public void removePictureClick(View view) {
