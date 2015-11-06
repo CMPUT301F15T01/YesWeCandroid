@@ -52,6 +52,10 @@ public class Trade extends Observable {
         return sender;
     }
 
+    /**
+     * Returns status of the trade. Can be pending, accepted, or rejected.
+     * @return String
+     */
     public String getStatus() {
         return status;
     }
@@ -60,9 +64,17 @@ public class Trade extends Observable {
         this.status = status;
     }
 
+    /**
+     * Returns number of items involved in the trades.
+     * @return Integer
+     */
     public Integer getNumberOfItems() { return numberOfItems;
     }
 
+    /**
+     * Sets number of items in the trade.
+     * @param numberOfItems
+     */
     public void setNumberOfItems(Integer numberOfItems) { this.numberOfItems = numberOfItems;
     }
 }

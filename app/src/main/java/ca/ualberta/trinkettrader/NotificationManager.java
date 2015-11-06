@@ -21,6 +21,10 @@ public class NotificationManager {
     ArrayList<Notification> pendingNotifications = new ArrayList<Notification>();
     Integer displayNotificationCountOnHomeScreen;  // TODO this sounds more like a method
 
+    /**
+     * Returns if there is a notification or not.
+     * @return Boolean
+     */
     public Boolean hasNotification(){
         return Boolean.TRUE;
     }

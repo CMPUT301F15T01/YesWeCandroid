@@ -27,6 +27,11 @@ public class Picture extends Observable {
     private byte[] image;
     private volatile File file;
 
+    /**
+     *
+     * @param file
+     * @throws IOException
+     */
     public Picture(File file) throws IOException {
         this.file = file;
         FileInputStream fileInputStream = new FileInputStream(file);
@@ -40,10 +45,18 @@ public class Picture extends Observable {
         this.file.delete();
     }
 
+    /**
+     * Returns bitmap of the picture.
+     * @return Bitmap
+     */
     public Bitmap getBitmap() {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
+    /**
+     * Returns size of the picture.
+     * @return Long
+     */
     public Long size() {
         return file.length();
     }
