@@ -20,8 +20,9 @@ import android.graphics.BitmapFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Observable;
 
-public class Picture {
+public class Picture extends Observable {
 
     private byte[] image;
     private volatile File file;
@@ -29,7 +30,7 @@ public class Picture {
     public Picture(File file) throws IOException {
         this.file = file;
         FileInputStream fileInputStream = new FileInputStream(file);
-        // Óscar López; http://stackoverflow.com/questions/8721262/how-to-get-file-size-in-java; 2015-11-04
+        // \u00d3scar L\u00f3pez; http://stackoverflow.com/questions/8721262/how-to-get-file-size-in-java; 2015-11-04
         image = new byte[(int) file.length()];
         fileInputStream.read(image);
         fileInputStream.close();

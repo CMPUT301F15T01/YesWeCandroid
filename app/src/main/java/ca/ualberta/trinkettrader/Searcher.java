@@ -15,8 +15,9 @@
 package ca.ualberta.trinkettrader;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class Searcher {
+public class Searcher extends Observable {
 
     public static Inventory searchInventoryByCategory(User user, String category) {
         return new Inventory();

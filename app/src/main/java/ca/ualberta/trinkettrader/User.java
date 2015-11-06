@@ -14,7 +14,11 @@
 
 package ca.ualberta.trinkettrader;
 
-public abstract class User  {
+import java.util.Observable;
+
+public abstract class User extends Observable {
+
+
 
     protected FriendsList friendsList;
     protected Inventory inventory;

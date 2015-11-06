@@ -14,7 +14,9 @@
 
 package ca.ualberta.trinkettrader;
 
-public class ContactInfo {
+import java.util.Observable;
+
+public class ContactInfo extends Observable {
 
     private String name;
     private String address;

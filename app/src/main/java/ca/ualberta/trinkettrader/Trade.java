@@ -14,7 +14,9 @@
 
 package ca.ualberta.trinkettrader;
 
-public class Trade {
+import java.util.Observable;
+
+public class Trade extends Observable {
 
     private Inventory offeredItems;
     private Inventory requestedItems;

@@ -14,7 +14,9 @@
 
 package ca.ualberta.trinkettrader;
 
-public class UserProfile {
+import java.util.Observable;
+
+public class UserProfile extends Observable {
 
     private Boolean arePhotosDownloadable;
     private ContactInfo contactInfo;

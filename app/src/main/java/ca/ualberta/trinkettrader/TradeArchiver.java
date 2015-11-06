@@ -15,8 +15,9 @@
 package ca.ualberta.trinkettrader;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class TradeArchiver {
+public class TradeArchiver extends Observable {
 
     private ArrayList<Trade> currentTrades;
     private ArrayList<Trade> pastTrades;
