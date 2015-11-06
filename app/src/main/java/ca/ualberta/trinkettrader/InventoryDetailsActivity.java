@@ -14,27 +14,21 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.support.v7.app.ActionBarActivity;
+import android.widget.TextView;
 
-/**
- *
- *
- *
- */
-public class DisplayTradesActivity extends AppCompatActivity {
+public class InventoryDetailsActivity extends ActionBarActivity {
+
+    TextView numItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_trades);
+        setContentView(R.layout.activity_inventory_details);
+
+        numItems = (TextView) findViewById(R.id.numItemsText);
+        numItems.setText("Number of items: " + LoggedInUser.getInstance().getInventory().size());
     }
 
-    // PastTrades Button click
-    public void openPastTrades(View view){
-        Intent intent = new Intent(this, DisplayPastTradesActivity.class);
-        startActivity(intent);
-    }
 }

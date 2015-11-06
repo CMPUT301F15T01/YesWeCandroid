@@ -77,4 +77,8 @@ public class DisplayInventoryActivity extends AppCompatActivity {
     public void clickAdd(View view) {
         inventoryController.onAddItemClick();
     }
+
+    public void detailsClick(View view) {
+        inventoryController.onDetailsClick();
+    }
 }
