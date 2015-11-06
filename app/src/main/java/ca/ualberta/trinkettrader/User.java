@@ -15,7 +15,6 @@
 package ca.ualberta.trinkettrader;
 
 import java.util.ArrayList;
-import java.util.Observable;
 import java.util.Observer;
 
 public abstract class User implements ca.ualberta.trinkettrader.Observable {

@@ -18,9 +18,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-/**
- * Created by anju on 03/11/15.
- */
 public class EditProfileController {
 
     private EditProfileActivity activity;
@@ -41,8 +38,8 @@ public class EditProfileController {
         public void onClick(View v) {
             //TODO: save the changed data remotely - Part 5
 
-            //NOW: Controller takes data from activity, updates UserProfile in LoggedInUser 
-            //UserProfile (observable) updates its observer (DisplayProfileActivity) 
+            //NOW: Controller takes data from activity, updates UserProfile in LoggedInUser
+            //UserProfile (observable) updates its observer (DisplayProfileActivity)
 
             EditText name = (EditText) activity.findViewById(R.id.edit_name);
             EditText address = (EditText) activity.findViewById(R.id.edit_address);
@@ -72,8 +69,8 @@ public class EditProfileController {
 
         }
     };
-    
-    
+
+
 
 
 }

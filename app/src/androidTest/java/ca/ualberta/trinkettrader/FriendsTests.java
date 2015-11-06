@@ -14,12 +14,8 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Application;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
