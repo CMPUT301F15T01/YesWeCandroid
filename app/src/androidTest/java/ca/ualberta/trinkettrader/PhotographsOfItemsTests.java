@@ -189,7 +189,11 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // TODO UI test the image capturing with the camera
+        // Simulate selecting an image
+        Intent intent = new Intent();
+        // Axarydax; http://stackoverflow.com/questions/4896223/how-to-get-an-uri-of-an-image-resource-in-android; 2015-11-05
+        addOrEditItemActivity.setUri(Uri.parse("android.resource://ca.ualberta.trinkettrader/" + R.drawable.bauble));
+        addOrEditItemActivity.onActivityResult(AddOrEditItemActivity.getRequestImageCapture(), Activity.RESULT_OK, intent);
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -342,7 +346,11 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // TODO UI test the image capturing with the camera
+        // Simulate selecting an image
+        Intent intent = new Intent();
+        // Axarydax; http://stackoverflow.com/questions/4896223/how-to-get-an-uri-of-an-image-resource-in-android; 2015-11-05
+        addOrEditItemActivity.setUri(Uri.parse("android.resource://ca.ualberta.trinkettrader/" + R.drawable.bauble));
+        addOrEditItemActivity.onActivityResult(AddOrEditItemActivity.getRequestImageCapture(), Activity.RESULT_OK, intent);
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -525,7 +533,11 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // TODO UI test the image capturing with the camera
+        // Simulate selecting an image
+        Intent intent = new Intent();
+        // Axarydax; http://stackoverflow.com/questions/4896223/how-to-get-an-uri-of-an-image-resource-in-android; 2015-11-05
+        addOrEditItemActivity.setUri(Uri.parse("android.resource://ca.ualberta.trinkettrader/" + R.drawable.bauble));
+        addOrEditItemActivity.onActivityResult(AddOrEditItemActivity.getRequestImageCapture(), Activity.RESULT_OK, intent);
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -679,7 +691,11 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // TODO UI test the image capturing with the camera
+        // Simulate selecting an image
+        Intent intent = new Intent();
+        // Axarydax; http://stackoverflow.com/questions/4896223/how-to-get-an-uri-of-an-image-resource-in-android; 2015-11-05
+        addOrEditItemActivity.setUri(Uri.parse("android.resource://ca.ualberta.trinkettrader/" + R.drawable.bauble));
+        addOrEditItemActivity.onActivityResult(AddOrEditItemActivity.getRequestImageCapture(), Activity.RESULT_OK, intent);
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
