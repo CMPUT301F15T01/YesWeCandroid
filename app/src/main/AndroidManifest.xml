@@ -83,14 +83,6 @@
                 android:value="ca.ualberta.trinkettrader.DisplayInventoryActivity" />
         </activity>
         <activity
-            android:name=".EditFriendsListActivity"
-            android:label="@string/title_activity_edit_friends_list"
-            android:parentActivityName=".DisplayFriendsActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.ualberta.trinkettrader.DisplayFriendsActivity" />
-        </activity>
-        <activity
             android:name=".DisplayTradesActivity"
             android:label="@string/title_activity_display_trades"
             android:parentActivityName=".HomePageActivity" >
