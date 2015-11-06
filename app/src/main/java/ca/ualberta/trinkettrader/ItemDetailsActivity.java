@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 public class ItemDetailsActivity extends AppCompatActivity {
 
     private Button deleteButton;
     private Button editButton;
-    private ImageView imageView;
+    private ArrayList<ImageView> imageViews;
     private Trinket item;
     private ItemDetailsController controller;
     private ItemDetailsActivity activity = this;
@@ -30,9 +32,11 @@ public class ItemDetailsActivity extends AppCompatActivity {
         this.editButton = (Button) findViewById(R.id.edit_button);
         this.controller = new ItemDetailsController(this);
 
-        imageView = (ImageView) findViewById(R.id.imageView);
-        if (item.getPicture() != null) {
-            imageView.setImageBitmap(item.getPicture().getBitmap());
+        imageViews = new ArrayList<>();
+        imageViews.add((ImageView) findViewById(R.id.imageView));
+        ArrayList<Picture> pictures = item.getPictures();
+        if (!pictures.isEmpty()) {
+            imageViews.get(0).setImageBitmap(pictures.get(0).getBitmap());
         }
 
         this.dialog = setupAlertDialog();
@@ -46,8 +50,8 @@ public class ItemDetailsActivity extends AppCompatActivity {
         return editButton;
     }
 
-    public ImageView getImageView() {
-        return imageView;
+    public ArrayList<ImageView> getImageViews() {
+        return this.imageViews;
     }
 
     public Trinket getItem() {
