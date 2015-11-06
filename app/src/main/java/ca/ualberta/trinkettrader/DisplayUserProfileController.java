@@ -17,9 +17,6 @@ package ca.ualberta.trinkettrader;
 import android.content.Intent;
 import android.view.View;
 
-/**
- * Created by anju on 03/11/15.
- */
 public class DisplayUserProfileController {
 
     private DisplayUserProfileActivity activity;
@@ -28,6 +25,10 @@ public class DisplayUserProfileController {
         this.activity = activity;
     }
 
+    /**
+     * Sets onClickListener for Edit Profile button.
+     * @return onClickListener
+     */
     public View.OnClickListener getEditButtonListener() {
         return editButtonListener;
     }

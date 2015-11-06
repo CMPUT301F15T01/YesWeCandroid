@@ -28,6 +28,10 @@ public class EditProfileController {
         this.activity = activity;
     }
 
+    /**
+     * Returns onClickListener for saving edits to user profile.
+     * @return onCLickListener
+     */
     public View.OnClickListener getSaveButtonListener() {
         return saveButtonListener;
     }
