@@ -36,6 +36,11 @@ public class DisplayTradesActivity extends AppCompatActivity implements Observer
     }
 
     // PastTrades Button click
+
+    /**
+     * onClick method for button that directs to past trades.
+     * @param view
+     */
     public void openPastTrades(View view){
         Intent intent = new Intent(this, DisplayPastTradesActivity.class);
         startActivity(intent);

@@ -71,10 +71,18 @@ public class EditProfileActivity extends AppCompatActivity implements Observer {
         saveButton.setOnClickListener(controller.getSaveButtonListener());
     }
 
+    /**
+     * Returns ToggleButton specifying if photos are downloadable or not.
+     * @return ToggleButton
+     */
     public ToggleButton getArePhotosDownloadableButton() {
         return arePhotosDownloadableButton;
     }
 
+    /**
+     * Returns profile of current LoggedInUser.
+     * @return UserProfile
+     */
     public UserProfile getUserProfile() {
         return LoggedInUser.getInstance().getProfile();
     }

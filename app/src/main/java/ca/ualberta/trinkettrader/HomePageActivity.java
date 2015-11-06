@@ -44,34 +44,66 @@ public class HomePageActivity extends AppCompatActivity implements Observer {
         this.tradeButton = (Button) findViewById(R.id.trades_button);
     }
 
+    /**
+     * Returns button directing to friends list.
+     * @return Button
+     */
     public Button getFriendsButton() {
         return friendsButton;
     }
 
+    /**
+     * Returns button directing to inventory.
+     * @return Button
+     */
     public Button getInventoryButton() {
         return inventoryButton;
     }
 
+    /**
+     * Returns button directing to user profile.
+     * @return Button
+     */
     public Button getProfileButton() {
         return profileButton;
     }
 
+    /**
+     * Returns button directing to trades
+     * @return Button
+     */
     public Button getTradeButton() {
         return tradeButton;
     }
 
+    /**
+     * Directs controller to handle click on inventory button.
+     * @param view
+     */
     public void inventoryClick(View view) {
         controller.onInventoryClick();
     }
 
+    /**
+     * Directs controller to handle click on friend button.
+     * @param view
+     */
     public void friendsClick(View view) {
         controller.onFriendsClick();
     }
 
+    /**
+     * Directs controller to handle click on trade button.
+     * @param view
+     */
     public void tradesClick(View view) {
         controller.onTradesClick();
     }
 
+    /**
+     * Directs controller to handle click on profile button.
+     * @param view
+     */
     public void profileClick(View view) {
         controller.onProfileClick();
     }
