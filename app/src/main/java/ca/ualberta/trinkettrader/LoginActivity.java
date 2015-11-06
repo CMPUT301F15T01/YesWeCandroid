@@ -154,10 +154,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         emailTextView.setAdapter(adapter);
     }
 
+    /**
+     * Returns text view for entering email.
+     * @return AutoCompleteTextView
+     */
     public AutoCompleteTextView getEmailTextView() {
         return emailTextView;
     }
 
+    /**
+     * Returns button for logging in.
+     * @return Button
+     */
     public Button getLoginButton() {
         return loginButton;
     }
