@@ -14,22 +14,6 @@
 
 package ca.ualberta.trinkettrader;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
-public class Inventory extends ArrayList<Trinket> {
-
-    private Boolean needToSave;
-
-    public Inventory(Collection<? extends Trinket> collection) {
-        super(collection);
-    }
-
-    public Inventory() {
-        this.needToSave = Boolean.TRUE;
-    }
-
-    public Boolean getNeedToSave() {
-        return this.needToSave;
-    }
+public class ActiveTradesController {
 }

@@ -50,16 +50,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         activity.finish();
     }
 
-    // Test method for checking if inventory contains a certain item
     public void testHasItem() {
-        Inventory inventory = new Inventory();
-        Trinket Trinket = new Trinket();
-        assertFalse(inventory.contains(Trinket));
-        inventory.add(Trinket);
-        assertTrue(inventory.contains(Trinket));
-    }
-
-    public void testHasItemUI() {
         // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
@@ -154,6 +145,10 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
+        Instrumentation.ActivityMonitor displayInventoryActivityMonitorAgain =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
+
         // Click the button
         final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
         addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
@@ -197,8 +192,21 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity displayInventoryActivityAgain = (DisplayInventoryActivity)
+                displayInventoryActivityMonitorAgain.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivityAgain);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayInventoryActivityMonitorAgain.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, displayInventoryActivityAgain.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayInventoryActivityMonitorAgain);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
         assertNotNull(list.getChildAt(0));
-        Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
+        Iterator<Trinket> trinketIterator = displayInventoryActivityAgain.getInventory().iterator();
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getName(), "test");
         }
@@ -277,21 +285,6 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
     // Test method for getting the number of items in an inventory
     public void testNumberOfItemsInInventory() {
-        Inventory inventory = new Inventory();
-        Trinket Trinket1 = new Trinket();
-        inventory.add(Trinket1);
-        Trinket Trinket2 = new Trinket();
-        inventory.add(Trinket2);
-        Trinket Trinket3 = new Trinket();
-        inventory.add(Trinket3);
-        assertTrue(inventory.size() == 3);
-
-        inventory.remove(Trinket1);
-        inventory.remove(Trinket2);
-        assertTrue(inventory.size() == 1);
-    }
-
-    public void testNumberOfItemsInInventoryUI() {
         // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
@@ -385,6 +378,11 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
+        // Move to add item activity
+        Instrumentation.ActivityMonitor displayInventoryActivityMonitorAgain =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
+
         // Click the button
         final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
         addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
@@ -427,6 +425,25 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity displayInventoryActivityAgain = (DisplayInventoryActivity)
+                displayInventoryActivityMonitorAgain.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivityAgain);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayInventoryActivityMonitorAgain.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, displayInventoryActivityAgain.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayInventoryActivityMonitorAgain);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
+        assertNotNull(list.getChildAt(0));
+        Iterator<Trinket> trinketIterator = displayInventoryActivityAgain.getInventory().iterator();
+        while (trinketIterator.hasNext()) {
+            assertEquals(trinketIterator.next().getName(), "test");
+        }
 
         assertTrue(inventoryActivity.getInventory().size() == 1);
     }

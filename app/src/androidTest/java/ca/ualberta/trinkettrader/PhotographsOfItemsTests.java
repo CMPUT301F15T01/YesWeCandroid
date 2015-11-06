@@ -16,7 +16,11 @@ package ca.ualberta.trinkettrader;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -27,6 +31,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -135,7 +141,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(addOrEditItemActivityMonitor);
 
-
         // Edit item name
         final EditText editName = addOrEditItemActivity.getItemName();
         final String itemName = "Test";
@@ -172,6 +177,11 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // TODO UI test the image capturing with the camera
+        // Simulate selecting an image
+        Intent intent = new Intent();
+        // Axarydax; http://stackoverflow.com/questions/4896223/how-to-get-an-uri-of-an-image-resource-in-android; 2015-11-05
+        addOrEditItemActivity.setUri(Uri.parse("android.resource://ca.ualberta.trinkettrader/" + R.drawable.bauble));
+        addOrEditItemActivity.onActivityResult(AddOrEditItemActivity.getRequestImageCapture(), Activity.RESULT_OK, intent);
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -186,11 +196,8 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         addOrEditItemActivity.finish();
         Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
         while (trinketIterator.hasNext()) {
-            ArrayList<Picture> pictures = trinketIterator.next().getPictures();
-            Iterator<Picture> pictureIterator = pictures.iterator();
-            while (pictureIterator.hasNext()) {
-                assertNotNull(pictureIterator.next());
-            }
+            Picture picture = trinketIterator.next().getPicture();
+            assertNotNull(picture);
         }
 
         // Close the activities
@@ -367,7 +374,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(itemDetailsActivityMonitor);
 
         // Check that the image is visible
-        ImageView itemImage = itemDetailsActivity.getItemPicture();
+        ImageView itemImage = itemDetailsActivity.getImageView();
         // PC.; http://stackoverflow.com/questions/9113895/how-to-check-if-an-imageview-is-attached-with-image-in-android; 2015-11-01
         assertNotNull(itemImage.getDrawable());
 
@@ -533,11 +540,8 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         addOrEditItemActivity.finish();
         Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
         while (trinketIterator.hasNext()) {
-            ArrayList<Picture> pictures = trinketIterator.next().getPictures();
-            Iterator<Picture> pictureIterator = pictures.iterator();
-            while (pictureIterator.hasNext()) {
-                assertNotNull(pictureIterator.next());
-            }
+            Picture picture = trinketIterator.next().getPicture();
+            assertNotNull(picture);
         }
 
         /******** ItemDetailsActivity ********/
@@ -617,7 +621,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Make sure the item does not have an image
         Iterator<Trinket> noPicturesTrinketIterator = displayInventoryActivity.getInventory().iterator();
         while (noPicturesTrinketIterator.hasNext()) {
-            assertEquals(noPicturesTrinketIterator.next().getPictures().size(), 0);
+            assertNull(noPicturesTrinketIterator.next().getPicture());
         }
 
         // Close the activities

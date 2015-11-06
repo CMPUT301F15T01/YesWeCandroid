@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,24 +30,24 @@ import android.widget.Spinner;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class AddOrEditItemActivity extends AppCompatActivity {
 
     private AddOrEditItemController controller;
-    private Button addPictureButton;
+    private Button pictureLibraryButton;
     private Button removePictureButton;
     private Button saveButton;
+    private Button takePictureButton;
     private CheckBox accessibility;
     private EditText itemDescription;
     private EditText itemName;
     private EditText itemQuantity;
     private Spinner itemCategory;
     private Spinner itemQuality;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int SELECT_PICTURE = 2;
     private Uri uri;
-    private ArrayList<Picture> pictures;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,6 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_or_edit_item);
 
         this.controller = new AddOrEditItemController(this);
-        this.pictures = new ArrayList<>();
 
         this.itemName = (EditText) findViewById(R.id.itemNameText);
         this.itemCategory = (Spinner) findViewById(R.id.itemCategorySpinner);
@@ -67,14 +67,6 @@ public class AddOrEditItemActivity extends AppCompatActivity {
 
     public CheckBox getAccessibility() {
         return accessibility;
-    }
-
-    public Button getAddPictureButton() {
-        return addPictureButton;
-    }
-
-    public AddOrEditItemController getController() {
-        return controller;
     }
 
     public Spinner getItemCategory() {
@@ -97,6 +89,10 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         return itemQuantity;
     }
 
+    public Button getPictureLibraryButton() {
+        return pictureLibraryButton;
+    }
+
     public Button getRemovePictureButton() {
         return removePictureButton;
     }
@@ -105,8 +101,12 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         return saveButton;
     }
 
+    public Button getTakePictureButton() {
+        return takePictureButton;
+    }
+
     // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
-    public void addPictureClick(View view) {
+    public void takePictureClick(View view) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -118,12 +118,22 @@ public class AddOrEditItemActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        this.uri = Uri.fromFile(image);
+        uri = Uri.fromFile(image);
+
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, this.uri);
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+    }
+
+    // hcpl; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05
+    public void pictureLibraryClick(View view) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,
+                "Select Picture"), SELECT_PICTURE);
     }
 
     // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
@@ -132,18 +142,54 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
                 // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
-                controller.onAddPictureClick(uri);
+                controller.addPicture(uri.getPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK) {
+            try {
+                controller.addPicture(getPath(data.getData()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void removePicturesClick(View view) {
-        controller.onRemovePicturesClick();
+    // mad; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05
+    public String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if(cursor!=null)
+        {
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
+        else return null;
+    }
+
+    public void removePictureClick(View view) {
+        controller.removePicture();
     }
 
     public void saveClick(View view) {
         controller.onSaveClick();
+    }
+
+    public static int getRequestImageCapture() {
+        return REQUEST_IMAGE_CAPTURE;
+    }
+
+    public static int getSelectPicture() {
+        return SELECT_PICTURE;
+    }
+
+    public Uri getUri() {
+        return uri;
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
     }
 }

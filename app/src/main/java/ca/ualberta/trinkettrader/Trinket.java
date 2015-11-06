@@ -20,18 +20,17 @@ import java.util.ArrayList;
 
 public class Trinket {
 
-    private ArrayList<Picture> pictures;
-    private String quantity;
+    private Picture picture;
     private String accessibility;
     private String category;
     private String description;
     private String name;
     private String quality;
+    private String quantity;
 
     public Trinket() {
         quantity = "1";
         accessibility = "public";
-        pictures = new ArrayList<>();
     }
 
     public String getAccessibility() {
@@ -66,12 +65,12 @@ public class Trinket {
         this.name = name;
     }
 
-    public ArrayList<Picture> getPictures() {
-        return pictures;
+    public Picture getPicture() {
+        return picture;
     }
 
-    public void setPictures(ArrayList<Picture> pictures) {
-        this.pictures = pictures;
+    public void setPicture(Picture picture) {
+        this.picture = picture;
     }
 
     public String getQuality() {
@@ -88,5 +87,10 @@ public class Trinket {
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

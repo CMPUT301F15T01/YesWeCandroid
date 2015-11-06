@@ -1,17 +1,9 @@
 package ca.ualberta.trinkettrader;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Environment;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Andrea McIntosh on 01/11/2015.
@@ -28,20 +20,15 @@ public class AddOrEditItemController {
 
     // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
     // dfserrano; https://github.com/joshua2ua/BogoPicLab/blob/master/BogoPicGen/src/es/softwareprocess/bogopicgen/BogoPicGenActivity.java; 2015-11-04
-    public void onAddPictureClick(Uri uri) throws IOException {
-        File file = new File(uri.getPath());
-        trinket.getPictures().add(new Picture(file));
+    public void addPicture(String path) throws IOException {
+        trinket.setPicture(new Picture(new File(path)));
     }
 
-    public void onRemovePicturesClick() {
-        for (Picture picture: trinket.getPictures()) {
-            picture.delete();
-        }
-        trinket.setPictures(new ArrayList<Picture>());
+    public void removePicture() {
+        trinket.setPicture(null);
     }
 
     public void onSaveClick() {
-        this.trinket = new Trinket();
         if (this.activity.getAccessibility().isChecked()) {
             this.trinket.setAccessibility("public");
         } else {

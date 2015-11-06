@@ -44,6 +44,7 @@ public class EditProfileController {
             activity.getUserProfile().setPostalCode(_postalCode);
             activity.getUserProfile().getContactInfo().setPhoneNumber(_phoneNum);
 
+            LoggedInUser.getInstance().saveInFile(activity.getBaseContext());
             //exit the activity
             activity.finish();
 

@@ -14,17 +14,42 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
 
-public class DisplayUserProfileActivity extends ActionBarActivity {
+public class DisplayUserProfileActivity extends AppCompatActivity {
 
     private Button editUserProfileButton;
     private DisplayUserProfileController controller;
-    private UserProfile profile;
+    private Handler handler;
+    private Runnable populateTextFieldsWithExistingValuesRunnable =  new Runnable() {
+        @Override
+        public void run() {
+            TextView name = (TextView) findViewById(R.id.name);
+            TextView address = (TextView) findViewById(R.id.address);
+            TextView city = (TextView) findViewById(R.id.city);
+            TextView postalCode = (TextView) findViewById(R.id.postal_code);
+            TextView phoneNum = (TextView) findViewById(R.id.phone_number);
+
+            name.setText(getUserProfile().getName());
+            address.setText(getUserProfile().getContactInfo().getAddress());
+            city.setText(getUserProfile().getCity());
+            postalCode.setText(getUserProfile().getContactInfo().getPostalCode());
+            phoneNum.setText(getUserProfile().getContactInfo().getPhoneNumber());
+
+        }
+    };
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        handler.post(populateTextFieldsWithExistingValuesRunnable);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +58,8 @@ public class DisplayUserProfileActivity extends ActionBarActivity {
 
         controller = new DisplayUserProfileController(this);
 
-        profile = LoggedInUser.getInstance().getProfile();
+        handler = new Handler();
+        handler.post(populateTextFieldsWithExistingValuesRunnable);
 
         editUserProfileButton = (Button) findViewById(R.id.edit_button);
         editUserProfileButton.setOnClickListener(controller.getEditButtonListener());
@@ -61,6 +87,7 @@ public class DisplayUserProfileActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public UserProfile getUserProfile(){return LoggedInUser.getInstance().getProfile();}
     public Button getEditUserProfileButton() {
         return editUserProfileButton;
     }
