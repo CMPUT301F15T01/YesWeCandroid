@@ -19,6 +19,7 @@ public class ItemDetailsController {
 
     public void onEditClick() {
         Intent intent = new Intent(this.activity, AddOrEditItemActivity.class);
+        intent.putExtra("activityName", "edit");
         activity.startActivity(intent);
     }
 }

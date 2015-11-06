@@ -22,6 +22,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 
 public class FriendsTests extends ActivityInstrumentationTestCase2{
 // Instrumentation code is from: https://developer.android.com/training/activity-testing/activity-functional-testing.html 2015-11-03
@@ -32,8 +33,11 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
     Button friendsButton;
     Button findFriendsButton;
     Button removeFriendButton;
-    Button trackFriendButton;
+    Button backButton;
+    Button viewTrackedFriendsButton;
+    RadioButton trackFriendButton;
     EditText findFriendTextField;
+
 
 
     public FriendsTests() {
@@ -342,9 +346,68 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         assertEquals("Activity is of wrong type; expected DisplayFriendsProfileActivity", DisplayFriendsProfileActivity.class, displayFriendsProfileActivity.getClass());
         getInstrumentation().removeMonitor(displayFriendsProfileActivityMonitor);
 
+<<<<<<< HEAD
 
 
         // we are in the friend's page....now we have to click track and add the friend to the track friends.
+=======
+        //click the radio button to set the friend as tracked
+        trackFriendButton = displayFriendsProfileActivity.getTrackedRadioButton();
+        displayFriendsProfileActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                trackFriendButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        //test that the friend has been tracked
+        assertTrue(LoggedInUser.getInstance().getFriendsList().get(0).isTracked().equals(true));
+
+
+        //click the back button to return to friends list
+        backButton = displayFriendsProfileActivity.getBackButton();
+        displayFriendsProfileActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                backButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        /*
+
+        THING IS SINCE THESE ARE NEW INTENTS OF IT STACKED ON TOP SOMETHING GOING WRONG
+
+        // Test that the DisplayFriendsActivity started correctly after the clicking the friends button..
+        displayFriendsActivityMonitor = getInstrumentation().addMonitor(DisplayFriendsActivity.class.getName(), null, false);
+        getInstrumentation().waitForIdleSync();
+        displayFriendsActivity = (DisplayFriendsActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("DisplayFriendsActivity is null", displayFriendsActivity);
+        assertEquals("Monitor for DisplayFriendsActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected DisplayFriendsActivity", DisplayFriendsActivity.class, displayFriendsActivity.getClass());
+        getInstrumentation().removeMonitor(displayFriendsActivityMonitor);
+        */
+        //click the view tracked friends button to view the tracked friends list
+        viewTrackedFriendsButton = displayFriendsActivity.getViewTrackedFriendsButton();
+        displayFriendsActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                viewTrackedFriendsButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        /*
+        // Test that the DisplayTrackedFriendsProfileActivity started correctly after the clicking the view tracked friends button.
+        Instrumentation.ActivityMonitor displayTrackedFriendsActivityMonitor = getInstrumentation().addMonitor(DisplayTrackedFriendsActivity.class.getName(), null, false);
+        getInstrumentation().waitForIdleSync();
+        DisplayTrackedFriendsActivity displayTrackedFriendsActivity = (DisplayTrackedFriendsActivity) displayTrackedFriendsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("DisplayTrackedFriendsActivity is null", displayTrackedFriendsActivity);
+        assertEquals("Monitor for DisplayTrackedFriendsActivity has not been called", 1, displayTrackedFriendsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected DisplayTrackedFriendsActivity", DisplayTrackedFriendsActivity.class, displayTrackedFriendsActivity.getClass());
+        getInstrumentation().removeMonitor(displayTrackedFriendsActivityMonitor);
+        */
+        // check that there is now a tracked friend in the tracked friends list
+        assertFalse(LoggedInUser.getInstance().getTrackedFriends().isEmpty());
+>>>>>>> 0768823ef11e38dbb4a98b3da486081f4b371795
         // we have to check that the friend was successfully added to the tracked friend list, and also check in the UI.
         // we have to make a tracked friends page or whatever, or somehow find a way to view tracked friends (or just leave it as is with this one button).
     }

@@ -16,6 +16,7 @@ package ca.ualberta.trinkettrader;
 
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.support.v7.widget.AppCompatButton;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.view.KeyEvent;
@@ -114,6 +115,10 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         assertNotNull("HomePageActivity is null", homePageActivity);
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
 
+        //Click button to display friends
+        Button friendsButton = (Button) homePageActivity.findViewById(R.id.friends_button);
+        assertNotNull(friendsButton);
+        assertEquals("View not a button", AppCompatButton.class, friendsButton.getClass());
 
         //Set an activity monitor for DisplayFriendsActivity
         Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(DisplayFriendsActivity.class.getName(), null, false);
