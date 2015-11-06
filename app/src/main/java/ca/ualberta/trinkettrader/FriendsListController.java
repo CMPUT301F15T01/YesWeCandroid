@@ -19,6 +19,9 @@ public class FriendsListController {
         this.activity = activity;
     }
 
+    /**
+     * onClick method for searching and adding friends.
+     */
     public void findFriendsOnClick() {
         EditText textField = activity.getFindFriendTextField();
         Friend newFriend = new Friend();
@@ -29,6 +32,9 @@ public class FriendsListController {
         LoggedInUser.getInstance().getFriendsList().add(newFriend);
     }
 
+    /**
+     * Sets click listener for the items in the friends list ListView.  Will direct to the friend's profile activity.
+     */
     public void setFriendsListViewItemOnClick() {
         ListView friendsListView = activity.getFriendsListView();
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -41,6 +47,9 @@ public class FriendsListController {
         });
     }
 
+    /**
+     * onClick method for the view tracked friends button.  Navigates to Tracked Friends List activity.
+     */
     public void viewTrackedFriendsOnClick() {
         Intent intent = new Intent(activity, DisplayTrackedFriendsActivity.class);
         activity.startActivity(intent);

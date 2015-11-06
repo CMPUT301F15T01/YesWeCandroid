@@ -40,6 +40,11 @@ public class FriendsList extends ArrayList<Friend> {
         return null;
     }
 
+    /**
+     * Add friend to friends list.  If that friend is already in your friends list it will not be added again.
+     * @param friend
+     * @return
+     */
     @Override
     public boolean add(Friend friend) {
         for (Friend f : this) {
