@@ -7,6 +7,7 @@ public class ApplicationState {
 
     private static ApplicationState ourInstance = new ApplicationState();
     private User clickedFriend;
+    private Trinket clickedTrinket;
 
     private ApplicationState() {
 
@@ -24,6 +25,11 @@ public class ApplicationState {
         this.clickedFriend = clickedFriend;
     }
 
+    public Trinket getClickedTrinket() {
+        return this.clickedTrinket;
+    }
 
-
+    public void setClickedTrinket(Trinket clickedTrinket) {
+        this.clickedTrinket = clickedTrinket;
+    }
 }

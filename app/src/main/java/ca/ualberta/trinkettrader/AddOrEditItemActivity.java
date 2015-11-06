@@ -34,7 +34,7 @@ import java.util.Date;
 public class AddOrEditItemActivity extends AppCompatActivity {
 
     private AddOrEditItemController controller;
-    private Button pictureLibrary;
+    private Button pictureLibraryButton;
     private Button removePictureButton;
     private Button saveButton;
     private Button takePictureButton;
@@ -87,8 +87,8 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         return itemQuantity;
     }
 
-    public Button getPictureLibrary() {
-        return pictureLibrary;
+    public Button getPictureLibraryButton() {
+        return pictureLibraryButton;
     }
 
     public Button getRemovePictureButton() {
@@ -144,8 +144,8 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         }
     }
 
-    public void removePicturesClick(View view) {
-        controller.removePictures();
+    public void removePictureClick(View view) {
+        controller.removePicture();
     }
 
     public void saveClick(View view) {

@@ -25,7 +25,7 @@
     <string name="activity_add_or_edit_item_public_check_box">Public</string>
     <string name="activity_add_or_edit_item_quantity_default">1</string>
     <string name="activity_add_or_edit_item_quantity_text">Quantity:</string>
-    <string name="activity_add_or_edit_item_remove_pictures_button_text">Remove All Pictures</string>
+    <string name="activity_add_or_edit_item_remove_picture_button_text">Remove Picture</string>
     <string name="activity_add_or_edit_item_save_button_text">Save</string>
     <string name="activity_add_or_edit_item_take_picture_button_text">Take Picture</string>
 
