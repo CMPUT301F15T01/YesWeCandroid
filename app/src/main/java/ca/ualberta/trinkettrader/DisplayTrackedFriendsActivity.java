@@ -51,18 +51,26 @@ public class DisplayTrackedFriendsActivity extends AppCompatActivity {
         trackedFriendsListView.setAdapter(trackedFriendAdapter);
     }
 
+    /**
+     * Directs controller to return to friends list activity.
+     * @param v
+     */
     public void backToFriendsListButtonOnClick(View v) {
         controller.backToFriendsListOnClick();
     }
 
-    /** Returns the back button to go back to the friends list page.
-     *
+    /**
+     * Returns the back button to go back to the friends list page.
      * @return back button
      */
     public Button getBackToFriendsListButton() {
         return backToFriendsListButton;
     }
 
+    /**
+     * Returns list of tracked friends.
+     * @return ListView
+     */
     public ListView getTrackedFriendsListView() {
         return trackedFriendsListView;
     }

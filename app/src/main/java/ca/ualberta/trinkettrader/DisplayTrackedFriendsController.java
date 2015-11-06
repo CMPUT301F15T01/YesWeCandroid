@@ -30,11 +30,17 @@ public class DisplayTrackedFriendsController {
         this.activity = activity;
     }
 
+    /**
+     * onClick method to return to FriendsListActivity.
+     */
     public void backToFriendsListOnClick() {
         Intent intent = new Intent(this.activity, DisplayFriendsActivity.class);
         activity.startActivity(intent);
     }
 
+    /**
+     * onClick method for clicking an item in the FriendsList ListView.
+     */
     public void setTrackedFriendsListViewItemOnClick() {
         ListView trackedFriendsListView = activity.getTrackedFriendsListView();
         trackedFriendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

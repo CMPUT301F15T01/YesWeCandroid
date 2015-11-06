@@ -93,7 +93,16 @@ public class DisplayUserProfileActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Returns profile object of current LoggedInUser.
+     * @return UserProfile
+     */
     public UserProfile getUserProfile(){return LoggedInUser.getInstance().getProfile();}
+
+    /**
+     * Returns button directing to edit user profile activity.
+     * @return Button
+     */
     public Button getEditUserProfileButton() {
         return editUserProfileButton;
     }
