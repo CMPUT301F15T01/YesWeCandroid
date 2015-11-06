@@ -17,7 +17,7 @@ package ca.ualberta.trinkettrader;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class FriendsList extends ArrayList<User> {
+public class FriendsList extends ArrayList<Friend> {
 
     public FriendsList() {
         super();
@@ -32,9 +32,9 @@ public class FriendsList extends ArrayList<User> {
     }
 
     public Friend getFriendByUsername(String username) {
-        for (User u : this) {
-            if (u.getProfile().getUsername().equals(username)) {
-                return (Friend) u;
+        for (Friend f : this) {
+            if (f.getProfile().getUsername().equals(username)) {
+                return f;
             }
         }
         return null;

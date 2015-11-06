@@ -41,8 +41,8 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
     }
 
     User borrower;
-    User friend1;
-    User friend2;
+    Friend friend1;
+    Friend friend2;
     Trinket trinket1;
     Trinket trinket2;
     Trinket trinket3;
@@ -84,7 +84,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         friend1Inventory.add(trinket3);
 
         borrower.getFriendsList().add(friend1);
-        friend1.getFriendsList().add(borrower);
+        friend1.getFriendsList().add((Friend)borrower);
 
         //Set an activity monitor for DisplayFriendsActivity
         Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(DisplayFriendsActivity.class.getName(), null, false);
@@ -171,7 +171,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         friend1Inventory.add(trinket3);
 
         borrower.getFriendsList().add(friend1);
-        friend1.getFriendsList().add(borrower);
+        friend1.getFriendsList().add((Friend)borrower);
 
         //Set an activity monitor for DisplayFriendsActivity
         Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(DisplayFriendsActivity.class.getName(), null, false);
@@ -296,7 +296,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         friend1Inventory.add(trinket3);
 
         borrower.getFriendsList().add(friend1);
-        friend1.getFriendsList().add(borrower);
+        friend1.getFriendsList().add((Friend)borrower);
 
         //Set an activity monitor for DisplayFriendsActivity
         Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(DisplayFriendsActivity.class.getName(), null, false);
@@ -401,7 +401,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         borrowerInventory.add(trinket2);
 
         borrower.getFriendsList().add(friend1);
-        friend1.getFriendsList().add(borrower);
+        friend1.getFriendsList().add((Friend)borrower);
 
         //TODO: check that we are viewing the borrower's inventory and not someone else's
         //Setup monitor for DisplayInventoryActivity for borrower

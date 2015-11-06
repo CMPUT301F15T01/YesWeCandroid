@@ -35,7 +35,7 @@ public class Friend extends User {
         this.isTracked = Boolean.FALSE;
     }
 
-    public Boolean getIsTracked() {
+    public Boolean isTracked() {
         return isTracked;
     }
 
