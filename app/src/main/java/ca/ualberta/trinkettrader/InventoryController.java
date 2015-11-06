@@ -19,4 +19,9 @@ public class InventoryController {
         intent.putExtra("activityName", "add");
         activity.startActivity(intent);
     }
+
+    public void onDetailsClick() {
+        Intent intent = new Intent(this.activity, InventoryDetailsActivity.class);
+        activity.startActivity(intent);
+    }
 }

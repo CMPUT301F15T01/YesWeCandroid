@@ -114,6 +114,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.trinkettrader.DisplayFriendsActivity" />
         </activity>
+        <activity
+            android:name=".InventoryDetailsActivity"
+            android:label="@string/title_activity_inventory_details" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.trinkettrader.DisplayInventoryActivity" />
+        </activity>
     </application>
 
 </manifest>

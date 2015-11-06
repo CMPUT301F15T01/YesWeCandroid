@@ -23,14 +23,26 @@ public class AddOrEditItemController {
 
     // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
     // dfserrano; https://github.com/joshua2ua/BogoPicLab/blob/master/BogoPicGen/src/es/softwareprocess/bogopicgen/BogoPicGenActivity.java; 2015-11-04
+
+    /**
+     * Adds picture to trinket being added/edited.
+     * @param path
+     * @throws IOException
+     */
     public void addPicture(String path) throws IOException {
         trinket.setPicture(new Picture(new File(path)));
     }
 
+    /**
+     * Removes picture from trinket being added/edited.
+     */
     public void removePicture() {
         trinket.setPicture(null);
     }
 
+    /**
+     * onClick behaviour for when a new item is being saved.
+     */
     public void onSaveNewClick() {
         if (this.activity.getAccessibility().isChecked()) {
             this.trinket.setAccessibility("public");
@@ -48,6 +60,9 @@ public class AddOrEditItemController {
         activity.startActivity(intent);
     }
 
+    /**
+     * onClick behaviour for when an existing item is being edited.
+     */
     public void onSaveEditClick() {
         if (this.activity.getAccessibility().isChecked()) {
             this.trinket.setAccessibility("public");
