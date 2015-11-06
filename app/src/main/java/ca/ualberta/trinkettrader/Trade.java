@@ -63,4 +63,9 @@ public class Trade {
 
     public void setNumberOfItems(Integer numberOfItems) { this.numberOfItems = numberOfItems;
     }
+
+    @Override
+    public String toString() {
+        return this.getStatus();
+    }
 }

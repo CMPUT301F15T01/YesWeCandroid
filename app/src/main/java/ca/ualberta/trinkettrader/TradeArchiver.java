@@ -25,27 +25,18 @@ public class TradeArchiver {
     public TradeArchiver() {
     }
 
-    public void addTrade(Trade trade) {
+    public void addTrade(Trade trade) { currentTrades.add(trade); }
 
-    }
-
-    public void archiveTrade(Trade trade) {
-
-    }
+    public void archiveTrade(Trade trade) { pastTrades.add(trade); }
 
     // TODO implementation details: will only be used to update currentTrades
     public void deleteTrade(Trade trade) {
-
+        // find trade in list and delete. need to delete anything anywhere else?
     }
 
-    public ArrayList<Trade> getPastTrades() {
-        return pastTrades;
-    }
+    public ArrayList<Trade> getPastTrades() { return pastTrades; }
 
-
-    public ArrayList<Trade> getCurrentTrades() {
-        return currentTrades;
-    }
+    public ArrayList<Trade> getCurrentTrades() { return currentTrades; }
 
     // will return trade from ArrayList of pastTrades
     public Trade getPastTrade(Trade trade){
@@ -59,4 +50,8 @@ public class TradeArchiver {
     public Boolean hasPastTrade(Trade trade){
         return Boolean.TRUE;
     }
+
+    public Boolean isCurrentTradesEmpty(){ return currentTrades.isEmpty(); }
+
+    public Boolean isPastTradesEmpty(){ return pastTrades.isEmpty(); }
 }
