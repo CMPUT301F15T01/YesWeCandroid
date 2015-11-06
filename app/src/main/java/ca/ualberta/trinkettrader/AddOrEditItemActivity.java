@@ -95,26 +95,50 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gets checkbox indicating if item is public or private.
+     * @return CheckBox
+     */
     public CheckBox getAccessibility() {
         return accessibility;
     }
 
+    /**
+     * Returns spinner indicating items category.
+     * @return Spinner
+     */
     public Spinner getItemCategory() {
         return itemCategory;
     }
 
+    /**
+     * Returns EditText for item's description.
+     * @return EditText
+     */
     public EditText getItemDescription() {
         return itemDescription;
     }
 
+    /**
+     * Returns EditText field for item's name
+     * @return EditText
+     */
     public EditText getItemName() {
         return itemName;
     }
 
+    /**
+     * Returns Spinner indicating item's quality.
+     * @return Spinner
+     */
     public Spinner getItemQuality() {
         return itemQuality;
     }
 
+    /**
+     * Returns EditText field for item's quantity.
+     * @return EditText
+     */
     public EditText getItemQuantity() {
         return itemQuantity;
     }
@@ -123,10 +147,18 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         return pictureLibraryButton;
     }
 
+    /**
+     * Returns Button that will remove an image attached to the item.
+     * @return Button
+     */
     public Button getRemovePictureButton() {
         return removePictureButton;
     }
 
+    /**
+     * Return Button that will save the item.
+     * @return Button
+     */
     public Button getSaveButton() {
         return saveButton;
     }
@@ -136,6 +168,11 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     }
 
     // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
+
+    /**
+     * Click method for taking a picture to attach to an item.
+     * @param view
+     */
     public void takePictureClick(View view) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -158,6 +195,11 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     }
 
     // hcpl; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05
+
+    /**
+     * Click method for selecting a picture from agallery.
+     * @param view
+     */
     public void pictureLibraryClick(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -199,10 +241,18 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         else return null;
     }
 
+    /**
+     * Click method directing controller to remove attached image.
+     * @param view
+     */
     public void removePictureClick(View view) {
         controller.removePicture();
     }
 
+    /**
+     * Returns REQUEST_IMAGE_CAPTURE value.
+     * @return in
+     */
     public static int getRequestImageCapture() {
         return REQUEST_IMAGE_CAPTURE;
     }
@@ -211,10 +261,18 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         return SELECT_PICTURE;
     }
 
+    /**
+     * Returns Uri.
+     * @return Uri
+     */
     public Uri getUri() {
         return uri;
     }
 
+    /**
+     * Set Uri.
+     * @param uri
+     */
     public void setUri(Uri uri) {
         this.uri = uri;
     }
