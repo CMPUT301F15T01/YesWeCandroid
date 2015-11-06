@@ -28,12 +28,12 @@ public class AddOrEditItemController {
 
     // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
     // dfserrano; https://github.com/joshua2ua/BogoPicLab/blob/master/BogoPicGen/src/es/softwareprocess/bogopicgen/BogoPicGenActivity.java; 2015-11-04
-    public void onAddPictureClick(Uri uri) throws IOException {
+    public void addPicture(Uri uri) throws IOException {
         File file = new File(uri.getPath());
         trinket.getPictures().add(new Picture(file));
     }
 
-    public void onRemovePicturesClick() {
+    public void removePictures() {
         for (Picture picture: trinket.getPictures()) {
             picture.delete();
         }

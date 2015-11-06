@@ -69,11 +69,18 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/addPictureButton"
+        android:id="@+id/pictureLibraryButton"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:onClick="addPictureClick"
-        android:text="@string/activity_add_or_edit_item_add_picture_button_text" />
+        android:onClick="pictureLibraryClick"
+        android:text="@string/activity_add_or_edit_item_picture_library_button_text" />
+
+    <Button
+        android:id="@+id/takePictureButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:onClick="takePictureClick"
+        android:text="@string/activity_add_or_edit_item_take_picture_button_text" />
 
     <Button
         android:id="@+id/removePictureButton"

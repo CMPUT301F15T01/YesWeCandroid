@@ -29,15 +29,15 @@ import android.widget.Spinner;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class AddOrEditItemActivity extends AppCompatActivity {
 
     private AddOrEditItemController controller;
-    private Button addPictureButton;
+    private Button pictureLibrary;
     private Button removePictureButton;
     private Button saveButton;
+    private Button takePictureButton;
     private CheckBox accessibility;
     private EditText itemDescription;
     private EditText itemName;
@@ -45,7 +45,6 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     private Spinner itemCategory;
     private Spinner itemQuality;
     private Uri uri;
-    private ArrayList<Picture> pictures;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
@@ -54,7 +53,6 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_or_edit_item);
 
         this.controller = new AddOrEditItemController(this);
-        this.pictures = new ArrayList<>();
 
         this.itemName = (EditText) findViewById(R.id.itemNameText);
         this.itemCategory = (Spinner) findViewById(R.id.itemCategorySpinner);
@@ -67,14 +65,6 @@ public class AddOrEditItemActivity extends AppCompatActivity {
 
     public CheckBox getAccessibility() {
         return accessibility;
-    }
-
-    public Button getAddPictureButton() {
-        return addPictureButton;
-    }
-
-    public AddOrEditItemController getController() {
-        return controller;
     }
 
     public Spinner getItemCategory() {
@@ -97,6 +87,10 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         return itemQuantity;
     }
 
+    public Button getPictureLibrary() {
+        return pictureLibrary;
+    }
+
     public Button getRemovePictureButton() {
         return removePictureButton;
     }
@@ -105,8 +99,12 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         return saveButton;
     }
 
+    public Button getTakePictureButton() {
+        return takePictureButton;
+    }
+
     // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
-    public void addPictureClick(View view) {
+    public void takePictureClick(View view) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -126,13 +124,20 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         }
     }
 
+    // nandeesh; http://stackoverflow.com/questions/11990945/android-sdk-let-user-choose-picture-from-gallery-or-camera; 2015-11-05
+    public void pictureLibraryClick(View view) {
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, REQUEST_IMAGE_CAPTURE);
+    }
+
     // http://developer.android.com/training/camera/photobasics.html; 2015-11-04
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
                 // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
-                controller.onAddPictureClick(uri);
+                controller.addPicture(uri);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -140,7 +145,7 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     }
 
     public void removePicturesClick(View view) {
-        controller.onRemovePicturesClick();
+        controller.removePictures();
     }
 
     public void saveClick(View view) {
