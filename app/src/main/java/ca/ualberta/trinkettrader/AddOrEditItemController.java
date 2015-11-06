@@ -41,14 +41,14 @@ public class AddOrEditItemController {
      * @throws IOException
      */
     public void addPicture(String path) throws IOException {
-        trinket.setPicture(new Picture(new File(path)));
+        trinket.getPictures().add(new Picture(new File(path)));
     }
 
     /**
      * Removes picture from trinket being added/edited.
      */
     public void removePicture() {
-        trinket.setPicture(null);
+        trinket.setPictures(new ArrayList<Picture>());
     }
 
     /**
