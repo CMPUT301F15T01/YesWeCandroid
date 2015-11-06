@@ -18,6 +18,9 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -28,6 +31,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -136,7 +141,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(addOrEditItemActivityMonitor);
 
-
         // Edit item name
         final EditText editName = addOrEditItemActivity.getItemName();
         final String itemName = "Test";
@@ -172,10 +176,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        // TODO UI test the image capturing with the camera
         // Simulate selecting an image
         Intent intent = new Intent();
-        //intent.setData();
-        addOrEditItemActivity.onActivityResult(addOrEditItemActivity.getSelectPicture(), Activity.RESULT_OK, intent);
+        // Axarydax; http://stackoverflow.com/questions/4896223/how-to-get-an-uri-of-an-image-resource-in-android; 2015-11-05
+        addOrEditItemActivity.setUri(Uri.parse("android.resource://ca.ualberta.trinkettrader/" + R.drawable.bauble));
+        addOrEditItemActivity.onActivityResult(AddOrEditItemActivity.getRequestImageCapture(), Activity.RESULT_OK, intent);
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
