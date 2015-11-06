@@ -18,17 +18,14 @@ public class UserProfile {
 
     private Boolean arePhotosDownloadable;
     private ContactInfo contactInfo;
-    private String city;
     private String email;
-    private String name;
     private String username;
     private Boolean needToSave;
 
     public UserProfile() {
-        this.name = "";
         this.email = "";
-        this.city = "";
         this.contactInfo = new ContactInfo();
+        this.needToSave = Boolean.TRUE;
     }
 
     public Boolean getArePhotosDownloadable() {
@@ -39,13 +36,12 @@ public class UserProfile {
         this.arePhotosDownloadable = arePhotosDownloadable;
     }
 
-    public String getCity() {
-        return city;
+    public String getCity(){
+        return this.contactInfo.getCity();
     }
 
     public void setCity(String city) {
 
-        this.city = city;
         this.contactInfo.setCity(city);
         this.needToSave = Boolean.TRUE;
     }
@@ -70,11 +66,11 @@ public class UserProfile {
     }
 
     public String getName() {
-        return name;
+        return this.contactInfo.getName();
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.contactInfo.setName(name);
         this.needToSave = Boolean.TRUE;
     }
 

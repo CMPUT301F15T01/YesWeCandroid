@@ -20,6 +20,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -36,8 +37,8 @@ import java.util.Iterator;
  */
 public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentationTestCase2 {
 
-    public BrowseSearchInventoriesOfFriendsTest(Class activityClass) {
-        super(activityClass);
+    public BrowseSearchInventoriesOfFriendsTest() {
+        super(LoginActivity.class);
     }
 
     User borrower;
@@ -83,14 +84,40 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         borrower.getFriendsList().add(friend1);
         friend1.getFriendsList().add((Friend)borrower);
 
+        // Start the UI test from the login page (beginning of the app).
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        // On the login page: click the email input box and write an arbitrary email.
+        // Test that the text was successfully written.
+        final AutoCompleteTextView loginEmailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                loginEmailTextView.performClick();
+                loginEmailTextView.setText("user@gmail.com");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
+
+        // Click the login button to proceed to the home page.
+        final Button loginButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                loginButton.performClick();
+            }
+        });
+
+        // Test that the HomePageActivity started correctly after the clicking the login button.
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        instrumentation.waitForIdleSync();
+        HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("HomePageActivity is null", homePageActivity);
+        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
+
+
         //Set an activity monitor for DisplayFriendsActivity
         Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(DisplayFriendsActivity.class.getName(), null, false);
-
-        //Start the activity that we set the monitor for
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setClassName(instrumentation.getTargetContext(), DisplayFriendsActivity.class.getName());
-        instrumentation.startActivitySync(intent);
+        instrumentation.waitForIdleSync();
 
         //Wait for DisplayFriendsActivity to start
         DisplayFriendsActivity displayFriendsActivity = (DisplayFriendsActivity) getInstrumentation().waitForMonitorWithTimeout(displayFriendsMonitor, 5);
@@ -172,6 +199,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
 
         //Set an activity monitor for DisplayFriendsActivity
         Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(DisplayFriendsActivity.class.getName(), null, false);
+        getInstrumentation().waitForIdleSync();
 
         //Start the activity that we set the monitor for
         Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -185,6 +213,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
 
         //set up monitor for User profile activity that should appear with button click below
         Instrumentation.ActivityMonitor userProfileMonitor = instrumentation.addMonitor(DisplayUserProfileActivity.class.getName(), null, false);
+        getInstrumentation().waitForIdleSync();
 
         //Select friend1
         final ListView friendsListView = displayFriendsActivity.getFriendsListView();
@@ -204,6 +233,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
 
         //Setup monitor for DisplayInventoryActivity before clicking button
         Instrumentation.ActivityMonitor inventoryMonitor = instrumentation.addMonitor(DisplayInventoryActivity.class.getName(), null, false);
+        getInstrumentation().waitForIdleSync();
 
         //Click the 'View Inventory' button
         Button inventoryButton = (Button) displayFriendsActivity.findViewById(R.id.view_inventory_button);
@@ -253,6 +283,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         //Setup monitor for DisplayInventoryActivity restarting before clicking filter button
         instrumentation.removeMonitor(inventoryMonitor);
         Instrumentation.ActivityMonitor refreshedInventoryMonitor = instrumentation.addMonitor(DisplayInventoryActivity.class.getName(), null, false);
+        getInstrumentation().waitForIdleSync();
 
         //Click the 'Filter' button
         Button filterButton = (Button) displayedTrinkets.findViewById(R.id.filterButtton);

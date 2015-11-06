@@ -26,6 +26,7 @@ public class Inventory extends ArrayList<Trinket> {
     }
 
     public Inventory() {
+        this.needToSave = Boolean.TRUE;
     }
 
     public Boolean getNeedToSave() {

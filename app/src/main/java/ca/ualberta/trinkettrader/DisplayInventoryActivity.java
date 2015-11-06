@@ -55,7 +55,6 @@ public class DisplayInventoryActivity extends AppCompatActivity {
 
         trinketArrayAdapter = new ArrayAdapter<>(this, R.layout.listview_item, inventory);
         inventoryItemsList.setAdapter(trinketArrayAdapter);
-        trinketArrayAdapter.notifyDataSetChanged();
 
         final DisplayInventoryActivity activity = this;
         inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,6 +65,12 @@ public class DisplayInventoryActivity extends AppCompatActivity {
                 activity.startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        trinketArrayAdapter.notifyDataSetChanged();
     }
 
     public Button getAddItemButton() {

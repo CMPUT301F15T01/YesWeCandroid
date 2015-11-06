@@ -33,16 +33,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/name"
-        android:layout_below="@+id/edit_button"
-        android:layout_toStartOf="@+id/view_inventory_button"
-        android:layout_marginTop="46dp" />
+        android:layout_marginTop="63dp"
+        android:text="Binky BingBong"
+        android:layout_toStartOf="@+id/view_inventory_button" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/postal_code"
-        android:layout_below="@+id/name"
+        android:id="@+id/address"
+        android:text="1041 Rutherford Place SW"
+        android:layout_below="@id/name"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/city"
+        android:text="Edmonton"
+        android:layout_below="@id/address"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="T6W 1J5"
+        android:id="@+id/postal_code"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/city" />
 
     <Button
         android:layout_width="wrap_content"
@@ -51,5 +68,13 @@
         android:id="@+id/trade_button_user_profile"
         android:layout_centerVertical="true"
         android:layout_alignEnd="@+id/view_inventory_button" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="780-111-1111"
+        android:id="@+id/phone_number"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/postal_code" />
 
 </RelativeLayout>
