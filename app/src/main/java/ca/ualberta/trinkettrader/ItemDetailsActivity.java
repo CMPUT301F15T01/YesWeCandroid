@@ -17,6 +17,8 @@ public class ItemDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
 
+        this.item = ApplicationState.getInstance().getClickedTrinket();
+
         imageView = (ImageView) findViewById(R.id.imageView);
         if (item.getPicture() != null) {
             imageView.setImageBitmap(item.getPicture().getBitmap());

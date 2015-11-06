@@ -54,6 +54,7 @@ public class DisplayInventoryActivity extends AppCompatActivity {
         this.addItemButton = (Button) findViewById(R.id.addItemButton);
 
         trinketArrayAdapter = new ArrayAdapter<>(this, R.layout.listview_item, inventory);
+        inventoryItemsList.setAdapter(trinketArrayAdapter);
         trinketArrayAdapter.notifyDataSetChanged();
 
         final DisplayInventoryActivity activity = this;
@@ -61,7 +62,7 @@ public class DisplayInventoryActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
                 Trinket clickedTrinket = LoggedInUser.getInstance().getInventory().get(position);
                 ApplicationState.getInstance().setClickedTrinket(clickedTrinket);
-                Intent intent = new Intent(activity, DisplayItemDetails.class);
+                Intent intent = new Intent(activity, ItemDetailsActivity.class);
                 activity.startActivity(intent);
             }
         });
