@@ -16,6 +16,7 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity {
     private Button removeFriendButton;
     private Button backButton;
     private RadioButton trackedRadioButton;
+    private TextView usernameTextView;
     private DisplayFriendsProfileController controller;
 
     @Override
@@ -28,12 +29,13 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity {
         trackedRadioButton = (RadioButton)findViewById(R.id.trackedRadioButton);
         controller = new DisplayFriendsProfileController(this);
 
+        usernameTextView = (TextView) findViewById(R.id.usernameText);
+
         updateFields();
     }
 
     private void updateFields() {
-        TextView usernameText = (TextView)findViewById(R.id.usernameText);
-        usernameText.setText(friend.getProfile().getUsername());
+        this.getUsernameTextView().setText(friend.getProfile().getUsername());
         trackedRadioButton.setChecked(ApplicationState.getInstance().getClickedFriend().isTracked());
     }
 
@@ -59,6 +61,10 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity {
 
     public Button getBackButton() {
         return backButton;
+    }
+
+    public TextView getUsernameTextView() {
+        return usernameTextView;
     }
 
 

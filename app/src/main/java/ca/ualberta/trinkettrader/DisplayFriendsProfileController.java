@@ -1,6 +1,7 @@
 package ca.ualberta.trinkettrader;
 
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,7 +40,6 @@ public class DisplayFriendsProfileController {
     }
 
     public void backToFriendsListButtonFromProfileOnClick() {
-        Intent intent = new Intent(this.activity, DisplayFriendsActivity.class);
-        activity.startActivity(intent);
+        NavUtils.navigateUpFromSameTask(activity);
     }
 }
