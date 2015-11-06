@@ -29,6 +29,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     Button friendsButton;
     Button findFriendsButton;
     EditText findFriendTextField;
+    Button tradeButton;
 
 
     public TradeWithFriendsTest() {
@@ -147,16 +148,6 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     // TODO is this redundant?
     // Test that user has current trades they are involved in
     public void testViewCurrentTrades() {
-        /*
-        User user = LoggedInUser.getInstance();
-        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
-        Trade trade1 = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
-        user.getTradeManager().proposeTrade(trade);
-        user.getTradeManager().proposeTrade(trade1);
-        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
-        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
-        */
-
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
@@ -189,71 +180,34 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
-        // Click the friends button to proceed to the friends page.
-        friendsButton = homePageActivity.getFriendsButton();
-        homePageActivity.runOnUiThread(new Runnable() {
+        // Hardcode in trades for user
+        LoggedInUser currentUser = LoggedInUser.getInstance();
+
+        // create inventories of items to trade
+        Inventory borrowerInventory = new Inventory();
+        Inventory ownerInventory = new Inventory();
+
+        Trinket necklace = new Trinket();
+        necklace.setName("Amulet of Fire");
+        Trinket ring = new Trinket();
+        ring.setName("Ring of Swirling Mist");
+        borrowerInventory.add(necklace);
+        ownerInventory.add(ring);
+
+        // trade with self
+        Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(),ownerInventory, currentUser.getTradeManager());
+        currentUser.getTradeManager().proposeTrade(trade);
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+
+        // Click the trades button to proceed to the current trades page.
+        tradeButton = homePageActivity.getTradeButton();
+        loginActivity.runOnUiThread(new Runnable() {
             public void run() {
-                friendsButton.performClick();
+                tradeButton.performClick();
             }
         });
 
-        // Test that the DisplayFriendsActivity started correctly after the clicking the friends button.
-        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(DisplayFriendsActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        DisplayFriendsActivity displayFriendsActivity = (DisplayFriendsActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("DisplayFriendsActivity is null", displayFriendsActivity);
-        assertEquals("Monitor for DisplayFriendsActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected DisplayFriendsActivity", DisplayFriendsActivity.class, displayFriendsActivity.getClass());
-        getInstrumentation().removeMonitor(displayFriendsActivityMonitor);
 
-        // On the friend-list page: click the Find Friend input box and write an arbitrary email.
-        // Test that the text was successfully written.
-        findFriendTextField = displayFriendsActivity.getFindFriendTextField();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                findFriendTextField.performClick();
-                findFriendTextField.setText("test@gmail.com");
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-        assertTrue(findFriendTextField.getText().toString().equals("test@gmail.com"));
-
-        // Click the Find Friend button to add the friend to the friend list.
-        // Test that the friend was successfully added.
-        findFriendsButton = displayFriendsActivity.getFindFriendsButton();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                findFriendsButton.performClick();
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-        assertTrue(LoggedInUser.getInstance().getFriendsList().get(0).getProfile().getUsername().equals("test@gmail.com"));
-
-        // Click the newly-added friend to proceed to the friend's profile, confirming that the friend was added.
-        friendsList = displayFriendsActivity.getFriendsListView();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                View firstFriend = friendsList.getChildAt(0);
-                friendsList.performItemClick(firstFriend, 0, firstFriend.getId());
-            }
-        });
-
-        // Test that the DisplayFriendsProfileActivity started correctly after the clicking the Friend in the list view.
-        Instrumentation.ActivityMonitor displayFriendsProfileActivityMonitor = getInstrumentation().addMonitor(DisplayFriendsProfileActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        DisplayFriendsProfileActivity displayFriendsProfileActivity = (DisplayFriendsProfileActivity) displayFriendsProfileActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("DisplayFriendsProfileActivity is null", displayFriendsProfileActivity);
-        assertEquals("Monitor for DisplayFriendsProfileActivity has not been called", 1, displayFriendsProfileActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected DisplayFriendsProfileActivity", DisplayFriendsProfileActivity.class, displayFriendsProfileActivity.getClass());
-        getInstrumentation().removeMonitor(displayFriendsProfileActivityMonitor);
-
-        // Add item to Friend's Inventory
-        
-        // Add item to my Inventory
-
-        // Click inventory button
-
-        // select item that you want to trade
 
     }
 
