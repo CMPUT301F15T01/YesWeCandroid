@@ -65,64 +65,123 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
     private String quality;
     private String quantity;
 
+    /**
+     * Public constructor
+     */
     public Trinket() {
         accessibility = "public";
         pictures = new ArrayList<>();
         quantity = "1";
     }
 
+    /**
+     * Return trinket's accessibility
+     * @return String
+     */
     public String getAccessibility() {
         return accessibility;
     }
 
+    /**
+     * Sets trinket's accessibility
+     * @param accessibility
+     */
     public void setAccessibility(String accessibility) {
         this.accessibility = accessibility;
     }
 
+    /**
+     * Return trinket's category
+     * @return String
+     */
     public String getCategory() {
         return category;
     }
 
+    /**
+     * Sets trinket's category
+     * @param category
+     */
     public void setCategory(String category) {
         this.category = category;
     }
 
+    /**
+     * Return trinket's description
+     * @return String
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Sets trinket's description
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Return trinket's name
+     * @return String
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets trinket's name
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Return trinket's pictures
+     * @return ArrayList<Picture>
+     */
     public ArrayList<Picture> getPictures() {
         return this.pictures;
     }
 
+    /**
+     * Set trinket's pictures
+     * @param pictures
+     */
     public void setPictures(ArrayList<Picture> pictures) {
         this.pictures = pictures;
     }
 
+    /**
+     * Return trinket's quality
+     * @return String
+     */
     public String getQuality() {
         return quality;
     }
 
+    /**
+     * Sets trinket's quality
+     * @param quality
+     */
     public void setQuality(String quality) {
         this.quality = quality;
     }
 
+    /**
+     * Return's quantity of Trinket
+     * @return String
+     */
     public String getQuantity() {
         return quantity;
     }
 
+    /**
+     * Sets trinkets quantity
+     * @param quantity
+     */
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }

@@ -63,6 +63,9 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     private String username;
     private Boolean needToSave;
 
+    /**
+     * UserProfile Constructor for generating new attribute classes
+     */
     public UserProfile() {
         this.email = "";
         this.contactInfo = new ContactInfo();
@@ -70,70 +73,130 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
         this.arePhotosDownloadable = Boolean.FALSE;
     }
 
+    /**
+     * Returns Boolean on whether photo download setting is set
+     * @return Boolean
+     */
     public Boolean getArePhotosDownloadable() {
         return arePhotosDownloadable;
     }
 
+    /**
+     * Set whether photos are downloadable
+     * @param arePhotosDownloadable
+     */
     public void setArePhotosDownloadable(Boolean arePhotosDownloadable) {
         this.arePhotosDownloadable = arePhotosDownloadable;
     }
 
+    /**
+     * Returns user's city
+     * @return String
+     */
     public String getCity(){
         return this.contactInfo.getCity();
     }
 
+    /**
+     * Sets users city
+     * @param city
+     */
     public void setCity(String city) {
 
         this.contactInfo.setCity(city);
         this.needToSave = Boolean.TRUE;
     }
 
+    /**
+     * Returns User's Contact Information
+     * @return ContactInfo
+     */
     public ContactInfo getContactInfo() {
         return contactInfo;
     }
 
+    /**
+     * Sets user's contact information
+     * @param contactInfo
+     */
     public void setContactInfo(ContactInfo contactInfo) {
 
         this.contactInfo = contactInfo;
         this.needToSave = Boolean.TRUE;
     }
 
+    /**
+     * Returns the user's email
+     * @return String
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets the user's email
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
         this.needToSave = Boolean.TRUE;
     }
 
+    /**
+     * Returns the user's name
+     * @return String
+     */
     public String getName() {
         return this.contactInfo.getName();
     }
 
+    /**
+     * Set's the user's name
+     * @param name
+     */
     public void setName(String name) {
         this.contactInfo.setName(name);
         this.needToSave = Boolean.TRUE;
     }
 
+    /**
+     * Returns the user's postal code
+     * @return String
+     */
+
     public String getPostalCode() {
         return contactInfo.getPostalCode();
     }
 
-
+    /**
+     * Sets the user's postal code
+     * @param postalCode
+     */
     public void setPostalCode(String postalCode) {
         contactInfo.setPostalCode(postalCode);
         this.needToSave = Boolean.TRUE;
     }
 
+    /**
+     * Returns user's username
+     * @return
+     */
     public String getUsername() {
         return this.username;
     }
 
+    /**
+     * Sets user's username
+     * @param username
+     */
     protected void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Returns whether the user's profile data needs to be saved
+     * @return
+     */
     public Boolean getNeedToSave() {
         return needToSave | this.contactInfo.getNeedToSave();
     }

@@ -19,33 +19,66 @@ public class TradeManager {
     private NotificationManager notificationManager;
     private TradeArchiver tradeArchiver;
 
+    /**
+     * Public Constructor
+     */
     public TradeManager() {
     }
 
+    /**
+     * Propose trade
+     * @param trade
+     */
     public void proposeTrade(Trade trade) {
 
     }
 
+    /**
+     * Propose counter trade
+     * @param trade
+     * @param counterTrade
+     */
     public void proposeCounterTrade(Trade trade, Trade counterTrade) {
 
     }
 
+    /**
+     * Accept trade
+     * @param trade
+     * @param comments
+     */
     public void acceptTrade(Trade trade, String comments) {
 
     }
 
+    /**
+     * Decline trade
+     * @param trade
+     */
     public void declineTrade(Trade trade) {
 
     }
 
+    /**
+     * Delete trade
+     * @param trade
+     */
     public void deleteTrade(Trade trade) {
 
     }
 
+    /**
+     * Return trade archiver
+     * @return TradeArchiver
+     */
     public TradeArchiver getTradeArchiver() {
         return tradeArchiver;
     }
 
+    /**
+     * Return notification manager
+     * @return NotificationManager
+     */
     public NotificationManager getNotificationManager() {
         return notificationManager;
     }
