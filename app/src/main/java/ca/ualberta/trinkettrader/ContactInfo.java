@@ -36,46 +36,86 @@ public class ContactInfo {
         this.postalCode = "";
     }
 
+    /**
+     * Returns name.
+     * @return String
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
         this.needToSave = Boolean.TRUE;
     }
 
+    /**
+     * Gets address.
+     * @return String
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * Sets address.
+     * @param address
+     */
     public void setAddress(String address) {
         this.address = address;
         this.needToSave = Boolean.TRUE;
     }
 
+    /**
+     * Gets city.
+     * @return String
+     */
     public String getCity() {
         return city;
     }
 
+    /**
+     * Sets city.
+     * @param city
+     */
     public void setCity(String city) {
         this.city = city;
         this.needToSave = Boolean.TRUE;
     }
 
+    /**
+     * Gets phone number.
+     * @return String
+     */
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
+    /**
+     * Sets phone number.
+     * @param phoneNumber
+     */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
         this.needToSave = Boolean.TRUE;
     }
 
+    /**
+     * Gets postal code.
+     * @return String
+     */
     public String getPostalCode() {
         return postalCode;
     }
 
+    /**
+     * Sets postal code.
+     * @param postalCode
+     */
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
         this.needToSave = Boolean.TRUE;

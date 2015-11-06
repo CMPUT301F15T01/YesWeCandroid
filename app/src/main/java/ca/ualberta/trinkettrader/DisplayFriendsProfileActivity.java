@@ -56,30 +56,58 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity implements 
         trackedRadioButton.setChecked(ApplicationState.getInstance().getClickedFriend().isTracked());
     }
 
+    /**
+     * Gets button for removing friends.
+     * @return Button
+     */
     public Button getRemoveFriendButton() {
         return removeFriendButton;
     }
 
+    /**
+     * Returns RadioButton that indicates if a friend is tracked or not.
+     * @return RadioButton
+     */
     public RadioButton getTrackedRadioButton() {
         return trackedRadioButton;
     }
 
+    /**
+     * Directs controller to handle Remove Friends button click.
+     * @param v
+     */
     public void removeFriendButtonOnClick(View v) {
         controller.removeFriendButtonOnClick();
     }
 
+    /**
+     * Directs controller to handle track friends radio button click.
+     * @param v
+     */
     public void trackedRadioButtonOnClick(View v) {
         controller.trackedRadioButtonOnClick();
     }
 
+    /**
+     * Directs controller to handle click to return to Friends List activity.
+     * @param v
+     */
     public void backToFriendsListButtonFromProfileOnClick(View v) {
         controller.backToFriendsListButtonFromProfileOnClick();
     }
 
+    /**
+     * Gets button that directs back to friends list activity.
+     * @return Button
+     */
     public Button getBackButton() {
         return backButton;
     }
 
+    /**
+     * Gets textView for displaying friend's username.
+     * @return TextView
+     */
     public TextView getUsernameTextView() {
         return usernameTextView;
     }

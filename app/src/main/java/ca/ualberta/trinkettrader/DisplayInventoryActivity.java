@@ -65,22 +65,42 @@ public class DisplayInventoryActivity extends AppCompatActivity implements Obser
         trinketArrayAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Returns button for adding item.
+     * @return Button
+     */
     public Button getAddItemButton() {
         return addItemButton;
     }
 
+    /**
+     * Returns logged in user's inventory.
+     * @return Inventory
+     */
     public Inventory getInventory() {
         return inventory;
     }
 
+    /**
+     * Returns ListView c=holding the inventory.
+     * @return ListView
+     */
     public ListView getInventoryItemsList() {
         return inventoryItemsList;
     }
 
+    /**
+     * Directs controller to add a new item.
+     * @param view
+     */
     public void clickAdd(View view) {
         inventoryController.onAddItemClick();
     }
 
+    /**
+     * Directs controller to display inventory details.
+     * @param view
+     */
     public void detailsClick(View view) {
         inventoryController.onDetailsClick();
     }
