@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.AccessibleObject;
 
 /**
  * Created by Andrea McIntosh on 01/11/2015.
@@ -28,7 +29,7 @@ public class AddOrEditItemController {
         trinket.setPicture(null);
     }
 
-    public void onSaveClick() {
+    public void onSaveNewClick() {
         if (this.activity.getAccessibility().isChecked()) {
             this.trinket.setAccessibility("public");
         } else {
@@ -40,6 +41,23 @@ public class AddOrEditItemController {
         this.trinket.setQuantity(this.activity.getItemQuantity().getText().toString());
         this.trinket.setQuality(this.activity.getItemQuality().toString());
         this.user.getInventory().add(this.trinket);
+
+        Intent intent = new Intent(activity, DisplayInventoryActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public void onSaveEditClick() {
+        if (this.activity.getAccessibility().isChecked()) {
+            this.trinket.setAccessibility("public");
+        } else {
+            this.trinket.setAccessibility("private");
+        }
+        this.trinket.setCategory(this.activity.getItemCategory().toString());
+        this.trinket.setDescription(this.activity.getItemDescription().getText().toString());
+        this.trinket.setName(this.activity.getItemName().getText().toString());
+        this.trinket.setQuantity(this.activity.getItemQuantity().getText().toString());
+        this.trinket.setQuality(this.activity.getItemQuality().toString());
+        this.user.getInventory().set(this.user.getInventory().indexOf(ApplicationState.getInstance().getClickedTrinket()), this.trinket);
 
         Intent intent = new Intent(activity, DisplayInventoryActivity.class);
         activity.startActivity(intent);

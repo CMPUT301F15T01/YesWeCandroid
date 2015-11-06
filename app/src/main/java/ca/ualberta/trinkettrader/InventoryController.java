@@ -16,6 +16,7 @@ public class InventoryController {
 
     public void onAddItemClick() {
         Intent intent = new Intent(this.activity, AddOrEditItemActivity.class);
+        intent.putExtra("activityName", "add");
         activity.startActivity(intent);
     }
 }
