@@ -28,21 +28,33 @@ public class HomePageController {
         this.activity = activity;
     }
 
+    /**
+     * Directs to DisplayInventoryActivity.
+     */
     public void onInventoryClick() {
         Intent intent = new Intent(this.activity, DisplayInventoryActivity.class);
         activity.startActivity(intent);
     }
 
+    /**
+     * Direct to DisplayFriendsActivity.
+     */
     public void onFriendsClick() {
         Intent intent = new Intent(this.activity, DisplayFriendsActivity.class);
         activity.startActivity(intent);
     }
 
+    /**
+     * Directs to DisplayTradesActivity.
+     */
     public void onTradesClick() {
         Intent intent = new Intent(this.activity, DisplayTradesActivity.class);
         activity.startActivity(intent);
     }
 
+    /**
+     * Directs to DisplayUserProfileActivity.
+     */
     public void onProfileClick() {
         Intent intent = new Intent(this.activity, DisplayUserProfileActivity.class);
         activity.startActivity(intent);

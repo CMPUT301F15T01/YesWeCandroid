@@ -43,7 +43,7 @@ public class FriendsList extends ArrayList<Friend> {
     /**
      * Add friend to friends list.  If that friend is already in your friends list it will not be added again.
      * @param friend
-     * @return
+     * @return boolean
      */
     @Override
     public boolean add(Friend friend) {
