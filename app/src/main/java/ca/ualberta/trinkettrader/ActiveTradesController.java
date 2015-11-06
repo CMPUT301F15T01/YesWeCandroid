@@ -33,11 +33,22 @@ public class ActiveTradesController {
         currentTradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
                 Trade clickedTrade = LoggedInUser.getInstance().getFriendsList().get(position);
-                ApplicationState.getInstance().setClickedFriend(clickedFriend);
+                ApplicationState.getInstance().setClickedFriend(clickedTrade);
                 Intent intent = new Intent(activity, ViewTradeDetailsActivity.class);
                 activity.startActivity(intent);
             }
         });
     }
 
+    public void setCurrentTradesListViewItemOnClick() {
+        ListView currentTradesListView = activity.getCurrentTradesListView();
+        currentTradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> v, View view, int position, long id) {
+                Trade clickedTrade = LoggedInUser.getInstance().getFriendsList().get(position);
+                ApplicationState.getInstance().setClickedFriend(clickedTrade);
+                Intent intent = new Intent(activity, ViewTradeDetailsActivity.class);
+                activity.startActivity(intent);
+            }
+        });
+    }
 }

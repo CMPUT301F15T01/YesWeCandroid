@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -28,6 +29,13 @@ public class DisplayTradesActivity extends AppCompatActivity {
         controller.setCurrentTradesListViewItemOnClick();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentTradeAdapter = new ArrayAdapter<Friend>(this, R.layout.listview_item, userFriendList);
+        currentTradesListView.setAdapter(currentTradesAdapter);
+    }
+
     // PastTrades Button click
     public void openPastTrades(View view){
         Intent intent = new Intent(this, DisplayPastTradesActivity.class);
@@ -40,8 +48,4 @@ public class DisplayTradesActivity extends AppCompatActivity {
         return currentTradesListView;
     }
 
-    public void pastTradesOnClick(View v) {
-        controller.pastTradesOnClick();
-        friendAdapter.notifyDataSetChanged();
-    }
 }
