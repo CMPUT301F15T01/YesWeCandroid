@@ -16,9 +16,13 @@ package ca.ualberta.trinkettrader;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-public class InventoryDetailsActivity extends ActionBarActivity {
+import java.util.Observable;
+import java.util.Observer;
+
+public class InventoryDetailsActivity extends AppCompatActivity implements Observer {
 
     TextView numItems;
 
@@ -31,4 +35,16 @@ public class InventoryDetailsActivity extends ActionBarActivity {
         numItems.setText("Number of items: " + LoggedInUser.getInstance().getInventory().size());
     }
 
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
+    @Override
+    public void update(Observable observable, Object data) {
+
+    }
 }

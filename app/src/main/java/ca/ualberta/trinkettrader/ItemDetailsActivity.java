@@ -24,8 +24,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class ItemDetailsActivity extends AppCompatActivity {
+public class ItemDetailsActivity extends AppCompatActivity implements Observer {
 
     private Button deleteButton;
     private Button editButton;
@@ -99,5 +101,18 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
     public void editClick(View view) {
         controller.onEditClick();
+    }
+
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
+    @Override
+    public void update(Observable observable, Object data) {
+
     }
 }

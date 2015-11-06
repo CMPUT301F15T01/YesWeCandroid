@@ -34,8 +34,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 
-public class AddOrEditItemActivity extends AppCompatActivity {
+public class AddOrEditItemActivity extends AppCompatActivity implements Observer {
 
     private AddOrEditItemController controller;
     private Button pictureLibraryButton;
@@ -197,7 +199,7 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     // hcpl; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05
 
     /**
-     * Click method for selecting a picture from agallery.
+     * Click method for selecting a picture from the android gallery.
      * @param view
      */
     public void pictureLibraryClick(View view) {
@@ -275,5 +277,18 @@ public class AddOrEditItemActivity extends AppCompatActivity {
      */
     public void setUri(Uri uri) {
         this.uri = uri;
+    }
+
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
+    @Override
+    public void update(Observable observable, Object data) {
+
     }
 }
