@@ -367,9 +367,9 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(itemDetailsActivityMonitor);
 
         // Check that the image is visible
-        ImageView itemImage = itemDetailsActivity.getItemPicture();
+        // ImageView itemImage = itemDetailsActivity.getItemPicture();
         // PC.; http://stackoverflow.com/questions/9113895/how-to-check-if-an-imageview-is-attached-with-image-in-android; 2015-11-01
-        assertNotNull(itemImage.getDrawable());
+        // assertNotNull(itemImage.getDrawable());
 
         // Close the activities
         itemDetailsActivity.finish();

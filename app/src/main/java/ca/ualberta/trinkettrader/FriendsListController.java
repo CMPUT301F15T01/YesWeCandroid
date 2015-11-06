@@ -46,4 +46,3 @@ public class FriendsListController {
         activity.startActivity(intent);
     }
 }
-
