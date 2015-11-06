@@ -14,7 +14,9 @@
 
 package ca.ualberta.trinkettrader;
 
-public class ApplicationState {
+import java.util.Observable;
+
+public class ApplicationState extends Observable {
 
     private static ApplicationState ourInstance = new ApplicationState();
     private Trinket clickedTrinket;

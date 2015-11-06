@@ -15,7 +15,9 @@
 package ca.ualberta.trinkettrader;
 
 
-public class Notification {
+import java.util.Observable;
+
+public class Notification extends Observable {
 
     private String message;
     private String type;
