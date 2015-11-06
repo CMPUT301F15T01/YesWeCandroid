@@ -8,6 +8,7 @@ public class ApplicationState {
     private static ApplicationState ourInstance = new ApplicationState();
     private Trinket clickedTrinket;
     private Friend clickedFriend;
+    private Trade clickedTrade;
 
     private ApplicationState() {
 
@@ -32,4 +33,8 @@ public class ApplicationState {
     public void setClickedTrinket(Trinket clickedTrinket) {
         this.clickedTrinket = clickedTrinket;
     }
+
+    public Trade getClickedTrade() {return this.clickedTrade; }
+
+    public void setClickedTrade(Trade clickedTrade){ this.clickedTrade = clickedTrade; }
 }

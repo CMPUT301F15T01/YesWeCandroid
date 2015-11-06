@@ -33,7 +33,7 @@ public class ActiveTradesController {
         currentTradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
                 Trade clickedTrade = LoggedInUser.getInstance().getFriendsList().get(position);
-                ApplicationState.getInstance().setClickedFriend(clickedTrade);
+                ApplicationState.getInstance().setClickedTrade(clickedTrade);
                 Intent intent = new Intent(activity, ViewTradeDetailsActivity.class);
                 activity.startActivity(intent);
             }
@@ -45,7 +45,7 @@ public class ActiveTradesController {
         currentTradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
                 Trade clickedTrade = LoggedInUser.getInstance().getFriendsList().get(position);
-                ApplicationState.getInstance().setClickedFriend(clickedTrade);
+                ApplicationState.getInstance().setClickedTrade(clickedTrade);
                 Intent intent = new Intent(activity, ViewTradeDetailsActivity.class);
                 activity.startActivity(intent);
             }
