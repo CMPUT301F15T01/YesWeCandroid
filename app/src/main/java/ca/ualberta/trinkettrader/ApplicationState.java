@@ -6,8 +6,8 @@ package ca.ualberta.trinkettrader;
 public class ApplicationState {
 
     private static ApplicationState ourInstance = new ApplicationState();
-    private User clickedFriend;
     private Trinket clickedTrinket;
+    private Friend clickedFriend;
 
     private ApplicationState() {
 
@@ -17,11 +17,11 @@ public class ApplicationState {
         return ourInstance;
     }
 
-    public User getClickedFriend() {
+    public Friend getClickedFriend() {
         return this.clickedFriend;
     }
 
-    public void setClickedFriend(User clickedFriend) {
+    public void setClickedFriend(Friend clickedFriend) {
         this.clickedFriend = clickedFriend;
     }
 

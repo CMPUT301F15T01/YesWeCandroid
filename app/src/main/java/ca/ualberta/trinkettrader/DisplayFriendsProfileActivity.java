@@ -7,13 +7,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class DisplayFriendsProfileActivity extends AppCompatActivity {
 
     private User friend;
     private Button removeFriendButton;
-    private Button trackFriendButton;
+    private RadioButton trackedRadioButton;
     private DisplayFriendsProfileController controller;
 
     @Override
@@ -22,7 +23,7 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_friends_profile);
         friend = ApplicationState.getInstance().getClickedFriend();
         removeFriendButton = (Button)findViewById(R.id.removeFriendButton);
-        trackFriendButton = (Button)findViewById(R.id.trackFriendButton);
+        trackedRadioButton = (RadioButton)findViewById(R.id.trackedRadioButton);
         controller = new DisplayFriendsProfileController(this);
 
         updateFields();
@@ -38,16 +39,16 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity {
         return removeFriendButton;
     }
 
-    public Button getTrackFriendButton() {
-        return trackFriendButton;
+    public RadioButton getTrackedRadioButton() {
+        return trackedRadioButton;
     }
 
     public void removeFriendButtonOnClick(View v) {
         controller.removeFriendButtonOnClick();
     }
 
-    public void trackFriendButtonOnClick(View v) {
-
+    public void trackedRadioButtonOnClick(View v) {
+        controller.trackedRadioButtonOnClick();
     }
 
 

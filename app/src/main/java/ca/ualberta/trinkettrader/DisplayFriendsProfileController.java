@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 
 /**
  * Created by Me on 2015-11-05.
@@ -24,7 +25,9 @@ public class DisplayFriendsProfileController {
         activity.startActivity(intent);
     }
 
-    public void setFriendsListViewItemOnClick() {
+    public void trackedRadioButtonOnClick() {
+        RadioButton tracked = activity.getTrackedRadioButton();
+        ApplicationState.getInstance().getClickedFriend().setIsTracked(tracked.isChecked());
 
     }
 }

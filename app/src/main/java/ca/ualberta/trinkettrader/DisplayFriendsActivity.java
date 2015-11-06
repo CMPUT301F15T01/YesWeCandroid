@@ -28,8 +28,9 @@ public class DisplayFriendsActivity extends AppCompatActivity {
     private EditText findFriendTextField;
     private ListView friendsListView;
     private FriendsList userFriendList;
-    private ArrayAdapter<User> friendAdapter;
+    private ArrayAdapter<Friend> friendAdapter;
     private FriendsListController controller;
+    private Button viewTrackedFriendsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class DisplayFriendsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_friends);
         friendsListView = (ListView)findViewById(R.id.friendsView);
         findFriendsButton = (Button)findViewById(R.id.findFriendsButton);
+        viewTrackedFriendsButton = (Button) findViewById(R.id.viewTrackedFriendsButton);
         findFriendTextField = (EditText)findViewById(R.id.findFriendTextField);
         userFriendList = LoggedInUser.getInstance().getFriendsList();
         controller = new FriendsListController(this);
@@ -46,12 +48,16 @@ public class DisplayFriendsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        friendAdapter = new ArrayAdapter<User>(this, R.layout.listview_item, userFriendList);
+        friendAdapter = new ArrayAdapter<Friend>(this, R.layout.listview_item, userFriendList);
         friendsListView.setAdapter(friendAdapter);
     }
 
     public Button getFindFriendsButton() {
         return findFriendsButton;
+    }
+
+    public Button getViewTrackedFriendsButton() {
+        return viewTrackedFriendsButton;
     }
 
     public EditText getFindFriendTextField() {
@@ -65,5 +71,9 @@ public class DisplayFriendsActivity extends AppCompatActivity {
     public void findFriendsOnClick(View v) {
         controller.findFriendsOnClick();
         friendAdapter.notifyDataSetChanged();
+    }
+
+    public void viewTrackedFriendsOnClick(View v){
+        controller.viewTrackedFriendsOnClick();
     }
 }

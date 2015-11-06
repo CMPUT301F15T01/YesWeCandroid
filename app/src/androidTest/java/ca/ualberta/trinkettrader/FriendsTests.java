@@ -343,7 +343,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
         getInstrumentation().removeMonitor(displayFriendsProfileActivityMonitor);
 
         // Click the Track Friend button to track the selected friend.
-        trackFriendButton = displayFriendsProfileActivity.getTrackFriendButton();
+        trackFriendButton = displayFriendsProfileActivity.getTrackedRadioButton();
         displayFriendsProfileActivity.runOnUiThread(new Runnable() {
             public void run() {
                 trackFriendButton.performClick();

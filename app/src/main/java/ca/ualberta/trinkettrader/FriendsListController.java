@@ -23,6 +23,7 @@ public class FriendsListController {
         EditText textField = activity.getFindFriendTextField();
         Friend newFriend = new Friend();
         String username = textField.getText().toString();
+
         // TODO testing for offline purposes only - will redo once web service intact
         newFriend.getProfile().setUsername(username);
         LoggedInUser.getInstance().friendsList.add(newFriend);
@@ -32,11 +33,16 @@ public class FriendsListController {
         ListView friendsListView = activity.getFriendsListView();
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
-                User clickedFriend = LoggedInUser.getInstance().getFriendsList().get(position);
+                Friend clickedFriend = LoggedInUser.getInstance().getFriendsList().get(position);
                 ApplicationState.getInstance().setClickedFriend(clickedFriend);
                 Intent intent = new Intent(activity, DisplayFriendsProfileActivity.class);
                 activity.startActivity(intent);
             }
         });
+    }
+
+    public void viewTrackedFriendsOnClick() {
+        Intent intent = new Intent(activity, DisplayTrackedFriendsActivity.class);
+        activity.startActivity(intent);
     }
 }
