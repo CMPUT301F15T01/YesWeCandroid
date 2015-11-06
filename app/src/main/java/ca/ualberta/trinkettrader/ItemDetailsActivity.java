@@ -58,22 +58,42 @@ public class ItemDetailsActivity extends AppCompatActivity implements Observer {
         this.dialog = setupAlertDialog();
     }
 
+    /**
+     * Returns button for deleting item.
+     * @return Button
+     */
     public Button getDeleteButton() {
         return deleteButton;
     }
 
+    /**
+     * Returns button for editing item.
+     * @return Button
+     */
     public Button getEditButton() {
         return editButton;
     }
 
+    /**
+     * Returns image views.
+     * @return ArrayList
+     */
     public ArrayList<ImageView> getImageViews() {
         return this.imageViews;
     }
 
+    /**
+     * Returns trinke currently being viewed.
+     * @return Trinket
+     */
     public Trinket getItem() {
         return item;
     }
 
+    /**
+     * Handles click on delete item button.
+     * @param view
+     */
     public void deleteClick(View view) {
         dialog.show();
     }

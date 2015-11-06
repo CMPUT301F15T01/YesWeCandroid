@@ -17,9 +17,6 @@ package ca.ualberta.trinkettrader;
 import android.app.Activity;
 import android.content.Intent;
 
-/**
- * Created by Andrea McIntosh on 01/11/2015.
- */
 public class InventoryController {
 
     private Activity activity;
@@ -28,12 +25,18 @@ public class InventoryController {
         this.activity = activity;
     }
 
+    /**
+     * Handles click to add an item to inventory.
+     */
     public void onAddItemClick() {
         Intent intent = new Intent(this.activity, AddOrEditItemActivity.class);
         intent.putExtra("activityName", "add");
         activity.startActivity(intent);
     }
 
+    /**
+     * Handles click to on an inventory ListView item to view item's details.
+     */
     public void onDetailsClick() {
         Intent intent = new Intent(this.activity, InventoryDetailsActivity.class);
         activity.startActivity(intent);

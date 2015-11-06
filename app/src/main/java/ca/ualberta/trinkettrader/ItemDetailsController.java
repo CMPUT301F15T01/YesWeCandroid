@@ -17,20 +17,28 @@ package ca.ualberta.trinkettrader;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 
-/**
- * Created by anju on 03/11/15.
- */
 public class ItemDetailsController {
     ItemDetailsActivity activity;
 
+    /**
+     *
+     * @param activity
+     */
     public ItemDetailsController(ItemDetailsActivity activity) {
         this.activity = activity;
     }
 
+    /**
+     * Handles deleting item.
+     * @param trinket
+     */
     public void onDeleteClick(Trinket trinket) {
         LoggedInUser.getInstance().getInventory().remove(trinket);
     }
 
+    /**
+     * Directs to activity to edit item.
+     */
     public void onEditClick() {
         Intent intent = new Intent(this.activity, AddOrEditItemActivity.class);
         intent.putExtra("activityName", "edit");
