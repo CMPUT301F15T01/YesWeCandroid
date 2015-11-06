@@ -14,6 +14,5 @@
 
 package ca.ualberta.trinkettrader;
 
-
 public class ActiveTradesController {
 }
