@@ -1224,51 +1224,53 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
     /* Test methods to edit an item's details */
     public void testChangeItemName() {
+        // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
-        /******** LoginActivity ********/
-        {
-            // Set up an ActivityMonitor
-            Instrumentation.ActivityMonitor receiverActivityMonitor =
-                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
-                            null, false);
-
-            // Start DisplayInventoryActivity
-            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
-            emailTextView.setText("test@test.test");
-            final Button homePageButton = loginActivity.getLoginButton();
-            loginActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    homePageButton.performClick();
-                }
-            });
-            getInstrumentation().waitForIdleSync();
-
-            // Validate that ReceiverActivity is started
-            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
-                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
-            assertNotNull("ReceiverActivity is null", receiverActivity);
-            assertEquals("Monitor for ReceiverActivity has not been called",
-                    1, receiverActivityMonitor.getHits());
-            assertEquals("Activity is of wrong type",
-                    DisplayInventoryActivity.class, receiverActivity.getClass());
-
-            // Remove the ActivityMonitor
-            getInstrumentation().removeMonitor(receiverActivityMonitor);
-        }
-
-        // Get the current activity
-        HomePageActivity activity = (HomePageActivity) getActivity();
-
-        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
+        /******** HomePageActivity ********/
         // Set up an ActivityMonitor
-        Instrumentation.ActivityMonitor receiverActivityMonitor =
+        Instrumentation.ActivityMonitor homePageActivityMonitor =
+                getInstrumentation().addMonitor(HomePageActivity.class.getName(),
+                        null, false);
+
+        // Start DisplayInventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emailTextView.setText(test_email);
+            }
+        });
+        final Button homePageButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                homePageButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        HomePageActivity homePageActivity = (HomePageActivity)
+                homePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", homePageActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, homePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                HomePageActivity.class, homePageActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        /******** DisplayInventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor invActMon =
                 getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
                         null, false);
 
-        // Click the button
-        inventoryButton = activity.getInventoryButton();
-        activity.runOnUiThread(new Runnable() {
+        // Start DisplayInventoryActivity
+        final Button inventoryButton = homePageActivity.getInventoryButton();
+        homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
                 inventoryButton.performClick();
             }
@@ -1277,18 +1279,20 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Validate that ReceiverActivity is started
         final DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+                invActMon.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", inventoryActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, invActMon.getHits());
         assertEquals("Activity is of wrong type",
                 DisplayInventoryActivity.class, inventoryActivity.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(invActMon);
+
+        assertTrue(inventoryActivity.getInventory().size() == 0);
 
         // Move to add item activity
-        receiverActivityMonitor =
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
                 getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
                         null, false);
 
@@ -1312,6 +1316,11 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        // Move to add item activity
+        Instrumentation.ActivityMonitor displayInventoryActivityMonitorAgain =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
 
         // Click the button
         final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
@@ -1356,13 +1365,32 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        Iterator<Trinket> trinketIterator = inventoryActivity.getInventory().iterator();
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity displayInventoryActivityAgain = (DisplayInventoryActivity)
+                displayInventoryActivityMonitorAgain.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivityAgain);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayInventoryActivityMonitorAgain.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, displayInventoryActivityAgain.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayInventoryActivityMonitorAgain);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
+        assertNotNull(list.getChildAt(0));
+        Iterator<Trinket> trinketIterator = displayInventoryActivityAgain.getInventory().iterator();
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getName(), "test");
         }
 
-        list = inventoryActivity.getInventoryItemsList();
-        inventoryActivity.runOnUiThread(new Runnable() {
+        // Move to add item activity
+        Instrumentation.ActivityMonitor itemDetailsMonitor =
+                getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
+                        null, false);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
+        displayInventoryActivityAgain.runOnUiThread(new Runnable() {
             public void run() {
                 View firstItem = list.getChildAt(0);
                 list.performItemClick(firstItem, 0, firstItem.getId());
@@ -1370,21 +1398,23 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        receiverActivityMonitor =
-                getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
-                        null, false);
-        ItemDetailsActivity itemDetsActivity = (ItemDetailsActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", itemDetsActivity);
+        ItemDetailsActivity itemDetsAct = (ItemDetailsActivity)
+                itemDetailsMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", itemDetsAct);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, itemDetailsMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                AddOrEditItemActivity.class, itemDetsActivity.getClass());
+                ItemDetailsActivity.class, itemDetsAct.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(itemDetailsMonitor);
 
-        final Button editButton = itemDetsActivity.getEditButton();
+        // Validate that ReceiverActivity is started
+        Instrumentation.ActivityMonitor editItemMon =
+                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                        null, false);
+
+        final Button editButton = itemDetsAct.getEditButton();
         inventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 editButton.performClick();
@@ -1394,74 +1424,101 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Validate that ReceiverActivity is started
         AddOrEditItemActivity editItemAct = (AddOrEditItemActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+                editItemMon.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", editItemAct);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, editItemMon.getHits());
         assertEquals("Activity is of wrong type",
                 AddOrEditItemActivity.class, editItemAct.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(editItemMon);
 
+        Instrumentation.ActivityMonitor itemDetsMon =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(), null, false);
+
+        final EditText name = editItemAct.getItemName();
         editItemAct.runOnUiThread(new Runnable() {
             public void run() {
-                editName.setText("new name");
+                name.setText("Test2");
             }
         });
         getInstrumentation().waitForIdleSync();
 
-        trinketIterator = inventoryActivity.getInventory().iterator();
+        // Click the button
+        final Button saveEditButton = editItemAct.getSaveButton();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveEditButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity editedInvAct = (DisplayInventoryActivity)
+                itemDetsMon.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", editedInvAct);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, itemDetsMon.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, editedInvAct.getClass());
+
+        getInstrumentation().removeMonitor(itemDetsMon);
+
+        trinketIterator = editedInvAct.getInventory().iterator();
         while (trinketIterator.hasNext()) {
-            assertEquals(trinketIterator.next().getName(), "new name");
+            assertEquals(trinketIterator.next().getName(), "Test2");
         }
     }
+
     public void testChangeItemQuantity() {
+        // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
-        /******** LoginActivity ********/
-        {
-            // Set up an ActivityMonitor
-            Instrumentation.ActivityMonitor receiverActivityMonitor =
-                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
-                            null, false);
-
-            // Start DisplayInventoryActivity
-            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
-            emailTextView.setText("test@test.test");
-            final Button homePageButton = loginActivity.getLoginButton();
-            loginActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    homePageButton.performClick();
-                }
-            });
-            getInstrumentation().waitForIdleSync();
-
-            // Validate that ReceiverActivity is started
-            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
-                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
-            assertNotNull("ReceiverActivity is null", receiverActivity);
-            assertEquals("Monitor for ReceiverActivity has not been called",
-                    1, receiverActivityMonitor.getHits());
-            assertEquals("Activity is of wrong type",
-                    DisplayInventoryActivity.class, receiverActivity.getClass());
-
-            // Remove the ActivityMonitor
-            getInstrumentation().removeMonitor(receiverActivityMonitor);
-        }
-
-        // Get the current activity
-        HomePageActivity activity = (HomePageActivity) getActivity();
-
-        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
+        /******** HomePageActivity ********/
         // Set up an ActivityMonitor
-        Instrumentation.ActivityMonitor receiverActivityMonitor =
+        Instrumentation.ActivityMonitor homePageActivityMonitor =
+                getInstrumentation().addMonitor(HomePageActivity.class.getName(),
+                        null, false);
+
+        // Start DisplayInventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emailTextView.setText(test_email);
+            }
+        });
+        final Button homePageButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                homePageButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        HomePageActivity homePageActivity = (HomePageActivity)
+                homePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", homePageActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, homePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                HomePageActivity.class, homePageActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        /******** DisplayInventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor invActMon =
                 getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
                         null, false);
 
-        // Click the button
-        inventoryButton = activity.getInventoryButton();
-        activity.runOnUiThread(new Runnable() {
+        // Start DisplayInventoryActivity
+        final Button inventoryButton = homePageActivity.getInventoryButton();
+        homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
                 inventoryButton.performClick();
             }
@@ -1470,18 +1527,20 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Validate that ReceiverActivity is started
         final DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+                invActMon.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", inventoryActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, invActMon.getHits());
         assertEquals("Activity is of wrong type",
                 DisplayInventoryActivity.class, inventoryActivity.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(invActMon);
+
+        assertTrue(inventoryActivity.getInventory().size() == 0);
 
         // Move to add item activity
-        receiverActivityMonitor =
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
                 getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
                         null, false);
 
@@ -1505,6 +1564,11 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        // Move to add item activity
+        Instrumentation.ActivityMonitor displayInventoryActivityMonitorAgain =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
 
         // Click the button
         final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
@@ -1549,13 +1613,32 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        Iterator<Trinket> trinketIterator = inventoryActivity.getInventory().iterator();
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity displayInventoryActivityAgain = (DisplayInventoryActivity)
+                displayInventoryActivityMonitorAgain.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivityAgain);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayInventoryActivityMonitorAgain.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, displayInventoryActivityAgain.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayInventoryActivityMonitorAgain);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
+        assertNotNull(list.getChildAt(0));
+        Iterator<Trinket> trinketIterator = displayInventoryActivityAgain.getInventory().iterator();
         while (trinketIterator.hasNext()) {
-            assertTrue(trinketIterator.next().getQuantity() == "1");
+            assertEquals(trinketIterator.next().getQuantity(), "1");
         }
 
-        list = inventoryActivity.getInventoryItemsList();
-        inventoryActivity.runOnUiThread(new Runnable() {
+        // Move to add item activity
+        Instrumentation.ActivityMonitor itemDetailsMonitor =
+                getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
+                        null, false);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
+        displayInventoryActivityAgain.runOnUiThread(new Runnable() {
             public void run() {
                 View firstItem = list.getChildAt(0);
                 list.performItemClick(firstItem, 0, firstItem.getId());
@@ -1563,21 +1646,23 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        receiverActivityMonitor =
-                getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
-                        null, false);
-        ItemDetailsActivity itemDetsActivity = (ItemDetailsActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", itemDetsActivity);
+        ItemDetailsActivity itemDetsAct = (ItemDetailsActivity)
+                itemDetailsMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", itemDetsAct);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, itemDetailsMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                AddOrEditItemActivity.class, itemDetsActivity.getClass());
+                ItemDetailsActivity.class, itemDetsAct.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(itemDetailsMonitor);
 
-        final Button editButton = itemDetsActivity.getEditButton();
+        // Validate that ReceiverActivity is started
+        Instrumentation.ActivityMonitor editItemMon =
+                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                        null, false);
+
+        final Button editButton = itemDetsAct.getEditButton();
         inventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 editButton.performClick();
@@ -1587,75 +1672,100 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Validate that ReceiverActivity is started
         AddOrEditItemActivity editItemAct = (AddOrEditItemActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+                editItemMon.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", editItemAct);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, editItemMon.getHits());
         assertEquals("Activity is of wrong type",
                 AddOrEditItemActivity.class, editItemAct.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(editItemMon);
 
-        final EditText quantity = editItemAct.getItemQuantity();
+        Instrumentation.ActivityMonitor itemDetsMon =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(), null, false);
+
+        final EditText quan = editItemAct.getItemQuantity();
         editItemAct.runOnUiThread(new Runnable() {
             public void run() {
-                quantity.setText("5");
+                quan.setText("4");
             }
         });
         getInstrumentation().waitForIdleSync();
 
-        trinketIterator = inventoryActivity.getInventory().iterator();
+        // Click the button
+        final Button saveEditButton = editItemAct.getSaveButton();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveEditButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity editedInvAct = (DisplayInventoryActivity)
+                itemDetsMon.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", editedInvAct);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, itemDetsMon.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, editedInvAct.getClass());
+
+        getInstrumentation().removeMonitor(itemDetsMon);
+
+        trinketIterator = editedInvAct.getInventory().iterator();
         while (trinketIterator.hasNext()) {
-            assertTrue(trinketIterator.next().getQuantity() == "5");
+            assertEquals(trinketIterator.next().getQuantity(), "4");
         }
     }
     public void testChangeItemQuality() {
+        // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
-        /******** LoginActivity ********/
-        {
-            // Set up an ActivityMonitor
-            Instrumentation.ActivityMonitor receiverActivityMonitor =
-                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
-                            null, false);
-
-            // Start DisplayInventoryActivity
-            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
-            emailTextView.setText("test@test.test");
-            final Button homePageButton = loginActivity.getLoginButton();
-            loginActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    homePageButton.performClick();
-                }
-            });
-            getInstrumentation().waitForIdleSync();
-
-            // Validate that ReceiverActivity is started
-            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
-                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
-            assertNotNull("ReceiverActivity is null", receiverActivity);
-            assertEquals("Monitor for ReceiverActivity has not been called",
-                    1, receiverActivityMonitor.getHits());
-            assertEquals("Activity is of wrong type",
-                    DisplayInventoryActivity.class, receiverActivity.getClass());
-
-            // Remove the ActivityMonitor
-            getInstrumentation().removeMonitor(receiverActivityMonitor);
-        }
-
-        // Get the current activity
-        HomePageActivity activity = (HomePageActivity) getActivity();
-
-        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
+        /******** HomePageActivity ********/
         // Set up an ActivityMonitor
-        Instrumentation.ActivityMonitor receiverActivityMonitor =
+        Instrumentation.ActivityMonitor homePageActivityMonitor =
+                getInstrumentation().addMonitor(HomePageActivity.class.getName(),
+                        null, false);
+
+        // Start DisplayInventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emailTextView.setText(test_email);
+            }
+        });
+        final Button homePageButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                homePageButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        HomePageActivity homePageActivity = (HomePageActivity)
+                homePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", homePageActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, homePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                HomePageActivity.class, homePageActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        /******** DisplayInventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor invActMon =
                 getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
                         null, false);
 
-        // Click the button
-        inventoryButton = activity.getInventoryButton();
-        activity.runOnUiThread(new Runnable() {
+        // Start DisplayInventoryActivity
+        final Button inventoryButton = homePageActivity.getInventoryButton();
+        homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
                 inventoryButton.performClick();
             }
@@ -1664,18 +1774,20 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Validate that ReceiverActivity is started
         final DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+                invActMon.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", inventoryActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, invActMon.getHits());
         assertEquals("Activity is of wrong type",
                 DisplayInventoryActivity.class, inventoryActivity.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(invActMon);
+
+        assertTrue(inventoryActivity.getInventory().size() == 0);
 
         // Move to add item activity
-        receiverActivityMonitor =
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
                 getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
                         null, false);
 
@@ -1699,6 +1811,11 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        // Move to add item activity
+        Instrumentation.ActivityMonitor displayInventoryActivityMonitorAgain =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
 
         // Click the button
         final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
@@ -1743,13 +1860,32 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        Iterator<Trinket> trinketIterator = inventoryActivity.getInventory().iterator();
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity displayInventoryActivityAgain = (DisplayInventoryActivity)
+                displayInventoryActivityMonitorAgain.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivityAgain);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayInventoryActivityMonitorAgain.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, displayInventoryActivityAgain.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayInventoryActivityMonitorAgain);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
+        assertNotNull(list.getChildAt(0));
+        Iterator<Trinket> trinketIterator = displayInventoryActivityAgain.getInventory().iterator();
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getQuality(), "Good");
         }
 
-        list = inventoryActivity.getInventoryItemsList();
-        inventoryActivity.runOnUiThread(new Runnable() {
+        // Move to add item activity
+        Instrumentation.ActivityMonitor itemDetailsMonitor =
+                getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
+                        null, false);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
+        displayInventoryActivityAgain.runOnUiThread(new Runnable() {
             public void run() {
                 View firstItem = list.getChildAt(0);
                 list.performItemClick(firstItem, 0, firstItem.getId());
@@ -1757,21 +1893,23 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        receiverActivityMonitor =
-                getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
-                        null, false);
-        ItemDetailsActivity itemDetsActivity = (ItemDetailsActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", itemDetsActivity);
+        ItemDetailsActivity itemDetsAct = (ItemDetailsActivity)
+                itemDetailsMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", itemDetsAct);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, itemDetailsMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                AddOrEditItemActivity.class, itemDetsActivity.getClass());
+                ItemDetailsActivity.class, itemDetsAct.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(itemDetailsMonitor);
 
-        final Button editButton = itemDetsActivity.getEditButton();
+        // Validate that ReceiverActivity is started
+        Instrumentation.ActivityMonitor editItemMon =
+                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                        null, false);
+
+        final Button editButton = itemDetsAct.getEditButton();
         inventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 editButton.performClick();
@@ -1781,74 +1919,100 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Validate that ReceiverActivity is started
         AddOrEditItemActivity editItemAct = (AddOrEditItemActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+                editItemMon.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", editItemAct);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, editItemMon.getHits());
         assertEquals("Activity is of wrong type",
                 AddOrEditItemActivity.class, editItemAct.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(editItemMon);
 
+        Instrumentation.ActivityMonitor itemDetsMon =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(), null, false);
+
+        final Spinner qual = editItemAct.getItemQuality();
         editItemAct.runOnUiThread(new Runnable() {
             public void run() {
-                quality.setSelection(spinner_qualities.indexOf("Poor"));
+                qual.setSelection(spinner_qualities.indexOf("Poor"));
             }
         });
         getInstrumentation().waitForIdleSync();
 
-        trinketIterator = inventoryActivity.getInventory().iterator();
+        // Click the button
+        final Button saveEditButton = editItemAct.getSaveButton();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveEditButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity editedInvAct = (DisplayInventoryActivity)
+                itemDetsMon.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", editedInvAct);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, itemDetsMon.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, editedInvAct.getClass());
+
+        getInstrumentation().removeMonitor(itemDetsMon);
+
+        trinketIterator = editedInvAct.getInventory().iterator();
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getQuality(), "Poor");
         }
     }
     public void testChangeItemDescription() {
+        // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
-        /******** LoginActivity ********/
-        {
-            // Set up an ActivityMonitor
-            Instrumentation.ActivityMonitor receiverActivityMonitor =
-                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
-                            null, false);
-
-            // Start DisplayInventoryActivity
-            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
-            emailTextView.setText("test@test.test");
-            final Button homePageButton = loginActivity.getLoginButton();
-            loginActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    homePageButton.performClick();
-                }
-            });
-            getInstrumentation().waitForIdleSync();
-
-            // Validate that ReceiverActivity is started
-            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
-                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
-            assertNotNull("ReceiverActivity is null", receiverActivity);
-            assertEquals("Monitor for ReceiverActivity has not been called",
-                    1, receiverActivityMonitor.getHits());
-            assertEquals("Activity is of wrong type",
-                    DisplayInventoryActivity.class, receiverActivity.getClass());
-
-            // Remove the ActivityMonitor
-            getInstrumentation().removeMonitor(receiverActivityMonitor);
-        }
-
-        // Get the current activity
-        HomePageActivity activity = (HomePageActivity) getActivity();
-
-        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
+        /******** HomePageActivity ********/
         // Set up an ActivityMonitor
-        Instrumentation.ActivityMonitor receiverActivityMonitor =
+        Instrumentation.ActivityMonitor homePageActivityMonitor =
+                getInstrumentation().addMonitor(HomePageActivity.class.getName(),
+                        null, false);
+
+        // Start DisplayInventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emailTextView.setText(test_email);
+            }
+        });
+        final Button homePageButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                homePageButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        HomePageActivity homePageActivity = (HomePageActivity)
+                homePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", homePageActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, homePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                HomePageActivity.class, homePageActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        /******** DisplayInventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor invActMon =
                 getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
                         null, false);
 
-        // Click the button
-        inventoryButton = activity.getInventoryButton();
-        activity.runOnUiThread(new Runnable() {
+        // Start DisplayInventoryActivity
+        final Button inventoryButton = homePageActivity.getInventoryButton();
+        homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
                 inventoryButton.performClick();
             }
@@ -1857,18 +2021,20 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Validate that ReceiverActivity is started
         final DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+                invActMon.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", inventoryActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, invActMon.getHits());
         assertEquals("Activity is of wrong type",
                 DisplayInventoryActivity.class, inventoryActivity.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(invActMon);
+
+        assertTrue(inventoryActivity.getInventory().size() == 0);
 
         // Move to add item activity
-        receiverActivityMonitor =
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
                 getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
                         null, false);
 
@@ -1892,6 +2058,11 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        // Move to add item activity
+        Instrumentation.ActivityMonitor displayInventoryActivityMonitorAgain =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
 
         // Click the button
         final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
@@ -1917,7 +2088,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
-        final ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
+        ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
         final int good = spinner_qualities.indexOf("Good");
         final Spinner quality = addItemtoDisplayInventoryActivity.getItemQuality();
         addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
@@ -1936,13 +2107,32 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        Iterator<Trinket> trinketIterator = inventoryActivity.getInventory().iterator();
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity displayInventoryActivityAgain = (DisplayInventoryActivity)
+                displayInventoryActivityMonitorAgain.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivityAgain);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayInventoryActivityMonitorAgain.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, displayInventoryActivityAgain.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayInventoryActivityMonitorAgain);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
+        assertNotNull(list.getChildAt(0));
+        Iterator<Trinket> trinketIterator = displayInventoryActivityAgain.getInventory().iterator();
         while (trinketIterator.hasNext()) {
-            assertEquals(trinketIterator.next().getDescription(), "");
+            assertEquals(trinketIterator.next().getDescription(), "Description");
         }
 
-        list = inventoryActivity.getInventoryItemsList();
-        inventoryActivity.runOnUiThread(new Runnable() {
+        // Move to add item activity
+        Instrumentation.ActivityMonitor itemDetailsMonitor =
+                getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
+                        null, false);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
+        displayInventoryActivityAgain.runOnUiThread(new Runnable() {
             public void run() {
                 View firstItem = list.getChildAt(0);
                 list.performItemClick(firstItem, 0, firstItem.getId());
@@ -1950,21 +2140,23 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        receiverActivityMonitor =
-                getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
-                        null, false);
-        ItemDetailsActivity itemDetsActivity = (ItemDetailsActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", itemDetsActivity);
+        ItemDetailsActivity itemDetsAct = (ItemDetailsActivity)
+                itemDetailsMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", itemDetsAct);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, itemDetailsMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                AddOrEditItemActivity.class, itemDetsActivity.getClass());
+                ItemDetailsActivity.class, itemDetsAct.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(itemDetailsMonitor);
 
-        final Button editButton = itemDetsActivity.getEditButton();
+        // Validate that ReceiverActivity is started
+        Instrumentation.ActivityMonitor editItemMon =
+                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                        null, false);
+
+        final Button editButton = itemDetsAct.getEditButton();
         inventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 editButton.performClick();
@@ -1974,76 +2166,101 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Validate that ReceiverActivity is started
         AddOrEditItemActivity editItemAct = (AddOrEditItemActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+                editItemMon.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", editItemAct);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, editItemMon.getHits());
         assertEquals("Activity is of wrong type",
                 AddOrEditItemActivity.class, editItemAct.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(editItemMon);
+
+        Instrumentation.ActivityMonitor itemDetsMon =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(), null, false);
 
         final EditText desc = editItemAct.getItemDescription();
         editItemAct.runOnUiThread(new Runnable() {
             public void run() {
-                desc.setText("description");
+                desc.setText("new desc");
             }
         });
         getInstrumentation().waitForIdleSync();
 
-        trinketIterator = inventoryActivity.getInventory().iterator();
+        // Click the button
+        final Button saveEditButton = editItemAct.getSaveButton();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveEditButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity editedInvAct = (DisplayInventoryActivity)
+                itemDetsMon.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", editedInvAct);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, itemDetsMon.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, editedInvAct.getClass());
+
+        getInstrumentation().removeMonitor(itemDetsMon);
+
+        trinketIterator = editedInvAct.getInventory().iterator();
         while (trinketIterator.hasNext()) {
-            assertEquals(trinketIterator.next().getDescription(), "description");
+            assertEquals(trinketIterator.next().getDescription(), "new desc");
         }
     }
     // Test for changing item's category
     public void testChangeItemCategory() {
+        // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
-        /******** LoginActivity ********/
-        {
-            // Set up an ActivityMonitor
-            Instrumentation.ActivityMonitor receiverActivityMonitor =
-                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
-                            null, false);
-
-            // Start DisplayInventoryActivity
-            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
-            emailTextView.setText("test@test.test");
-            final Button homePageButton = loginActivity.getLoginButton();
-            loginActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    homePageButton.performClick();
-                }
-            });
-            getInstrumentation().waitForIdleSync();
-
-            // Validate that ReceiverActivity is started
-            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
-                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
-            assertNotNull("ReceiverActivity is null", receiverActivity);
-            assertEquals("Monitor for ReceiverActivity has not been called",
-                    1, receiverActivityMonitor.getHits());
-            assertEquals("Activity is of wrong type",
-                    DisplayInventoryActivity.class, receiverActivity.getClass());
-
-            // Remove the ActivityMonitor
-            getInstrumentation().removeMonitor(receiverActivityMonitor);
-        }
-
-        // Get the current activity
-        HomePageActivity activity = (HomePageActivity) getActivity();
-
-        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
+        /******** HomePageActivity ********/
         // Set up an ActivityMonitor
-        Instrumentation.ActivityMonitor receiverActivityMonitor =
+        Instrumentation.ActivityMonitor homePageActivityMonitor =
+                getInstrumentation().addMonitor(HomePageActivity.class.getName(),
+                        null, false);
+
+        // Start DisplayInventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emailTextView.setText(test_email);
+            }
+        });
+        final Button homePageButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                homePageButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        HomePageActivity homePageActivity = (HomePageActivity)
+                homePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", homePageActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, homePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                HomePageActivity.class, homePageActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        /******** DisplayInventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor invActMon =
                 getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
                         null, false);
 
-        // Click the button
-        inventoryButton = activity.getInventoryButton();
-        activity.runOnUiThread(new Runnable() {
+        // Start DisplayInventoryActivity
+        final Button inventoryButton = homePageActivity.getInventoryButton();
+        homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
                 inventoryButton.performClick();
             }
@@ -2052,18 +2269,20 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Validate that ReceiverActivity is started
         final DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+                invActMon.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", inventoryActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, invActMon.getHits());
         assertEquals("Activity is of wrong type",
                 DisplayInventoryActivity.class, inventoryActivity.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(invActMon);
+
+        assertTrue(inventoryActivity.getInventory().size() == 0);
 
         // Move to add item activity
-        receiverActivityMonitor =
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
                 getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
                         null, false);
 
@@ -2087,6 +2306,11 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
+
+        // Move to add item activity
+        Instrumentation.ActivityMonitor displayInventoryActivityMonitorAgain =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
 
         // Click the button
         final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
@@ -2131,13 +2355,32 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        Iterator<Trinket> trinketIterator = inventoryActivity.getInventory().iterator();
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity displayInventoryActivityAgain = (DisplayInventoryActivity)
+                displayInventoryActivityMonitorAgain.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivityAgain);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayInventoryActivityMonitorAgain.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, displayInventoryActivityAgain.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayInventoryActivityMonitorAgain);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
+        assertNotNull(list.getChildAt(0));
+        Iterator<Trinket> trinketIterator = displayInventoryActivityAgain.getInventory().iterator();
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getCategory(), "Ring");
         }
 
-        list = inventoryActivity.getInventoryItemsList();
-        inventoryActivity.runOnUiThread(new Runnable() {
+        // Move to add item activity
+        Instrumentation.ActivityMonitor itemDetailsMonitor =
+                getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
+                        null, false);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
+        displayInventoryActivityAgain.runOnUiThread(new Runnable() {
             public void run() {
                 View firstItem = list.getChildAt(0);
                 list.performItemClick(firstItem, 0, firstItem.getId());
@@ -2145,21 +2388,23 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        receiverActivityMonitor =
-                getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
-                        null, false);
-        ItemDetailsActivity itemDetsActivity = (ItemDetailsActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", itemDetsActivity);
+        ItemDetailsActivity itemDetsAct = (ItemDetailsActivity)
+                itemDetailsMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", itemDetsAct);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, itemDetailsMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                AddOrEditItemActivity.class, itemDetsActivity.getClass());
+                ItemDetailsActivity.class, itemDetsAct.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(itemDetailsMonitor);
 
-        final Button editButton = itemDetsActivity.getEditButton();
+        // Validate that ReceiverActivity is started
+        Instrumentation.ActivityMonitor editItemMon =
+                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                        null, false);
+
+        final Button editButton = itemDetsAct.getEditButton();
         inventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 editButton.performClick();
@@ -2169,24 +2414,48 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Validate that ReceiverActivity is started
         AddOrEditItemActivity editItemAct = (AddOrEditItemActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+                editItemMon.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", editItemAct);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, editItemMon.getHits());
         assertEquals("Activity is of wrong type",
                 AddOrEditItemActivity.class, editItemAct.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(editItemMon);
 
+        Instrumentation.ActivityMonitor itemDetsMon =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(), null, false);
+
+        final Spinner cat = editItemAct.getItemCategory();
         editItemAct.runOnUiThread(new Runnable() {
             public void run() {
-                category.setSelection(spinner_categories.indexOf("Necklace"));
+                cat.setSelection(spinner_categories.indexOf("Necklace"));
             }
         });
         getInstrumentation().waitForIdleSync();
 
-        trinketIterator = inventoryActivity.getInventory().iterator();
+        // Click the button
+        final Button saveEditButton = editItemAct.getSaveButton();
+        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveEditButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity editedInvAct = (DisplayInventoryActivity)
+                itemDetsMon.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", editedInvAct);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, itemDetsMon.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, editedInvAct.getClass());
+
+        getInstrumentation().removeMonitor(itemDetsMon);
+
+        trinketIterator = editedInvAct.getInventory().iterator();
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getCategory(), "Necklace");
         }
@@ -2195,51 +2464,54 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     // Test method for checking how quickly an item can be added to the inventory
     public void testQuickAdd() {
         clickCount = 0;
+        // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
-        /******** LoginActivity ********/
-        {
-            // Set up an ActivityMonitor
-            Instrumentation.ActivityMonitor receiverActivityMonitor =
-                    getInstrumentation().addMonitor(LoginActivity.class.getName(),
-                            null, false);
-
-            // Start DisplayInventoryActivity
-            AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
-            emailTextView.setText("test@test.test");
-            final Button homePageButton = loginActivity.getLoginButton();
-            loginActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    homePageButton.performClick();
-                }
-            });
-            getInstrumentation().waitForIdleSync();
-
-            // Validate that ReceiverActivity is started
-            DisplayInventoryActivity receiverActivity = (DisplayInventoryActivity)
-                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
-            assertNotNull("ReceiverActivity is null", receiverActivity);
-            assertEquals("Monitor for ReceiverActivity has not been called",
-                    1, receiverActivityMonitor.getHits());
-            assertEquals("Activity is of wrong type",
-                    DisplayInventoryActivity.class, receiverActivity.getClass());
-
-            // Remove the ActivityMonitor
-            getInstrumentation().removeMonitor(receiverActivityMonitor);
-        }
-
-        // Get the current activity
-        HomePageActivity activity = (HomePageActivity) getActivity();
-
-        // Code from : https://developer.android.com/training/activity-testing/activity-functional-testing.html#keyinput, 2015-10-14
+        /******** HomePageActivity ********/
         // Set up an ActivityMonitor
-        Instrumentation.ActivityMonitor receiverActivityMonitor =
+        Instrumentation.ActivityMonitor homePageActivityMonitor =
+                getInstrumentation().addMonitor(HomePageActivity.class.getName(),
+                        null, false);
+
+        // Start DisplayInventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emailTextView.setText(test_email);
+            }
+        });
+        final Button homePageButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                homePageButton.performClick();
+                clickCount += 1;
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        HomePageActivity homePageActivity = (HomePageActivity)
+                homePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", homePageActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, homePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                HomePageActivity.class, homePageActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        /******** DisplayInventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor invActMon =
                 getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
                         null, false);
 
-        // Click the button
-        inventoryButton = activity.getInventoryButton();
-        activity.runOnUiThread(new Runnable() {
+        // Start DisplayInventoryActivity
+        final Button inventoryButton = homePageActivity.getInventoryButton();
+        homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
                 inventoryButton.performClick();
                 clickCount += 1;
@@ -2249,18 +2521,20 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Validate that ReceiverActivity is started
         final DisplayInventoryActivity inventoryActivity = (DisplayInventoryActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+                invActMon.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", inventoryActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
+                1, invActMon.getHits());
         assertEquals("Activity is of wrong type",
                 DisplayInventoryActivity.class, inventoryActivity.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+        getInstrumentation().removeMonitor(invActMon);
+
+        assertTrue(inventoryActivity.getInventory().isEmpty());
 
         // Move to add item activity
-        receiverActivityMonitor =
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
                 getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
                         null, false);
 
@@ -2286,14 +2560,10 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
-        // Click the button
-        final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
-        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                editName.setText("test");
-            }
-        });
-        getInstrumentation().waitForIdleSync();
+        // Move to add item activity
+        Instrumentation.ActivityMonitor displayInventoryActivityMonitorAgain =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
 
         // Get resources
         Resources resources = addItemtoDisplayInventoryActivity.getResources();
@@ -2310,18 +2580,6 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
-        ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
-        final int good = spinner_qualities.indexOf("Good");
-        final Spinner quality = addItemtoDisplayInventoryActivity.getItemQuality();
-        addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                quality.setSelection(good);
-                clickCount += 1;
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-
         // Click the button
         final Button saveItemButton = addItemtoDisplayInventoryActivity.getSaveButton();
         addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
@@ -2332,10 +2590,25 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity displayInventoryActivityAgain = (DisplayInventoryActivity)
+                displayInventoryActivityMonitorAgain.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivityAgain);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayInventoryActivityMonitorAgain.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, displayInventoryActivityAgain.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayInventoryActivityMonitorAgain);
+
+        list = displayInventoryActivityAgain.getInventoryItemsList();
+        assertNotNull(list.getChildAt(0));
         Iterator<Trinket> trinketIterator = inventoryActivity.getInventory().iterator();
         while (trinketIterator.hasNext()) {
-            assertEquals(trinketIterator.next().getName(), "test");
+            assertEquals(trinketIterator.next().getName(), "Name");
         }
+
         // 5 or less clicks
         assertTrue(clickCount <= 5);
     }
