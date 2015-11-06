@@ -39,4 +39,16 @@ public class FriendsList extends ArrayList<Friend> {
         }
         return null;
     }
+
+    @Override
+    public boolean add(Friend friend) {
+        for (Friend f : this) {
+            if (f.getProfile().getUsername().equals(friend.getProfile().getUsername())) {
+                return false;
+            }
+        }
+        this.add(this.size(), friend);
+        return true;
+    }
+
 }

@@ -26,7 +26,7 @@ public class FriendsListController {
 
         // TODO testing for offline purposes only - will redo once web service intact
         newFriend.getProfile().setUsername(username);
-        LoggedInUser.getInstance().friendsList.add(newFriend);
+        LoggedInUser.getInstance().getFriendsList().add(newFriend);
     }
 
     public void setFriendsListViewItemOnClick() {

@@ -27,7 +27,19 @@ public class DisplayFriendsProfileController {
 
     public void trackedRadioButtonOnClick() {
         RadioButton tracked = activity.getTrackedRadioButton();
-        ApplicationState.getInstance().getClickedFriend().setIsTracked(tracked.isChecked());
+        Friend clickedFriend = ApplicationState.getInstance().getClickedFriend();
+        Boolean wasChecked = clickedFriend.isTracked();
+        tracked.setChecked(!wasChecked);
+        clickedFriend.setIsTracked(!wasChecked);
+        if(wasChecked) {
+            LoggedInUser.getInstance().getTrackedFriends().remove(clickedFriend);
+        } else {
+            LoggedInUser.getInstance().getTrackedFriends().add(clickedFriend);
+        }
+    }
 
+    public void backToFriendsListButtonFromProfileOnClick() {
+        Intent intent = new Intent(this.activity, DisplayFriendsActivity.class);
+        activity.startActivity(intent);
     }
 }
