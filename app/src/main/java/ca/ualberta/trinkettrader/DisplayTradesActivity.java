@@ -27,7 +27,7 @@ public class DisplayTradesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_trades);
         currentTradesListView = (ListView)findViewById(R.id.friendsView);
         pastTradesButton = (Button)findViewById(R.id.past_trades_button);
-        userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
+        //userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();
     }
@@ -42,8 +42,8 @@ public class DisplayTradesActivity extends AppCompatActivity {
     // PastTrades Button click
     public void openPastTrades(View view){
         Intent intent = new Intent(this, DisplayPastTradesActivity.class);
-        startActivity(intent);
-    }
+            startActivity(intent);
+        }
 
     public Button getPastTradesButton(){return pastTradesButton; }
 

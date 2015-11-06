@@ -28,7 +28,7 @@ public class PastTradesController {
     public PastTradesController(DisplayPastTradesActivity activity) {
         this.activity = activity;
     }
-
+/*
     public void setPastTradesListViewItemOnClick() {
         ListView pastTradesListView = activity.getPastTradesListView();
         pastTradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -41,4 +41,5 @@ public class PastTradesController {
             }
         });
     }
+    */
 }
