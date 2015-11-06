@@ -52,10 +52,18 @@ public class DisplayFriendsActivity extends AppCompatActivity {
         friendsListView.setAdapter(friendAdapter);
     }
 
+    /**
+     *  Returns the find friend button.
+     * @return findFriendsButton
+     */
     public Button getFindFriendsButton() {
         return findFriendsButton;
     }
 
+    /**
+     *  Returns view tracked friends button
+     * @return viewTrackedFriendsButton
+     */
     public Button getViewTrackedFriendsButton() {
         return viewTrackedFriendsButton;
     }
@@ -68,10 +76,20 @@ public class DisplayFriendsActivity extends AppCompatActivity {
         return friendsListView;
     }
 
+    /**
+     * Sets the friends information so that their profile can be viewed
+     *
+     * @param v
+     */
     public void findFriendsOnClick(View v) {
         controller.findFriendsOnClick();
         friendAdapter.notifyDataSetChanged();
     }
+
+    /**
+     * viewTrackedFriendsOnCLick navigates to tracked friends
+     * @param v tracked friends button view
+     */
 
     public void viewTrackedFriendsOnClick(View v){
         controller.viewTrackedFriendsOnClick();
