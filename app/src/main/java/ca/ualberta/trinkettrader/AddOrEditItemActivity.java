@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,8 @@ import android.widget.Spinner;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class AddOrEditItemActivity extends AppCompatActivity {
@@ -63,6 +66,33 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         this.accessibility = (CheckBox) findViewById(R.id.accessibilityCheckbox);
         this.saveButton = (Button) findViewById(R.id.saveItemButton);
         this.itemDescription = (EditText) findViewById(R.id.itemDescriptionText);
+
+        // Lalit Poptani, http://stackoverflow.com/questions/8119526/android-get-previous-activity, 2015-11-06
+        Intent intent = getIntent();
+        String prevActivity = intent.getStringExtra("activityName");
+        if (prevActivity.equals("edit")) {
+            Trinket edited = ApplicationState.getInstance().getClickedTrinket();
+            this.itemName.setText(edited.getName());
+            this.itemCategory.setSelection(new ArrayList<>(Arrays.asList(this.getResources().getStringArray(R.array.spinner_categories))).indexOf(edited.getCategory()));
+            this.itemQuality.setSelection(new ArrayList<>(Arrays.asList(this.getResources().getStringArray(R.array.spinner_qualities))).indexOf(edited.getQuality()));
+            this.itemQuantity.setText(edited.getQuantity());
+            this.accessibility.setChecked(edited.getAccessibility().equals("public"));
+            this.itemDescription.setText(edited.getDescription());
+
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    controller.onSaveEditClick();
+                }
+            });
+        } else {
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    controller.onSaveNewClick();
+                }
+            });
+        }
     }
 
     public CheckBox getAccessibility() {
@@ -171,10 +201,6 @@ public class AddOrEditItemActivity extends AppCompatActivity {
 
     public void removePictureClick(View view) {
         controller.removePicture();
-    }
-
-    public void saveClick(View view) {
-        controller.onSaveClick();
     }
 
     public static int getRequestImageCapture() {
