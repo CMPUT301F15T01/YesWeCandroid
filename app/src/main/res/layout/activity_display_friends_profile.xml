@@ -17,20 +17,22 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Track Friend"
-        android:id="@+id/trackFriendButton"
-        android:layout_below="@+id/viewInventoryButton"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/viewInventoryButton" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Remove Friend"
         android:id="@+id/removeFriendButton"
-        android:layout_below="@+id/trackFriendButton"
-        android:layout_alignEnd="@+id/trackFriendButton"
-        android:layout_alignStart="@+id/trackFriendButton" />
+        android:onClick="removeFriendButtonOnClick"
+        android:layout_below="@+id/viewInventoryButton"
+        android:layout_alignStart="@+id/viewInventoryButton"
+        android:layout_alignParentEnd="true" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Track"
+        android:id="@+id/trackedRadioButton"
+        android:checked="false"
+        android:onClick="trackedRadioButtonOnClick"
+        android:layout_alignTop="@+id/viewInventoryButton"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -14,102 +14,21 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.support.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.Observable;
 
-public class Inventory extends Observable implements Collection {
+public class Inventory extends ArrayList<Trinket> {
 
-    private ArrayList<Trinket> trinkets;
     private Boolean needToSave;
 
+    public Inventory(Collection<? extends Trinket> collection) {
+        super(collection);
+    }
+
     public Inventory() {
-        this(new ArrayList<Trinket>());
     }
 
     public Boolean getNeedToSave() {
         return this.needToSave;
-    }
-
-    public Inventory(ArrayList<Trinket> trinkets) {
-        this.trinkets = trinkets;
-    }
-
-    @Override
-    public boolean add(Object object) {
-        this.needToSave = Boolean.TRUE;
-        return trinkets.add((Trinket) object);
-
-    }
-
-    @Override
-    public boolean addAll(Collection collection) {
-        this.needToSave = Boolean.TRUE;
-        return trinkets.addAll(collection);
-    }
-
-    @Override
-    public void clear() {
-        this.needToSave = Boolean.TRUE;
-        trinkets.clear();
-    }
-
-    @Override
-    public boolean contains(Object object) {
-        return trinkets.contains((object));
-    }
-
-    @Override
-    public boolean containsAll(Collection collection) {
-        return trinkets.containsAll(collection);
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return trinkets.isEmpty();
-    }
-
-    @NonNull
-    @Override
-    public Iterator<Trinket> iterator() {
-        return trinkets.iterator();
-    }
-
-    @Override
-    public boolean remove(Object object) {
-        this.needToSave = Boolean.TRUE;
-        return trinkets.remove(object);
-    }
-
-    @Override
-    public boolean removeAll(Collection collection) {
-        this.needToSave = Boolean.TRUE;
-        return trinkets.removeAll(collection);
-    }
-
-    @Override
-    public boolean retainAll(Collection collection) {
-        this.needToSave = Boolean.TRUE;
-        return trinkets.retainAll(collection);
-    }
-
-    @Override
-    public int size() {
-        return trinkets.size();
-    }
-
-    @NonNull
-    @Override
-    public Trinket[] toArray() {
-        return (Trinket[]) trinkets.toArray();
-    }
-
-    @NonNull
-    @Override
-    public Trinket[] toArray(Object[] array) {
-        return new Trinket[0];
     }
 }

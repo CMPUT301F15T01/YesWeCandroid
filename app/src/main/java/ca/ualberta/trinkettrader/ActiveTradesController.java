@@ -14,29 +14,6 @@
 
 package ca.ualberta.trinkettrader;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
-public class FriendsList extends ArrayList<Friend> {
-
-    public FriendsList() {
-        super();
-    }
-
-    public FriendsList(Collection<? extends User> c) {
-        super();
-    }
-
-    public FriendsList(int initialCapacity) {
-        super();
-    }
-
-    public Friend getFriendByUsername(String username) {
-        for (Friend f : this) {
-            if (f.getProfile().getUsername().equals(username)) {
-                return f;
-            }
-        }
-        return null;
-    }
+public class ActiveTradesController {
 }

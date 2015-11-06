@@ -14,10 +14,13 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -25,10 +28,11 @@ import java.util.List;
 
 public class DisplayInventoryActivity extends AppCompatActivity {
 
+    private ArrayAdapter<Trinket> trinketArrayAdapter;
     private Button addItemButton;
+    private Button deleteAll;
     private Inventory inventory;
     private ListView inventoryItemsList;
-    private Button deleteAll;
 
     private InventoryController inventoryController;
 
@@ -45,9 +49,22 @@ public class DisplayInventoryActivity extends AppCompatActivity {
         });
         */
         this.inventoryController = new InventoryController(this);
-        this.inventory = new Inventory();
+        this.inventory = LoggedInUser.getInstance().getInventory();
         this.inventoryItemsList = (ListView) findViewById(R.id.displayedTrinkets);
         this.addItemButton = (Button) findViewById(R.id.addItemButton);
+
+        trinketArrayAdapter = new ArrayAdapter<>(this, R.layout.listview_item, inventory);
+        trinketArrayAdapter.notifyDataSetChanged();
+
+        final DisplayInventoryActivity activity = this;
+        inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> v, View view, int position, long id) {
+                Trinket clickedTrinket = LoggedInUser.getInstance().getInventory().get(position);
+                ApplicationState.getInstance().setClickedTrinket(clickedTrinket);
+                Intent intent = new Intent(activity, DisplayItemDetails.class);
+                activity.startActivity(intent);
+            }
+        });
     }
 
     public Button getAddItemButton() {

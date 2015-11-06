@@ -36,4 +36,13 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:hint="Enter Username" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Tracked Friends"
+        android:id="@+id/viewTrackedFriendsButton"
+        android:onClick="viewTrackedFriendsOnClick"
+        android:layout_below="@+id/findFriendsButton"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

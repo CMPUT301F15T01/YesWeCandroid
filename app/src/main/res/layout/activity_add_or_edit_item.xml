@@ -86,8 +86,8 @@
         android:id="@+id/removePictureButton"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:onClick="removePicturesClick"
-        android:text="@string/activity_add_or_edit_item_remove_pictures_button_text" />
+        android:onClick="removePictureClick"
+        android:text="@string/activity_add_or_edit_item_remove_picture_button_text" />
 
     <Button
         android:id="@+id/saveItemButton"

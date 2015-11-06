@@ -34,7 +34,11 @@ import java.util.Date;
 public class AddOrEditItemActivity extends AppCompatActivity {
 
     private AddOrEditItemController controller;
+<<<<<<< HEAD
     private Button pictureLibrary;
+=======
+    private Button pictureLibraryButton;
+>>>>>>> 48d2a19f1bcb27477ac9eb200cad04605bb15b9d
     private Button removePictureButton;
     private Button saveButton;
     private Button takePictureButton;
@@ -87,8 +91,13 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         return itemQuantity;
     }
 
+<<<<<<< HEAD
     public Button getPictureLibrary() {
         return pictureLibrary;
+=======
+    public Button getPictureLibraryButton() {
+        return pictureLibraryButton;
+>>>>>>> 48d2a19f1bcb27477ac9eb200cad04605bb15b9d
     }
 
     public Button getRemovePictureButton() {
@@ -144,8 +153,13 @@ public class AddOrEditItemActivity extends AppCompatActivity {
         }
     }
 
+<<<<<<< HEAD
     public void removePicturesClick(View view) {
         controller.removePictures();
+=======
+    public void removePictureClick(View view) {
+        controller.removePicture();
+>>>>>>> 48d2a19f1bcb27477ac9eb200cad04605bb15b9d
     }
 
     public void saveClick(View view) {

@@ -1,37 +1,60 @@
 package ca.ualberta.trinkettrader;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 public class DisplayFriendsProfileActivity extends AppCompatActivity {
+
+    private User friend;
+    private Button removeFriendButton;
+    private RadioButton trackedRadioButton;
+    private DisplayFriendsProfileController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_friends_profile);
+        friend = ApplicationState.getInstance().getClickedFriend();
+        removeFriendButton = (Button)findViewById(R.id.removeFriendButton);
+        trackedRadioButton = (RadioButton)findViewById(R.id.trackedRadioButton);
+        controller = new DisplayFriendsProfileController(this);
+
+        updateFields();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_display_friends_profile, menu);
-        return true;
+    private void updateFields() {
+        TextView usernameText = (TextView)findViewById(R.id.usernameText);
+        usernameText.setText(friend.getProfile().getUsername());
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public Button getRemoveFriendButton() {
+        return removeFriendButton;
     }
+
+    public RadioButton getTrackedRadioButton() {
+        return trackedRadioButton;
+    }
+
+    public void removeFriendButtonOnClick(View v) {
+        controller.removeFriendButtonOnClick();
+    }
+
+    public void trackedRadioButtonOnClick(View v) {
+        controller.trackedRadioButtonOnClick();
+    }
+
+
+
+
+
+
+
 }
