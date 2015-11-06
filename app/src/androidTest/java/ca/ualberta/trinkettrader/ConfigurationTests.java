@@ -163,7 +163,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
 
         //Assert that DisplayUserProfileActivity starts up
         DisplayUserProfileActivity refreshedProfileActivity = (DisplayUserProfileActivity) refreshedProfileMonitor.waitForActivityWithTimeout(5);
-        assertNotNull("Inventory Activity is null", refreshedProfileActivity);
+        assertNotNull("Profile Activity is null", refreshedProfileActivity);
         assertEquals("Activity of wrong type", DisplayUserProfileActivity.class, refreshedProfileActivity.getClass());
 
         assertTrue(LoggedInUser.getInstance().getNeedToSave());
