@@ -186,7 +186,7 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     }
 
     // mad; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05
-    public String getPath(Uri uri) {
+    private String getPath(Uri uri) {
         String[] projection = { MediaStore.Images.Media.DATA };
         Cursor cursor = managedQuery(uri, projection, null, null, null);
         if(cursor!=null)

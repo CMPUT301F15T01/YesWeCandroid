@@ -17,10 +17,12 @@ package ca.ualberta.trinkettrader;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -32,6 +34,9 @@ import android.widget.Spinner;
 import android.widget.ToggleButton;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,8 +44,16 @@ import java.util.Iterator;
 
 public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
+    // richq; http://stackoverflow.com/questions/3668528/access-image-in-my-android-tests; 2015-11-06
+    private AssetManager assetManager;
+
     public PhotographsOfItemsTests() {
         super(LoginActivity.class);
+    }
+
+    public void setUp() throws Exception {
+        super.setUp();
+        assetManager = this.getActivity().getAssets();
     }
 
     public void testStart() throws Exception {
@@ -180,7 +193,37 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Simulate selecting an image
         Intent intent = new Intent();
         // Axarydax; http://stackoverflow.com/questions/4896223/how-to-get-an-uri-of-an-image-resource-in-android; 2015-11-05
-        addOrEditItemActivity.setUri(Uri.parse("android.resource://ca.ualberta.trinkettrader/" + R.drawable.bauble));
+
+        try {
+            int BUFFER_LEN = 1048576;
+            String fileName = "bauble.jpg";
+            InputStream is = assetManager.open(fileName);
+            File out = new File(Environment.getExternalStorageDirectory(), fileName);
+            byte[] buffer = new byte[BUFFER_LEN];
+            FileOutputStream fos = new FileOutputStream(out);
+            int read = 0;
+
+            while ((read = is.read(buffer, 0, BUFFER_LEN)) >= 0) {
+                fos.write(buffer, 0, read);
+            }
+
+            fos.flush();
+            fos.close();
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+        addOrEditItemActivity.setUri(Uri.parse("android.resources://ca.ualberta.trinkettrader/drawable/bauble"));
+        String p = addOrEditItemActivity.getUri().getPath();
+        File f = new File(p);
+        try {
+            Picture picture = new Picture(f);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
         addOrEditItemActivity.onActivityResult(AddOrEditItemActivity.getRequestImageCapture(), Activity.RESULT_OK, intent);
 
         // Save the item
