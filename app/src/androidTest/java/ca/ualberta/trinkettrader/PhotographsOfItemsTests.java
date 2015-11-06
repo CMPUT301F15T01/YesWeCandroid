@@ -16,6 +16,7 @@ package ca.ualberta.trinkettrader;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
@@ -171,7 +172,10 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // TODO UI test the image capturing with the camera
+        // Simulate selecting an image
+        Intent intent = new Intent();
+        //intent.setData();
+        addOrEditItemActivity.onActivityResult(addOrEditItemActivity.getSelectPicture(), Activity.RESULT_OK, intent);
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -364,9 +368,9 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(itemDetailsActivityMonitor);
 
         // Check that the image is visible
-        // ImageView itemImage = itemDetailsActivity.getItemPicture();
+        ImageView itemImage = itemDetailsActivity.getImageView();
         // PC.; http://stackoverflow.com/questions/9113895/how-to-check-if-an-imageview-is-attached-with-image-in-android; 2015-11-01
-        // assertNotNull(itemImage.getDrawable());
+        assertNotNull(itemImage.getDrawable());
 
         // Close the activities
         itemDetailsActivity.finish();

@@ -176,4 +176,12 @@ public class AddOrEditItemActivity extends AppCompatActivity {
     public void saveClick(View view) {
         controller.onSaveClick();
     }
+
+    public static int getRequestImageCapture() {
+        return REQUEST_IMAGE_CAPTURE;
+    }
+
+    public static int getSelectPicture() {
+        return SELECT_PICTURE;
+    }
 }
