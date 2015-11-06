@@ -14,9 +14,48 @@
 
 package ca.ualberta.trinkettrader;
 
-import java.util.Observable;
+import java.util.ArrayList;
+import java.util.Observer;
 
-public class ContactInfo extends Observable {
+public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
+
+    private ArrayList<Observer> observers;
+
+    /**
+     * Adds the specified observer to the list of observers. If it is already
+     * registered, it is not added a second time.
+     *
+     * @param observer the Observer to add.
+     */
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    /**
+     * Removes the specified observer from the list of observers. Passing null
+     * won't do anything.
+     *
+     * @param observer the observer to remove.
+     */
+    @Override
+    public synchronized void deleteObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    /**
+     * If {@code hasChanged()} returns {@code true}, calls the {@code update()}
+     * method for every observer in the list of observers using null as the
+     * argument. Afterwards, calls {@code clearChanged()}.
+     * <p/>
+     * Equivalent to calling {@code notifyObservers(null)}.
+     */
+    @Override
+    public void notifyObservers() {
+        for (Observer observer: observers) {
+            observer.notify();
+        }
+    }
 
     private String name;
     private String address;
