@@ -177,78 +177,114 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
 
     }
 
-
     public void testEnablePhotoDownload() {
         profile.setArePhotosDownloadable(Boolean.FALSE);
         assertFalse(profile.getArePhotosDownloadable());
 
-        //Set an activity monitor for DisplayFriendsActivity
-        Instrumentation.ActivityMonitor homePageMonitor = instrumentation.addMonitor(HomePageActivity.class.getName(), null, false);
+        // Start the UI test from the login page (beginning of the app).
+        LoginActivity loginActivity = (LoginActivity) getActivity();
 
-        //Start the activity that we set the monitor for
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setClassName(instrumentation.getTargetContext(), HomePageActivity.class.getName());
-        instrumentation.startActivitySync(intent);
+        // On the login page: click the email input box and write an arbitrary email.
+        // Test that the text was successfully written.
+        final AutoCompleteTextView loginEmailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                loginEmailTextView.performClick();
+                loginEmailTextView.setText("user@gmail.com");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
 
-        //Wait for HomePageActivity to start
-        HomePageActivity homePageActivity = (HomePageActivity) getInstrumentation().waitForMonitorWithTimeout(homePageMonitor, 5);
-        assertNotNull(homePageActivity);
+        // Click the login button to proceed to the home page.
+        final Button loginButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                loginButton.performClick();
+            }
+        });
+
+        // Test that the HomePageActivity started correctly after the clicking the login button.
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        getInstrumentation().waitForIdleSync();
+
+        HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("HomePageActivity is null", homePageActivity);
+        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
+
+        //Click the 'My Profile' button
+        final Button myProfile = (Button) homePageActivity.findViewById(R.id.profile_button);
+        assertNotNull(myProfile);
+        assertEquals("View not a button", AppCompatButton.class, myProfile.getClass());
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                myProfile.performClick();
+            }
+        });
 
         //Set an activity monitor for ProfilePageActivity
         Instrumentation.ActivityMonitor profilePageMonitor = instrumentation.addMonitor(DisplayUserProfileActivity.class.getName(), null, false);
-
-        //Click the 'My Profile' button
-        Button myProfile = (Button) homePageActivity.findViewById(R.id.profile_button);
-        assertNotNull(myProfile);
-        assertEquals("View not a button", AppCompatButton.class, myProfile.getClass());
-        TouchUtils.clickView(this, myProfile);
+        getInstrumentation().waitForIdleSync();
 
         //Assert that DisplayUserProfileActivity starts up
         DisplayUserProfileActivity profileActivity = (DisplayUserProfileActivity) profilePageMonitor.waitForActivityWithTimeout(5);
-        assertNotNull("Inventory Activity is null", profileActivity);
-        assertEquals("Inventory activity has not been called", 1, profilePageMonitor.getHits());
+        assertNotNull("Profile Activity is null", profileActivity);
         assertEquals("Activity of wrong type", DisplayUserProfileActivity.class, profileActivity.getClass());
 
         //Check that photo download is disabled
         TextView setting = (TextView) profileActivity.findViewById(R.id.photo_download_setting);
         assertEquals(setting.getText(), "Photo Download: Disabled");
 
-        //Set an activity monitor for EditProfilePageActivity
-        Instrumentation.ActivityMonitor editProfileMonitor = instrumentation.addMonitor(EditProfileActivity.class.getName(), null, false);
-
         //Click the 'Edit' button
-        Button editButton = (Button) profileActivity.findViewById(R.id.edit_button);
+        final Button editButton = (Button) profileActivity.findViewById(R.id.edit_button);
         assertNotNull(editButton);
         assertEquals("View not a button", AppCompatButton.class, editButton.getClass());
-        TouchUtils.clickView(this, editButton);
+        profileActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                editButton.performClick();
+            }
+        });
+
+        //Set an activity monitor for EditProfilePageActivity
+        Instrumentation.ActivityMonitor editProfileMonitor = instrumentation.addMonitor(EditProfileActivity.class.getName(), null, false);
+        getInstrumentation().waitForIdleSync();
 
         //Assert that EditUserProfileActivity starts up
         EditProfileActivity editProfileActivity = (EditProfileActivity) editProfileMonitor.waitForActivityWithTimeout(5);
-        assertNotNull("Inventory Activity is null", editProfileActivity);
-        assertEquals("Inventory activity has not been called", 1, profilePageMonitor.getHits());
+        assertNotNull("EditProfile Activity is null", editProfileActivity);
         assertEquals("Activity of wrong type", EditProfileActivity.class, editProfileActivity.getClass());
 
 
         //Select photos as downloadable.
-        CheckBox photoDownload = (CheckBox) editProfileActivity.findViewById(R.id.photo_download_checkbox);
+        final CheckBox photoDownload = (CheckBox) editProfileActivity.findViewById(R.id.photo_download_checkbox);
         assertFalse(photoDownload.isChecked());
-        photoDownload.setChecked(Boolean.TRUE);
+        editProfileActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                photoDownload.setChecked(Boolean.TRUE);
+            }
+        });
+
+        //Click 'Save' button
+        final Button save = (Button) editProfileActivity.findViewById(R.id.save_button);
+        assertNotNull(save);
+        assertEquals("View not a button", AppCompatButton.class, save.getClass());
+        editProfileActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                save.performClick();
+            }
+        });
 
         //Set an activity monitor for ProfilePageActivity
         instrumentation.removeMonitor(profilePageMonitor);
         Instrumentation.ActivityMonitor refreshedProfileMonitor = instrumentation.addMonitor(DisplayUserProfileActivity.class.getName(), null, false);
-
-        //Click 'Save' button
-        Button save = (Button) editProfileActivity.findViewById(R.id.save_button);
-        assertNotNull(save);
-        assertEquals("View not a button", AppCompatButton.class, save.getClass());
-        TouchUtils.clickView(this, save);
+        getInstrumentation().waitForIdleSync();
 
         //Assert that DisplayUserProfileActivity starts up
         DisplayUserProfileActivity refreshedProfileActivity = (DisplayUserProfileActivity) refreshedProfileMonitor.waitForActivityWithTimeout(5);
-        assertNotNull("Inventory Activity is null", refreshedProfileActivity);
-        assertEquals("Inventory activity has not been called", 1, refreshedProfileMonitor.getHits());
+        assertNotNull("Profile Activity is null", refreshedProfileActivity);
         assertEquals("Activity of wrong type", DisplayUserProfileActivity.class, refreshedProfileActivity.getClass());
 
 
@@ -311,9 +347,14 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
 
 
         //Select photos as downloadable.
-        CheckBox photoDownload = (CheckBox) editProfileActivity.findViewById(R.id.photo_download_checkbox);
-        assertTrue(photoDownload.isChecked());
-        photoDownload.setChecked(Boolean.FALSE);
+        final CheckBox photoDownload = (CheckBox) editProfileActivity.findViewById(R.id.photo_download_checkbox);
+        editProfileActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                photoDownload.setChecked(Boolean.FALSE);
+            }
+        });
+        assertFalse("Photo download should not be checked", photoDownload.isChecked());
 
         //Set an activity monitor for ProfilePageActivity
         instrumentation.removeMonitor(profilePageMonitor);
@@ -328,7 +369,6 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         //Assert that DisplayUserProfileActivity starts up
         DisplayUserProfileActivity refreshedProfileActivity = (DisplayUserProfileActivity) refreshedProfileMonitor.waitForActivityWithTimeout(5);
         assertNotNull("Inventory Activity is null", refreshedProfileActivity);
-        assertEquals("Inventory activity has not been called", 1, refreshedProfileMonitor.getHits());
         assertEquals("Activity of wrong type", DisplayUserProfileActivity.class, refreshedProfileActivity.getClass());
 
 

@@ -1,6 +1,7 @@
 package ca.ualberta.trinkettrader;
 
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 /**
@@ -30,12 +31,14 @@ public class EditProfileController {
             EditText city = (EditText) activity.findViewById(R.id.edit_city);
             EditText postalCode = (EditText) activity.findViewById(R.id.edit_postal_code);
             EditText phoneNum = (EditText) activity.findViewById(R.id.edit_phone_number);
+            CheckBox photoDownload = (CheckBox) activity.findViewById(R.id.photo_download_checkbox);
 
             String _name = name.getText().toString();
             String _address = address.getText().toString();
             String _city = city.getText().toString();
             String _postalCode = postalCode.getText().toString();
             String _phoneNum = phoneNum.getText().toString();
+            Boolean photoDownloadEnabled = photoDownload.isChecked();
 
             //Set the LoggedInUser with new data
             activity.getUserProfile().setName(_name);
@@ -43,6 +46,7 @@ public class EditProfileController {
             activity.getUserProfile().setCity(_city);
             activity.getUserProfile().setPostalCode(_postalCode);
             activity.getUserProfile().getContactInfo().setPhoneNumber(_phoneNum);
+            activity.getUserProfile().setArePhotosDownloadable(photoDownloadEnabled);
 
             LoggedInUser.getInstance().saveInFile(activity.getBaseContext());
             //exit the activity
