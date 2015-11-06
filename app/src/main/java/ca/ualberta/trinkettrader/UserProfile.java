@@ -25,6 +25,10 @@ public class UserProfile {
     private Boolean needToSave;
 
     public UserProfile() {
+        this.name = "";
+        this.email = "";
+        this.city = "";
+        this.contactInfo = new ContactInfo();
     }
 
     public Boolean getArePhotosDownloadable() {

@@ -16,8 +16,10 @@ package ca.ualberta.trinkettrader;
 
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.support.v7.widget.AppCompatButton;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -25,8 +27,8 @@ import android.widget.TextView;
 
 public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
 
-    public ConfigurationTests(Class activityClass) {
-        super(activityClass);
+    public ConfigurationTests() {
+        super(LoginActivity.class);
     }
 
     User user;
@@ -40,6 +42,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
 
         profile = user.getProfile();
         instrumentation = getInstrumentation();
+        setActivityInitialTouchMode(true);
     }
 
     public void testEditProfile() {
@@ -51,78 +54,123 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         //TODO: assert that we are dealing with Binky's homepage and therefore his profile
        //TODO: check preconditions
 
-        //Set an activity monitor for DisplayFriendsActivity
-        Instrumentation.ActivityMonitor homePageMonitor = instrumentation.addMonitor(HomePageActivity.class.getName(), null, false);
+        // Start the UI test from the login page (beginning of the app).
+        LoginActivity loginActivity = (LoginActivity) getActivity();
 
-        //Start the activity that we set the monitor for
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setClassName(instrumentation.getTargetContext(), HomePageActivity.class.getName());
-        instrumentation.startActivitySync(intent);
+        // On the login page: click the email input box and write an arbitrary email.
+        // Test that the text was successfully written.
+        final AutoCompleteTextView loginEmailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                loginEmailTextView.performClick();
+                loginEmailTextView.setText("user@gmail.com");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
 
-        //Wait for HomePageActivity to start
-        HomePageActivity homePageActivity = (HomePageActivity) getInstrumentation().waitForMonitorWithTimeout(homePageMonitor, 5);
-        assertNotNull(homePageActivity);
+        // Click the login button to proceed to the home page.
+        final Button loginButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                loginButton.performClick();
+            }
+        });
 
-        //Set an activity monitor for ProfilePageActivity
-        Instrumentation.ActivityMonitor profilePageMonitor = instrumentation.addMonitor(DisplayUserProfileActivity.class.getName(), null, false);
+        // Test that the HomePageActivity started correctly after the clicking the login button.
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        getInstrumentation().waitForIdleSync();
+        HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("HomePageActivity is null", homePageActivity);
+        assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
+
 
         //Click the 'My Profile' button
-        Button myProfile = (Button) homePageActivity.findViewById(R.id.profile_button);
+        final Button myProfile = (Button) homePageActivity.findViewById(R.id.profile_button);
         assertNotNull(myProfile);
-        assertEquals("View not a button", Button.class, myProfile.getClass());
-        TouchUtils.clickView(this, myProfile);
+        assertEquals("View not a button", AppCompatButton.class, myProfile.getClass());
+        homePageActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                myProfile.performClick();
+            }
+        });
+        //Set an activity monitor for ProfilePageActivity
+        Instrumentation.ActivityMonitor profilePageMonitor = instrumentation.addMonitor(DisplayUserProfileActivity.class.getName(), null, false);
+        getInstrumentation().waitForIdleSync();
+
 
         //Assert that DisplayUserProfileActivity starts up
         DisplayUserProfileActivity profileActivity = (DisplayUserProfileActivity) profilePageMonitor.waitForActivityWithTimeout(5);
-        assertNotNull("Inventory Activity is null", profileActivity);
-        assertEquals("Inventory activity has not been called", 1, profilePageMonitor.getHits());
+        assertNotNull("Profile Activity is null", profileActivity);
         assertEquals("Activity of wrong type", DisplayUserProfileActivity.class, profileActivity.getClass());
+
+        //Click the 'Edit' button
+        final Button editButton = (Button) profileActivity.findViewById(R.id.edit_button);
+        assertNotNull(editButton);
+        assertEquals("View not a button", AppCompatButton.class, editButton.getClass());
+        profileActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                editButton.performClick();
+            }
+        });
 
         //Set an activity monitor for EditProfilePageActivity
         Instrumentation.ActivityMonitor editProfileMonitor = instrumentation.addMonitor(EditProfileActivity.class.getName(), null, false);
-
-        //Click the 'My Profile' button
-        Button editButton = (Button) profileActivity.findViewById(R.id.edit_button);
-        assertNotNull(editButton);
-        assertEquals("View not a button", Button.class, editButton.getClass());
-        TouchUtils.clickView(this, editButton);
+        getInstrumentation().waitForIdleSync();
 
         //Assert that EditUserProfileActivity starts up
         EditProfileActivity editProfileActivity = (EditProfileActivity) editProfileMonitor.waitForActivityWithTimeout(5);
         assertNotNull("Inventory Activity is null", editProfileActivity);
-        assertEquals("Inventory activity has not been called", 1, profilePageMonitor.getHits());
         assertEquals("Activity of wrong type", EditProfileActivity.class, editProfileActivity.getClass());
 
         //Fix the name
-        EditText fixName = (EditText) editProfileActivity.findViewById(R.id.edit_name);
-        fixName.setText("Bonky");
+        final EditText fixName = (EditText) editProfileActivity.findViewById(R.id.edit_name);
+        editProfileActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                fixName.setText("Bonky");
+            }
+        });
 
         //Fix the postal code
-        EditText fixPC = (EditText) editProfileActivity.findViewById(R.id.edit_postal_code);
-        fixPC.setText("T6W 1J5");
+        final EditText fixPC = (EditText) editProfileActivity.findViewById(R.id.edit_postal_code);
+        editProfileActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                fixPC.setText("T6W 1J5");
+            }
+        });
+
+
+        //Click 'Save' button
+        final Button save = (Button) editProfileActivity.findViewById(R.id.save_button);
+        assertNotNull(save);
+        assertEquals("View not a button", AppCompatButton.class, save.getClass());
+        editProfileActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                save.performClick();
+            }
+        });
 
         //Set an activity monitor for ProfilePageActivity
         instrumentation.removeMonitor(profilePageMonitor);
         Instrumentation.ActivityMonitor refreshedProfileMonitor = instrumentation.addMonitor(DisplayUserProfileActivity.class.getName(), null, false);
-
-        //Click 'Save' button
-        Button save = (Button) editProfileActivity.findViewById(R.id.save_button);
-        assertNotNull(save);
-        assertEquals("View not a button", Button.class, save.getClass());
-        TouchUtils.clickView(this, save);
+        getInstrumentation().waitForIdleSync();
 
         //Assert that DisplayUserProfileActivity starts up
         DisplayUserProfileActivity refreshedProfileActivity = (DisplayUserProfileActivity) refreshedProfileMonitor.waitForActivityWithTimeout(5);
         assertNotNull("Inventory Activity is null", refreshedProfileActivity);
-        assertEquals("Inventory activity has not been called", 1, refreshedProfileMonitor.getHits());
         assertEquals("Activity of wrong type", DisplayUserProfileActivity.class, refreshedProfileActivity.getClass());
 
         TextView name = (TextView) refreshedProfileActivity.findViewById(R.id.name);
-        assertEquals(name.getText(), "Bonky");
+        assertEquals(name.getText().toString(), "Bonky");
 
         TextView postalCode = (TextView) refreshedProfileActivity.findViewById(R.id.postal_code);
-        assertEquals(postalCode.getText(), "T6W 1J5");
+        assertEquals(postalCode.getText().toString(), "T6W 1J5");
 
     }
 

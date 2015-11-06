@@ -13,7 +13,13 @@ public class ContactInfo {
     }
 
     private Boolean needToSave;
+
     public ContactInfo() {
+        this.name = "";
+        this.address = "";
+        this.city = "";
+        this.phoneNumber = "";
+        this.postalCode = "";
     }
 
     public String getName() {
