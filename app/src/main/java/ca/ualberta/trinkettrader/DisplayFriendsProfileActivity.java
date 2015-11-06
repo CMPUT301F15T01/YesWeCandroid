@@ -24,7 +24,10 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-public class DisplayFriendsProfileActivity extends AppCompatActivity {
+import java.util.Observable;
+import java.util.Observer;
+
+public class DisplayFriendsProfileActivity extends AppCompatActivity implements Observer {
 
     private User friend;
     private Button removeFriendButton;
@@ -109,9 +112,16 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity {
         return usernameTextView;
     }
 
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
+    @Override
+    public void update(Observable observable, Object data) {
 
-
-
-
-
+    }
 }

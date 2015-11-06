@@ -24,7 +24,7 @@ import android.widget.ToggleButton;
 import java.util.Observable;
 import java.util.Observer;
 
-public class EditProfileActivity extends AppCompatActivity implements Observer{
+public class EditProfileActivity extends AppCompatActivity implements Observer {
 
 
     public EditProfileActivity() {
@@ -79,6 +79,14 @@ public class EditProfileActivity extends AppCompatActivity implements Observer{
         return LoggedInUser.getInstance().getProfile();
     }
 
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
     @Override
     public void update(Observable observable, Object data) {
 

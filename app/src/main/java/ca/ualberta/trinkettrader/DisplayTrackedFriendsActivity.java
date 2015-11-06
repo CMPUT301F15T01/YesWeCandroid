@@ -24,7 +24,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class DisplayTrackedFriendsActivity extends AppCompatActivity {
+import java.util.Observable;
+import java.util.Observer;
+
+public class DisplayTrackedFriendsActivity extends AppCompatActivity implements Observer {
 
     private TrackedFriendsList trackedFriendsList;
     private ArrayAdapter<Friend> trackedFriendAdapter;
@@ -75,4 +78,6 @@ public class DisplayTrackedFriendsActivity extends AppCompatActivity {
         return trackedFriendsListView;
     }
 
+    @Override
+    public void update(Observable observable, Object data) {}
 }
