@@ -61,9 +61,6 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         trinket3 = new Trinket();
         instrumentation  = getInstrumentation();
 
-
-
-
         Inventory inventory = borrower.getInventory();
         Iterator iterator = inventory.iterator();
         while (iterator.hasNext()) {
