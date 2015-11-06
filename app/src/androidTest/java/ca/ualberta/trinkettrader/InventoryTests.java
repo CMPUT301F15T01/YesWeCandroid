@@ -41,7 +41,6 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
     int clickCount;
     public ListView list;
     public Button addItemButton;
-    public Button inventoryButton;
 
     public InventoryTests() {
         super(LoginActivity.class);
@@ -217,8 +216,8 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         addItemtoDisplayInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
         homePageActivity.finish();
-        displayInventoryActivity.finish();
         displayInventoryActivity.getInventory().clear();
+        displayInventoryActivity.finish();
     }
 
     // Test if a user has an inventory
@@ -293,8 +292,8 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         loginActivity.finish();
         homePageActivity.finish();
-        inventoryActivity.finish();
         inventoryActivity.getInventory().clear();
+        inventoryActivity.finish();
     }
 
     // Test method for getting the number of items in an inventory
@@ -564,6 +563,10 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
+        Instrumentation.ActivityMonitor displayInventoryActivityMonitorAgain =
+                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                        null, false);
+
         // Click the button
         final EditText editName = addItemtoDisplayInventoryActivity.getItemName();
         addItemtoDisplayInventoryActivity.runOnUiThread(new Runnable() {
@@ -607,13 +610,26 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        assertFalse(inventoryActivity.getInventory().isEmpty());
+        // Validate that ReceiverActivity is started
+        DisplayInventoryActivity displayInventoryActivityAgain = (DisplayInventoryActivity)
+                displayInventoryActivityMonitorAgain.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivityAgain);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayInventoryActivityMonitorAgain.getHits());
+        assertEquals("Activity is of wrong type",
+                DisplayInventoryActivity.class, displayInventoryActivityAgain.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayInventoryActivityMonitorAgain);
+
+        assertFalse(displayInventoryActivityAgain.getInventory().isEmpty());
 
         loginActivity.finish();
         addItemtoDisplayInventoryActivity.finish();
         homePageActivity.finish();
-        inventoryActivity.finish();
         inventoryActivity.getInventory().clear();
+        inventoryActivity.finish();
+        displayInventoryActivityAgain.finish();
     }
 
     // Test method for adding an item to your inventory
@@ -782,8 +798,8 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         addItemtoDisplayInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
         homePageActivity.finish();
-        inventoryActivity.finish();
         inventoryActivity.getInventory().clear();
+        inventoryActivity.finish();
     }
 
     // Test method for removing an item from your inventory
@@ -1524,8 +1540,8 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         addItemtoDisplayInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
         homePageActivity.finish();
-        inventoryActivity.finish();
         inventoryActivity.getInventory().clear();
+        inventoryActivity.finish();
         editedInvAct.finish();
         editItemAct.finish();
         itemDetsAct.finish();
@@ -1782,8 +1798,8 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         addItemtoDisplayInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
         homePageActivity.finish();
-        inventoryActivity.finish();
         inventoryActivity.getInventory().clear();
+        inventoryActivity.finish();
         editedInvAct.finish();
         editItemAct.finish();
         itemDetsAct.finish();
@@ -2040,8 +2056,8 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         addItemtoDisplayInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
         homePageActivity.finish();
-        inventoryActivity.finish();
         inventoryActivity.getInventory().clear();
+        inventoryActivity.finish();
         editedInvAct.finish();
         editItemAct.finish();
         itemDetsAct.finish();
@@ -2298,8 +2314,8 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         addItemtoDisplayInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
         homePageActivity.finish();
-        inventoryActivity.finish();
         inventoryActivity.getInventory().clear();
+        inventoryActivity.finish();
         editedInvAct.finish();
         editItemAct.finish();
         itemDetsAct.finish();
@@ -2557,8 +2573,8 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         addItemtoDisplayInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
         homePageActivity.finish();
-        inventoryActivity.finish();
         inventoryActivity.getInventory().clear();
+        inventoryActivity.finish();
         editedInvAct.finish();
         editItemAct.finish();
         itemDetsAct.finish();
