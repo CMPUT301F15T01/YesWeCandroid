@@ -212,6 +212,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getName(), "test");
         }
+
+        loginActivity.finish();
+        addItemtoDisplayInventoryActivity.finish();
+        displayInventoryActivityAgain.finish();
+        homePageActivity.finish();
+        displayInventoryActivity.finish();
+        displayInventoryActivity.getInventory().clear();
     }
 
     // Test if a user has an inventory
@@ -283,6 +290,11 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(invActMon);
 
         assertNotNull(inventoryActivity.getInventory());
+
+        loginActivity.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        inventoryActivity.getInventory().clear();
     }
 
     // Test method for getting the number of items in an inventory
@@ -448,6 +460,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         }
 
         assertTrue(inventoryActivity.getInventory().size() == 1);
+
+        loginActivity.finish();
+        addItemtoDisplayInventoryActivity.finish();
+        displayInventoryActivityAgain.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        inventoryActivity.getInventory().clear();
     }
 
     // Test method to test if an inventory is empty
@@ -589,6 +608,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         assertFalse(inventoryActivity.getInventory().isEmpty());
+
+        loginActivity.finish();
+        addItemtoDisplayInventoryActivity.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        inventoryActivity.getInventory().clear();
     }
 
     // Test method for adding an item to your inventory
@@ -752,6 +777,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getName(), "test");
         }
+
+        loginActivity.finish();
+        addItemtoDisplayInventoryActivity.finish();
+        displayInventoryActivityAgain.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        inventoryActivity.getInventory().clear();
     }
 
     // Test method for removing an item from your inventory
@@ -971,6 +1003,14 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         list = displayInventoryActivityAgain.getInventoryItemsList();
         assertNull(list.getChildAt(0));
+
+        loginActivity.finish();
+        addItemtoDisplayInventoryActivity.finish();
+        displayInventoryActivityAgain.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        inventoryActivity.getInventory().clear();
+        itemDetsAct.finish();
     }
 
     // Test method for changing the share settings of an item
@@ -1220,6 +1260,16 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getAccessibility(), "private");
         }
+
+        loginActivity.finish();
+        addItemtoDisplayInventoryActivity.finish();
+        displayInventoryActivityAgain.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        inventoryActivity.getInventory().clear();
+        editedInvAct.finish();
+        editItemAct.finish();
+        itemDetsAct.finish();
     }
 
     /* Test methods to edit an item's details */
@@ -1469,6 +1519,16 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getName(), "Test2");
         }
+
+        loginActivity.finish();
+        addItemtoDisplayInventoryActivity.finish();
+        displayInventoryActivityAgain.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        inventoryActivity.getInventory().clear();
+        editedInvAct.finish();
+        editItemAct.finish();
+        itemDetsAct.finish();
     }
 
     public void testChangeItemQuantity() {
@@ -1717,7 +1777,18 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getQuantity(), "4");
         }
+
+        loginActivity.finish();
+        addItemtoDisplayInventoryActivity.finish();
+        displayInventoryActivityAgain.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        inventoryActivity.getInventory().clear();
+        editedInvAct.finish();
+        editItemAct.finish();
+        itemDetsAct.finish();
     }
+
     public void testChangeItemQuality() {
         // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
@@ -1964,7 +2035,18 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getQuality(), "Poor");
         }
+
+        loginActivity.finish();
+        addItemtoDisplayInventoryActivity.finish();
+        displayInventoryActivityAgain.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        inventoryActivity.getInventory().clear();
+        editedInvAct.finish();
+        editItemAct.finish();
+        itemDetsAct.finish();
     }
+
     public void testChangeItemDescription() {
         // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
@@ -2211,7 +2293,18 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getDescription(), "new desc");
         }
+
+        loginActivity.finish();
+        addItemtoDisplayInventoryActivity.finish();
+        displayInventoryActivityAgain.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        inventoryActivity.getInventory().clear();
+        editedInvAct.finish();
+        editItemAct.finish();
+        itemDetsAct.finish();
     }
+
     // Test for changing item's category
     public void testChangeItemCategory() {
         // Get the current activity
@@ -2459,6 +2552,16 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getCategory(), "Necklace");
         }
+
+        loginActivity.finish();
+        addItemtoDisplayInventoryActivity.finish();
+        displayInventoryActivityAgain.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        inventoryActivity.getInventory().clear();
+        editedInvAct.finish();
+        editItemAct.finish();
+        itemDetsAct.finish();
     }
 
     // Test method for checking how quickly an item can be added to the inventory
@@ -2611,5 +2714,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // 5 or less clicks
         assertTrue(clickCount <= 5);
+
+        loginActivity.finish();
+        addItemtoDisplayInventoryActivity.finish();
+        displayInventoryActivityAgain.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        inventoryActivity.getInventory().clear();
     }
 }
