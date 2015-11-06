@@ -33,16 +33,8 @@ public class AddOrEditItemController {
         trinket.setPicture(new Picture(file));
     }
 
-<<<<<<< HEAD
-    public void removePictures() {
-        for (Picture picture: trinket.getPictures()) {
-            picture.delete();
-        }
-        trinket.setPictures(new ArrayList<Picture>());
-=======
     public void removePicture() {
         trinket.setPicture(null);
->>>>>>> 48d2a19f1bcb27477ac9eb200cad04605bb15b9d
     }
 
     public void onSaveClick() {
