@@ -122,6 +122,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.trinkettrader.DisplayFriendsActivity" />
         </activity>
+        <activity
+            android:name=".ViewTradeDetailsActivity"
+            android:label="@string/title_activity_view_trade_details" >
+        </activity>
     </application>
 
 </manifest>

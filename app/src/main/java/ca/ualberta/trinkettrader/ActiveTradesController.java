@@ -14,6 +14,30 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ListView;
 
 public class ActiveTradesController {
+    private DisplayTradesActivity activity;
+
+    public ActiveTradesController(DisplayTradesActivity activity) {
+        this.activity = activity;
+    }
+
+
+    public void setCurrentTradesListViewItemOnClick() {
+        ListView currentTradesListView = activity.getCurrentTradesListView();
+        currentTradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> v, View view, int position, long id) {
+                Trade clickedTrade = LoggedInUser.getInstance().getFriendsList().get(position);
+                ApplicationState.getInstance().setClickedFriend(clickedFriend);
+                Intent intent = new Intent(activity, ViewTradeDetailsActivity.class);
+                activity.startActivity(intent);
+            }
+        });
+    }
+
 }

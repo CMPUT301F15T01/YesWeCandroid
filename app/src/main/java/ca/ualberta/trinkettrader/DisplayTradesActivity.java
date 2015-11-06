@@ -15,6 +15,7 @@ import android.widget.ListView;
 public class DisplayTradesActivity extends AppCompatActivity {
     Button pastTradesButton;
     ListView currentTradesListView;
+    private ActiveTradesController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +24,8 @@ public class DisplayTradesActivity extends AppCompatActivity {
         currentTradesListView = (ListView)findViewById(R.id.friendsView);
         pastTradesButton = (Button)findViewById(R.id.past_trades_button);
         // equivalent of user friend's list
-        // controller
-        // set controller
+        controller = new ActiveTradesController(this);
+        controller.setCurrentTradesListViewItemOnClick();
     }
 
     // PastTrades Button click
@@ -34,4 +35,13 @@ public class DisplayTradesActivity extends AppCompatActivity {
     }
 
     public Button getPastTradesButton(){return pastTradesButton; }
+
+    public ListView getCurrentTradesListView() {
+        return currentTradesListView;
+    }
+
+    public void pastTradesOnClick(View v) {
+        controller.pastTradesOnClick();
+        friendAdapter.notifyDataSetChanged();
+    }
 }

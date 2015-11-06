@@ -46,5 +46,6 @@
     <string name="title_activity_display_friends_profile">DisplayFriendsProfileActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_view_trade_details">ViewTradeDetailsActivity</string>
 
 </resources>
