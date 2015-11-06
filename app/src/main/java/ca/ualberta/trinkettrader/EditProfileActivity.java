@@ -21,7 +21,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 
-public class EditProfileActivity extends AppCompatActivity {
+import java.util.Observable;
+import java.util.Observer;
+
+public class EditProfileActivity extends AppCompatActivity implements Observer{
 
 
     public EditProfileActivity() {
@@ -74,5 +77,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
     public UserProfile getUserProfile() {
         return LoggedInUser.getInstance().getProfile();
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+
     }
 }

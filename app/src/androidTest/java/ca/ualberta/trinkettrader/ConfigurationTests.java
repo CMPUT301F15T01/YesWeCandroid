@@ -82,7 +82,6 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("HomePageActivity is null", homePageActivity);
-        assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
 
 
@@ -166,11 +165,14 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         assertNotNull("Inventory Activity is null", refreshedProfileActivity);
         assertEquals("Activity of wrong type", DisplayUserProfileActivity.class, refreshedProfileActivity.getClass());
 
+        assertTrue(LoggedInUser.getInstance().getNeedToSave());
+
         TextView name = (TextView) refreshedProfileActivity.findViewById(R.id.name);
         assertEquals(name.getText().toString(), "Bonky");
 
         TextView postalCode = (TextView) refreshedProfileActivity.findViewById(R.id.postal_code);
         assertEquals(postalCode.getText().toString(), "T6W 1J5");
+
 
     }
 
