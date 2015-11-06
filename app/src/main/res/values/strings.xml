@@ -19,14 +19,15 @@
 
     <!-- activity_add_or_edit_item -->
     <string name="activity_add_or_edit_item_accessibility_prompt">Set Accessibility</string>
-    <string name="activity_add_or_edit_item_add_picture_button_text">Add Picture</string>
     <string name="activity_add_or_edit_item_description_text">Description</string>
     <string name="activity_add_or_edit_item_name_prompt">Name</string>
+    <string name="activity_add_or_edit_item_picture_library_button_text">Picture Library</string>
     <string name="activity_add_or_edit_item_public_check_box">Public</string>
     <string name="activity_add_or_edit_item_quantity_default">1</string>
     <string name="activity_add_or_edit_item_quantity_text">Quantity:</string>
     <string name="activity_add_or_edit_item_remove_pictures_button_text">Remove All Pictures</string>
     <string name="activity_add_or_edit_item_save_button_text">Save</string>
+    <string name="activity_add_or_edit_item_take_picture_button_text">Take Picture</string>
 
     <!-- activity_home_page -->
     <string name="activity_home_page_friends_button">Friends</string>
