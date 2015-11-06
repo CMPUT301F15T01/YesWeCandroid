@@ -35,10 +35,18 @@ public class Friend extends User {
         this.isTracked = Boolean.FALSE;
     }
 
+    /**
+     * Returns boolean indicating if friend is tracked or not.
+     * @return Boolean
+     */
     public Boolean isTracked() {
         return isTracked;
     }
 
+    /**
+     * Sets if friend is tracked or not.
+     * @param isTracked
+     */
     public void setIsTracked(Boolean isTracked) {
         this.isTracked = isTracked;
     }

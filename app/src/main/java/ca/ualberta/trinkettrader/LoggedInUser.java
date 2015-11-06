@@ -40,6 +40,7 @@ public class LoggedInUser extends User {
 
     private LoggedInUser() {
     }
+    //Taken from LonelyTwitter https://github.com/joshua2ua/lonelyTwitter
     public void saveInFile(Context c) {
         /**
          * saves LoggedInUser Data to file
@@ -63,7 +64,7 @@ public class LoggedInUser extends User {
         }
         needToSave = Boolean.FALSE;
     }
-
+    //Taken from LonelyTwitter https://github.com/joshua2ua/lonelyTwitter
     public void loadFromFile(Context c) {
         /**
          * Loads LoggedInUser data from file

@@ -20,16 +20,62 @@ import android.graphics.BitmapFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Picture {
+public class Picture implements ca.ualberta.trinkettrader.Observable {
+
+    private ArrayList<Observer> observers;
+
+    /**
+     * Adds the specified observer to the list of observers. If it is already
+     * registered, it is not added a second time.
+     *
+     * @param observer the Observer to add.
+     */
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    /**
+     * Removes the specified observer from the list of observers. Passing null
+     * won't do anything.
+     *
+     * @param observer the observer to remove.
+     */
+    @Override
+    public synchronized void deleteObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    /**
+     * If {@code hasChanged()} returns {@code true}, calls the {@code update()}
+     * method for every observer in the list of observers using null as the
+     * argument. Afterwards, calls {@code clearChanged()}.
+     * <p/>
+     * Equivalent to calling {@code notifyObservers(null)}.
+     */
+    @Override
+    public void notifyObservers() {
+        for (Observer observer: observers) {
+            observer.notify();
+        }
+    }
 
     private byte[] image;
     private volatile File file;
 
+    /**
+     *
+     * @param file
+     * @throws IOException
+     */
     public Picture(File file) throws IOException {
         this.file = file;
         FileInputStream fileInputStream = new FileInputStream(file);
-        // Óscar López; http://stackoverflow.com/questions/8721262/how-to-get-file-size-in-java; 2015-11-04
+        // \u00d3scar L\u00f3pez; http://stackoverflow.com/questions/8721262/how-to-get-file-size-in-java; 2015-11-04
         image = new byte[(int) file.length()];
         fileInputStream.read(image);
         fileInputStream.close();
@@ -39,10 +85,18 @@ public class Picture {
         this.file.delete();
     }
 
+    /**
+     * Returns bitmap of the picture.
+     * @return Bitmap
+     */
     public Bitmap getBitmap() {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
+    /**
+     * Returns size of the picture.
+     * @return Long
+     */
     public Long size() {
         return file.length();
     }
