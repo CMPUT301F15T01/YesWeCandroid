@@ -186,11 +186,8 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         addOrEditItemActivity.finish();
         Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
         while (trinketIterator.hasNext()) {
-            ArrayList<Picture> pictures = trinketIterator.next().getPictures();
-            Iterator<Picture> pictureIterator = pictures.iterator();
-            while (pictureIterator.hasNext()) {
-                assertNotNull(pictureIterator.next());
-            }
+            Picture picture = trinketIterator.next().getPicture();
+            assertNotNull(picture);
         }
 
         // Close the activities
@@ -533,11 +530,8 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         addOrEditItemActivity.finish();
         Iterator<Trinket> trinketIterator = displayInventoryActivity.getInventory().iterator();
         while (trinketIterator.hasNext()) {
-            ArrayList<Picture> pictures = trinketIterator.next().getPictures();
-            Iterator<Picture> pictureIterator = pictures.iterator();
-            while (pictureIterator.hasNext()) {
-                assertNotNull(pictureIterator.next());
-            }
+            Picture picture = trinketIterator.next().getPicture();
+            assertNotNull(picture);
         }
 
         /******** ItemDetailsActivity ********/
@@ -617,7 +611,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Make sure the item does not have an image
         Iterator<Trinket> noPicturesTrinketIterator = displayInventoryActivity.getInventory().iterator();
         while (noPicturesTrinketIterator.hasNext()) {
-            assertEquals(noPicturesTrinketIterator.next().getPictures().size(), 0);
+            assertNull(noPicturesTrinketIterator.next().getPicture());
         }
 
         // Close the activities

@@ -425,7 +425,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
 
         //Setup monitor for ItemDetailsActivity
         Instrumentation.ActivityMonitor itemDetailsMonitor = instrumentation.addMonitor(
-                DisplayItemDetails.class.getName(), null, false);
+                ItemDetailsActivity.class.getName(), null, false);
 
         //Select an item borrower's inventory
         inventory.performItemClick(inventory.getAdapter().getView(1, null, null), 1,
