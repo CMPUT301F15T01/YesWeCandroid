@@ -197,7 +197,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // trade with self
         Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(),ownerInventory, currentUser.getTradeManager());
         currentUser.getTradeManager().proposeTrade(trade);
+        currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
         assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+
 
         // Click the trades button to proceed to the current trades page.
         tradeButton = homePageActivity.getTradeButton();
@@ -207,7 +209,14 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
             }
         });
 
-
+        // Test that the DisplayTradesActivity started correctly after the clicking the login button.
+        Instrumentation.ActivityMonitor displayTradesActivityMonitor = getInstrumentation().addMonitor(DisplayTradesActivity.class.getName(), null, false);
+        getInstrumentation().waitForIdleSync();
+        DisplayTradesActivity displayTradesActivity = (DisplayTradesActivity) displayTradesActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("DisplayTradesActivity is null", displayTradesActivity);
+        assertEquals("Monitor for DisplayTradesActivity has not been called", 1, displayTradesActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected DisplayTradesActivity", DisplayTradesActivity.class, displayTradesActivity.getClass());
+        getInstrumentation().removeMonitor(displayTradesActivityMonitor);
 
     }
 
