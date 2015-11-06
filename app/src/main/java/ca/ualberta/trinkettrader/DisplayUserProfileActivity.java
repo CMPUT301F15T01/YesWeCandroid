@@ -35,13 +35,19 @@ public class DisplayUserProfileActivity extends AppCompatActivity {
             TextView city = (TextView) findViewById(R.id.city);
             TextView postalCode = (TextView) findViewById(R.id.postal_code);
             TextView phoneNum = (TextView) findViewById(R.id.phone_number);
+            TextView photoDownloadEnabled = (TextView) findViewById(R.id.photo_download_setting);
 
             name.setText(getUserProfile().getName());
             address.setText(getUserProfile().getContactInfo().getAddress());
             city.setText(getUserProfile().getCity());
             postalCode.setText(getUserProfile().getContactInfo().getPostalCode());
             phoneNum.setText(getUserProfile().getContactInfo().getPhoneNumber());
-
+            Boolean isPhotoDownloadEnabled = getUserProfile().getArePhotosDownloadable();
+            if(isPhotoDownloadEnabled){
+                photoDownloadEnabled.setText("Photo Download: Enabled");
+            }else{
+                photoDownloadEnabled.setText("Photo Download: Disabled");
+            }
         }
     };
 
