@@ -16,7 +16,8 @@
         android:text="Past Trades"
         android:id="@+id/past_trades_button"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="openPastTrades"/>
 
     <TextView
         android:layout_width="wrap_content"

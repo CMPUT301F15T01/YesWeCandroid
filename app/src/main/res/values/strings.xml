@@ -7,6 +7,7 @@
     <string name="title_activity_display_friends">DisplayFriendsActivity</string>
     <string name="title_activity_display_inventory">Inventory</string>
     <string name="title_activity_display_trades">DisplayTradesActivity</string>
+    <string name="title_activity_display_past_trades">DisplayPastTradesActivity</string>
     <string name="title_activity_display_user_profile">DisplayUserProfileActivity</string>
     <string name="title_activity_edit_friends_list">EditFriendsListActivity</string>
     <string name="title_activity_edit_profile">Edit Profile</string>
@@ -44,4 +45,5 @@
     <string name="title_activity_display_friends_profile">DisplayFriendsProfileActivity</string>
 
     <string name="hello_world">Hello world!</string>
+
 </resources>

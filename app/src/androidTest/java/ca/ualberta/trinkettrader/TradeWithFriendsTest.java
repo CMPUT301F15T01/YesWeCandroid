@@ -15,8 +15,12 @@
 package ca.ualberta.trinkettrader;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
+    AutoCompleteTextView loginEmailTextView;
+    Button loginButton;
 
     public TradeWithFriendsTest() {
         super(HomePageActivity.class);
@@ -106,6 +110,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertFalse(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
         user.getTradeManager().proposeTrade(trade);
         assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+
     }
 
     // TODO USer Case: Edit a proposed trade
@@ -132,7 +137,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
 
     // TODO is this redundant?
     // Test that user has current trades they are involved in
-    public void testCurrentTrades() {
+    public void testViewCurrentTrades() {
         User user = LoggedInUser.getInstance();
         Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
         Trade trade1 = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
@@ -140,6 +145,29 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         user.getTradeManager().proposeTrade(trade1);
         assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
         assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
+
+        // Start the UI test from the login page (beginning of the app).
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        // On the login page: click the email input box and write an arbitrary email.
+        // Test that the text was successfully written.
+        loginEmailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                loginEmailTextView.performClick();
+                loginEmailTextView.setText("user@gmail.com");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
+
+        // Click the login button to proceed to the home page.
+        loginButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                loginButton.performClick();
+            }
+        });
     }
     // TODO User Case: owner/ borrower can browse all past trade involving them
     // TODO: need to test different statuses? owner/borrower cases?
