@@ -155,6 +155,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
             }
         });
 
+
         //Set an activity monitor for ProfilePageActivity
         instrumentation.removeMonitor(profilePageMonitor);
         Instrumentation.ActivityMonitor refreshedProfileMonitor = instrumentation.addMonitor(DisplayUserProfileActivity.class.getName(), null, false);
@@ -200,7 +201,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         //Click the 'My Profile' button
         Button myProfile = (Button) homePageActivity.findViewById(R.id.profile_button);
         assertNotNull(myProfile);
-        assertEquals("View not a button", Button.class, myProfile.getClass());
+        assertEquals("View not a button", AppCompatButton.class, myProfile.getClass());
         TouchUtils.clickView(this, myProfile);
 
         //Assert that DisplayUserProfileActivity starts up
@@ -219,7 +220,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         //Click the 'Edit' button
         Button editButton = (Button) profileActivity.findViewById(R.id.edit_button);
         assertNotNull(editButton);
-        assertEquals("View not a button", Button.class, editButton.getClass());
+        assertEquals("View not a button", AppCompatButton.class, editButton.getClass());
         TouchUtils.clickView(this, editButton);
 
         //Assert that EditUserProfileActivity starts up
@@ -241,7 +242,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         //Click 'Save' button
         Button save = (Button) editProfileActivity.findViewById(R.id.save_button);
         assertNotNull(save);
-        assertEquals("View not a button", Button.class, save.getClass());
+        assertEquals("View not a button", AppCompatButton.class, save.getClass());
         TouchUtils.clickView(this, save);
 
         //Assert that DisplayUserProfileActivity starts up
@@ -280,7 +281,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         //Click the 'My Profile' button
         Button myProfile = (Button) homePageActivity.findViewById(R.id.profile_button);
         assertNotNull(myProfile);
-        assertEquals("View not a button", Button.class, myProfile.getClass());
+        assertEquals("View not a button", AppCompatButton.class, myProfile.getClass());
         TouchUtils.clickView(this, myProfile);
 
         //Assert that DisplayUserProfileActivity starts up
@@ -299,7 +300,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         //Click the 'Edit' button
         Button editButton = (Button) profileActivity.findViewById(R.id.edit_button);
         assertNotNull(editButton);
-        assertEquals("View not a button", Button.class, editButton.getClass());
+        assertEquals("View not a button", AppCompatButton.class, editButton.getClass());
         TouchUtils.clickView(this, editButton);
 
         //Assert that EditUserProfileActivity starts up
@@ -321,7 +322,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         //Click 'Save' button
         Button save = (Button) editProfileActivity.findViewById(R.id.save_button);
         assertNotNull(save);
-        assertEquals("View not a button", Button.class, save.getClass());
+        assertEquals("View not a button", AppCompatButton.class, save.getClass());
         TouchUtils.clickView(this, save);
 
         //Assert that DisplayUserProfileActivity starts up
