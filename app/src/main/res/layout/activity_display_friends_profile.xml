@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:text="Track Friend"
         android:id="@+id/trackFriendButton"
+        android:onClick="trackFriendButtonOnClick"
         android:layout_below="@+id/viewInventoryButton"
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/viewInventoryButton" />
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:text="Remove Friend"
         android:id="@+id/removeFriendButton"
+        android:onClick="removeFriendButtonOnClick"
         android:layout_below="@+id/trackFriendButton"
         android:layout_alignEnd="@+id/trackFriendButton"
         android:layout_alignStart="@+id/trackFriendButton" />
