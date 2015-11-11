@@ -24,11 +24,11 @@ import java.util.Arrays;
 
 public class AddOrEditItemController {
 
-    private AddOrEditItemActivity activity;
+    private AddOrEditTrinketActivity activity;
     private Trinket trinket = new Trinket();
     private User user = LoggedInUser.getInstance();
 
-    public AddOrEditItemController(AddOrEditItemActivity activity) {
+    public AddOrEditItemController(AddOrEditTrinketActivity activity) {
         this.activity = activity;
     }
 
