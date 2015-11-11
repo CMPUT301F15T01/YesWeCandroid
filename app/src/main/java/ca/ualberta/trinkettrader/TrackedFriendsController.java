@@ -18,15 +18,14 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RadioButton;
 
 /**
  * Created by RV on 11/5/2015.
  */
-public class DisplayTrackedFriendsController {
-    private DisplayTrackedFriendsActivity activity;
+public class TrackedFriendsController {
+    private TrackedFriendsActivity activity;
 
-    public DisplayTrackedFriendsController(DisplayTrackedFriendsActivity activity) {
+    public TrackedFriendsController(TrackedFriendsActivity activity) {
         this.activity = activity;
     }
 
@@ -34,7 +33,7 @@ public class DisplayTrackedFriendsController {
      * onClick method to return to FriendsListActivity.
      */
     public void backToFriendsListOnClick() {
-        Intent intent = new Intent(this.activity, DisplayFriendsActivity.class);
+        Intent intent = new Intent(this.activity, FriendsActivity.class);
         activity.startActivity(intent);
     }
 
@@ -47,7 +46,7 @@ public class DisplayTrackedFriendsController {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
                 Friend clickedFriend = LoggedInUser.getInstance().getFriendsList().get(position);
                 ApplicationState.getInstance().setClickedFriend(clickedFriend);
-                Intent intent = new Intent(activity, DisplayFriendsProfileActivity.class);
+                Intent intent = new Intent(activity, FriendsProfileActivity.class);
                 activity.startActivity(intent);
             }
         });

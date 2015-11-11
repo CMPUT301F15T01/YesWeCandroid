@@ -24,35 +24,36 @@ import android.widget.ListView;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DisplayTrackedFriendsActivity extends AppCompatActivity implements Observer {
+public class TrackedFriendsActivity extends AppCompatActivity implements Observer {
 
     private TrackedFriendsList trackedFriendsList;
     private ArrayAdapter<Friend> trackedFriendAdapter;
     private ListView trackedFriendsListView;
     private Button backToFriendsListButton;
-    private DisplayTrackedFriendsController controller;
+    private TrackedFriendsController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_tracked_friends);
+        setContentView(R.layout.activity_tracked_friends);
 
         trackedFriendsList = LoggedInUser.getInstance().getTrackedFriends();
         trackedFriendsListView = (ListView) findViewById(R.id.trackedFriendsListView);
         backToFriendsListButton = (Button) findViewById(R.id.backToFriendsListButton);
-        controller = new DisplayTrackedFriendsController(this);
+        controller = new TrackedFriendsController(this);
         controller.setTrackedFriendsListViewItemOnClick();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        trackedFriendAdapter = new ArrayAdapter<Friend>(this, R.layout.listview_item, trackedFriendsList);
+        trackedFriendAdapter = new ArrayAdapter<Friend>(this, R.layout.activity_friends_friend, trackedFriendsList);
         trackedFriendsListView.setAdapter(trackedFriendAdapter);
     }
 
     /**
      * Directs controller to return to friends list activity.
+     *
      * @param v
      */
     public void backToFriendsListButtonOnClick(View v) {
@@ -61,6 +62,7 @@ public class DisplayTrackedFriendsActivity extends AppCompatActivity implements 
 
     /**
      * Returns the back button to go back to the friends list page.
+     *
      * @return back button
      */
     public Button getBackToFriendsListButton() {
@@ -69,6 +71,7 @@ public class DisplayTrackedFriendsActivity extends AppCompatActivity implements 
 
     /**
      * Returns list of tracked friends.
+     *
      * @return ListView
      */
     public ListView getTrackedFriendsListView() {
@@ -76,5 +79,6 @@ public class DisplayTrackedFriendsActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void update(Observable observable, Object data) {}
+    public void update(Observable observable, Object data) {
+    }
 }

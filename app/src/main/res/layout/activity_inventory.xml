@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="ca.ualberta.trinkettrader.DisplayInventoryActivity"
-    android:orientation="vertical">
+    tools:context="ca.ualberta.trinkettrader.DisplayInventoryActivity">
 
     <Button
+        android:id="@+id/addItemButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Item"
-        android:id="@+id/addItemButton"
-        android:onClick="clickAdd" />
+        android:onClick="clickAdd"
+        android:text="Add Item" />
 
     <EditText
+        android:id="@+id/searchByText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/searchByText"
-        android:text="Search"
         android:editable="true"
-        android:textSize="20dp"
+        android:inputType="text"
+        android:text="Search"
         android:textIsSelectable="true"
-        android:inputType="text" />
+        android:textSize="20dp" />
 
     <Button
+        android:id="@+id/detailsButton"
         android:layout_width="355dp"
         android:layout_height="wrap_content"
-        android:text="Inventory Details"
-        android:id="@+id/detailsButton"
-        android:onClick="detailsClick"/>
+        android:onClick="detailsClick"
+        android:text="Inventory Details" />
 
     <Spinner
         android:id="@+id/accessibility_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
         android:entries="@array/spinner_categories"
-        android:prompt="@string/activity_display_inventory_category_prompt"
-        android:layout_marginTop="65dp"  />
+        android:prompt="@string/activity_display_inventory_category_prompt" />
 
     <Button
         android:id="@+id/filterButtton"
@@ -52,7 +51,7 @@
         android:text="Filter" />
 
     <ListView
+        android:id="@+id/displayedTrinkets"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/displayedTrinkets"  />
+        android:layout_height="wrap_content" />
 </LinearLayout>

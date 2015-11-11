@@ -23,7 +23,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
-public class FriendsTests extends ActivityInstrumentationTestCase2{
+public class FriendsTests extends ActivityInstrumentationTestCase2 {
 // Instrumentation code is from: https://developer.android.com/training/activity-testing/activity-functional-testing.html 2015-11-03
 
     AutoCompleteTextView loginEmailTextView;
@@ -37,7 +37,6 @@ public class FriendsTests extends ActivityInstrumentationTestCase2{
     Button viewTrackedFriendsButton;
     RadioButton trackFriendButton;
     EditText findFriendTextField;
-
 
 
     public FriendsTests() {

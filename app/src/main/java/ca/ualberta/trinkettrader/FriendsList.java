@@ -22,6 +22,18 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
 
     private ArrayList<Observer> observers;
 
+    public FriendsList() {
+        super();
+    }
+
+    public FriendsList(Collection<? extends User> c) {
+        super();
+    }
+
+    public FriendsList(int initialCapacity) {
+        super();
+    }
+
     /**
      * Adds the specified observer to the list of observers. If it is already
      * registered, it is not added a second time.
@@ -53,21 +65,9 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
      */
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.notify();
         }
-    }
-
-    public FriendsList() {
-        super();
-    }
-
-    public FriendsList(Collection<? extends User> c) {
-        super();
-    }
-
-    public FriendsList(int initialCapacity) {
-        super();
     }
 
     public Friend getFriendByUsername(String username) {
@@ -81,6 +81,7 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
 
     /**
      * Add friend to friends list.  If that friend is already in your friends list it will not be added again.
+     *
      * @param friend
      * @return boolean
      */

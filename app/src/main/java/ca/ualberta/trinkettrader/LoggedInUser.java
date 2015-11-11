@@ -34,23 +34,24 @@ public class LoggedInUser extends User {
     private static String FILENAME = "profile.sav";
     private static LoggedInUser ourInstance = new LoggedInUser();
 
+    private LoggedInUser() {
+    }
+
     public static LoggedInUser getInstance() {
         return ourInstance;
     }
 
-    private LoggedInUser() {
-    }
     //Taken from LonelyTwitter https://github.com/joshua2ua/lonelyTwitter
     public void saveInFile(Context c) {
         /**
          * saves LoggedInUser Data to file
          */
-        if(this.getNeedToSave()){
+        if (this.getNeedToSave()) {
             return;
         }
         try {
             FileOutputStream fos = c.openFileOutput(FILENAME, 0);
-            BufferedWriter out =  new BufferedWriter(new OutputStreamWriter(fos));
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
             Gson gson = new Gson();
             gson.toJson(ourInstance, out);
             out.flush();
@@ -64,6 +65,7 @@ public class LoggedInUser extends User {
         }
         needToSave = Boolean.FALSE;
     }
+
     //Taken from LonelyTwitter https://github.com/joshua2ua/lonelyTwitter
     public void loadFromFile(Context c) {
         /**
@@ -74,7 +76,8 @@ public class LoggedInUser extends User {
             FileInputStream fis = c.openFileInput(FILENAME);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             //https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/dcom/google/gson/Gson.html, 2015-09-23
-            Type loggedInUserType = new TypeToken<LoggedInUser>(){}.getType();
+            Type loggedInUserType = new TypeToken<LoggedInUser>() {
+            }.getType();
             Gson gson = new Gson();
             ourInstance = gson.fromJson(in, loggedInUserType);
 

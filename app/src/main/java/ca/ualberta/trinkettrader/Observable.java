@@ -18,28 +18,28 @@ import java.util.Observer;
 
 public interface Observable {
 
-        /**
-         * Adds the specified observer to the list of observers. If it is already
-         * registered, it is not added a second time.
-         *
-         * @param observer the Observer to add.
-         */
-        void addObserver(Observer observer);
+    /**
+     * Adds the specified observer to the list of observers. If it is already
+     * registered, it is not added a second time.
+     *
+     * @param observer the Observer to add.
+     */
+    void addObserver(Observer observer);
 
-        /**
-         * Removes the specified observer from the list of observers. Passing null
-         * won't do anything.
-         *
-         * @param observer the observer to remove.
-         */
-        void deleteObserver(Observer observer);
+    /**
+     * Removes the specified observer from the list of observers. Passing null
+     * won't do anything.
+     *
+     * @param observer the observer to remove.
+     */
+    void deleteObserver(Observer observer);
 
-        /**
-         * If {@code hasChanged()} returns {@code true}, calls the {@code update()}
-         * method for every observer in the list of observers using null as the
-         * argument. Afterwards, calls {@code clearChanged()}.
-         * <p/>
-         * Equivalent to calling {@code notifyObservers(null)}.
-         */
-        void notifyObservers();
+    /**
+     * If {@code hasChanged()} returns {@code true}, calls the {@code update()}
+     * method for every observer in the list of observers using null as the
+     * argument. Afterwards, calls {@code clearChanged()}.
+     * <p/>
+     * Equivalent to calling {@code notifyObservers(null)}.
+     */
+    void notifyObservers();
 }

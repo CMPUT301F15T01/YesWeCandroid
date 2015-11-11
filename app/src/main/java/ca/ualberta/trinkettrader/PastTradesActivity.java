@@ -25,12 +25,12 @@ import java.util.Observer;
  *
  *
  */
-public class DisplayPastTradesActivity extends AppCompatActivity implements Observer {
+public class PastTradesActivity extends AppCompatActivity implements Observer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_past_trades);
+        setContentView(R.layout.activity_past_trades);
     }
 
     /**

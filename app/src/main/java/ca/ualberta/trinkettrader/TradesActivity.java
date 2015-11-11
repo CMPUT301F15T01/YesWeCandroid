@@ -27,22 +27,23 @@ import java.util.Observer;
  *
  *
  */
-public class DisplayTradesActivity extends AppCompatActivity implements Observer {
+public class TradesActivity extends AppCompatActivity implements Observer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_trades);
+        setContentView(R.layout.activity_trades);
     }
 
     // PastTrades Button click
 
     /**
      * onClick method for button that directs to past trades.
+     *
      * @param view
      */
-    public void openPastTrades(View view){
-        Intent intent = new Intent(this, DisplayPastTradesActivity.class);
+    public void openPastTrades(View view) {
+        Intent intent = new Intent(this, PastTradesActivity.class);
         startActivity(intent);
     }
 

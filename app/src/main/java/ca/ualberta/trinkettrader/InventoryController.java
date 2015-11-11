@@ -29,7 +29,7 @@ public class InventoryController {
      * Handles click to add an item to inventory.
      */
     public void onAddItemClick() {
-        Intent intent = new Intent(this.activity, AddOrEditItemActivity.class);
+        Intent intent = new Intent(this.activity, AddOrEditTrinketActivity.class);
         intent.putExtra("activityName", "add");
         activity.startActivity(intent);
     }

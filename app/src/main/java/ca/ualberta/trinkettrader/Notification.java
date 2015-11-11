@@ -20,6 +20,12 @@ import java.util.Observer;
 public class Notification implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
+    private String message;
+    private String type;
+
+    public Notification() {
+
+    }
 
     /**
      * Adds the specified observer to the list of observers. If it is already
@@ -52,16 +58,9 @@ public class Notification implements ca.ualberta.trinkettrader.Observable {
      */
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.notify();
         }
-    }
-
-    private String message;
-    private String type;
-
-    public Notification(){
-
     }
 
 }

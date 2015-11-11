@@ -26,7 +26,7 @@ import android.widget.ListView;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DisplayInventoryActivity extends AppCompatActivity implements Observer {
+public class InventoryActivity extends AppCompatActivity implements Observer {
 
     private ArrayAdapter<Trinket> trinketArrayAdapter;
     private Button addItemButton;
@@ -38,22 +38,22 @@ public class DisplayInventoryActivity extends AppCompatActivity implements Obser
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_inventory);
+        setContentView(R.layout.activity_inventory);
 
         this.inventoryController = new InventoryController(this);
         this.inventory = LoggedInUser.getInstance().getInventory();
         this.inventoryItemsList = (ListView) findViewById(R.id.displayedTrinkets);
         this.addItemButton = (Button) findViewById(R.id.addItemButton);
 
-        trinketArrayAdapter = new ArrayAdapter<>(this, R.layout.listview_item, inventory);
+        trinketArrayAdapter = new ArrayAdapter<>(this, R.layout.activity_inventory_trinket, inventory);
         inventoryItemsList.setAdapter(trinketArrayAdapter);
 
-        final DisplayInventoryActivity activity = this;
+        final InventoryActivity activity = this;
         inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
                 Trinket clickedTrinket = LoggedInUser.getInstance().getInventory().get(position);
                 ApplicationState.getInstance().setClickedTrinket(clickedTrinket);
-                Intent intent = new Intent(activity, ItemDetailsActivity.class);
+                Intent intent = new Intent(activity, TrinketDetailsActivity.class);
                 activity.startActivity(intent);
             }
         });
@@ -67,6 +67,7 @@ public class DisplayInventoryActivity extends AppCompatActivity implements Obser
 
     /**
      * Returns button for adding item.
+     *
      * @return Button
      */
     public Button getAddItemButton() {
@@ -75,6 +76,7 @@ public class DisplayInventoryActivity extends AppCompatActivity implements Obser
 
     /**
      * Returns logged in user's inventory.
+     *
      * @return Inventory
      */
     public Inventory getInventory() {
@@ -83,6 +85,7 @@ public class DisplayInventoryActivity extends AppCompatActivity implements Obser
 
     /**
      * Returns ListView c=holding the inventory.
+     *
      * @return ListView
      */
     public ListView getInventoryItemsList() {
@@ -91,6 +94,7 @@ public class DisplayInventoryActivity extends AppCompatActivity implements Obser
 
     /**
      * Directs controller to add a new item.
+     *
      * @param view
      */
     public void clickAdd(View view) {
@@ -99,6 +103,7 @@ public class DisplayInventoryActivity extends AppCompatActivity implements Obser
 
     /**
      * Directs controller to display inventory details.
+     *
      * @param view
      */
     public void detailsClick(View view) {

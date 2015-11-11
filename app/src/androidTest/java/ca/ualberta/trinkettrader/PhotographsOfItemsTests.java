@@ -19,10 +19,7 @@ import android.app.Instrumentation;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Environment;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -33,14 +30,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
@@ -208,7 +199,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         addOrEditItemActivity.finish();
         Inventory trinkets = displayInventoryActivity.getInventory();
         assertFalse(trinkets.isEmpty());
-        for (Trinket trinket: trinkets) {
+        for (Trinket trinket : trinkets) {
             assertFalse(trinket.getPictures().isEmpty());
         }
 
@@ -393,7 +384,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         ArrayList<ImageView> imageViews = itemDetailsActivity.getImageViews();
         // PC.; http://stackoverflow.com/questions/9113895/how-to-check-if-an-imageview-is-attached-with-image-in-android; 2015-11-01
         assertFalse(imageViews.isEmpty());
-        for (ImageView imageView: imageViews) {
+        for (ImageView imageView : imageViews) {
             assertNotNull(imageView.getDrawable());
         }
 
@@ -551,8 +542,8 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Make sure the item's image is less than the limit
         addOrEditItemActivity.finish();
         Inventory trinkets = displayInventoryActivity.getInventory();
-        for (Trinket trinket: trinkets) {
-            for (Picture picture: trinket.getPictures()) {
+        for (Trinket trinket : trinkets) {
+            for (Picture picture : trinket.getPictures()) {
                 assertTrue(picture.size() < 65536);
             }
         }
@@ -783,7 +774,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Make sure the item does not have an image
         Inventory inventory = displayInventoryActivity.getInventory();
         assertFalse(inventory.isEmpty());
-        for (Trinket trinket: inventory) {
+        for (Trinket trinket : inventory) {
             assertTrue(trinket.getPictures().isEmpty());
         }
 

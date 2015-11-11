@@ -21,18 +21,6 @@ import android.widget.EditText;
 public class EditProfileController {
 
     private EditProfileActivity activity;
-    public EditProfileController(EditProfileActivity activity) {
-        this.activity = activity;
-    }
-
-    /**
-     * Returns onClickListener for saving edits to user profile.
-     * @return onCLickListener
-     */
-    public View.OnClickListener getSaveButtonListener() {
-        return saveButtonListener;
-    }
-
     private View.OnClickListener saveButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -70,7 +58,18 @@ public class EditProfileController {
         }
     };
 
+    public EditProfileController(EditProfileActivity activity) {
+        this.activity = activity;
+    }
 
+    /**
+     * Returns onClickListener for saving edits to user profile.
+     *
+     * @return onCLickListener
+     */
+    public View.OnClickListener getSaveButtonListener() {
+        return saveButtonListener;
+    }
 
 
 }

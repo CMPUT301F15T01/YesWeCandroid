@@ -21,6 +21,22 @@ public class Searcher implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
 
+    public static Inventory searchInventoryByCategory(User user, String category) {
+        return new Inventory();
+    }
+
+    public static Inventory searchInventoryByDescription(User user, String description) {
+        return new Inventory();
+    }
+
+    public static Inventory searchInventoryByCategory(ArrayList<User> users, String category) {
+        return new Inventory();
+    }
+
+    public static Inventory searchInventoryByDescription(ArrayList<User> users, String description) {
+        return new Inventory();
+    }
+
     /**
      * Adds the specified observer to the list of observers. If it is already
      * registered, it is not added a second time.
@@ -52,24 +68,8 @@ public class Searcher implements ca.ualberta.trinkettrader.Observable {
      */
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.notify();
         }
-    }
-
-    public static Inventory searchInventoryByCategory(User user, String category) {
-        return new Inventory();
-    }
-
-    public static Inventory searchInventoryByDescription(User user, String description) {
-        return new Inventory();
-    }
-
-    public static Inventory searchInventoryByCategory(ArrayList<User> users, String category) {
-        return new Inventory();
-    }
-
-    public static Inventory searchInventoryByDescription(ArrayList<User> users, String description) {
-        return new Inventory();
     }
 }

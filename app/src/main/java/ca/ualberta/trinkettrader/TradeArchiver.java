@@ -20,6 +20,11 @@ import java.util.Observer;
 public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
+    private ArrayList<Trade> currentTrades;
+    private ArrayList<Trade> pastTrades;
+
+    public TradeArchiver() {
+    }
 
     /**
      * Adds the specified observer to the list of observers. If it is already
@@ -52,20 +57,14 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      */
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.notify();
         }
     }
 
-    private ArrayList<Trade> currentTrades;
-    private ArrayList<Trade> pastTrades;
-
-
-    public TradeArchiver() {
-    }
-
     /**
      * Add a trade to the archive.
+     *
      * @param trade
      */
     public void addTrade(Trade trade) {
@@ -94,28 +93,31 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns a trade from list of past trades.
+     *
      * @param trade
      * @return Trade
      */
-    public Trade getPastTrade(Trade trade){
+    public Trade getPastTrade(Trade trade) {
         return trade;
     }
 
     /**
      * Returns boolean indicating if there is a pending trade.
+     *
      * @param trade
      * @return Boolean
      */
-    public Boolean hasCurrentTrade(Trade trade){
+    public Boolean hasCurrentTrade(Trade trade) {
         return Boolean.TRUE;
     }
 
     /**
      * Returns boolean indicating if there are any closed trades.
+     *
      * @param trade
      * @return Boolean
      */
-    public Boolean hasPastTrade(Trade trade){
+    public Boolean hasPastTrade(Trade trade) {
         return Boolean.TRUE;
     }
 }

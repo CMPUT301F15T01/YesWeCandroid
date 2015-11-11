@@ -29,7 +29,7 @@ public class HomePageController {
      * Directs to DisplayInventoryActivity.
      */
     public void onInventoryClick() {
-        Intent intent = new Intent(this.activity, DisplayInventoryActivity.class);
+        Intent intent = new Intent(this.activity, InventoryActivity.class);
         activity.startActivity(intent);
     }
 
@@ -37,7 +37,7 @@ public class HomePageController {
      * Direct to DisplayFriendsActivity.
      */
     public void onFriendsClick() {
-        Intent intent = new Intent(this.activity, DisplayFriendsActivity.class);
+        Intent intent = new Intent(this.activity, FriendsActivity.class);
         activity.startActivity(intent);
     }
 
@@ -45,7 +45,7 @@ public class HomePageController {
      * Directs to DisplayTradesActivity.
      */
     public void onTradesClick() {
-        Intent intent = new Intent(this.activity, DisplayTradesActivity.class);
+        Intent intent = new Intent(this.activity, TradesActivity.class);
         activity.startActivity(intent);
     }
 
@@ -53,7 +53,7 @@ public class HomePageController {
      * Directs to DisplayUserProfileActivity.
      */
     public void onProfileClick() {
-        Intent intent = new Intent(this.activity, DisplayUserProfileActivity.class);
+        Intent intent = new Intent(this.activity, UserProfileActivity.class);
         activity.startActivity(intent);
     }
 }

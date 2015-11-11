@@ -19,7 +19,23 @@ import java.util.Observer;
 
 public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
 
+    private static ApplicationState ourInstance = new ApplicationState();
     private ArrayList<Observer> observers;
+    private Trinket clickedTrinket;
+    private Friend clickedFriend;
+
+    private ApplicationState() {
+
+    }
+
+    /**
+     * Returns the instance of the singletom
+     *
+     * @return ApplicationState
+     */
+    public static ApplicationState getInstance() {
+        return ourInstance;
+    }
 
     /**
      * Adds the specified observer to the list of observers. If it is already
@@ -52,29 +68,14 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
      */
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.notify();
         }
     }
 
-    private static ApplicationState ourInstance = new ApplicationState();
-    private Trinket clickedTrinket;
-    private Friend clickedFriend;
-
-    private ApplicationState() {
-
-    }
-
-    /**
-     * Returns the instance of the singletom
-     * @return ApplicationState
-     */
-    public static ApplicationState getInstance() {
-        return ourInstance;
-    }
-
     /**
      * Returns the friend most recently clicked on from the Friends List ListView.
+     *
      * @return Friend
      */
     public Friend getClickedFriend() {
@@ -90,6 +91,7 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns the trinket most recently clicked on from the Inventory ListView.
+     *
      * @return Trinket
      */
     public Trinket getClickedTrinket() {

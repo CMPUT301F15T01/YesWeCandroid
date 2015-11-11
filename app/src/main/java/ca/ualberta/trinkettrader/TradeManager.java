@@ -27,6 +27,7 @@ public class TradeManager {
 
     /**
      * Propose trade
+     *
      * @param trade
      */
     public void proposeTrade(Trade trade) {
@@ -35,6 +36,7 @@ public class TradeManager {
 
     /**
      * Propose counter trade
+     *
      * @param trade
      * @param counterTrade
      */
@@ -44,6 +46,7 @@ public class TradeManager {
 
     /**
      * Accept trade
+     *
      * @param trade
      * @param comments
      */
@@ -53,6 +56,7 @@ public class TradeManager {
 
     /**
      * Decline trade
+     *
      * @param trade
      */
     public void declineTrade(Trade trade) {
@@ -61,6 +65,7 @@ public class TradeManager {
 
     /**
      * Delete trade
+     *
      * @param trade
      */
     public void deleteTrade(Trade trade) {
@@ -69,6 +74,7 @@ public class TradeManager {
 
     /**
      * Return trade archiver
+     *
      * @return TradeArchiver
      */
     public TradeArchiver getTradeArchiver() {
@@ -77,6 +83,7 @@ public class TradeManager {
 
     /**
      * Return notification manager
+     *
      * @return NotificationManager
      */
     public NotificationManager getNotificationManager() {

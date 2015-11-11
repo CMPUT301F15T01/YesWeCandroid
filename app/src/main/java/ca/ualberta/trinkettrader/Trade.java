@@ -20,6 +20,20 @@ import java.util.Observer;
 public class Trade implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
+    private Inventory offeredItems;
+    private Inventory requestedItems;
+    private String status;
+    private TradeManager receiver;
+    private TradeManager sender;
+    private Integer numberOfItems;
+
+    public Trade(Inventory offeredItems, TradeManager receiver, Inventory requestedItems, TradeManager sender) {
+        this.offeredItems = offeredItems;
+        this.receiver = receiver;
+        this.requestedItems = requestedItems;
+        this.sender = sender;
+        this.status = "pending"; // TODO need to clarify what status names will be
+    }
 
     /**
      * Adds the specified observer to the list of observers. If it is already
@@ -52,27 +66,9 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
      */
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.notify();
         }
-    }
-
-    private Inventory offeredItems;
-    private Inventory requestedItems;
-    private String status;
-    private TradeManager receiver;
-    private TradeManager sender;
-
-
-    private Integer numberOfItems;
-
-
-    public Trade(Inventory offeredItems, TradeManager receiver, Inventory requestedItems, TradeManager sender) {
-        this.offeredItems = offeredItems;
-        this.receiver = receiver;
-        this.requestedItems = requestedItems;
-        this.sender = sender;
-        this.status = "pending"; // TODO need to clarify what status names will be
     }
 
     public Inventory getOfferedItems() {
@@ -93,6 +89,7 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns status of the trade. Can be pending, accepted, or rejected.
+     *
      * @return String
      */
     public String getStatus() {
@@ -105,15 +102,19 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns number of items involved in the trades.
+     *
      * @return Integer
      */
-    public Integer getNumberOfItems() { return numberOfItems;
+    public Integer getNumberOfItems() {
+        return numberOfItems;
     }
 
     /**
      * Sets number of items in the trade.
+     *
      * @param numberOfItems
      */
-    public void setNumberOfItems(Integer numberOfItems) { this.numberOfItems = numberOfItems;
+    public void setNumberOfItems(Integer numberOfItems) {
+        this.numberOfItems = numberOfItems;
     }
 }

@@ -27,13 +27,13 @@ import android.widget.TextView;
 
 public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
 
-    public ConfigurationTests() {
-        super(LoginActivity.class);
-    }
-
     User user;
     UserProfile profile;
     Instrumentation instrumentation;
+
+    public ConfigurationTests() {
+        super(LoginActivity.class);
+    }
 
     @Override
     protected void setUp() throws Exception {
@@ -52,7 +52,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         assertTrue(profile.getPostalCode().equals("T6W 1K8"));
 
         //TODO: assert that we are dealing with Binky's homepage and therefore his profile
-       //TODO: check preconditions
+        //TODO: check preconditions
 
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();

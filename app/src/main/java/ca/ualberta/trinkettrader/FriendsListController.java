@@ -21,9 +21,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 public class FriendsListController {
-    private DisplayFriendsActivity activity;
+    private FriendsActivity activity;
 
-    public FriendsListController(DisplayFriendsActivity activity) {
+    public FriendsListController(FriendsActivity activity) {
         this.activity = activity;
     }
 
@@ -49,7 +49,7 @@ public class FriendsListController {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
                 Friend clickedFriend = LoggedInUser.getInstance().getFriendsList().get(position);
                 ApplicationState.getInstance().setClickedFriend(clickedFriend);
-                Intent intent = new Intent(activity, DisplayFriendsProfileActivity.class);
+                Intent intent = new Intent(activity, FriendsProfileActivity.class);
                 activity.startActivity(intent);
             }
         });
@@ -59,7 +59,7 @@ public class FriendsListController {
      * onClick method for the view tracked friends button.  Navigates to Tracked Friends List activity.
      */
     public void viewTrackedFriendsOnClick() {
-        Intent intent = new Intent(activity, DisplayTrackedFriendsActivity.class);
+        Intent intent = new Intent(activity, TrackedFriendsActivity.class);
         activity.startActivity(intent);
     }
 }

@@ -20,7 +20,6 @@ import android.app.Instrumentation;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.UiThreadTest;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -38,9 +37,9 @@ import java.util.Iterator;
 
 public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
-    int clickCount;
     public ListView list;
     public Button addItemButton;
+    int clickCount;
 
     public InventoryTests() {
         super(LoginActivity.class);
@@ -1058,7 +1057,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-                HomePageActivity homePageActivity = (HomePageActivity)
+        HomePageActivity homePageActivity = (HomePageActivity)
                 homePageActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", homePageActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",

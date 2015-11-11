@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="ca.ualberta.trinkettrader.HomePageActivity"
-    android:orientation="vertical" >
+    tools:context="ca.ualberta.trinkettrader.HomePageActivity">
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/activity_home_page_inventory_button"
         android:id="@+id/inventory_button"
-        android:onClick="inventoryClick" />
-
-    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/activity_home_page_trades_button"
+        android:onClick="inventoryClick"
+        android:text="@string/activity_home_page_inventory_button" />
+
+    <Button
         android:id="@+id/trades_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/friends_button"
         android:onClick="tradesClick"
-        android:layout_below="@+id/friends_button" />
+        android:text="@string/activity_home_page_trades_button" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/activity_home_page_friends_button"
         android:id="@+id/friends_button"
-        android:onClick="friendsClick"
-        android:layout_below="@+id/profile_button" />
-
-    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/activity_home_page_profile_button"
+        android:layout_below="@+id/profile_button"
+        android:onClick="friendsClick"
+        android:text="@string/activity_home_page_friends_button" />
+
+    <Button
         android:id="@+id/profile_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_button"
         android:onClick="profileClick"
-        android:layout_below="@+id/profile_button" />
+        android:text="@string/activity_home_page_profile_button" />
 
 </LinearLayout>

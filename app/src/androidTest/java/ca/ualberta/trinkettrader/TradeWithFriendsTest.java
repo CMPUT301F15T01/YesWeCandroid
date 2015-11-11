@@ -486,7 +486,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         ownerInventory.add(ring);
 
         // trade with self
-        Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(),ownerInventory, currentUser.getTradeManager());
+        Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, currentUser.getTradeManager());
         currentUser.getTradeManager().proposeTrade(trade);
         currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
         assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
@@ -606,6 +606,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(displayFriendsProfileActivityMonitor);
 
     }
+
     // TODO User Case: owner/ borrower can browse all past trade involving them
     // TODO: need to test different statuses? owner/borrower cases?
     // Test that user can browse past trades that they were involved in
@@ -662,7 +663,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     }
 
     // TODO: User Case : Notify parties of accepted trade - email; could possibly be bundled with acceptTrade test
-    public void testNotifyPartiesOfAcceptedTrade(){
+    public void testNotifyPartiesOfAcceptedTrade() {
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 

@@ -25,7 +25,7 @@ import android.widget.ListView;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DisplayFriendsActivity extends AppCompatActivity implements Observer {
+public class FriendsActivity extends AppCompatActivity implements Observer {
 
     private Button findFriendsButton;
     private EditText findFriendTextField;
@@ -38,11 +38,11 @@ public class DisplayFriendsActivity extends AppCompatActivity implements Observe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_friends);
-        friendsListView = (ListView)findViewById(R.id.friendsView);
-        findFriendsButton = (Button)findViewById(R.id.findFriendsButton);
+        setContentView(R.layout.activity_friends);
+        friendsListView = (ListView) findViewById(R.id.friendsView);
+        findFriendsButton = (Button) findViewById(R.id.findFriendsButton);
         viewTrackedFriendsButton = (Button) findViewById(R.id.viewTrackedFriendsButton);
-        findFriendTextField = (EditText)findViewById(R.id.findFriendTextField);
+        findFriendTextField = (EditText) findViewById(R.id.findFriendTextField);
         userFriendList = LoggedInUser.getInstance().getFriendsList();
         controller = new FriendsListController(this);
         controller.setFriendsListViewItemOnClick();
@@ -51,12 +51,13 @@ public class DisplayFriendsActivity extends AppCompatActivity implements Observe
     @Override
     protected void onStart() {
         super.onStart();
-        friendAdapter = new ArrayAdapter<Friend>(this, R.layout.listview_item, userFriendList);
+        friendAdapter = new ArrayAdapter<Friend>(this, R.layout.activity_friends_friend, userFriendList);
         friendsListView.setAdapter(friendAdapter);
     }
 
     /**
-     *  Returns the find friend button.
+     * Returns the find friend button.
+     *
      * @return findFriendsButton
      */
     public Button getFindFriendsButton() {
@@ -64,7 +65,8 @@ public class DisplayFriendsActivity extends AppCompatActivity implements Observe
     }
 
     /**
-     *  Returns view tracked friends button
+     * Returns view tracked friends button
+     *
      * @return viewTrackedFriendsButton
      */
     public Button getViewTrackedFriendsButton() {
@@ -91,10 +93,11 @@ public class DisplayFriendsActivity extends AppCompatActivity implements Observe
 
     /**
      * viewTrackedFriendsOnCLick navigates to tracked friends
+     *
      * @param v tracked friends button view
      */
 
-    public void viewTrackedFriendsOnClick(View v){
+    public void viewTrackedFriendsOnClick(View v) {
         controller.viewTrackedFriendsOnClick();
     }
 
@@ -108,6 +111,6 @@ public class DisplayFriendsActivity extends AppCompatActivity implements Observe
      */
     @Override
     public void update(Observable observable, Object data) {
-        
+
     }
 }

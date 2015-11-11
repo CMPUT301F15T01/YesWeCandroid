@@ -20,6 +20,21 @@ import java.util.Observer;
 public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
+    private Boolean arePhotosDownloadable;
+    private ContactInfo contactInfo;
+    private String email;
+    private String username;
+    private Boolean needToSave;
+
+    /**
+     * UserProfile Constructor for generating new attribute classes
+     */
+    public UserProfile() {
+        this.email = "";
+        this.contactInfo = new ContactInfo();
+        this.needToSave = Boolean.TRUE;
+        this.arePhotosDownloadable = Boolean.FALSE;
+    }
 
     /**
      * Adds the specified observer to the list of observers. If it is already
@@ -52,29 +67,14 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      */
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.notify();
         }
     }
 
-    private Boolean arePhotosDownloadable;
-    private ContactInfo contactInfo;
-    private String email;
-    private String username;
-    private Boolean needToSave;
-
-    /**
-     * UserProfile Constructor for generating new attribute classes
-     */
-    public UserProfile() {
-        this.email = "";
-        this.contactInfo = new ContactInfo();
-        this.needToSave = Boolean.TRUE;
-        this.arePhotosDownloadable = Boolean.FALSE;
-    }
-
     /**
      * Returns Boolean on whether photo download setting is set
+     *
      * @return Boolean
      */
     public Boolean getArePhotosDownloadable() {
@@ -83,6 +83,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Set whether photos are downloadable
+     *
      * @param arePhotosDownloadable
      */
     public void setArePhotosDownloadable(Boolean arePhotosDownloadable) {
@@ -91,14 +92,16 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns user's city
+     *
      * @return String
      */
-    public String getCity(){
+    public String getCity() {
         return this.contactInfo.getCity();
     }
 
     /**
      * Sets users city
+     *
      * @param city
      */
     public void setCity(String city) {
@@ -109,6 +112,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns User's Contact Information
+     *
      * @return ContactInfo
      */
     public ContactInfo getContactInfo() {
@@ -117,6 +121,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets user's contact information
+     *
      * @param contactInfo
      */
     public void setContactInfo(ContactInfo contactInfo) {
@@ -127,6 +132,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns the user's email
+     *
      * @return String
      */
     public String getEmail() {
@@ -135,6 +141,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets the user's email
+     *
      * @param email
      */
     public void setEmail(String email) {
@@ -144,6 +151,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns the user's name
+     *
      * @return String
      */
     public String getName() {
@@ -152,6 +160,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Set's the user's name
+     *
      * @param name
      */
     public void setName(String name) {
@@ -161,6 +170,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns the user's postal code
+     *
      * @return String
      */
 
@@ -170,6 +180,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets the user's postal code
+     *
      * @param postalCode
      */
     public void setPostalCode(String postalCode) {
@@ -179,6 +190,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns user's username
+     *
      * @return
      */
     public String getUsername() {
@@ -187,6 +199,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets user's username
+     *
      * @param username
      */
     protected void setUsername(String username) {
@@ -195,6 +208,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns whether the user's profile data needs to be saved
+     *
      * @return
      */
     public Boolean getNeedToSave() {

@@ -37,6 +37,7 @@ public class Friend extends User {
 
     /**
      * Returns boolean indicating if friend is tracked or not.
+     *
      * @return Boolean
      */
     public Boolean isTracked() {
@@ -45,6 +46,7 @@ public class Friend extends User {
 
     /**
      * Sets if friend is tracked or not.
+     *
      * @param isTracked
      */
     public void setIsTracked(Boolean isTracked) {

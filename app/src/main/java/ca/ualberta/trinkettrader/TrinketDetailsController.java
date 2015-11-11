@@ -15,29 +15,30 @@
 package ca.ualberta.trinkettrader;
 
 import android.content.Intent;
-import android.view.View;
 
-public class DisplayUserProfileController {
+public class TrinketDetailsController {
+    private TrinketDetailsActivity activity;
 
-    private DisplayUserProfileActivity activity;
-
-    public DisplayUserProfileController(DisplayUserProfileActivity activity) {
+    public TrinketDetailsController(TrinketDetailsActivity activity) {
         this.activity = activity;
     }
 
     /**
-     * Sets onClickListener for Edit Profile button.
-     * @return onClickListener
+     * Removes trinket from the logged in user's inventory.
+     *
+     * @param trinket trinket to remove
      */
-    public View.OnClickListener getEditButtonListener() {
-        return editButtonListener;
+    public void onDeleteClick(Trinket trinket) {
+        LoggedInUser.getInstance().getInventory().remove(trinket);
     }
 
-    private View.OnClickListener editButtonListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent i = new Intent(activity.getBaseContext(), EditProfileActivity.class);
-            activity.startActivity(i);
-        }
-    };
+    /**
+     * Starts activity to edit trinket.
+     */
+    public void onEditClick() {
+        Intent intent = new Intent(this.activity, AddOrEditTrinketActivity.class);
+        intent.putExtra("activityName", "edit");
+        activity.startActivity(intent);
+
+    }
 }

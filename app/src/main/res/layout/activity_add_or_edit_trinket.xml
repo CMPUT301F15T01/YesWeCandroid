@@ -1,97 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ca.ualberta.trinkettrader.AddOrEditTrinketActivity"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    tools:context="ca.ualberta.trinkettrader.AddOrEditTrinketActivity">
 
     <EditText
-        android:id="@+id/trinket_name_text"
-        android:layout_height="wrap_content"
+        android:id="@+id/name_text"
         android:layout_width="match_parent"
-        android:text="@string/activity_add_or_edit_trinket_name_prompt" />
+        android:layout_height="wrap_content"
+        android:hint="@string/activity_add_or_edit_trinket_name_hint" />
 
     <EditText
-        android:id="@+id/itemDescriptionText"
-        android:layout_height="wrap_content"
+        android:id="@+id/description_text"
         android:layout_width="match_parent"
-        android:text="@string/activity_add_or_edit_trinket_description_text" />
+        android:layout_height="wrap_content"
+        android:hint="@string/activity_add_or_edit_trinket_description_hint" />
 
     <Spinner
-        android:entries="@array/spinner_categories"
-        android:id="@+id/itemCategorySpinner"
-        android:layout_height="wrap_content"
+        android:id="@+id/category_spinner"
         android:layout_width="match_parent"
-        android:prompt="@string/activity_add_or_edit_trinket_accessibility_prompt"
+        android:layout_height="wrap_content"
+        android:entries="@array/spinner_categories"
+        android:prompt="@string/activity_add_or_edit_trinket_spinner_categories_prompt"
         android:spinnerMode="dropdown" />
 
     <Spinner
-        android:entries="@array/spinner_qualities"
-        android:id="@+id/itemQualitySpinner"
-        android:layout_height="wrap_content"
+        android:id="@+id/quality_spinner"
         android:layout_width="match_parent"
-        android:prompt="@string/activity_add_or_edit_trinket_accessibility_prompt"
+        android:layout_height="wrap_content"
+        android:entries="@array/spinner_qualities"
+        android:prompt="@string/activity_add_or_edit_trinket_spinner_qualities_prompt"
         android:spinnerMode="dropdown" />
 
     <CheckBox
-        android:checked="true"
-        android:id="@+id/accessibilityCheckbox"
+        android:id="@+id/accessibility_checkbox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/activity_add_or_edit_trinket_accessibility_checkbox" />
+
+    <EditText
+        android:id="@+id/quantity_text"
         android:layout_width="match_parent"
-        android:text="@string/activity_add_or_edit_trinket_public_check_box" />
-
-    <!-- Dean; http://stackoverflow.com/questions/21778632/put-two-textviews-side-by-side-in-a-layout; 2015-11-04 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/activity_add_or_edit_trinket_quantity_text"
-            android:id="@+id/textView"/>
-
-        <EditText
-            android:ems="10"
-            android:id="@+id/itemQuantityText"
-            android:inputType="number"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="@string/activity_add_or_edit_trinket_quantity_default" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:hint="@string/activity_add_or_edit_trinket_quantity_hint" />
 
     <Button
-        android:id="@+id/pictureLibraryButton"
-        android:layout_height="wrap_content"
+        android:id="@+id/picture_library_button"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="pictureLibraryClick"
         android:text="@string/activity_add_or_edit_trinket_picture_library_button_text" />
 
     <Button
-        android:id="@+id/takePictureButton"
-        android:layout_height="wrap_content"
+        android:id="@+id/take_picture_button"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="takePictureClick"
         android:text="@string/activity_add_or_edit_trinket_take_picture_button_text" />
 
     <Button
-        android:id="@+id/removePictureButton"
-        android:layout_height="wrap_content"
+        android:id="@+id/remove_picture_button"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="removePictureClick"
         android:text="@string/activity_add_or_edit_trinket_remove_picture_button_text" />
 
     <Button
-        android:id="@+id/saveItemButton"
-        android:layout_height="match_parent"
+        android:id="@+id/save_button"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="@string/activity_add_or_edit_trinket_save_button_text" />
 </LinearLayout>

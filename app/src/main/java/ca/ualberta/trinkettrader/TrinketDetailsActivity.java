@@ -27,14 +27,14 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ItemDetailsActivity extends AppCompatActivity implements Observer {
+public class TrinketDetailsActivity extends AppCompatActivity implements Observer {
 
     private Button deleteButton;
     private Button editButton;
     private ArrayList<ImageView> imageViews;
     private Trinket item;
-    private ItemDetailsController controller;
-    private ItemDetailsActivity activity = this;
+    private TrinketDetailsController controller;
+    private TrinketDetailsActivity activity = this;
     private AlertDialog dialog;
 
     @Override
@@ -46,7 +46,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements Observer {
 
         this.deleteButton = (Button) findViewById(R.id.deleteItemButton);
         this.editButton = (Button) findViewById(R.id.edit_button);
-        this.controller = new ItemDetailsController(this);
+        this.controller = new TrinketDetailsController(this);
 
         imageViews = new ArrayList<>();
         imageViews.add((ImageView) findViewById(R.id.imageView));
@@ -56,50 +56,6 @@ public class ItemDetailsActivity extends AppCompatActivity implements Observer {
         }
 
         this.dialog = setupAlertDialog();
-    }
-
-    /**
-     * Returns button for deleting item.
-     * @return Button
-     */
-    public Button getDeleteButton() {
-        return deleteButton;
-    }
-
-    /**
-     * Returns button for editing item.
-     * @return Button
-     */
-    public Button getEditButton() {
-        return editButton;
-    }
-
-    /**
-     * Returns image views.
-     * @return ArrayList
-     */
-    public ArrayList<ImageView> getImageViews() {
-        return this.imageViews;
-    }
-
-    /**
-     * Returns trinke currently being viewed.
-     * @return Trinket
-     */
-    public Trinket getItem() {
-        return item;
-    }
-
-    /**
-     * Handles click on delete item button.
-     * @param view
-     */
-    public void deleteClick(View view) {
-        dialog.show();
-    }
-
-    public AlertDialog getDialog() {
-        return dialog;
     }
 
     private AlertDialog setupAlertDialog() {
@@ -119,6 +75,55 @@ public class ItemDetailsActivity extends AppCompatActivity implements Observer {
         return builder.create();
     }
 
+    /**
+     * Returns button for deleting item.
+     *
+     * @return Button
+     */
+    public Button getDeleteButton() {
+        return deleteButton;
+    }
+
+    /**
+     * Returns button for editing item.
+     *
+     * @return Button
+     */
+    public Button getEditButton() {
+        return editButton;
+    }
+
+    /**
+     * Returns image views.
+     *
+     * @return ArrayList
+     */
+    public ArrayList<ImageView> getImageViews() {
+        return this.imageViews;
+    }
+
+    /**
+     * Returns trinke currently being viewed.
+     *
+     * @return Trinket
+     */
+    public Trinket getItem() {
+        return item;
+    }
+
+    /**
+     * Handles click on delete item button.
+     *
+     * @param view
+     */
+    public void deleteClick(View view) {
+        dialog.show();
+    }
+
+    public AlertDialog getDialog() {
+        return dialog;
+    }
+
     public void editClick(View view) {
         controller.onEditClick();
     }
@@ -133,6 +138,5 @@ public class ItemDetailsActivity extends AppCompatActivity implements Observer {
      */
     @Override
     public void update(Observable observable, Object data) {
-
     }
 }

@@ -21,12 +21,26 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Observable;
 import java.util.Observer;
 
 public class Picture implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
+    private byte[] image;
+    private volatile File file;
+
+    /**
+     * @param file
+     * @throws IOException
+     */
+    public Picture(File file) throws IOException {
+        this.file = file;
+        FileInputStream fileInputStream = new FileInputStream(file);
+        // \u00d3scar L\u00f3pez; http://stackoverflow.com/questions/8721262/how-to-get-file-size-in-java; 2015-11-04
+        image = new byte[(int) file.length()];
+        fileInputStream.read(image);
+        fileInputStream.close();
+    }
 
     /**
      * Adds the specified observer to the list of observers. If it is already
@@ -59,26 +73,9 @@ public class Picture implements ca.ualberta.trinkettrader.Observable {
      */
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.notify();
         }
-    }
-
-    private byte[] image;
-    private volatile File file;
-
-    /**
-     *
-     * @param file
-     * @throws IOException
-     */
-    public Picture(File file) throws IOException {
-        this.file = file;
-        FileInputStream fileInputStream = new FileInputStream(file);
-        // \u00d3scar L\u00f3pez; http://stackoverflow.com/questions/8721262/how-to-get-file-size-in-java; 2015-11-04
-        image = new byte[(int) file.length()];
-        fileInputStream.read(image);
-        fileInputStream.close();
     }
 
     public void delete() {
@@ -87,6 +84,7 @@ public class Picture implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns bitmap of the picture.
+     *
      * @return Bitmap
      */
     public Bitmap getBitmap() {
@@ -95,6 +93,7 @@ public class Picture implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns size of the picture.
+     *
      * @return Long
      */
     public Long size() {

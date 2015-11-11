@@ -27,14 +27,10 @@ import java.util.Observer;
 public class EditProfileActivity extends AppCompatActivity implements Observer {
 
 
-    public EditProfileActivity() {
-    }
-
     private EditProfileController controller;
     private ToggleButton arePhotosDownloadableButton;
     private Handler handler;
-
-    private Runnable populateEditFieldsWithExistingValuesRunnable =  new Runnable() {
+    private Runnable populateEditFieldsWithExistingValuesRunnable = new Runnable() {
         @Override
         public void run() {
             EditText name = (EditText) findViewById(R.id.edit_name);
@@ -51,6 +47,9 @@ public class EditProfileActivity extends AppCompatActivity implements Observer {
 
         }
     };
+
+    public EditProfileActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +72,7 @@ public class EditProfileActivity extends AppCompatActivity implements Observer {
 
     /**
      * Returns ToggleButton specifying if photos are downloadable or not.
+     *
      * @return ToggleButton
      */
     public ToggleButton getArePhotosDownloadableButton() {
@@ -81,6 +81,7 @@ public class EditProfileActivity extends AppCompatActivity implements Observer {
 
     /**
      * Returns profile of current LoggedInUser.
+     *
      * @return UserProfile
      */
     public UserProfile getUserProfile() {

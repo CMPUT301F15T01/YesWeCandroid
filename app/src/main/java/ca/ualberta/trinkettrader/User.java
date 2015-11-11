@@ -19,7 +19,40 @@ import java.util.Observer;
 
 public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
+    protected FriendsList friendsList;
+    protected Inventory inventory;
+    protected NotificationManager notificationManager;
+    protected TrackedFriendsList trackedFriends;
+    protected TradeManager tradeManager;
+    protected UserProfile profile;
+    protected Boolean needToSave;
     private ArrayList<Observer> observers;
+
+    /**
+     * Public constructor for user: initializes all attribute classes
+     */
+    public User() {
+        this.friendsList = new FriendsList();
+        this.inventory = new Inventory();
+        this.notificationManager = new NotificationManager();
+        this.trackedFriends = new TrackedFriendsList();
+        this.tradeManager = new TradeManager();
+        this.profile = new UserProfile();
+        this.needToSave = Boolean.TRUE;
+    }
+
+    /**
+     * Public constructor for user: sets all attribute classes
+     */
+    public User(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager) {
+        this.friendsList = friendsList;
+        this.inventory = inventory;
+        this.notificationManager = notificationManager;
+        this.profile = profile;
+        this.trackedFriends = trackedFriends;
+        this.tradeManager = tradeManager;
+        this.needToSave = Boolean.TRUE;
+    }
 
     /**
      * Adds the specified observer to the list of observers. If it is already
@@ -52,55 +85,14 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
      */
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.notify();
         }
     }
 
-    protected FriendsList friendsList;
-    protected Inventory inventory;
-    protected NotificationManager notificationManager;
-    protected TrackedFriendsList trackedFriends;
-    protected TradeManager tradeManager;
-    protected UserProfile profile;
-
-    protected Boolean needToSave;
-
-    /**
-     * Public constructor for user: initializes all attribute classes
-     */
-    public User() {
-        this.friendsList = new FriendsList();
-        this.inventory = new Inventory();
-        this.notificationManager = new NotificationManager();
-        this.trackedFriends = new TrackedFriendsList();
-        this.tradeManager = new TradeManager();
-        this.profile = new UserProfile();
-        this.needToSave = Boolean.TRUE;
-    }
-    /**
-     * Public constructor for user: sets all attribute classes
-     */
-    public User(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager) {
-        this.friendsList = friendsList;
-        this.inventory = inventory;
-        this.notificationManager = notificationManager;
-        this.profile = profile;
-        this.trackedFriends = trackedFriends;
-        this.tradeManager = tradeManager;
-        this.needToSave = Boolean.TRUE;
-    }
-
-    /**
-     *Sets whether User data needs to be locally cached
-     * @param needToSave
-     */
-    protected void setNeedToSave(Boolean needToSave) {
-        this.needToSave = needToSave;
-    }
-
     /**
      * Returns whether User data needs to be locally cached
+     *
      * @return Boolean
      */
     public Boolean getNeedToSave() {
@@ -109,7 +101,17 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
+     * Sets whether User data needs to be locally cached
+     *
+     * @param needToSave
+     */
+    protected void setNeedToSave(Boolean needToSave) {
+        this.needToSave = needToSave;
+    }
+
+    /**
      * Returns User's friends
+     *
      * @return FriendList
      */
     public FriendsList getFriendsList() {
@@ -118,6 +120,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets user's friends
+     *
      * @param friendsList
      */
     public void setFriendsList(FriendsList friendsList) {
@@ -127,6 +130,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns user's inventory
+     *
      * @return Inventory
      */
     public Inventory getInventory() {
@@ -135,6 +139,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets user's inventory
+     *
      * @param inventory
      */
     public void setInventory(Inventory inventory) {
@@ -144,6 +149,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns user's notification manager
+     *
      * @return NotificationManager
      */
     public NotificationManager getNotificationManager() {
@@ -152,6 +158,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets user's notification manager
+     *
      * @param notificationManager
      */
     public void setNotificationManager(NotificationManager notificationManager) {
@@ -160,6 +167,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns user's UserProfle
+     *
      * @return UserProfile
      */
     public UserProfile getProfile() {
@@ -168,6 +176,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets user's UserProfile
+     *
      * @param profile
      */
     public void setProfile(UserProfile profile) {
@@ -177,6 +186,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns user's list of tracked friends
+     *
      * @return TrackedFriendsList
      */
     public TrackedFriendsList getTrackedFriends() {
@@ -185,6 +195,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets user's list of tracked friends
+     *
      * @param trackedFriends
      */
     public void setTrackedFriends(TrackedFriendsList trackedFriends) {
@@ -193,6 +204,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns user's trade manager
+     *
      * @return TradeManager
      */
     public TradeManager getTradeManager() {
@@ -201,6 +213,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets user's trade manager
+     *
      * @param tradeManager
      */
     public void setTradeManager(TradeManager tradeManager) {

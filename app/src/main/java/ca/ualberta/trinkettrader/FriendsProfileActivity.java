@@ -24,24 +24,24 @@ import android.widget.TextView;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DisplayFriendsProfileActivity extends AppCompatActivity implements Observer {
+public class FriendsProfileActivity extends AppCompatActivity implements Observer {
 
     private User friend;
     private Button removeFriendButton;
     private Button backButton;
     private RadioButton trackedRadioButton;
     private TextView usernameTextView;
-    private DisplayFriendsProfileController controller;
+    private FriendsProfileController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_friends_profile);
+        setContentView(R.layout.activity_friends_profile);
         friend = ApplicationState.getInstance().getClickedFriend();
-        removeFriendButton = (Button)findViewById(R.id.removeFriendButton);
+        removeFriendButton = (Button) findViewById(R.id.removeFriendButton);
         backButton = (Button) findViewById(R.id.backToFriendsListFromProfile);
-        trackedRadioButton = (RadioButton)findViewById(R.id.trackedRadioButton);
-        controller = new DisplayFriendsProfileController(this);
+        trackedRadioButton = (RadioButton) findViewById(R.id.trackedRadioButton);
+        controller = new FriendsProfileController(this);
 
         usernameTextView = (TextView) findViewById(R.id.usernameText);
 
@@ -54,7 +54,17 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity implements 
     }
 
     /**
+     * Gets textView for displaying friend's username.
+     *
+     * @return TextView
+     */
+    public TextView getUsernameTextView() {
+        return usernameTextView;
+    }
+
+    /**
      * Gets button for removing friends.
+     *
      * @return Button
      */
     public Button getRemoveFriendButton() {
@@ -63,6 +73,7 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity implements 
 
     /**
      * Returns RadioButton that indicates if a friend is tracked or not.
+     *
      * @return RadioButton
      */
     public RadioButton getTrackedRadioButton() {
@@ -71,6 +82,7 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity implements 
 
     /**
      * Directs controller to handle Remove Friends button click.
+     *
      * @param v
      */
     public void removeFriendButtonOnClick(View v) {
@@ -79,6 +91,7 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity implements 
 
     /**
      * Directs controller to handle track friends radio button click.
+     *
      * @param v
      */
     public void trackedRadioButtonOnClick(View v) {
@@ -87,6 +100,7 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity implements 
 
     /**
      * Directs controller to handle click to return to Friends List activity.
+     *
      * @param v
      */
     public void backToFriendsListButtonFromProfileOnClick(View v) {
@@ -95,18 +109,11 @@ public class DisplayFriendsProfileActivity extends AppCompatActivity implements 
 
     /**
      * Gets button that directs back to friends list activity.
+     *
      * @return Button
      */
     public Button getBackButton() {
         return backButton;
-    }
-
-    /**
-     * Gets textView for displaying friend's username.
-     * @return TextView
-     */
-    public TextView getUsernameTextView() {
-        return usernameTextView;
     }
 
     /**

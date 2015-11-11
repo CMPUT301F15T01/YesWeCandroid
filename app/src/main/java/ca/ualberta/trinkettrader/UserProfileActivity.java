@@ -25,12 +25,12 @@ import android.widget.TextView;
 import java.util.Observable;
 import java.util.Observer;
 
-public class DisplayUserProfileActivity extends AppCompatActivity implements Observer {
+public class UserProfileActivity extends AppCompatActivity implements Observer {
 
     private Button editUserProfileButton;
-    private DisplayUserProfileController controller;
+    private UserProfileController controller;
     private Handler handler;
-    private Runnable populateTextFieldsWithExistingValuesRunnable =  new Runnable() {
+    private Runnable populateTextFieldsWithExistingValuesRunnable = new Runnable() {
         @Override
         public void run() {
             TextView name = (TextView) findViewById(R.id.name);
@@ -46,26 +46,20 @@ public class DisplayUserProfileActivity extends AppCompatActivity implements Obs
             postalCode.setText(getUserProfile().getContactInfo().getPostalCode());
             phoneNum.setText(getUserProfile().getContactInfo().getPhoneNumber());
             Boolean isPhotoDownloadEnabled = getUserProfile().getArePhotosDownloadable();
-            if(isPhotoDownloadEnabled){
+            if (isPhotoDownloadEnabled) {
                 photoDownloadEnabled.setText("Photo Download: Enabled");
-            }else{
+            } else {
                 photoDownloadEnabled.setText("Photo Download: Disabled");
             }
         }
     };
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        handler.post(populateTextFieldsWithExistingValuesRunnable);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_user_profile);
+        setContentView(R.layout.activity_user_profile);
 
-        controller = new DisplayUserProfileController(this);
+        controller = new UserProfileController(this);
 
         handler = new Handler();
         handler.post(populateTextFieldsWithExistingValuesRunnable);
@@ -75,35 +69,23 @@ public class DisplayUserProfileActivity extends AppCompatActivity implements Obs
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_display_user_profile, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    protected void onPostResume() {
+        super.onPostResume();
+        handler.post(populateTextFieldsWithExistingValuesRunnable);
     }
 
     /**
      * Returns profile object of current LoggedInUser.
+     *
      * @return UserProfile
      */
-    public UserProfile getUserProfile(){return LoggedInUser.getInstance().getProfile();}
+    public UserProfile getUserProfile() {
+        return LoggedInUser.getInstance().getProfile();
+    }
 
     /**
      * Returns button directing to edit user profile activity.
+     *
      * @return Button
      */
     public Button getEditUserProfileButton() {

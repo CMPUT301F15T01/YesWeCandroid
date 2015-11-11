@@ -21,6 +21,21 @@ import java.util.Observer;
 public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
+    private Boolean needToSave;
+
+    /**
+     * @param collection
+     */
+    public Inventory(Collection<? extends Trinket> collection) {
+        super(collection);
+    }
+
+    /**
+     * Empty constructor.  By default inventory need to be saved.
+     */
+    public Inventory() {
+        this.needToSave = Boolean.TRUE;
+    }
 
     /**
      * Adds the specified observer to the list of observers. If it is already
@@ -53,30 +68,14 @@ public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinket
      */
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.notify();
         }
     }
 
-    private Boolean needToSave;
-
-    /**
-     *
-     * @param collection
-     */
-    public Inventory(Collection<? extends Trinket> collection) {
-        super(collection);
-    }
-
-    /**
-     * Empty constructor.  By default inventory need to be saved.
-     */
-    public Inventory() {
-        this.needToSave = Boolean.TRUE;
-    }
-
     /**
      * Returns boolean indicating if profile needs to be saved.
+     *
      * @return Boolean
      */
     public Boolean getNeedToSave() {

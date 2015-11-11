@@ -15,34 +15,29 @@
 package ca.ualberta.trinkettrader;
 
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
+import android.view.View;
 
-public class ItemDetailsController {
-    ItemDetailsActivity activity;
+public class UserProfileController {
 
-    /**
-     *
-     * @param activity
-     */
-    public ItemDetailsController(ItemDetailsActivity activity) {
+    private UserProfileActivity activity;
+    private View.OnClickListener editButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent i = new Intent(activity.getBaseContext(), EditProfileActivity.class);
+            activity.startActivity(i);
+        }
+    };
+
+    public UserProfileController(UserProfileActivity activity) {
         this.activity = activity;
     }
 
     /**
-     * Handles deleting item.
-     * @param trinket
+     * Sets onClickListener for Edit Profile button.
+     *
+     * @return onClickListener
      */
-    public void onDeleteClick(Trinket trinket) {
-        LoggedInUser.getInstance().getInventory().remove(trinket);
-    }
-
-    /**
-     * Directs to activity to edit item.
-     */
-    public void onEditClick() {
-        Intent intent = new Intent(this.activity, AddOrEditItemActivity.class);
-        intent.putExtra("activityName", "edit");
-        activity.startActivity(intent);
-
+    public View.OnClickListener getEditButtonListener() {
+        return editButtonListener;
     }
 }

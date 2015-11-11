@@ -38,10 +38,6 @@ import java.util.Iterator;
  */
 public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentationTestCase2 {
 
-    public BrowseSearchInventoriesOfFriendsTest() {
-        super(LoginActivity.class);
-    }
-
     User borrower;
     Friend friend1;
     Friend friend2;
@@ -50,6 +46,10 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
     Trinket trinket3;
     Inventory friend1Inventory;
     Instrumentation instrumentation;
+
+    public BrowseSearchInventoriesOfFriendsTest() {
+        super(LoginActivity.class);
+    }
 
     @Override
     protected void setUp() throws Exception {
@@ -61,7 +61,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         trinket1 = new Trinket();
         trinket2 = new Trinket();
         trinket3 = new Trinket();
-        instrumentation  = getInstrumentation();
+        instrumentation = getInstrumentation();
 
         Inventory inventory = borrower.getInventory();
         Iterator iterator = inventory.iterator();
@@ -83,7 +83,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         friend1Inventory.add(trinket3);
 
         borrower.getFriendsList().add(friend1);
-        friend1.getFriendsList().add((Friend)borrower);
+        friend1.getFriendsList().add((Friend) borrower);
 
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
@@ -163,7 +163,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         assertEquals("Activity of wrong type", DisplayInventoryActivity.class, inventoryActivity.getClass());
 
         //Check that correct inventory items are displayed
-        ListView displayedTrinkets = (ListView)  inventoryActivity.findViewById(R.id.displayedTrinkets);
+        ListView displayedTrinkets = (ListView) inventoryActivity.findViewById(R.id.displayedTrinkets);
         ArrayList<Trinket> visibleTrinkets = this.getDisplayedItems(displayedTrinkets);
         assertTrue(visibleTrinkets.contains(trinket1));
         assertTrue(visibleTrinkets.contains(trinket3));
@@ -177,7 +177,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         instrumentation.removeMonitor(userProfileMonitor);
     }
 
-    public ArrayList<Trinket> getDisplayedItems(ListView view){
+    public ArrayList<Trinket> getDisplayedItems(ListView view) {
         int count = view.getAdapter().getCount();
         ArrayList<Trinket> listData = new ArrayList<Trinket>();
         for (int i = 0; i < count; i++) {
@@ -200,7 +200,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         friend1Inventory.add(trinket3);
 
         borrower.getFriendsList().add(friend1);
-        friend1.getFriendsList().add((Friend)borrower);
+        friend1.getFriendsList().add((Friend) borrower);
 
         //Set an activity monitor for DisplayFriendsActivity
         Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(DisplayFriendsActivity.class.getName(), null, false);
@@ -253,7 +253,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         assertEquals("Activity of wrong type", DisplayInventoryActivity.class, inventoryActivity.getClass());
 
         //Check that correct inventory items are displayed
-        ListView displayedTrinkets = (ListView)  inventoryActivity.findViewById(R.id.displayedTrinkets);
+        ListView displayedTrinkets = (ListView) inventoryActivity.findViewById(R.id.displayedTrinkets);
         ArrayList<Trinket> visibleTrinkets = this.getDisplayedItems(displayedTrinkets);
         assertTrue(visibleTrinkets.contains(trinket1));
         assertTrue(visibleTrinkets.contains(trinket3));
@@ -278,7 +278,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         this.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
 
         //Move the spinner down 6 spots to get the 6th item - necklace
-        for(int i = 0; i <= 6; i++){
+        for (int i = 0; i <= 6; i++) {
             this.sendKeys(KeyEvent.KEYCODE_DPAD_DOWN);
         }
         Integer categoryPostion = catsSpinner.getSelectedItemPosition();
@@ -306,7 +306,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         assertEquals("Activity of wrong type", DisplayInventoryActivity.class, refreshedInventoryActivity.getClass());
 
         //Check that correct inventory items are displayed
-        ListView refreshedInventory = (ListView)  refreshedInventoryActivity.findViewById(R.id.displayedTrinkets);
+        ListView refreshedInventory = (ListView) refreshedInventoryActivity.findViewById(R.id.displayedTrinkets);
         ArrayList<Trinket> refreshedTrinkets = this.getDisplayedItems(refreshedInventory);
         assertTrue(refreshedTrinkets.contains(trinket1));
         assertTrue(refreshedTrinkets.contains(trinket3));
@@ -329,7 +329,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         friend1Inventory.add(trinket3);
 
         borrower.getFriendsList().add(friend1);
-        friend1.getFriendsList().add((Friend)borrower);
+        friend1.getFriendsList().add((Friend) borrower);
 
         //Set an activity monitor for DisplayFriendsActivity
         Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(DisplayFriendsActivity.class.getName(), null, false);
@@ -379,7 +379,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         assertEquals("Activity of wrong type", DisplayInventoryActivity.class, inventoryActivity.getClass());
 
         //Check that correct inventory items are displayed
-        ListView displayedTrinkets = (ListView)  inventoryActivity.findViewById(R.id.displayedTrinkets);
+        ListView displayedTrinkets = (ListView) inventoryActivity.findViewById(R.id.displayedTrinkets);
         ArrayList<Trinket> visibleTrinkets = this.getDisplayedItems(displayedTrinkets);
         assertTrue(visibleTrinkets.contains(trinket1));
         assertTrue(visibleTrinkets.contains(trinket3));
@@ -408,7 +408,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         assertEquals("Activity of wrong type", DisplayInventoryActivity.class, refreshedInventoryActivity.getClass());
 
         //Check that correct inventory items are displayed
-        ListView refreshedInventory = (ListView)  refreshedInventoryActivity.findViewById(R.id.displayedTrinkets);
+        ListView refreshedInventory = (ListView) refreshedInventoryActivity.findViewById(R.id.displayedTrinkets);
         ArrayList<Trinket> refreshedTrinkets = this.getDisplayedItems(refreshedInventory);
         assertTrue(refreshedTrinkets.contains(trinket1));
 
@@ -434,7 +434,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         borrowerInventory.add(trinket2);
 
         borrower.getFriendsList().add(friend1);
-        friend1.getFriendsList().add((Friend)borrower);
+        friend1.getFriendsList().add((Friend) borrower);
 
         //TODO: check that we are viewing the borrower's inventory and not someone else's
         //Setup monitor for DisplayInventoryActivity for borrower
@@ -465,7 +465,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
 
         //Select an item borrower's inventory
         inventory.performItemClick(inventory.getAdapter().getView(1, null, null), 1,
-                                   inventory.getAdapter().getItemId(1));
+                inventory.getAdapter().getItemId(1));
 
         //Assert that ItemDetailsActivity starts up
         ItemDetailsActivity itemDetailsActivity = (ItemDetailsActivity) itemDetailsMonitor.waitForActivityWithTimeout(5);
@@ -508,7 +508,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         this.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
 
         //Move the spinner down 6 spots to get the 6th item - necklace
-        for(int i = 0; i <= 2; i++){
+        for (int i = 0; i <= 2; i++) {
             this.sendKeys(KeyEvent.KEYCODE_DPAD_DOWN);
         }
         Integer index = accessibiltySpinner.getSelectedItemPosition();

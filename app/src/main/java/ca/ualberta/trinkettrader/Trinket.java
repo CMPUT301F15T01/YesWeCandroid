@@ -20,6 +20,22 @@ import java.util.Observer;
 public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
+    private ArrayList<Picture> pictures;
+    private String accessibility;
+    private String category;
+    private String description;
+    private String name;
+    private String quality;
+    private String quantity;
+
+    /**
+     * Creates a new trinket object.
+     */
+    public Trinket() {
+        accessibility = "public";
+        pictures = new ArrayList<>();
+        quantity = "1";
+    }
 
     /**
      * Adds the specified observer to the list of observers. If it is already
@@ -52,30 +68,14 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      */
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.notify();
         }
     }
 
-    private ArrayList<Picture> pictures;
-    private String accessibility;
-    private String category;
-    private String description;
-    private String name;
-    private String quality;
-    private String quantity;
-
-    /**
-     * Public constructor
-     */
-    public Trinket() {
-        accessibility = "public";
-        pictures = new ArrayList<>();
-        quantity = "1";
-    }
-
     /**
      * Return trinket's accessibility
+     *
      * @return String
      */
     public String getAccessibility() {
@@ -84,6 +84,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets trinket's accessibility
+     *
      * @param accessibility
      */
     public void setAccessibility(String accessibility) {
@@ -92,6 +93,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Return trinket's category
+     *
      * @return String
      */
     public String getCategory() {
@@ -100,6 +102,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets trinket's category
+     *
      * @param category
      */
     public void setCategory(String category) {
@@ -108,6 +111,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Return trinket's description
+     *
      * @return String
      */
     public String getDescription() {
@@ -116,6 +120,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets trinket's description
+     *
      * @param description
      */
     public void setDescription(String description) {
@@ -124,6 +129,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Return trinket's name
+     *
      * @return String
      */
     public String getName() {
@@ -132,6 +138,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets trinket's name
+     *
      * @param name
      */
     public void setName(String name) {
@@ -140,6 +147,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Return trinket's pictures
+     *
      * @return ArrayList<Picture>
      */
     public ArrayList<Picture> getPictures() {
@@ -148,6 +156,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Set trinket's pictures
+     *
      * @param pictures
      */
     public void setPictures(ArrayList<Picture> pictures) {
@@ -156,6 +165,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Return trinket's quality
+     *
      * @return String
      */
     public String getQuality() {
@@ -164,6 +174,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets trinket's quality
+     *
      * @param quality
      */
     public void setQuality(String quality) {
@@ -172,6 +183,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Return's quantity of Trinket
+     *
      * @return String
      */
     public String getQuantity() {
@@ -180,6 +192,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets trinkets quantity
+     *
      * @param quantity
      */
     public void setQuantity(String quantity) {

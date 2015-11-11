@@ -20,6 +20,20 @@ import java.util.Observer;
 public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
+    private String name;
+    private String address;
+    private String city;
+    private String phoneNumber;
+    private String postalCode;
+    private Boolean needToSave;
+
+    public ContactInfo() {
+        this.name = "";
+        this.address = "";
+        this.city = "";
+        this.phoneNumber = "";
+        this.postalCode = "";
+    }
 
     /**
      * Adds the specified observer to the list of observers. If it is already
@@ -52,33 +66,18 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
      */
     @Override
     public void notifyObservers() {
-        for (Observer observer: observers) {
+        for (Observer observer : observers) {
             observer.notify();
         }
     }
-
-    private String name;
-    private String address;
-    private String city;
-    private String phoneNumber;
-    private String postalCode;
 
     public Boolean getNeedToSave() {
         return this.needToSave;
     }
 
-    private Boolean needToSave;
-
-    public ContactInfo() {
-        this.name = "";
-        this.address = "";
-        this.city = "";
-        this.phoneNumber = "";
-        this.postalCode = "";
-    }
-
     /**
      * Returns name.
+     *
      * @return String
      */
     public String getName() {
@@ -87,6 +86,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets name.
+     *
      * @param name
      */
     public void setName(String name) {
@@ -96,6 +96,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Gets address.
+     *
      * @return String
      */
     public String getAddress() {
@@ -104,6 +105,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets address.
+     *
      * @param address
      */
     public void setAddress(String address) {
@@ -113,6 +115,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Gets city.
+     *
      * @return String
      */
     public String getCity() {
@@ -121,6 +124,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets city.
+     *
      * @param city
      */
     public void setCity(String city) {
@@ -130,6 +134,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Gets phone number.
+     *
      * @return String
      */
     public String getPhoneNumber() {
@@ -138,6 +143,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets phone number.
+     *
      * @param phoneNumber
      */
     public void setPhoneNumber(String phoneNumber) {
@@ -147,6 +153,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Gets postal code.
+     *
      * @return String
      */
     public String getPostalCode() {
@@ -155,6 +162,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets postal code.
+     *
      * @param postalCode
      */
     public void setPostalCode(String postalCode) {
