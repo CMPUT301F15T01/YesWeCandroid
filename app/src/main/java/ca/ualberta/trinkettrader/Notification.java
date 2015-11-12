@@ -24,7 +24,6 @@ public class Notification implements ca.ualberta.trinkettrader.Observable {
     private String type;
 
     public Notification() {
-
     }
 
     /**

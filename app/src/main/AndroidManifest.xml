@@ -92,7 +92,7 @@
                 android:value="ca.ualberta.trinkettrader.HomePageActivity" />
         </activity>
         <activity
-            android:name=".PastTradesActivity"
+            android:name=".Trades.PastTradesActivity"
             android:label="@string/title_activity_past_trades"
             android:parentActivityName=".Trades.TradesActivity">
             <meta-data

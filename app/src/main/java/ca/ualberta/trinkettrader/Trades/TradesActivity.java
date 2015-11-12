@@ -22,7 +22,6 @@ import android.view.View;
 import java.util.Observable;
 import java.util.Observer;
 
-import ca.ualberta.trinkettrader.PastTradesActivity;
 import ca.ualberta.trinkettrader.R;
 
 /**

@@ -12,13 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package ca.ualberta.trinkettrader;
+package ca.ualberta.trinkettrader.Trades;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.Observable;
 import java.util.Observer;
+
+import ca.ualberta.trinkettrader.R;
 
 /**
  *
