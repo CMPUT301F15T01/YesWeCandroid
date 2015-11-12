@@ -17,6 +17,9 @@ package ca.ualberta.trinkettrader;
 import java.util.ArrayList;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.Friends.Friend;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
+
 public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
 
     private static ApplicationState ourInstance = new ApplicationState();

@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".InventoryActivity"
+            android:name=".Inventory.InventoryActivity"
             android:label="@string/title_activity_inventory"
             android:parentActivityName=".HomePageActivity">
             <meta-data
@@ -44,15 +44,15 @@
                 android:value="ca.ualberta.trinkettrader.LoginActivity" />
         </activity>
         <activity
-            android:name=".AddOrEditTrinketActivity"
+            android:name=".Inventory.Trinket.AddOrEditTrinketActivity"
             android:label="@string/title_activity_add_or_edit_trinket"
-            android:parentActivityName=".InventoryActivity">
+            android:parentActivityName=".Inventory.InventoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.ualberta.trinkettrader.InventoryActivity" />
+                android:value=".Inventory.InventoryActivity" />
         </activity>
         <activity
-            android:name=".FriendsActivity"
+            android:name=".Friends.FriendsActivity"
             android:label="@string/title_activity_friends"
             android:parentActivityName=".HomePageActivity">
             <meta-data
@@ -60,7 +60,7 @@
                 android:value="ca.ualberta.trinkettrader.HomePageActivity" />
         </activity>
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".User.Profile.UserProfileActivity"
             android:label="@string/title_activity_user_profile"
             android:parentActivityName=".HomePageActivity">
             <meta-data
@@ -68,23 +68,23 @@
                 android:value="ca.ualberta.trinkettrader.HomePageActivity" />
         </activity>
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".User.Profile.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
-            android:parentActivityName=".UserProfileActivity">
+            android:parentActivityName=".User.Profile.UserProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.ualberta.trinkettrader.UserProfileActivity" />
+                android:value=".User.Profile.UserProfileActivity" />
         </activity>
         <activity
-            android:name=".TrinketDetailsActivity"
+            android:name=".Inventory.Trinket.TrinketDetailsActivity"
             android:label="@string/title_activity_trinket_details"
-            android:parentActivityName=".InventoryActivity">
+            android:parentActivityName=".Inventory.InventoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.ualberta.trinkettrader.InventoryActivity" />
+                android:value=".Inventory.InventoryActivity" />
         </activity>
         <activity
-            android:name=".TradesActivity"
+            android:name=".Trades.TradesActivity"
             android:label="@string/title_activity_trades"
             android:parentActivityName=".HomePageActivity">
             <meta-data
@@ -94,33 +94,33 @@
         <activity
             android:name=".PastTradesActivity"
             android:label="@string/title_activity_past_trades"
-            android:parentActivityName=".TradesActivity">
+            android:parentActivityName=".Trades.TradesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.ualberta.trinkettrader.TradesActivity" />
+                android:value=".Trades.TradesActivity" />
         </activity>
         <activity
-            android:name=".TrackedFriendsActivity"
+            android:name=".Friends.TrackedFriends.TrackedFriendsActivity"
             android:label="@string/title_activity_tracked_friends"
-            android:parentActivityName=".FriendsActivity">
+            android:parentActivityName=".Friends.FriendsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.ualberta.trinkettrader.FriendsActivity" />
+                android:value=".Friends.FriendsActivity" />
         </activity>
         <activity
-            android:name=".FriendsProfileActivity"
+            android:name=".Friends.FriendsProfileActivity"
             android:label="@string/title_activity_friends_profile"
-            android:parentActivityName=".FriendsActivity">
+            android:parentActivityName=".Friends.FriendsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.ualberta.trinkettrader.FriendsActivity" />
+                android:value=".Friends.FriendsActivity" />
         </activity>
         <activity
-            android:name=".InventoryDetailsActivity"
+            android:name=".Inventory.InventoryDetailsActivity"
             android:label="@string/title_activity_inventory_details">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.ualberta.trinkettrader.InventoryActivity" />
+                android:value=".Inventory.InventoryActivity" />
         </activity>
     </application>
 </manifest>

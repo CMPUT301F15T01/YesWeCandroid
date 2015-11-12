@@ -22,6 +22,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import ca.ualberta.trinkettrader.Friends.Friend;
+import ca.ualberta.trinkettrader.Friends.FriendsActivity;
+import ca.ualberta.trinkettrader.Friends.FriendsProfileActivity;
+import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.Trades.Trade;
+import ca.ualberta.trinkettrader.Trades.TradesActivity;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
+import ca.ualberta.trinkettrader.User.User;
+
 public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     AutoCompleteTextView loginEmailTextView;
     Button loginButton;
@@ -501,13 +511,13 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
             }
         });
 
-        // Test that the DisplayTradesActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor displayTradesActivityMonitor = getInstrumentation().addMonitor(DisplayTradesActivity.class.getName(), null, false);
+        // Test that the TradesActivity started correctly after the clicking the login button.
+        Instrumentation.ActivityMonitor displayTradesActivityMonitor = getInstrumentation().addMonitor(TradesActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
-        DisplayTradesActivity displayTradesActivity = (DisplayTradesActivity) displayTradesActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("DisplayTradesActivity is null", displayTradesActivity);
-        assertEquals("Monitor for DisplayTradesActivity has not been called", 1, displayTradesActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected DisplayTradesActivity", DisplayTradesActivity.class, displayTradesActivity.getClass());
+        TradesActivity displayTradesActivity = (TradesActivity) displayTradesActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("TradesActivity is null", displayTradesActivity);
+        assertEquals("Monitor for TradesActivity has not been called", 1, displayTradesActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected TradesActivity", TradesActivity.class, displayTradesActivity.getClass());
         getInstrumentation().removeMonitor(displayTradesActivityMonitor);
 
     }
@@ -555,13 +565,13 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
             }
         });
 
-        // Test that the DisplayFriendsActivity started correctly after the clicking the friends button.
-        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(DisplayFriendsActivity.class.getName(), null, false);
+        // Test that the FriendsActivity started correctly after the clicking the friends button.
+        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
-        DisplayFriendsActivity displayFriendsActivity = (DisplayFriendsActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("DisplayFriendsActivity is null", displayFriendsActivity);
-        assertEquals("Monitor for DisplayFriendsActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected DisplayFriendsActivity", DisplayFriendsActivity.class, displayFriendsActivity.getClass());
+        FriendsActivity displayFriendsActivity = (FriendsActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("FriendsActivity is null", displayFriendsActivity);
+        assertEquals("Monitor for FriendsActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected FriendsActivity", FriendsActivity.class, displayFriendsActivity.getClass());
         getInstrumentation().removeMonitor(displayFriendsActivityMonitor);
 
         // On the friend-list page: click the Find Friend input box and write an arbitrary email.
@@ -596,13 +606,13 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
             }
         });
 
-        // Test that the DisplayFriendsProfileActivity started correctly after the clicking the Friend in the list view.
-        Instrumentation.ActivityMonitor displayFriendsProfileActivityMonitor = getInstrumentation().addMonitor(DisplayFriendsProfileActivity.class.getName(), null, false);
+        // Test that the FriendsProfileActivity started correctly after the clicking the Friend in the list view.
+        Instrumentation.ActivityMonitor displayFriendsProfileActivityMonitor = getInstrumentation().addMonitor(FriendsProfileActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
-        DisplayFriendsProfileActivity displayFriendsProfileActivity = (DisplayFriendsProfileActivity) displayFriendsProfileActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("DisplayFriendsProfileActivity is null", displayFriendsProfileActivity);
-        assertEquals("Monitor for DisplayFriendsProfileActivity has not been called", 1, displayFriendsProfileActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected DisplayFriendsProfileActivity", DisplayFriendsProfileActivity.class, displayFriendsProfileActivity.getClass());
+        FriendsProfileActivity displayFriendsProfileActivity = (FriendsProfileActivity) displayFriendsProfileActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("FriendsProfileActivity is null", displayFriendsProfileActivity);
+        assertEquals("Monitor for FriendsProfileActivity has not been called", 1, displayFriendsProfileActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected FriendsProfileActivity", FriendsProfileActivity.class, displayFriendsProfileActivity.getClass());
         getInstrumentation().removeMonitor(displayFriendsProfileActivityMonitor);
 
     }

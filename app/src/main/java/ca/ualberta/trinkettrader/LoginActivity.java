@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.User.LoggedInUser;
+
 /**
  * Basic login screen that allows users to login with their email.
  */

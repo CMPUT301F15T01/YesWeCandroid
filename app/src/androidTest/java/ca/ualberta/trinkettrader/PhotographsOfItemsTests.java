@@ -16,10 +16,8 @@ package ca.ualberta.trinkettrader;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -32,6 +30,16 @@ import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
+import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
+import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
+import ca.ualberta.trinkettrader.User.Profile.EditProfileActivity;
+import ca.ualberta.trinkettrader.User.Profile.UserProfile;
+import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
 
 public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
@@ -62,7 +70,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                 getInstrumentation().addMonitor(HomePageActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final String test_email = loginActivity.getResources().getString(R.string.test_email);
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
@@ -91,13 +99,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
-        /******** DisplayInventoryActivity ********/
+        /******** InventoryActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor displayInventoryActivityMonitor =
-                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button inventoryButton = homePageActivity.getInventoryButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -107,24 +115,24 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        DisplayInventoryActivity displayInventoryActivity = (DisplayInventoryActivity)
+        InventoryActivity displayInventoryActivity = (InventoryActivity)
                 displayInventoryActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", displayInventoryActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, displayInventoryActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                DisplayInventoryActivity.class, displayInventoryActivity.getClass());
+                InventoryActivity.class, displayInventoryActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(displayInventoryActivityMonitor);
 
-        /******** AddOrEditItemActivity ********/
+        /******** AddOrEditTrinketActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor addOrEditItemActivityMonitor =
-                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                getInstrumentation().addMonitor(AddOrEditTrinketActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button addItemButton = displayInventoryActivity.getAddItemButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -134,19 +142,19 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        AddOrEditItemActivity addOrEditItemActivity = (AddOrEditItemActivity)
+        AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
                 addOrEditItemActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", addOrEditItemActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, addOrEditItemActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                AddOrEditItemActivity.class, addOrEditItemActivity.getClass());
+                AddOrEditTrinketActivity.class, addOrEditItemActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(addOrEditItemActivityMonitor);
 
         // Edit item name
-        final EditText editName = addOrEditItemActivity.getItemName();
+        final EditText editName = addOrEditItemActivity.getTrinketName();
         final String itemName = "Test";
         addOrEditItemActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -161,7 +169,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
         ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
         final int ring = spinner_categories.indexOf("Ring");
-        final Spinner category = addOrEditItemActivity.getItemCategory();
+        final Spinner category = addOrEditItemActivity.getTrinketCategory();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
             public void run() {
                 category.setSelection(ring);
@@ -172,7 +180,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
         ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
         final int good = spinner_qualities.indexOf("Good");
-        final Spinner quality = addOrEditItemActivity.getItemQuality();
+        final Spinner quality = addOrEditItemActivity.getTrinketQuality();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
             public void run() {
                 quality.setSelection(good);
@@ -180,11 +188,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // Simulate selecting an image
-        Intent intent = new Intent();
-        // Axarydax; http://stackoverflow.com/questions/4896223/how-to-get-an-uri-of-an-image-resource-in-android; 2015-11-05
-        addOrEditItemActivity.setUri(Uri.parse("android.resource://ca.ualberta.trinkettrader/" + R.drawable.bauble));
-        addOrEditItemActivity.onActivityResult(AddOrEditItemActivity.getRequestImageCapture(), Activity.RESULT_OK, intent);
+        // TODO Simulate selecting an image
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -219,7 +223,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                 getInstrumentation().addMonitor(HomePageActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final String test_email = loginActivity.getResources().getString(R.string.test_email);
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
@@ -248,13 +252,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
-        /******** DisplayInventoryActivity ********/
+        /******** InventoryActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor displayInventoryActivityMonitor =
-                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button inventoryButton = homePageActivity.getInventoryButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -264,24 +268,24 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        DisplayInventoryActivity displayInventoryActivity = (DisplayInventoryActivity)
+        InventoryActivity displayInventoryActivity = (InventoryActivity)
                 displayInventoryActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", displayInventoryActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, displayInventoryActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                DisplayInventoryActivity.class, displayInventoryActivity.getClass());
+                InventoryActivity.class, displayInventoryActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(displayInventoryActivityMonitor);
 
-        /******** AddOrEditItemActivity ********/
+        /******** AddOrEditTrinketActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor addOrEditItemActivityMonitor =
-                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                getInstrumentation().addMonitor(AddOrEditTrinketActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button addItemButton = displayInventoryActivity.getAddItemButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -291,19 +295,19 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        AddOrEditItemActivity addOrEditItemActivity = (AddOrEditItemActivity)
+        AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
                 addOrEditItemActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", addOrEditItemActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, addOrEditItemActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                AddOrEditItemActivity.class, addOrEditItemActivity.getClass());
+                AddOrEditTrinketActivity.class, addOrEditItemActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(addOrEditItemActivityMonitor);
 
         // Edit item name
-        final EditText editName = addOrEditItemActivity.getItemName();
+        final EditText editName = addOrEditItemActivity.getTrinketName();
         final String itemName = "Test";
         addOrEditItemActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -318,7 +322,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
         ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
         final int ring = spinner_categories.indexOf("Ring");
-        final Spinner category = addOrEditItemActivity.getItemCategory();
+        final Spinner category = addOrEditItemActivity.getTrinketCategory();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
             public void run() {
                 category.setSelection(ring);
@@ -329,7 +333,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
         ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
         final int good = spinner_qualities.indexOf("Good");
-        final Spinner quality = addOrEditItemActivity.getItemQuality();
+        final Spinner quality = addOrEditItemActivity.getTrinketQuality();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
             public void run() {
                 quality.setSelection(good);
@@ -337,11 +341,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // Simulate selecting an image
-        Intent intent = new Intent();
-        // Axarydax; http://stackoverflow.com/questions/4896223/how-to-get-an-uri-of-an-image-resource-in-android; 2015-11-05
-        addOrEditItemActivity.setUri(Uri.parse("android.resource://ca.ualberta.trinkettrader/" + R.drawable.bauble));
-        addOrEditItemActivity.onActivityResult(AddOrEditItemActivity.getRequestImageCapture(), Activity.RESULT_OK, intent);
+        // TODO Simulate selecting an image
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -352,13 +352,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        /******** ItemDetailsActivity ********/
+        /******** TrinketDetailsActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor itemDetailsActivityMonitor =
-                getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
+                getInstrumentation().addMonitor(TrinketDetailsActivity.class.getName(),
                         null, false);
 
-        // Start ItemDetailsActivity
+        // Start TrinketDetailsActivity
         final ListView inventoryItemsList = displayInventoryActivity.getInventoryItemsList();
         displayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -369,13 +369,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        ItemDetailsActivity itemDetailsActivity = (ItemDetailsActivity)
+        TrinketDetailsActivity itemDetailsActivity = (TrinketDetailsActivity)
                 itemDetailsActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", itemDetailsActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, itemDetailsActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                ItemDetailsActivity.class, itemDetailsActivity.getClass());
+                TrinketDetailsActivity.class, itemDetailsActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(itemDetailsActivityMonitor);
@@ -406,7 +406,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                 getInstrumentation().addMonitor(HomePageActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final String test_email = loginActivity.getResources().getString(R.string.test_email);
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
@@ -435,13 +435,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
-        /******** DisplayInventoryActivity ********/
+        /******** InventoryActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor displayInventoryActivityMonitor =
-                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button inventoryButton = homePageActivity.getInventoryButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -451,24 +451,24 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        DisplayInventoryActivity displayInventoryActivity = (DisplayInventoryActivity)
+        InventoryActivity displayInventoryActivity = (InventoryActivity)
                 displayInventoryActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", displayInventoryActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, displayInventoryActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                DisplayInventoryActivity.class, displayInventoryActivity.getClass());
+                InventoryActivity.class, displayInventoryActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(displayInventoryActivityMonitor);
 
-        /******** AddOrEditItemActivity ********/
+        /******** AddOrEditTrinketActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor addOrEditItemActivityMonitor =
-                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                getInstrumentation().addMonitor(AddOrEditTrinketActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button addItemButton = displayInventoryActivity.getAddItemButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -478,19 +478,19 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        AddOrEditItemActivity addOrEditItemActivity = (AddOrEditItemActivity)
+        AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
                 addOrEditItemActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", addOrEditItemActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, addOrEditItemActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                AddOrEditItemActivity.class, addOrEditItemActivity.getClass());
+                AddOrEditTrinketActivity.class, addOrEditItemActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(addOrEditItemActivityMonitor);
 
         // Edit item name
-        final EditText editName = addOrEditItemActivity.getItemName();
+        final EditText editName = addOrEditItemActivity.getTrinketName();
         final String itemName = "Test";
         addOrEditItemActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -505,7 +505,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
         ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
         final int ring = spinner_categories.indexOf("Ring");
-        final Spinner category = addOrEditItemActivity.getItemCategory();
+        final Spinner category = addOrEditItemActivity.getTrinketCategory();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
             public void run() {
                 category.setSelection(ring);
@@ -516,7 +516,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
         ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
         final int good = spinner_qualities.indexOf("Good");
-        final Spinner quality = addOrEditItemActivity.getItemQuality();
+        final Spinner quality = addOrEditItemActivity.getTrinketQuality();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
             public void run() {
                 quality.setSelection(good);
@@ -524,11 +524,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // Simulate selecting an image
-        Intent intent = new Intent();
-        // Axarydax; http://stackoverflow.com/questions/4896223/how-to-get-an-uri-of-an-image-resource-in-android; 2015-11-05
-        addOrEditItemActivity.setUri(Uri.parse("android.resource://ca.ualberta.trinkettrader/" + R.drawable.bauble));
-        addOrEditItemActivity.onActivityResult(AddOrEditItemActivity.getRequestImageCapture(), Activity.RESULT_OK, intent);
+        // TODO Simulate selecting an image
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -564,7 +560,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                 getInstrumentation().addMonitor(HomePageActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final String test_email = loginActivity.getResources().getString(R.string.test_email);
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
@@ -593,13 +589,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
-        /******** DisplayInventoryActivity ********/
+        /******** InventoryActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor displayInventoryActivityMonitor =
-                getInstrumentation().addMonitor(DisplayInventoryActivity.class.getName(),
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button inventoryButton = homePageActivity.getInventoryButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -609,24 +605,24 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        DisplayInventoryActivity displayInventoryActivity = (DisplayInventoryActivity)
+        InventoryActivity displayInventoryActivity = (InventoryActivity)
                 displayInventoryActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", displayInventoryActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, displayInventoryActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                DisplayInventoryActivity.class, displayInventoryActivity.getClass());
+                InventoryActivity.class, displayInventoryActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(displayInventoryActivityMonitor);
 
-        /******** AddOrEditItemActivity ********/
+        /******** AddOrEditTrinketActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor addOrEditItemActivityMonitor =
-                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                getInstrumentation().addMonitor(AddOrEditTrinketActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button addItemButton = displayInventoryActivity.getAddItemButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -636,19 +632,19 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        AddOrEditItemActivity addOrEditItemActivity = (AddOrEditItemActivity)
+        AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
                 addOrEditItemActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", addOrEditItemActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, addOrEditItemActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                AddOrEditItemActivity.class, addOrEditItemActivity.getClass());
+                AddOrEditTrinketActivity.class, addOrEditItemActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(addOrEditItemActivityMonitor);
 
         // Edit item name
-        final EditText editName = addOrEditItemActivity.getItemName();
+        final EditText editName = addOrEditItemActivity.getTrinketName();
         final String itemName = "Test";
         addOrEditItemActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -663,7 +659,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
         ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_categories)));
         final int ring = spinner_categories.indexOf("Ring");
-        final Spinner category = addOrEditItemActivity.getItemCategory();
+        final Spinner category = addOrEditItemActivity.getTrinketCategory();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
             public void run() {
                 category.setSelection(ring);
@@ -674,7 +670,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // SLaks; http://stackoverflow.com/questions/3064423/in-java-how-to-easily-convert-an-array-to-a-set; 2015-10-30
         ArrayList<String> spinner_qualities = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_qualities)));
         final int good = spinner_qualities.indexOf("Good");
-        final Spinner quality = addOrEditItemActivity.getItemQuality();
+        final Spinner quality = addOrEditItemActivity.getTrinketQuality();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
             public void run() {
                 quality.setSelection(good);
@@ -682,11 +678,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // Simulate selecting an image
-        Intent intent = new Intent();
-        // Axarydax; http://stackoverflow.com/questions/4896223/how-to-get-an-uri-of-an-image-resource-in-android; 2015-11-05
-        addOrEditItemActivity.setUri(Uri.parse("android.resource://ca.ualberta.trinkettrader/" + R.drawable.bauble));
-        addOrEditItemActivity.onActivityResult(AddOrEditItemActivity.getRequestImageCapture(), Activity.RESULT_OK, intent);
+        // TODO Simulate selecting an image
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -697,13 +689,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        /******** ItemDetailsActivity ********/
+        /******** TrinketDetailsActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor itemDetailsActivityMonitor =
-                getInstrumentation().addMonitor(ItemDetailsActivity.class.getName(),
+                getInstrumentation().addMonitor(TrinketDetailsActivity.class.getName(),
                         null, false);
 
-        // Start ItemDetailsActivity
+        // Start TrinketDetailsActivity
         final ListView inventoryItemsList = displayInventoryActivity.getInventoryItemsList();
         displayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -714,24 +706,24 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        ItemDetailsActivity itemDetailsActivity = (ItemDetailsActivity)
+        TrinketDetailsActivity itemDetailsActivity = (TrinketDetailsActivity)
                 itemDetailsActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", itemDetailsActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, itemDetailsActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                ItemDetailsActivity.class, itemDetailsActivity.getClass());
+                TrinketDetailsActivity.class, itemDetailsActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(itemDetailsActivityMonitor);
 
-        /******** AddOrEditItemActivity ********/
+        /******** AddOrEditTrinketActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor removeItemPictureActivityMonitor =
-                getInstrumentation().addMonitor(AddOrEditItemActivity.class.getName(),
+                getInstrumentation().addMonitor(AddOrEditTrinketActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button editButton = itemDetailsActivity.getEditButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -741,13 +733,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        AddOrEditItemActivity removeItemPictureActivity = (AddOrEditItemActivity)
+        AddOrEditTrinketActivity removeItemPictureActivity = (AddOrEditTrinketActivity)
                 removeItemPictureActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", removeItemPictureActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, removeItemPictureActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                AddOrEditItemActivity.class, removeItemPictureActivity.getClass());
+                AddOrEditTrinketActivity.class, removeItemPictureActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(removeItemPictureActivityMonitor);
@@ -797,7 +789,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                 getInstrumentation().addMonitor(HomePageActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final String test_email = loginActivity.getResources().getString(R.string.test_email);
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
@@ -826,13 +818,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
-        /******** DisplayUserProfileActivity ********/
+        /******** UserProfileActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor displayUserProfileActivityMonitor =
-                getInstrumentation().addMonitor(DisplayUserProfileActivity.class.getName(),
+                getInstrumentation().addMonitor(UserProfileActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button profileButton = homePageActivity.getProfileButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -842,13 +834,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        DisplayUserProfileActivity displayUserProfileActivity = (DisplayUserProfileActivity)
+        UserProfileActivity displayUserProfileActivity = (UserProfileActivity)
                 displayUserProfileActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", displayUserProfileActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, displayUserProfileActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                DisplayUserProfileActivity.class, displayUserProfileActivity.getClass());
+                UserProfileActivity.class, displayUserProfileActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(displayUserProfileActivityMonitor);
@@ -859,7 +851,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                 getInstrumentation().addMonitor(EditProfileActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button editUserProfileButton = displayUserProfileActivity.getEditUserProfileButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -920,7 +912,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                 getInstrumentation().addMonitor(HomePageActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final String test_email = loginActivity.getResources().getString(R.string.test_email);
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
@@ -949,13 +941,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
-        /******** DisplayUserProfileActivity ********/
+        /******** UserProfileActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor displayUserProfileActivityMonitor =
-                getInstrumentation().addMonitor(DisplayUserProfileActivity.class.getName(),
+                getInstrumentation().addMonitor(UserProfileActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button profileButton = homePageActivity.getProfileButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -965,13 +957,13 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        DisplayUserProfileActivity displayUserProfileActivity = (DisplayUserProfileActivity)
+        UserProfileActivity displayUserProfileActivity = (UserProfileActivity)
                 displayUserProfileActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", displayUserProfileActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, displayUserProfileActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                DisplayUserProfileActivity.class, displayUserProfileActivity.getClass());
+                UserProfileActivity.class, displayUserProfileActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(displayUserProfileActivityMonitor);
@@ -982,7 +974,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                 getInstrumentation().addMonitor(EditProfileActivity.class.getName(),
                         null, false);
 
-        // Start DisplayInventoryActivity
+        // Start InventoryActivity
         final Button editUserProfileButton = displayUserProfileActivity.getEditUserProfileButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {

@@ -16,6 +16,8 @@ package ca.ualberta.trinkettrader;
 
 import java.util.ArrayList;
 
+import ca.ualberta.trinkettrader.User.User;
+
 public class NotificationManager {
     ArrayList<Notification> pendingNotifications = new ArrayList<Notification>();
     Integer displayNotificationCountOnHomeScreen;  // TODO this sounds more like a method

@@ -17,6 +17,11 @@ package ca.ualberta.trinkettrader;
 import android.app.Activity;
 import android.content.Intent;
 
+import ca.ualberta.trinkettrader.Friends.FriendsActivity;
+import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
+import ca.ualberta.trinkettrader.Trades.TradesActivity;
+import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
+
 public class HomePageController {
 
     Activity activity;
@@ -26,7 +31,7 @@ public class HomePageController {
     }
 
     /**
-     * Directs to DisplayInventoryActivity.
+     * Directs to InventoryActivity.
      */
     public void onInventoryClick() {
         Intent intent = new Intent(this.activity, InventoryActivity.class);
@@ -42,7 +47,7 @@ public class HomePageController {
     }
 
     /**
-     * Directs to DisplayTradesActivity.
+     * Directs to TradesActivity.
      */
     public void onTradesClick() {
         Intent intent = new Intent(this.activity, TradesActivity.class);
@@ -50,7 +55,7 @@ public class HomePageController {
     }
 
     /**
-     * Directs to DisplayUserProfileActivity.
+     * Directs to UserProfileActivity.
      */
     public void onProfileClick() {
         Intent intent = new Intent(this.activity, UserProfileActivity.class);
