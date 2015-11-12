@@ -37,7 +37,7 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
-import ca.ualberta.trinkettrader.User.Profile.EditProfileActivity;
+import ca.ualberta.trinkettrader.User.Profile.EditUserProfileActivity;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
 
@@ -845,10 +845,10 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(displayUserProfileActivityMonitor);
 
-        /******** EditProfileActivity ********/
+        /******** EditUserProfileActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor editProfileActivityMonitor =
-                getInstrumentation().addMonitor(EditProfileActivity.class.getName(),
+                getInstrumentation().addMonitor(EditUserProfileActivity.class.getName(),
                         null, false);
 
         // Start InventoryActivity
@@ -861,23 +861,23 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        EditProfileActivity editProfileActivity = (EditProfileActivity)
+        EditUserProfileActivity editUserProfileActivity = (EditUserProfileActivity)
                 editProfileActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", editProfileActivity);
+        assertNotNull("ReceiverActivity is null", editUserProfileActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, editProfileActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                EditProfileActivity.class, editProfileActivity.getClass());
+                EditUserProfileActivity.class, editUserProfileActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(editProfileActivityMonitor);
 
-        UserProfile userProfile = editProfileActivity.getUserProfile();
+        UserProfile userProfile = editUserProfileActivity.getUserProfile();
         userProfile.setArePhotosDownloadable(Boolean.TRUE);
         assertTrue(userProfile.getArePhotosDownloadable());
 
         // Click the button
-        final ToggleButton arePhotosDownloadableButton = editProfileActivity.getArePhotosDownloadableButton();
+        final ToggleButton arePhotosDownloadableButton = editUserProfileActivity.getArePhotosDownloadableButton();
         assertTrue(arePhotosDownloadableButton.isChecked());
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -889,14 +889,14 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         assertFalse(userProfile.getArePhotosDownloadable());
 
         // Return to main menu
-        editProfileActivity.finish();
+        editUserProfileActivity.finish();
         displayUserProfileActivity.finish();
 
         // TODO Need to try and manually download a photo here
         assertNotNull(null);
 
         // Close the activities
-        editProfileActivity.finish();
+        editUserProfileActivity.finish();
         displayUserProfileActivity.finish();
         homePageActivity.finish();
         loginActivity.finish();
@@ -968,10 +968,10 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(displayUserProfileActivityMonitor);
 
-        /******** EditProfileActivity ********/
+        /******** EditUserProfileActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor editProfileActivityMonitor =
-                getInstrumentation().addMonitor(EditProfileActivity.class.getName(),
+                getInstrumentation().addMonitor(EditUserProfileActivity.class.getName(),
                         null, false);
 
         // Start InventoryActivity
@@ -984,23 +984,23 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        EditProfileActivity editProfileActivity = (EditProfileActivity)
+        EditUserProfileActivity editUserProfileActivity = (EditUserProfileActivity)
                 editProfileActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", editProfileActivity);
+        assertNotNull("ReceiverActivity is null", editUserProfileActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, editProfileActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                EditProfileActivity.class, editProfileActivity.getClass());
+                EditUserProfileActivity.class, editUserProfileActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(editProfileActivityMonitor);
 
-        UserProfile userProfile = editProfileActivity.getUserProfile();
+        UserProfile userProfile = editUserProfileActivity.getUserProfile();
         userProfile.setArePhotosDownloadable(Boolean.TRUE);
         assertTrue(userProfile.getArePhotosDownloadable());
 
         // Click the button
-        final ToggleButton arePhotosDownloadableButton = editProfileActivity.getArePhotosDownloadableButton();
+        final ToggleButton arePhotosDownloadableButton = editUserProfileActivity.getArePhotosDownloadableButton();
         assertTrue(arePhotosDownloadableButton.isChecked());
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -1012,14 +1012,14 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         assertFalse(userProfile.getArePhotosDownloadable());
 
         // Return to main menu
-        editProfileActivity.finish();
+        editUserProfileActivity.finish();
         displayUserProfileActivity.finish();
 
         // TODO Need to check here if the photos actually don't download
         assertNotNull(null);
 
         // Close the activities
-        editProfileActivity.finish();
+        editUserProfileActivity.finish();
         displayUserProfileActivity.finish();
         homePageActivity.finish();
         loginActivity.finish();

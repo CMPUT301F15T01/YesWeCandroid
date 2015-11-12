@@ -17,7 +17,7 @@ package ca.ualberta.trinkettrader;
 import android.app.Activity;
 import android.content.Intent;
 
-import ca.ualberta.trinkettrader.Friends.FriendsActivity;
+import ca.ualberta.trinkettrader.Friends.FriendsListActivity;
 import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
 import ca.ualberta.trinkettrader.Trades.TradesActivity;
 import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
@@ -42,7 +42,7 @@ public class HomePageController {
      * Direct to DisplayFriendsActivity.
      */
     public void onFriendsClick() {
-        Intent intent = new Intent(this.activity, FriendsActivity.class);
+        Intent intent = new Intent(this.activity, FriendsListActivity.class);
         activity.startActivity(intent);
     }
 

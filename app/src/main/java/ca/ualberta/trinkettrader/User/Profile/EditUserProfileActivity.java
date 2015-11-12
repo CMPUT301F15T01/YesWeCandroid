@@ -27,10 +27,10 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
-public class EditProfileActivity extends AppCompatActivity implements Observer {
+public class EditUserProfileActivity extends AppCompatActivity implements Observer {
 
 
-    private EditProfileController controller;
+    private EditUserProfileController controller;
     private ToggleButton arePhotosDownloadableButton;
     private Handler handler;
     private Runnable populateEditFieldsWithExistingValuesRunnable = new Runnable() {
@@ -51,7 +51,7 @@ public class EditProfileActivity extends AppCompatActivity implements Observer {
         }
     };
 
-    public EditProfileActivity() {
+    public EditUserProfileActivity() {
     }
 
     @Override
@@ -63,7 +63,7 @@ public class EditProfileActivity extends AppCompatActivity implements Observer {
         handler = new Handler();
 
         //Instantiate controller
-        controller = new EditProfileController(this);
+        controller = new EditUserProfileController(this);
 
         //Populate the EditText fields with existing values
         handler.post(populateEditFieldsWithExistingValuesRunnable);

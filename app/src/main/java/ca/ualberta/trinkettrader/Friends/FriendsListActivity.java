@@ -28,7 +28,7 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.R;
 
-public class FriendsActivity extends AppCompatActivity implements Observer {
+public class FriendsListActivity extends AppCompatActivity implements Observer {
 
     private Button findFriendsButton;
     private EditText findFriendTextField;

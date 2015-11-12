@@ -38,7 +38,7 @@ public class FriendsProfileController {
     public void removeFriendButtonOnClick() {
         User exFriend = ApplicationState.getInstance().getClickedFriend();
         LoggedInUser.getInstance().getFriendsList().remove(exFriend);
-        Intent intent = new Intent(this.activity, FriendsActivity.class);
+        Intent intent = new Intent(this.activity, FriendsListActivity.class);
         activity.startActivity(intent);
     }
 

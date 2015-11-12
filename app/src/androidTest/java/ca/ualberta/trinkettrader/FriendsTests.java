@@ -23,9 +23,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
-import ca.ualberta.trinkettrader.Friends.FriendsActivity;
+import ca.ualberta.trinkettrader.Friends.FriendsListActivity;
 import ca.ualberta.trinkettrader.Friends.FriendsProfileActivity;
-import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsActivity;
+import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsListActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
 
@@ -92,19 +92,19 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
             }
         });
 
-        // Test that the FriendsActivity started correctly after the clicking the friends button.
-        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsActivity.class.getName(), null, false);
+        // Test that the FriendsListActivity started correctly after the clicking the friends button.
+        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsListActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
-        FriendsActivity displayFriendsActivity = (FriendsActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("FriendsActivity is null", displayFriendsActivity);
-        assertEquals("Monitor for FriendsActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected FriendsActivity", FriendsActivity.class, displayFriendsActivity.getClass());
+        FriendsListActivity displayFriendsListActivity = (FriendsListActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("FriendsListActivity is null", displayFriendsListActivity);
+        assertEquals("Monitor for FriendsListActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected FriendsListActivity", FriendsListActivity.class, displayFriendsListActivity.getClass());
         getInstrumentation().removeMonitor(displayFriendsActivityMonitor);
 
         // On the friend-list page: click the Find Friend input box and write an arbitrary email.
         // Test that the text was successfully written.
-        findFriendTextField = displayFriendsActivity.getFindFriendTextField();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        findFriendTextField = displayFriendsListActivity.getFindFriendTextField();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 findFriendTextField.performClick();
                 findFriendTextField.setText("test@gmail.com");
@@ -115,8 +115,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
 
         // Click the Find Friend button to add the friend to the friend list.
         // Test that the friend was successfully added.
-        findFriendsButton = displayFriendsActivity.getFindFriendsButton();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        findFriendsButton = displayFriendsListActivity.getFindFriendsButton();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 findFriendsButton.performClick();
             }
@@ -125,8 +125,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
         assertTrue(LoggedInUser.getInstance().getFriendsList().get(0).getProfile().getUsername().equals("test@gmail.com"));
 
         // Click the newly-added friend to proceed to the friend's profile, confirming that the friend was added.
-        friendsList = displayFriendsActivity.getFriendsListView();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        friendsList = displayFriendsListActivity.getFriendsListView();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View firstFriend = friendsList.getChildAt(0);
                 friendsList.performItemClick(firstFriend, 0, firstFriend.getId());
@@ -146,7 +146,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
         LoggedInUser.getInstance().getFriendsList().clear();
         loginActivity.finish();
         homePageActivity.finish();
-        displayFriendsActivity.finish();
+        displayFriendsListActivity.finish();
         displayFriendsProfileActivity.finish();
     }
 
@@ -193,19 +193,19 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
             }
         });
 
-        // Test that the FriendsActivity started correctly after the clicking the friends button.
-        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsActivity.class.getName(), null, false);
+        // Test that the FriendsListActivity started correctly after the clicking the friends button.
+        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsListActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
-        FriendsActivity displayFriendsActivity = (FriendsActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("FriendsActivity is null", displayFriendsActivity);
-        assertEquals("Monitor for FriendsActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected FriendsActivity", FriendsActivity.class, displayFriendsActivity.getClass());
+        FriendsListActivity displayFriendsListActivity = (FriendsListActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("FriendsListActivity is null", displayFriendsListActivity);
+        assertEquals("Monitor for FriendsListActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected FriendsListActivity", FriendsListActivity.class, displayFriendsListActivity.getClass());
         getInstrumentation().removeMonitor(displayFriendsActivityMonitor);
 
         // On the friend-list page: click the Find Friend input box and write an arbitrary email.
         // Test that the text was successfully written.
-        findFriendTextField = displayFriendsActivity.getFindFriendTextField();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        findFriendTextField = displayFriendsListActivity.getFindFriendTextField();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 findFriendTextField.performClick();
                 findFriendTextField.setText("test@gmail.com");
@@ -216,8 +216,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
 
         // Click the Find Friend button to add the friend to the friend list.
         // Test that the friend was successfully added.
-        findFriendsButton = displayFriendsActivity.getFindFriendsButton();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        findFriendsButton = displayFriendsListActivity.getFindFriendsButton();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 findFriendsButton.performClick();
             }
@@ -226,8 +226,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
         assertTrue(LoggedInUser.getInstance().getFriendsList().get(0).getProfile().getUsername().equals("test@gmail.com"));
 
         // Click the newly-added friend to proceed to the friend's profile. From here, the friend can be removed.
-        friendsList = displayFriendsActivity.getFriendsListView();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        friendsList = displayFriendsListActivity.getFriendsListView();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View firstFriend = friendsList.getChildAt(0);
                 friendsList.performItemClick(firstFriend, 0, firstFriend.getId());
@@ -251,13 +251,13 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
             }
         });
 
-        // Test that the FriendsActivity started correctly after the clicking the Remove button.
-        displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsActivity.class.getName(), null, false);
+        // Test that the FriendsListActivity started correctly after the clicking the Remove button.
+        displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsListActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
-        displayFriendsActivity = (FriendsActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("FriendsActivity is null", displayFriendsActivity);
-        assertEquals("Monitor for FriendsActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected FriendsActivity", FriendsActivity.class, displayFriendsActivity.getClass());
+        displayFriendsListActivity = (FriendsListActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("FriendsListActivity is null", displayFriendsListActivity);
+        assertEquals("Monitor for FriendsListActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected FriendsListActivity", FriendsListActivity.class, displayFriendsListActivity.getClass());
         getInstrumentation().removeMonitor(displayFriendsActivityMonitor);
 
         // Test that the friend was successfully removed.
@@ -267,7 +267,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
         LoggedInUser.getInstance().getFriendsList().clear();
         loginActivity.finish();
         homePageActivity.finish();
-        displayFriendsActivity.finish();
+        displayFriendsListActivity.finish();
         displayFriendsProfileActivity.finish();
     }
 
@@ -314,18 +314,18 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
             }
         });
 
-        // Test that the FriendsActivity started correctly after the clicking the friends button.
-        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsActivity.class.getName(), null, false);
+        // Test that the FriendsListActivity started correctly after the clicking the friends button.
+        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsListActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
-        FriendsActivity displayFriendsActivity = (FriendsActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("FriendsActivity is null", displayFriendsActivity);
-        assertEquals("Monitor for FriendsActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected FriendsActivity", FriendsActivity.class, displayFriendsActivity.getClass());
+        FriendsListActivity displayFriendsListActivity = (FriendsListActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("FriendsListActivity is null", displayFriendsListActivity);
+        assertEquals("Monitor for FriendsListActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected FriendsListActivity", FriendsListActivity.class, displayFriendsListActivity.getClass());
 
         // On the friend-list page: click the Find Friend input box and write an arbitrary email.
         // Test that the text was successfully written.
-        findFriendTextField = displayFriendsActivity.getFindFriendTextField();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        findFriendTextField = displayFriendsListActivity.getFindFriendTextField();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 findFriendTextField.performClick();
                 findFriendTextField.setText("test@gmail.com");
@@ -336,8 +336,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
 
         // Click the Find Friend button to add the friend to the friend list.
         // Test that the friend was successfully added.
-        findFriendsButton = displayFriendsActivity.getFindFriendsButton();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        findFriendsButton = displayFriendsListActivity.getFindFriendsButton();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 findFriendsButton.performClick();
             }
@@ -346,8 +346,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
         assertTrue(LoggedInUser.getInstance().getFriendsList().get(0).getProfile().getUsername().equals("test@gmail.com"));
 
         // Click the newly-added friend to proceed to the friend's profile, confirming that the friend was added.
-        friendsList = displayFriendsActivity.getFriendsListView();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        friendsList = displayFriendsListActivity.getFriendsListView();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View firstFriend = friendsList.getChildAt(0);
                 friendsList.performItemClick(firstFriend, 0, firstFriend.getId());
@@ -387,28 +387,28 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // Test that the FriendsActivity started correctly after the clicking the back button.
-        displayFriendsActivity = (FriendsActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("FriendsActivity is null", displayFriendsActivity);
-        assertEquals("Monitor for FriendsActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected FriendsActivity", FriendsActivity.class, displayFriendsActivity.getClass());
+        // Test that the FriendsListActivity started correctly after the clicking the back button.
+        displayFriendsListActivity = (FriendsListActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("FriendsListActivity is null", displayFriendsListActivity);
+        assertEquals("Monitor for FriendsListActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected FriendsListActivity", FriendsListActivity.class, displayFriendsListActivity.getClass());
         getInstrumentation().removeMonitor(displayFriendsActivityMonitor);
 
         // Click the View Tracked Friends button to go to the tracked friends page and view newly-tracked friend.
-        viewTrackedFriendsButton = displayFriendsActivity.getViewTrackedFriendsButton();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        viewTrackedFriendsButton = displayFriendsListActivity.getViewTrackedFriendsButton();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 viewTrackedFriendsButton.performClick();
             }
         });
 
         // Test that the DisplayTrackedFriendsProfileActivity started correctly after the clicking the View Tracked Friends button.
-        Instrumentation.ActivityMonitor displayTrackedFriendsActivityMonitor = getInstrumentation().addMonitor(TrackedFriendsActivity.class.getName(), null, false);
+        Instrumentation.ActivityMonitor displayTrackedFriendsActivityMonitor = getInstrumentation().addMonitor(TrackedFriendsListActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
-        TrackedFriendsActivity displayTrackedFriendsActivity = (TrackedFriendsActivity) displayTrackedFriendsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("TrackedFriendsActivity is null", displayTrackedFriendsActivity);
-        assertEquals("Monitor for TrackedFriendsActivity has not been called", 1, displayTrackedFriendsActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected TrackedFriendsActivity", TrackedFriendsActivity.class, displayTrackedFriendsActivity.getClass());
+        TrackedFriendsListActivity displayTrackedFriendsListActivity = (TrackedFriendsListActivity) displayTrackedFriendsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("TrackedFriendsListActivity is null", displayTrackedFriendsListActivity);
+        assertEquals("Monitor for TrackedFriendsListActivity has not been called", 1, displayTrackedFriendsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected TrackedFriendsListActivity", TrackedFriendsListActivity.class, displayTrackedFriendsListActivity.getClass());
         getInstrumentation().removeMonitor(displayTrackedFriendsActivityMonitor);
 
         // Test that the friend was successfully added to the tracked friends list.
@@ -422,9 +422,9 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
         LoggedInUser.getInstance().getTrackedFriends().clear();
         loginActivity.finish();
         homePageActivity.finish();
-        displayFriendsActivity.finish();
+        displayFriendsListActivity.finish();
         displayFriendsProfileActivity.finish();
-        displayTrackedFriendsActivity.finish();
+        displayTrackedFriendsListActivity.finish();
     }
 
     // UI test for viewing a friend's profile. User Story: US02.05.01. Use Case: ViewFriendsProfile.
@@ -470,19 +470,19 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
             }
         });
 
-        // Test that the FriendsActivity started correctly after the clicking the friends button.
-        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsActivity.class.getName(), null, false);
+        // Test that the FriendsListActivity started correctly after the clicking the friends button.
+        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsListActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
-        FriendsActivity displayFriendsActivity = (FriendsActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("FriendsActivity is null", displayFriendsActivity);
-        assertEquals("Monitor for FriendsActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected FriendsActivity", FriendsActivity.class, displayFriendsActivity.getClass());
+        FriendsListActivity displayFriendsListActivity = (FriendsListActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("FriendsListActivity is null", displayFriendsListActivity);
+        assertEquals("Monitor for FriendsListActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected FriendsListActivity", FriendsListActivity.class, displayFriendsListActivity.getClass());
         getInstrumentation().removeMonitor(displayFriendsActivityMonitor);
 
         // On the friend-list page: click the Find Friend input box and write an arbitrary email.
         // Test that the text was successfully written.
-        findFriendTextField = displayFriendsActivity.getFindFriendTextField();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        findFriendTextField = displayFriendsListActivity.getFindFriendTextField();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 findFriendTextField.performClick();
                 findFriendTextField.setText("test@gmail.com");
@@ -493,8 +493,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
 
         // Click the Find Friend button to add the friend to the friend list.
         // Test that the friend was successfully added.
-        findFriendsButton = displayFriendsActivity.getFindFriendsButton();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        findFriendsButton = displayFriendsListActivity.getFindFriendsButton();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 findFriendsButton.performClick();
             }
@@ -503,8 +503,8 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
         assertTrue(LoggedInUser.getInstance().getFriendsList().get(0).getProfile().getUsername().equals("test@gmail.com"));
 
         // Click the newly-added friend to proceed to the friend's profile.
-        friendsList = displayFriendsActivity.getFriendsListView();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        friendsList = displayFriendsListActivity.getFriendsListView();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View firstFriend = friendsList.getChildAt(0);
                 friendsList.performItemClick(firstFriend, 0, firstFriend.getId());
@@ -527,7 +527,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
         LoggedInUser.getInstance().getFriendsList().clear();
         loginActivity.finish();
         homePageActivity.finish();
-        displayFriendsActivity.finish();
+        displayFriendsListActivity.finish();
         displayFriendsProfileActivity.finish();
     }
 

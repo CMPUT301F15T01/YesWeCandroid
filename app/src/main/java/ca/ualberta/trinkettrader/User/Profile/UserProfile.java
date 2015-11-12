@@ -202,7 +202,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      *
      * @param username
      */
-    protected void setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 

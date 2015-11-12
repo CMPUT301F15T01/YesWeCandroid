@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import ca.ualberta.trinkettrader.Friends.Friend;
-import ca.ualberta.trinkettrader.Friends.FriendsActivity;
+import ca.ualberta.trinkettrader.Friends.FriendsListActivity;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
 import ca.ualberta.trinkettrader.Inventory.Searcher;
@@ -132,20 +132,20 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         assertNotNull(friendsButton);
         assertEquals("View not a button", AppCompatButton.class, friendsButton.getClass());
 
-        //Set an activity monitor for FriendsActivity
-        Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(FriendsActivity.class.getName(), null, false);
+        //Set an activity monitor for FriendsListActivity
+        Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(FriendsListActivity.class.getName(), null, false);
         instrumentation.waitForIdleSync();
 
-        //Wait for FriendsActivity to start
-        FriendsActivity displayFriendsActivity = (FriendsActivity) getInstrumentation().waitForMonitorWithTimeout(displayFriendsMonitor, 5);
-        assertNotNull(displayFriendsActivity);
+        //Wait for FriendsListActivity to start
+        FriendsListActivity displayFriendsListActivity = (FriendsListActivity) getInstrumentation().waitForMonitorWithTimeout(displayFriendsMonitor, 5);
+        assertNotNull(displayFriendsListActivity);
 
         //set up monitor for User profile activity that should appear with button click below
         Instrumentation.ActivityMonitor userProfileMonitor = instrumentation.addMonitor(UserProfileActivity.class.getName(), null, false);
 
         //Select friend1
-        final ListView friendsListView = displayFriendsActivity.getFriendsListView();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        final ListView friendsListView = displayFriendsListActivity.getFriendsListView();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View v = friendsListView.getChildAt(0);
                 friendsListView.performItemClick(v, 0, v.getId());
@@ -163,7 +163,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         Instrumentation.ActivityMonitor inventoryMonitor = instrumentation.addMonitor(InventoryActivity.class.getName(), null, false);
 
         //Click the 'View Inventory' button
-        Button inventoryButton = (Button) displayFriendsActivity.findViewById(R.id.view_inventory_button);
+        Button inventoryButton = (Button) displayFriendsListActivity.findViewById(R.id.view_inventory_button);
         assertNotNull(inventoryButton);
         assertEquals("View not a button", Button.class, inventoryButton.getClass());
         TouchUtils.clickView(this, inventoryButton);
@@ -214,27 +214,27 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         borrower.getFriendsList().add(friend1);
         friend1.getFriendsList().add((Friend) borrower);
 
-        //Set an activity monitor for FriendsActivity
-        Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(FriendsActivity.class.getName(), null, false);
+        //Set an activity monitor for FriendsListActivity
+        Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(FriendsListActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
 
         //Start the activity that we set the monitor for
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setClassName(instrumentation.getTargetContext(), FriendsActivity.class.getName());
+        intent.setClassName(instrumentation.getTargetContext(), FriendsListActivity.class.getName());
         instrumentation.startActivitySync(intent);
 
-        //Wait for FriendsActivity to start
-        FriendsActivity displayFriendsActivity = (FriendsActivity) getInstrumentation().waitForMonitorWithTimeout(displayFriendsMonitor, 5);
-        assertNotNull(displayFriendsActivity);
+        //Wait for FriendsListActivity to start
+        FriendsListActivity displayFriendsListActivity = (FriendsListActivity) getInstrumentation().waitForMonitorWithTimeout(displayFriendsMonitor, 5);
+        assertNotNull(displayFriendsListActivity);
 
         //set up monitor for User profile activity that should appear with button click below
         Instrumentation.ActivityMonitor userProfileMonitor = instrumentation.addMonitor(UserProfileActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
 
         //Select friend1
-        final ListView friendsListView = displayFriendsActivity.getFriendsListView();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        final ListView friendsListView = displayFriendsListActivity.getFriendsListView();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View v = friendsListView.getChildAt(0);
                 friendsListView.performItemClick(v, 0, v.getId());
@@ -253,7 +253,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         getInstrumentation().waitForIdleSync();
 
         //Click the 'View Inventory' button
-        Button inventoryButton = (Button) displayFriendsActivity.findViewById(R.id.view_inventory_button);
+        Button inventoryButton = (Button) displayFriendsListActivity.findViewById(R.id.view_inventory_button);
         assertNotNull(inventoryButton);
         assertEquals("View not a button", Button.class, inventoryButton.getClass());
         TouchUtils.clickView(this, inventoryButton);
@@ -272,7 +272,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         assertFalse(visibleTrinkets.contains(trinket2));
 
         //Set the correct position on the spinner
-        final Spinner catsSpinner = (Spinner) displayFriendsActivity.findViewById(R.id.accessibility_spinner);
+        final Spinner catsSpinner = (Spinner) displayFriendsListActivity.findViewById(R.id.accessibility_spinner);
         SpinnerAdapter categoryData = catsSpinner.getAdapter();
 
         assertNotNull(categoryData);
@@ -343,25 +343,25 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         borrower.getFriendsList().add(friend1);
         friend1.getFriendsList().add((Friend) borrower);
 
-        //Set an activity monitor for FriendsActivity
-        Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(FriendsActivity.class.getName(), null, false);
+        //Set an activity monitor for FriendsListActivity
+        Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(FriendsListActivity.class.getName(), null, false);
 
         //Start the activity that we set the monitor for
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setClassName(instrumentation.getTargetContext(), FriendsActivity.class.getName());
+        intent.setClassName(instrumentation.getTargetContext(), FriendsListActivity.class.getName());
         instrumentation.startActivitySync(intent);
 
-        //Wait for FriendsActivity to start
-        FriendsActivity displayFriendsActivity = (FriendsActivity) getInstrumentation().waitForMonitorWithTimeout(displayFriendsMonitor, 5);
-        assertNotNull(displayFriendsActivity);
+        //Wait for FriendsListActivity to start
+        FriendsListActivity displayFriendsListActivity = (FriendsListActivity) getInstrumentation().waitForMonitorWithTimeout(displayFriendsMonitor, 5);
+        assertNotNull(displayFriendsListActivity);
 
         //set up monitor for User profile activity that should appear with button click below
         Instrumentation.ActivityMonitor userProfileMonitor = instrumentation.addMonitor(UserProfileActivity.class.getName(), null, false);
 
         //Select friend1
-        final ListView friendsListView = displayFriendsActivity.getFriendsListView();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        final ListView friendsListView = displayFriendsListActivity.getFriendsListView();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View v = friendsListView.getChildAt(0);
                 friendsListView.performItemClick(v, 0, v.getId());
@@ -379,7 +379,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         Instrumentation.ActivityMonitor inventoryMonitor = instrumentation.addMonitor(InventoryActivity.class.getName(), null, false);
 
         //Click the 'View Inventory' button
-        Button inventoryButton = (Button) displayFriendsActivity.findViewById(R.id.view_inventory_button);
+        Button inventoryButton = (Button) displayFriendsListActivity.findViewById(R.id.view_inventory_button);
         assertNotNull(inventoryButton);
         assertEquals("View not a button", Button.class, inventoryButton.getClass());
         TouchUtils.clickView(this, inventoryButton);

@@ -28,13 +28,13 @@ import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.R;
 
-public class TrackedFriendsActivity extends AppCompatActivity implements Observer {
+public class TrackedFriendsListActivity extends AppCompatActivity implements Observer {
 
     private TrackedFriendsList trackedFriendsList;
     private ArrayAdapter<Friend> trackedFriendAdapter;
     private ListView trackedFriendsListView;
     private Button backToFriendsListButton;
-    private TrackedFriendsController controller;
+    private TrackedFriendsListController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class TrackedFriendsActivity extends AppCompatActivity implements Observe
         trackedFriendsList = LoggedInUser.getInstance().getTrackedFriends();
         trackedFriendsListView = (ListView) findViewById(R.id.trackedFriendsListView);
         backToFriendsListButton = (Button) findViewById(R.id.backToFriendsListButton);
-        controller = new TrackedFriendsController(this);
+        controller = new TrackedFriendsListController(this);
         controller.setTrackedFriendsListViewItemOnClick();
     }
 

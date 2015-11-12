@@ -21,9 +21,9 @@ import android.widget.EditText;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
-public class EditProfileController {
+public class EditUserProfileController {
 
-    private EditProfileActivity activity;
+    private EditUserProfileActivity activity;
     private View.OnClickListener saveButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -61,7 +61,7 @@ public class EditProfileController {
         }
     };
 
-    public EditProfileController(EditProfileActivity activity) {
+    public EditUserProfileController(EditUserProfileActivity activity) {
         this.activity = activity;
     }
 

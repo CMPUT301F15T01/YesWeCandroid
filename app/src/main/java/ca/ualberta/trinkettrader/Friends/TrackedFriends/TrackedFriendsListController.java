@@ -21,17 +21,17 @@ import android.widget.ListView;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Friends.Friend;
-import ca.ualberta.trinkettrader.Friends.FriendsActivity;
+import ca.ualberta.trinkettrader.Friends.FriendsListActivity;
 import ca.ualberta.trinkettrader.Friends.FriendsProfileActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Created by RV on 11/5/2015.
  */
-public class TrackedFriendsController {
-    private TrackedFriendsActivity activity;
+public class TrackedFriendsListController {
+    private TrackedFriendsListActivity activity;
 
-    public TrackedFriendsController(TrackedFriendsActivity activity) {
+    public TrackedFriendsListController(TrackedFriendsListActivity activity) {
         this.activity = activity;
     }
 
@@ -39,7 +39,7 @@ public class TrackedFriendsController {
      * onClick method to return to FriendsListActivity.
      */
     public void backToFriendsListOnClick() {
-        Intent intent = new Intent(this.activity, FriendsActivity.class);
+        Intent intent = new Intent(this.activity, FriendsListActivity.class);
         activity.startActivity(intent);
     }
 

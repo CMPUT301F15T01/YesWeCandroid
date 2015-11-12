@@ -52,7 +52,7 @@
                 android:value=".Inventory.InventoryActivity" />
         </activity>
         <activity
-            android:name=".Friends.FriendsActivity"
+            android:name=".Friends.FriendsListActivity"
             android:label="@string/title_activity_friends"
             android:parentActivityName=".HomePageActivity">
             <meta-data
@@ -68,7 +68,7 @@
                 android:value="ca.ualberta.trinkettrader.HomePageActivity" />
         </activity>
         <activity
-            android:name=".User.Profile.EditProfileActivity"
+            android:name=".User.Profile.EditUserProfileActivity"
             android:label="@string/title_activity_edit_profile"
             android:parentActivityName=".User.Profile.UserProfileActivity">
             <meta-data
@@ -100,20 +100,20 @@
                 android:value=".Trades.TradesActivity" />
         </activity>
         <activity
-            android:name=".Friends.TrackedFriends.TrackedFriendsActivity"
+            android:name=".Friends.TrackedFriends.TrackedFriendsListActivity"
             android:label="@string/title_activity_tracked_friends"
-            android:parentActivityName=".Friends.FriendsActivity">
+            android:parentActivityName=".Friends.FriendsListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Friends.FriendsActivity" />
+                android:value=".Friends.FriendsListActivity" />
         </activity>
         <activity
             android:name=".Friends.FriendsProfileActivity"
             android:label="@string/title_activity_friends_profile"
-            android:parentActivityName=".Friends.FriendsActivity">
+            android:parentActivityName=".Friends.FriendsListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Friends.FriendsActivity" />
+                android:value=".Friends.FriendsListActivity" />
         </activity>
         <activity
             android:name=".Inventory.InventoryDetailsActivity"

@@ -23,7 +23,7 @@ public class UserProfileController {
     private View.OnClickListener editButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i = new Intent(activity.getBaseContext(), EditProfileActivity.class);
+            Intent i = new Intent(activity.getBaseContext(), EditUserProfileActivity.class);
             activity.startActivity(i);
         }
     };
