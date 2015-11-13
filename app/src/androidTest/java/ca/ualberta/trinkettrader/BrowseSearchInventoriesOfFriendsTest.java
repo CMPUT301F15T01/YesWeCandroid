@@ -102,11 +102,12 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
 
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
         final AutoCompleteTextView loginEmailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
             public void run() {
                 loginEmailTextView.performClick();
-                loginEmailTextView.setText("user@gmail.com");
+                loginEmailTextView.setText(test_email);
             }
         });
         getInstrumentation().waitForIdleSync();

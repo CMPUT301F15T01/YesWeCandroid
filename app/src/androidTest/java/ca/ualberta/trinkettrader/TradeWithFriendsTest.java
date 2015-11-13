@@ -530,15 +530,16 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
 
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
         loginEmailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
             public void run() {
                 loginEmailTextView.performClick();
-                loginEmailTextView.setText("user@gmail.com");
+                loginEmailTextView.setText(test_email);
             }
         });
         getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
+        assertTrue(loginEmailTextView.getText().toString().equals(test_email));
 
         // Click the login button to proceed to the home page.
         loginButton = loginActivity.getLoginButton();
