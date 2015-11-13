@@ -23,13 +23,14 @@ public class TradeManager {
      * Public Constructor
      */
     public TradeManager() {
-        notificationManager = new NotificationManager();
+        notificationManager = new NotificationManager(); // TODO see that notification manager is in User. move out? or do we have two?
         tradeArchiver = new TradeArchiver();
 
     }
 
     /**
      * Propose trade
+     * // needs to access tradeManager
      * @param trade
      */
     public void proposeTrade(Trade trade) {
