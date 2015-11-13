@@ -36,7 +36,7 @@ public class PastTradesController {
                 ArrayList<Trade> userPastTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades();
                 Trade clickedTrade = userPastTradesList.get(position);
                 ApplicationState.getInstance().setClickedTrade(clickedTrade);
-                Intent intent = new Intent(activity, ViewTradeDetailsActivity.class);
+                Intent intent = new Intent(activity, ViewTradeDetailsActivity.class);  //TODO set parent to previous activity-DisplayPastTradesActivity
                 activity.startActivity(intent);
             }
         });

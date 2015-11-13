@@ -14,11 +14,13 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -108,6 +110,11 @@ public class DisplayUserProfileActivity extends AppCompatActivity implements Obs
      */
     public Button getEditUserProfileButton() {
         return editUserProfileButton;
+    }
+
+    public void openCurrentTrades(View view){
+        Intent intent = new Intent(this, DisplayTradesActivity.class);
+        startActivity(intent);
     }
 
     /**

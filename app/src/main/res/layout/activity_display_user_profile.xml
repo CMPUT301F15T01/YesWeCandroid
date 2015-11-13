@@ -67,7 +67,8 @@
         android:text="Trade"
         android:id="@+id/trade_button_user_profile"
         android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/view_inventory_button" />
+        android:layout_alignEnd="@+id/view_inventory_button"
+        android:onClick="openCurrentTrades"/>
 
     <TextView
         android:layout_width="wrap_content"

@@ -36,7 +36,7 @@ public class ActiveTradesController {
                 ArrayList<Trade> userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
                 Trade clickedTrade = userCurrentTradesList.get(position);
                 ApplicationState.getInstance().setClickedTrade(clickedTrade);
-                Intent intent = new Intent(activity, ViewTradeDetailsActivity.class);
+                Intent intent = new Intent(activity, ViewTradeDetailsActivity.class);  // TODO set parent to be previous activity -DisplayTradesActivity
                 activity.startActivity(intent);
             }
         });
