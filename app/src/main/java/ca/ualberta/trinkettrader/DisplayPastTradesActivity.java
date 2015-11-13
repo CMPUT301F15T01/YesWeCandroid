@@ -36,13 +36,28 @@ public class DisplayPastTradesActivity extends AppCompatActivity implements Obse
     private ArrayList<Trade> userPastTradesList;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_past_trades);
+
+        pastTradesListView = (ListView)findViewById(R.id.pastTradesList);
+
+        // add trade to test. TODO empty list functionality. or create an 'empty trade' which is around and displayed if no current trades
+        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().addTrade(); // add trades so list not empty
+        userPastTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades();
+        controller = new PastTradesController(this);
+        controller.setPastTradesListViewItemOnClick();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        pastTradesAdapter = new ArrayAdapter<Trade>(this, R.layout.listview_item, userPastTradesList);
+        pastTradesListView.setAdapter(pastTradesAdapter);
+    }
+
+    public ListView getPastTradesListView(){ return pastTradesListView; }
     /**
      * This method is called if the specified {@code Observable} object's
      * {@code notifyObservers} method is called (because the {@code Observable}

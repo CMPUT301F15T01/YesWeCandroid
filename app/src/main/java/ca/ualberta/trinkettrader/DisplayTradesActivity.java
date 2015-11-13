@@ -48,7 +48,7 @@ public class DisplayTradesActivity extends AppCompatActivity implements Observer
         pastTradesButton = (Button)findViewById(R.id.past_trades_button);
         // add trade to test. TODO empty list functionality. or create an 'empty trade' which is around and displayed if no current trades
         LoggedInUser.getInstance().getTradeManager().getTradeArchiver().addTrade(); // add trades so list not empty
-        userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades(); // problem npe
+        userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();
     }
@@ -60,7 +60,6 @@ public class DisplayTradesActivity extends AppCompatActivity implements Observer
         currentTradesListView.setAdapter(currentTradesAdapter);
     }
 
-    // PastTrades Button click
 
     /**
      * onClick method for button that directs to past trades.
