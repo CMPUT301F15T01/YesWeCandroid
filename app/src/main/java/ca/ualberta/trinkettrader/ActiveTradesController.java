@@ -31,7 +31,7 @@ public class ActiveTradesController {
 
     public void setCurrentTradesListViewItemOnClick() {
         ListView currentTradesListView = activity.getCurrentTradesListView();
-        currentTradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        currentTradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // problem. npe
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
                 ArrayList<Trade> userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
                 Trade clickedTrade = userCurrentTradesList.get(position);

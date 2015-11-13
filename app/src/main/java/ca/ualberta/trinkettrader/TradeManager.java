@@ -23,6 +23,9 @@ public class TradeManager {
      * Public Constructor
      */
     public TradeManager() {
+        notificationManager = new NotificationManager();
+        tradeArchiver = new TradeArchiver();
+
     }
 
     /**
