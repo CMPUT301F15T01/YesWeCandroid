@@ -62,16 +62,6 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
 
 
     public TradeArchiver() {
-
-    }
-
-    /**
-     * Add a trade to the archive.
-     * @param //trade
-     */
-    public void addTrade() { // for testing purposes
-    //public void addTrade(Trade trade) {
-
         // Hardcode in trades for user
         LoggedInUser currentUser = LoggedInUser.getInstance();
 
@@ -88,6 +78,15 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
         Trade trade1 = new Trade(borrowerInventory, currentUser.getTradeManager(),ownerInventory, currentUser.getTradeManager());
         currentTrades.add(trade1);
         pastTrades.add(trade1);
+    }
+
+    /**
+     * Add a trade to the archive.
+     * @param //trade
+     */
+
+    public void addTrade(Trade trade) {
+
     }
 
     public void archiveTrade(Trade trade) { pastTrades.add(trade); }
