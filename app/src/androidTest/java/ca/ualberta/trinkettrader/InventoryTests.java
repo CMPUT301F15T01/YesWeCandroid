@@ -2225,7 +2225,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         assertNotNull(list.getChildAt(0));
         Iterator<Trinket> trinketIterator = displayInventoryActivityAgain.getInventory().iterator();
         while (trinketIterator.hasNext()) {
-            assertEquals(trinketIterator.next().getDescription(), "Description");
+            assertEquals(trinketIterator.next().getDescription(), "");
         }
 
         // Move to add item activity
@@ -2729,7 +2729,7 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         assertNotNull(list.getChildAt(0));
         Iterator<Trinket> trinketIterator = inventoryActivity.getInventory().iterator();
         while (trinketIterator.hasNext()) {
-            assertEquals(trinketIterator.next().getName(), "Name");
+            assertEquals(trinketIterator.next().getName(), "");
         }
 
         // 5 or less clicks

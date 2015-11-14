@@ -111,6 +111,9 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
                 }
             });
         } else {
+            this.trinketAccessibility.setChecked(true);
+            this.trinketQuantity.setText("1");
+
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
