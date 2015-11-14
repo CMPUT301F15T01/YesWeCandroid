@@ -67,7 +67,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Add a trade to the archive.
-     * @param //trade
+     * @param trade
      */
 
     public void addTrade(Trade trade) {
