@@ -74,6 +74,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
                 loginButton.performClick();
             }
         });
+        getInstrumentation().waitForIdleSync();
 
         // Test that the HomePageActivity started correctly after the clicking the login button.
         Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
@@ -91,6 +92,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
                 friendsButton.performClick();
             }
         });
+        getInstrumentation().waitForIdleSync();
 
         // Test that the FriendsListActivity started correctly after the clicking the friends button.
         Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsListActivity.class.getName(), null, false);
@@ -132,6 +134,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
                 friendsList.performItemClick(firstFriend, 0, firstFriend.getId());
             }
         });
+        getInstrumentation().waitForIdleSync();
 
         // Test that the FriendsProfileActivity started correctly after the clicking the Friend in the list view.
         Instrumentation.ActivityMonitor displayFriendsProfileActivityMonitor = getInstrumentation().addMonitor(FriendsProfileActivity.class.getName(), null, false);
