@@ -46,6 +46,7 @@ public class HomePageActivity extends AppCompatActivity implements Observer {
 
     /**
      * Returns button directing to friends list.
+     *
      * @return Button
      */
     public Button getFriendsButton() {
@@ -54,6 +55,7 @@ public class HomePageActivity extends AppCompatActivity implements Observer {
 
     /**
      * Returns button directing to inventory.
+     *
      * @return Button
      */
     public Button getInventoryButton() {
@@ -62,6 +64,7 @@ public class HomePageActivity extends AppCompatActivity implements Observer {
 
     /**
      * Returns button directing to user profile.
+     *
      * @return Button
      */
     public Button getProfileButton() {
@@ -70,6 +73,7 @@ public class HomePageActivity extends AppCompatActivity implements Observer {
 
     /**
      * Returns button directing to trades
+     *
      * @return Button
      */
     public Button getTradeButton() {
@@ -78,6 +82,7 @@ public class HomePageActivity extends AppCompatActivity implements Observer {
 
     /**
      * Directs controller to handle click on inventory button.
+     *
      * @param view
      */
     public void inventoryClick(View view) {
@@ -86,6 +91,7 @@ public class HomePageActivity extends AppCompatActivity implements Observer {
 
     /**
      * Directs controller to handle click on friend button.
+     *
      * @param view
      */
     public void friendsClick(View view) {
@@ -94,6 +100,7 @@ public class HomePageActivity extends AppCompatActivity implements Observer {
 
     /**
      * Directs controller to handle click on trade button.
+     *
      * @param view
      */
     public void tradesClick(View view) {
@@ -102,6 +109,7 @@ public class HomePageActivity extends AppCompatActivity implements Observer {
 
     /**
      * Directs controller to handle click on profile button.
+     *
      * @param view
      */
     public void profileClick(View view) {

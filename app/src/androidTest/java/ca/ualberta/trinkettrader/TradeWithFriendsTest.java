@@ -22,6 +22,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import ca.ualberta.trinkettrader.Friends.Friend;
+import ca.ualberta.trinkettrader.Friends.FriendsListActivity;
+import ca.ualberta.trinkettrader.Friends.FriendsProfileActivity;
+import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.Trades.Trade;
+import ca.ualberta.trinkettrader.Trades.TradesActivity;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
+import ca.ualberta.trinkettrader.User.User;
+
 public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     AutoCompleteTextView loginEmailTextView;
     Button loginButton;
@@ -486,7 +496,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         ownerInventory.add(ring);
 
         // trade with self
-        Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(),ownerInventory, currentUser.getTradeManager());
+        Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, currentUser.getTradeManager());
         currentUser.getTradeManager().proposeTrade(trade);
         currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
         assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
@@ -501,13 +511,13 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
             }
         });
 
-        // Test that the DisplayTradesActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor displayTradesActivityMonitor = getInstrumentation().addMonitor(DisplayTradesActivity.class.getName(), null, false);
+        // Test that the TradesActivity started correctly after the clicking the login button.
+        Instrumentation.ActivityMonitor displayTradesActivityMonitor = getInstrumentation().addMonitor(TradesActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
-        DisplayTradesActivity displayTradesActivity = (DisplayTradesActivity) displayTradesActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("DisplayTradesActivity is null", displayTradesActivity);
-        assertEquals("Monitor for DisplayTradesActivity has not been called", 1, displayTradesActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected DisplayTradesActivity", DisplayTradesActivity.class, displayTradesActivity.getClass());
+        TradesActivity displayTradesActivity = (TradesActivity) displayTradesActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("TradesActivity is null", displayTradesActivity);
+        assertEquals("Monitor for TradesActivity has not been called", 1, displayTradesActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected TradesActivity", TradesActivity.class, displayTradesActivity.getClass());
         getInstrumentation().removeMonitor(displayTradesActivityMonitor);
 
     }
@@ -520,15 +530,16 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
 
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
         loginEmailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
             public void run() {
                 loginEmailTextView.performClick();
-                loginEmailTextView.setText("user@gmail.com");
+                loginEmailTextView.setText(test_email);
             }
         });
         getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
+        assertTrue(loginEmailTextView.getText().toString().equals(test_email));
 
         // Click the login button to proceed to the home page.
         loginButton = loginActivity.getLoginButton();
@@ -555,19 +566,19 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
             }
         });
 
-        // Test that the DisplayFriendsActivity started correctly after the clicking the friends button.
-        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(DisplayFriendsActivity.class.getName(), null, false);
+        // Test that the FriendsListActivity started correctly after the clicking the friends button.
+        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsListActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
-        DisplayFriendsActivity displayFriendsActivity = (DisplayFriendsActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("DisplayFriendsActivity is null", displayFriendsActivity);
-        assertEquals("Monitor for DisplayFriendsActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected DisplayFriendsActivity", DisplayFriendsActivity.class, displayFriendsActivity.getClass());
+        FriendsListActivity displayFriendsListActivity = (FriendsListActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("FriendsListActivity is null", displayFriendsListActivity);
+        assertEquals("Monitor for FriendsListActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected FriendsListActivity", FriendsListActivity.class, displayFriendsListActivity.getClass());
         getInstrumentation().removeMonitor(displayFriendsActivityMonitor);
 
         // On the friend-list page: click the Find Friend input box and write an arbitrary email.
         // Test that the text was successfully written.
-        findFriendTextField = displayFriendsActivity.getFindFriendTextField();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        findFriendTextField = displayFriendsListActivity.getFindFriendTextField();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 findFriendTextField.performClick();
                 findFriendTextField.setText("test@gmail.com");
@@ -578,8 +589,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
 
         // Click the Find Friend button to add the friend to the friend list.
         // Test that the friend was successfully added.
-        findFriendsButton = displayFriendsActivity.getFindFriendsButton();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        findFriendsButton = displayFriendsListActivity.getFindFriendsButton();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 findFriendsButton.performClick();
             }
@@ -588,24 +599,25 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertTrue(LoggedInUser.getInstance().getFriendsList().get(0).getProfile().getName().equals("test@gmail.com"));
 
         // Click the newly-added friend to proceed to the friend's profile. From here, the friend can be removed.
-        friendsList = displayFriendsActivity.getFriendsListView();
-        displayFriendsActivity.runOnUiThread(new Runnable() {
+        friendsList = displayFriendsListActivity.getFriendsListView();
+        displayFriendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View firstFriend = friendsList.getChildAt(0);
                 friendsList.performItemClick(firstFriend, 0, firstFriend.getId());
             }
         });
 
-        // Test that the DisplayFriendsProfileActivity started correctly after the clicking the Friend in the list view.
-        Instrumentation.ActivityMonitor displayFriendsProfileActivityMonitor = getInstrumentation().addMonitor(DisplayFriendsProfileActivity.class.getName(), null, false);
+        // Test that the FriendsProfileActivity started correctly after the clicking the Friend in the list view.
+        Instrumentation.ActivityMonitor displayFriendsProfileActivityMonitor = getInstrumentation().addMonitor(FriendsProfileActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
-        DisplayFriendsProfileActivity displayFriendsProfileActivity = (DisplayFriendsProfileActivity) displayFriendsProfileActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("DisplayFriendsProfileActivity is null", displayFriendsProfileActivity);
-        assertEquals("Monitor for DisplayFriendsProfileActivity has not been called", 1, displayFriendsProfileActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected DisplayFriendsProfileActivity", DisplayFriendsProfileActivity.class, displayFriendsProfileActivity.getClass());
+        FriendsProfileActivity displayFriendsProfileActivity = (FriendsProfileActivity) displayFriendsProfileActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("FriendsProfileActivity is null", displayFriendsProfileActivity);
+        assertEquals("Monitor for FriendsProfileActivity has not been called", 1, displayFriendsProfileActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type; expected FriendsProfileActivity", FriendsProfileActivity.class, displayFriendsProfileActivity.getClass());
         getInstrumentation().removeMonitor(displayFriendsProfileActivityMonitor);
 
     }
+
     // TODO User Case: owner/ borrower can browse all past trade involving them
     // TODO: need to test different statuses? owner/borrower cases?
     // Test that user can browse past trades that they were involved in
@@ -662,7 +674,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     }
 
     // TODO: User Case : Notify parties of accepted trade - email; could possibly be bundled with acceptTrade test
-    public void testNotifyPartiesOfAcceptedTrade(){
+    public void testNotifyPartiesOfAcceptedTrade() {
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 

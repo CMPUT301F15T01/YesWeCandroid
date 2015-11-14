@@ -17,6 +17,11 @@ package ca.ualberta.trinkettrader;
 import android.app.Activity;
 import android.content.Intent;
 
+import ca.ualberta.trinkettrader.Friends.FriendsListActivity;
+import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
+import ca.ualberta.trinkettrader.Trades.TradesActivity;
+import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
+
 public class HomePageController {
 
     Activity activity;
@@ -26,10 +31,10 @@ public class HomePageController {
     }
 
     /**
-     * Directs to DisplayInventoryActivity.
+     * Directs to InventoryActivity.
      */
     public void onInventoryClick() {
-        Intent intent = new Intent(this.activity, DisplayInventoryActivity.class);
+        Intent intent = new Intent(this.activity, InventoryActivity.class);
         activity.startActivity(intent);
     }
 
@@ -37,23 +42,23 @@ public class HomePageController {
      * Direct to DisplayFriendsActivity.
      */
     public void onFriendsClick() {
-        Intent intent = new Intent(this.activity, DisplayFriendsActivity.class);
+        Intent intent = new Intent(this.activity, FriendsListActivity.class);
         activity.startActivity(intent);
     }
 
     /**
-     * Directs to DisplayTradesActivity.
+     * Directs to TradesActivity.
      */
     public void onTradesClick() {
-        Intent intent = new Intent(this.activity, DisplayTradesActivity.class);
+        Intent intent = new Intent(this.activity, TradesActivity.class);
         activity.startActivity(intent);
     }
 
     /**
-     * Directs to DisplayUserProfileActivity.
+     * Directs to UserProfileActivity.
      */
     public void onProfileClick() {
-        Intent intent = new Intent(this.activity, DisplayUserProfileActivity.class);
+        Intent intent = new Intent(this.activity, UserProfileActivity.class);
         activity.startActivity(intent);
     }
 }

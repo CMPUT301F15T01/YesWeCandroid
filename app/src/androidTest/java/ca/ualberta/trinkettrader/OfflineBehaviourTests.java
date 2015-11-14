@@ -15,7 +15,16 @@
 package ca.ualberta.trinkettrader;
 
 import android.test.ActivityInstrumentationTestCase2;
+
 import java.util.ArrayList;
+
+import ca.ualberta.trinkettrader.Friends.Friend;
+import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.Trades.Trade;
+import ca.ualberta.trinkettrader.Trades.TradeCommunicationsManager;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
+import ca.ualberta.trinkettrader.User.User;
 
 public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
 
@@ -23,9 +32,9 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
         super(activityClass);
     }
 
-    public void testAddInventoryOffline(){
+    public void testAddInventoryOffline() {
 
-        Inventory inventory =  new Inventory();
+        Inventory inventory = new Inventory();
         //UserSettings state = new UserSettings();
         //assertTrue(state.hasActiveInternetConnection());
         Trinket a = new Trinket();
@@ -35,7 +44,7 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
         assertNotNull(null);
     }
 
-    public void testMakeTradeOffline(){
+    public void testMakeTradeOffline() {
 
         /**
          * Is there a way to turn off internet connection in unit tests?
@@ -61,7 +70,7 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
         assertNotNull(null);
     }
 
-    public void testViewPreviouslyViewedInventories(){
+    public void testViewPreviouslyViewedInventories() {
 
         /**
          * Another UI test ..therefore incomplete*/

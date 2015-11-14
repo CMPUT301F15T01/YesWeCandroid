@@ -35,9 +35,10 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
- * A login screen that offers login via email/password.
+ * Basic login screen that allows users to login with their email.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, Observer {
 
@@ -49,12 +50,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        // Set up the login form.
+
         emailTextView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-
         loginButton = (Button) findViewById(R.id.email_sign_in_button);
-
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,29 +67,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void attemptLogin() {
-        // Reset errors.
         emailTextView.setError(null);
-
-        // Store values at the time of the login attempt.
         String email = emailTextView.getText().toString();
 
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             emailTextView.setError(getString(R.string.error_field_required));
-            focusView = emailTextView;
-            cancel = true;
         } else if (!isEmailValid(email)) {
             emailTextView.setError(getString(R.string.error_invalid_email));
-            focusView = emailTextView;
-            cancel = true;
         } else {
-            User user = LoggedInUser.getInstance();
-            user.getProfile().setEmail(email);
-
-            // TODO Get user info from inet
+            // TODO Get user info from internet
+            LoggedInUser.getInstance().getProfile().setEmail(email);
             Intent intent = new Intent(this, HomePageActivity.class);
             startActivity(intent);
         }
@@ -134,17 +120,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
-    }
-
-
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
@@ -156,6 +131,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * Returns text view for entering email.
+     *
      * @return AutoCompleteTextView
      */
     public AutoCompleteTextView getEmailTextView() {
@@ -164,6 +140,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * Returns button for logging in.
+     *
      * @return Button
      */
     public Button getLoginButton() {
@@ -180,6 +157,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     @Override
     public void update(Observable observable, Object data) {
+    }
 
+    private interface ProfileQuery {
+        String[] PROJECTION = {
+                ContactsContract.CommonDataKinds.Email.ADDRESS,
+                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
+        };
+
+        int ADDRESS = 0;
+        int IS_PRIMARY = 1;
     }
 }

@@ -16,24 +16,27 @@ package ca.ualberta.trinkettrader;
 
 import java.util.ArrayList;
 
+import ca.ualberta.trinkettrader.User.User;
+
 public class NotificationManager {
-    private User user;
     ArrayList<Notification> pendingNotifications = new ArrayList<Notification>();
     Integer displayNotificationCountOnHomeScreen;  // TODO this sounds more like a method
+    private User user;
 
     /**
      * Returns if there is a notification or not.
+     *
      * @return Boolean
      */
-    public Boolean hasNotification(){
+    public Boolean hasNotification() {
         return Boolean.TRUE;
     }
 
-    public void sendEmail(){
+    public void sendEmail() {
 
     }
 
-    public void notifyUser(){
+    public void notifyUser() {
 
     }
 }
