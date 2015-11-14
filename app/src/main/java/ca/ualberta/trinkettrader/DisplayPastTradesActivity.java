@@ -42,9 +42,7 @@ public class DisplayPastTradesActivity extends AppCompatActivity implements Obse
         setContentView(R.layout.activity_display_past_trades);
 
         pastTradesListView = (ListView)findViewById(R.id.pastTradesList);
-
         // add trade to test. TODO empty list functionality. or create an 'empty trade' which is around and displayed if no current trades
-
         userPastTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades();
         controller = new PastTradesController(this);
         controller.setPastTradesListViewItemOnClick();

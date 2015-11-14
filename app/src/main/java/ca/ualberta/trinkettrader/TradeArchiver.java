@@ -62,22 +62,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
 
 
     public TradeArchiver() {
-        // Hardcode in trades for user
-        LoggedInUser currentUser = LoggedInUser.getInstance();
 
-        // create inventories of items to trade
-        Inventory borrowerInventory = new Inventory();
-        Inventory ownerInventory = new Inventory();
-
-        Trinket necklace = new Trinket();
-        necklace.setName("Amulet of Fire");
-        Trinket ring = new Trinket();
-        ring.setName("Ring of Swirling Mist");
-        borrowerInventory.add(necklace);
-        ownerInventory.add(ring);
-        Trade trade1 = new Trade(borrowerInventory, currentUser.getTradeManager(),ownerInventory, currentUser.getTradeManager());
-        currentTrades.add(trade1);
-        pastTrades.add(trade1);
     }
 
     /**
