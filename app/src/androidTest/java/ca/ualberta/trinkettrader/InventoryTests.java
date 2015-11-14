@@ -50,11 +50,6 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         super(LoginActivity.class);
     }
 
-    public void testStart() throws Exception {
-        Activity activity = getActivity();
-        activity.finish();
-    }
-
     public void testHasItem() {
         // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();

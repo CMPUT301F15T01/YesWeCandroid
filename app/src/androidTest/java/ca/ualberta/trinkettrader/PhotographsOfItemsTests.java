@@ -47,11 +47,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         super(LoginActivity.class);
     }
 
-    public void testStart() throws Exception {
-        Activity activity = getActivity();
-        activity.finish();
-    }
-
     public void testAttachPhotograph() {
         // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
