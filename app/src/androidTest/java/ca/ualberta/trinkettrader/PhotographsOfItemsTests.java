@@ -43,16 +43,8 @@ import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
 
 public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
-    // richq; http://stackoverflow.com/questions/3668528/access-image-in-my-android-tests; 2015-11-06
-    private AssetManager assetManager;
-
     public PhotographsOfItemsTests() {
         super(LoginActivity.class);
-    }
-
-    public void setUp() throws Exception {
-        super.setUp();
-        assetManager = this.getActivity().getAssets();
     }
 
     public void testStart() throws Exception {
