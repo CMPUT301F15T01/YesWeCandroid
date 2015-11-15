@@ -74,7 +74,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
+        assertTrue(loginEmailTextView.getText().toString().equals(test_email));
 
         // Click the login button to proceed to the home page.
         final Button loginButton = loginActivity.getLoginButton();
@@ -207,7 +207,7 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
+        assertTrue(loginEmailTextView.getText().toString().equals(test_email));
 
         // Click the login button to proceed to the home page.
         final Button loginButton = loginActivity.getLoginButton();
