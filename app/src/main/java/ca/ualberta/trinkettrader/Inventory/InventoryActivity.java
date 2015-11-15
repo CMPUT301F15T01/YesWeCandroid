@@ -32,6 +32,18 @@ import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
 
+/**
+ * Android activity class for displaying a user's inventory.  From this activity trinkets in the
+ * user's inventory can be viewed.  If the user is viewing their own inventory, then they see all
+ * their trinkets.  If the user is viewing another user's inventory, then only trinkets marked as
+ * "public" by that user can be viewed.
+ *
+ * This activity contains an "Add Trinket" button that connects the user to the
+ * AddOrEditTrinketActivity for adding a new trinket to their own inventory.  It also has a "Details"
+ * button that connects the user to the InventoryDetailsActivity, which displays information about
+ * the user's inventory.  Any trinket in the inventory can be clicked on which connects to the
+ * AddOrEditTrinketActivity, from which the user can view and edit the trinket's details.
+ */
 public class InventoryActivity extends AppCompatActivity implements Observer {
 
     private ArrayAdapter<Trinket> trinketArrayAdapter;
@@ -72,45 +84,49 @@ public class InventoryActivity extends AppCompatActivity implements Observer {
     }
 
     /**
-     * Returns button for adding item.
+     * Returns the "Add Trinket" button from the activity's user interface that connects the user to
+     * the AddOrEditTrinketActivity.
      *
-     * @return Button
+     * @return Android Button - button for adding a new trinket to the user's inventory
      */
     public Button getAddItemButton() {
         return addItemButton;
     }
 
     /**
-     * Returns logged in user's inventory.
+     * Returns the current user's inventory, which is being displayed in this activity.
      *
-     * @return Inventory
+     * @return Inventory - the current user's inventory, which is being displayed by this activity
      */
     public Inventory getInventory() {
         return inventory;
     }
 
     /**
-     * Returns ListView c=holding the inventory.
+     * Returns the ListView element displaying the current user's inventory.
      *
-     * @return ListView
+     * @return Android ListView - the layout element responsible for displaying the user's inventory
+     * in this activity
      */
     public ListView getInventoryItemsList() {
         return inventoryItemsList;
     }
 
     /**
-     * Directs controller to add a new item.
+     * Method called with the "Add Trinket" button is clocked.  Directs the activity's controller
+     * to switch the user to the AddOrEditTrinketActivity.
      *
-     * @param view
+     * @param view - the button that was clicked
      */
     public void clickAdd(View view) {
         inventoryController.onAddItemClick();
     }
 
     /**
-     * Directs controller to display inventory details.
+     * Method called with the "Details" button is clocked.  Directs the activity's controller
+     * to switch the user to the InventoryDetailsActivity.
      *
-     * @param view
+     * @param view - the button that was clicked
      */
     public void detailsClick(View view) {
         inventoryController.onDetailsClick();
