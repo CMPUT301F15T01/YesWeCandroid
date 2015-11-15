@@ -13,42 +13,42 @@
         android:id="@+id/edit_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:text="Name"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="86dp"
-        android:text="Name" />
+        android:layout_alignStart="@+id/edit_address" />
 
     <EditText
         android:id="@+id/edit_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/edit_name"
-        android:text="Address" />
+        android:text="Address"
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/edit_city" />
 
     <EditText
         android:id="@+id/edit_city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/edit_address"
-        android:text="City" />
+        android:text="City"
+        android:layout_below="@+id/textView2"
+        android:layout_alignStart="@+id/edit_postal_code" />
 
     <EditText
         android:id="@+id/edit_postal_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:text="Postal Code"
         android:layout_below="@+id/edit_city"
-        android:text="Postal Code" />
+        android:layout_alignStart="@+id/edit_phone_number" />
 
     <EditText
         android:id="@+id/edit_phone_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:text="Phone Number"
         android:layout_below="@+id/edit_postal_code"
-        android:text="Phone Number" />
+        android:layout_toEndOf="@+id/textView5"
+        android:layout_marginStart="46dp" />
 
     <Button
         android:id="@+id/save_button"
@@ -63,7 +63,56 @@
         android:id="@+id/photo_download_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Photo Download Enabled"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/edit_phone_number" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Name"
+        android:id="@+id/textView"
+        android:layout_alignBaseline="@+id/edit_name"
+        android:layout_alignBottom="@+id/edit_name"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Address"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/edit_name"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBottom="@+id/edit_address" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="City"
+        android:id="@+id/textView3"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/edit_phone_number"
-        android:text="Photo Download Enabled" />
+        android:layout_alignBottom="@+id/edit_city"
+        android:paddingBottom="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Postal Code"
+        android:id="@+id/textView4"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/edit_postal_code"
+        android:paddingBottom="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Phone Number"
+        android:id="@+id/textView5"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/edit_phone_number"
+        android:paddingBottom="10dp" />
 </RelativeLayout>
