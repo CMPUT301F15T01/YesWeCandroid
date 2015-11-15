@@ -94,6 +94,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
+        // finish activities
+        loginActivity.finish();
+        homePageActivity.finish();
     }
 
     // TODO User Case: Accept a proposed trade
@@ -144,7 +147,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
-
+        // finish activities
+        loginActivity.finish();
+        homePageActivity.finish();
     }
 
     // TODO User Case: Decline a proposed trade
@@ -199,6 +204,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
+        // finish activities
+        loginActivity.finish();
+        homePageActivity.finish();
     }
 
     // TODO User Case: Propose a counter-trade
@@ -251,9 +259,13 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
+        // finish activities
+        loginActivity.finish();
+        homePageActivity.finish();
     }
 
     // Test that friend has the item that user is proposing in their offered trade
+    // TODO this seems out of place?
     public void testFriendHasItem() {
         User user = LoggedInUser.getInstance();
         User user1 = LoggedInUser.getInstance();
@@ -301,6 +313,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
+        // finish activities
+        loginActivity.finish();
+        homePageActivity.finish();
     }
 
     // TODO User Case: owner/borrower can browse all current trades involving them
@@ -349,6 +364,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
+        // finish activities
+        loginActivity.finish();
+        homePageActivity.finish();
     }
 
     // TODO USer Case: Edit a proposed trade
@@ -396,6 +414,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
+        // finish activities
+        loginActivity.finish();
+        homePageActivity.finish();
     }
 
     // TODO User Case: delete a proposed trade
@@ -444,6 +465,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
+        // finish activities
+        loginActivity.finish();
+        homePageActivity.finish();
     }
 
     // TODO is this redundant?
@@ -520,103 +544,13 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected TradesActivity", TradesActivity.class, displayTradesActivity.getClass());
         getInstrumentation().removeMonitor(displayTradesActivityMonitor);
 
+        // finish activities
+        loginActivity.finish();
+        homePageActivity.finish();
+        displayTradesActivity.finish();
     }
 
-    // UI test for removing a friend. User Story: US02.03.01. Use Case: RemoveFriend.
-    public void testRemoveFriendUI() {
 
-        // Start the UI test from the login page (beginning of the app).
-        LoginActivity loginActivity = (LoginActivity) getActivity();
-
-        // On the login page: click the email input box and write an arbitrary email.
-        // Test that the text was successfully written.
-        final String test_email = loginActivity.getResources().getString(R.string.test_email);
-        loginEmailTextView = loginActivity.getEmailTextView();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginEmailTextView.performClick();
-                loginEmailTextView.setText(test_email);
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals(test_email));
-
-        // Click the login button to proceed to the home page.
-        loginButton = loginActivity.getLoginButton();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginButton.performClick();
-            }
-        });
-
-        // Test that the HomePageActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("HomePageActivity is null", homePageActivity);
-        assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
-        getInstrumentation().removeMonitor(homePageActivityMonitor);
-
-        // Click the friends button to proceed to the friends page.
-        friendsButton = homePageActivity.getFriendsButton();
-        homePageActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                friendsButton.performClick();
-            }
-        });
-
-        // Test that the FriendsListActivity started correctly after the clicking the friends button.
-        Instrumentation.ActivityMonitor displayFriendsActivityMonitor = getInstrumentation().addMonitor(FriendsListActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        FriendsListActivity displayFriendsListActivity = (FriendsListActivity) displayFriendsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("FriendsListActivity is null", displayFriendsListActivity);
-        assertEquals("Monitor for FriendsListActivity has not been called", 1, displayFriendsActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected FriendsListActivity", FriendsListActivity.class, displayFriendsListActivity.getClass());
-        getInstrumentation().removeMonitor(displayFriendsActivityMonitor);
-
-        // On the friend-list page: click the Find Friend input box and write an arbitrary email.
-        // Test that the text was successfully written.
-        findFriendTextField = displayFriendsListActivity.getFindFriendTextField();
-        displayFriendsListActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                findFriendTextField.performClick();
-                findFriendTextField.setText("test@gmail.com");
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-        assertTrue(findFriendTextField.getText().toString().equals("test@gmail.com"));
-
-        // Click the Find Friend button to add the friend to the friend list.
-        // Test that the friend was successfully added.
-        findFriendsButton = displayFriendsListActivity.getFindFriendsButton();
-        displayFriendsListActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                findFriendsButton.performClick();
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-        assertTrue(LoggedInUser.getInstance().getFriendsList().get(0).getProfile().getName().equals("test@gmail.com"));
-
-        // Click the newly-added friend to proceed to the friend's profile. From here, the friend can be removed.
-        friendsList = displayFriendsListActivity.getFriendsListView();
-        displayFriendsListActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                View firstFriend = friendsList.getChildAt(0);
-                friendsList.performItemClick(firstFriend, 0, firstFriend.getId());
-            }
-        });
-
-        // Test that the FriendsProfileActivity started correctly after the clicking the Friend in the list view.
-        Instrumentation.ActivityMonitor displayFriendsProfileActivityMonitor = getInstrumentation().addMonitor(FriendsProfileActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        FriendsProfileActivity displayFriendsProfileActivity = (FriendsProfileActivity) displayFriendsProfileActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("FriendsProfileActivity is null", displayFriendsProfileActivity);
-        assertEquals("Monitor for FriendsProfileActivity has not been called", 1, displayFriendsProfileActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected FriendsProfileActivity", FriendsProfileActivity.class, displayFriendsProfileActivity.getClass());
-        getInstrumentation().removeMonitor(displayFriendsProfileActivityMonitor);
-
-    }
 
     // TODO User Case: owner/ borrower can browse all past trade involving them
     // TODO: need to test different statuses? owner/borrower cases?
@@ -671,41 +605,13 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
+        // finish activities
+        loginActivity.finish();
+        homePageActivity.finish();
     }
 
     // TODO: User Case : Notify parties of accepted trade - email; could possibly be bundled with acceptTrade test
     public void testNotifyPartiesOfAcceptedTrade() {
-        // Start the UI test from the login page (beginning of the app).
-        LoginActivity loginActivity = (LoginActivity) getActivity();
-
-        // On the login page: click the email input box and write an arbitrary email.
-        // Test that the text was successfully written.
-        loginEmailTextView = loginActivity.getEmailTextView();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginEmailTextView.performClick();
-                loginEmailTextView.setText("user@gmail.com");
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
-
-        // Click the login button to proceed to the home page.
-        loginButton = loginActivity.getLoginButton();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginButton.performClick();
-            }
-        });
-
-        // Test that the HomePageActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("HomePageActivity is null", homePageActivity);
-        assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
-        getInstrumentation().removeMonitor(homePageActivityMonitor);
-
+        assertNotNull(null);
     }
 }

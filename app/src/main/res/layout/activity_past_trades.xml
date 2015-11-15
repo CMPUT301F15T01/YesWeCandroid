@@ -8,7 +8,13 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ca.ualberta.trinkettrader.DisplayPastTradesActivity">
+    tools:context="ca.ualberta.trinkettrader.Trades.PastTradesActivity">
+
+    <ListView
+        android:id="@+id/pastTradesList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/past_trades_title" />
 
     <TextView
         android:id="@+id/past_trades_title"
@@ -21,18 +27,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/past_trades_title">
 
 
-        <ListView
-            android:id="@+id/pastTradesList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </ScrollView>
 
 
 </RelativeLayout>

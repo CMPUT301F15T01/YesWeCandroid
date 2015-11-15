@@ -47,4 +47,7 @@
     <string name="prompt_email">Email</string>
     <string name="title_activity_display_friends_profile">FriendsProfileActivity</string>
     <string name="title_activity_display_tracked_friends">TrackedFriendsActivity</string>
+    <string name="title_activity_trade_details">TradeDetailsActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
