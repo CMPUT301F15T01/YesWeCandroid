@@ -19,6 +19,8 @@ import android.view.View;
 
 public class UserProfileController {
 
+    private static final String RESOURCE_URL = "";
+
     private UserProfileActivity activity;
     private View.OnClickListener editButtonListener = new View.OnClickListener() {
         @Override
