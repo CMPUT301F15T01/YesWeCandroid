@@ -33,10 +33,8 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
 
 /**
- * Android activity class for displaying a user's inventory.  From this activity trinkets in the
- * user's inventory can be viewed.  If the user is viewing their own inventory, then they see all
- * their trinkets.  If the user is viewing another user's inventory, then only trinkets marked as
- * "public" by that user can be viewed.
+ * Android activity class for displaying a user's inventory.  From this activity all the trinkets in
+ * the user's inventory can be viewed.
  *
  * This activity contains an "Add Trinket" button that connects the user to the
  * AddOrEditTrinketActivity for adding a new trinket to their own inventory.  It also has a "Details"

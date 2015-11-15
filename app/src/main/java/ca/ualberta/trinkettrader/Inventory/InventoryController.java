@@ -19,16 +19,27 @@ import android.content.Intent;
 
 import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
 
+/**
+ * Controller for handling interactions from the InventoryActivity.
+ */
 public class InventoryController {
 
     private Activity activity;
 
+    /**
+     * Constructs a controller with the activity this constructor is attached to.  Each controller
+     * can only be used by one activity.
+     *
+     * @param activity - The activity this controller is attached to
+     */
     public InventoryController(Activity activity) {
         this.activity = activity;
     }
 
     /**
-     * Handles click to add an item to inventory.
+     * Handles click from the "Add Trinket" button in the InventoryActivity.  Starts the
+     * AddOrEditTrinketActivity with its trinket adding functionality (rather than its editing
+     * functionality).
      */
     public void onAddItemClick() {
         Intent intent = new Intent(this.activity, AddOrEditTrinketActivity.class);
@@ -37,7 +48,8 @@ public class InventoryController {
     }
 
     /**
-     * Handles click to on an inventory ListView item to view item's details.
+     * Handles click from the "Inventory Details" button in the InventoryActivity.  Starts the
+     * InventoryDetailsActivity..
      */
     public void onDetailsClick() {
         Intent intent = new Intent(this.activity, InventoryDetailsActivity.class);
