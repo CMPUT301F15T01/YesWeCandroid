@@ -37,8 +37,6 @@ public class TradesActivity extends AppCompatActivity implements Observer {
         setContentView(R.layout.activity_trades);
     }
 
-    // PastTrades Button click
-
     /**
      * onClick method for button that directs to past trades.
      *

@@ -14,10 +14,11 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
+
+import java.util.Observable;
+import java.util.Observer;
 
 import ca.ualberta.trinkettrader.R;
 
@@ -30,7 +31,7 @@ import ca.ualberta.trinkettrader.R;
  * This screen will appear when a trade is clicked in the user's current trades' list
  * or past trades' list.
  */
-public class TradeDetailsActivity extends ActionBarActivity {
+public class TradeDetailsActivity extends AppCompatActivity implements Observer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,25 +39,16 @@ public class TradeDetailsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_trade_details);
     }
 
+    /**
+     * This method is called if the specified {@code Observable} object's
+     * {@code notifyObservers} method is called (because the {@code Observable}
+     * object has been updated.
+     *
+     * @param observable the {@link Observable} object.
+     * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
+     */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_trade_details, menu);
-        return true;
-    }
+    public void update(Observable observable, Object data) {
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
