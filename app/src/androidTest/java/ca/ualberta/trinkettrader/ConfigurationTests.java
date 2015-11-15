@@ -181,7 +181,12 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         TextView postalCode = (TextView) refreshedProfileActivity.findViewById(R.id.postal_code);
         assertEquals(postalCode.getText().toString(), "T6W 1J5");
 
-
+        // Finish activities
+        editUserProfileActivity.finish();
+        homePageActivity.finish();
+        loginActivity.finish();
+        profileActivity.finish();
+        refreshedProfileActivity.finish();
     }
 
     public void testEnablePhotoDownload() {
@@ -300,6 +305,13 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         TextView newSetting = (TextView) refreshedProfileActivity.findViewById(R.id.photo_download_setting);
         assertEquals(newSetting.getText(), "Photo Download: Enabled");
         assertTrue(profile.getArePhotosDownloadable());
+
+        // Finish activities
+        editUserProfileActivity.finish();
+        homePageActivity.finish();
+        loginActivity.finish();
+        profileActivity.finish();
+        refreshedProfileActivity.finish();
     }
 
     public void testDisablePhotoDownload() {
@@ -385,5 +397,10 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         assertEquals(newSetting.getText(), "Photo Download: Disabled");
         assertFalse(profile.getArePhotosDownloadable());
 
+        // Finish activities
+        editUserProfileActivity.finish();
+        homePageActivity.finish();
+        refreshedProfileActivity.finish();
+        profileActivity.finish();
     }
 }
