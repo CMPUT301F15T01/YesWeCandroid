@@ -20,20 +20,30 @@ import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 
+/**
+ * Specialized extension of the ArrayList class, which represents the inventory of a user.  An
+ * inventory can only contain Trinkets.  In addition to all basic ArrayList functionality and
+ * attributes, an inventory also has an attribute specifying if it needs to be saved to the device
+ * for offline viewing.
+ */
 public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
     private Boolean needToSave;
 
     /**
-     * @param collection
+     * Constructs an inventory containing the Trinkets of the specified collection, in the order
+     * they are returned by the collection's iterator.  By default the inventory needs to be saved.
+     *
+     * @param collection - the collection whose elements are to be included in the inventory
      */
     public Inventory(Collection<? extends Trinket> collection) {
         super(collection);
+        this.needToSave = Boolean.TRUE;
     }
 
     /**
-     * Empty constructor.  By default inventory need to be saved.
+     * Constructs an empty inventory.  By default the inventory needs to be saved.
      */
     public Inventory() {
         this.needToSave = Boolean.TRUE;
@@ -54,7 +64,7 @@ public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinket
      * Removes the specified observer from the list of observers. Passing null
      * won't do anything.
      *
-     * @param observer the observer to remove.
+     * @param observer the Observer to remove.
      */
     @Override
     public synchronized void deleteObserver(Observer observer) {
@@ -76,9 +86,9 @@ public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinket
     }
 
     /**
-     * Returns boolean indicating if profile needs to be saved.
+     * Returns a boolean indicating if inventory needs to be saved.
      *
-     * @return Boolean
+     * @return Boolean - true if inventory needs to be saved, false if not
      */
     public Boolean getNeedToSave() {
         return this.needToSave;
