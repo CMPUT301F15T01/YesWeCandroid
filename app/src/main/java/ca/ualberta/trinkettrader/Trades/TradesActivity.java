@@ -25,9 +25,15 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.R;
 
 /**
+ * Shows list of user's <i>current trades</i>. Current trades are trades with the status
+ * "pending".  If a trade has been offered to the user, it will appear here.
+ * Clicking a trade in the list will open up the trade details page, and show the
+ * relevant trade information for that trade (ie. items offered, quanity of
+ * items offered).
  *
- *
- *
+ * Trades which have been accepted or declined are considered "past" trades and will
+ * not be shown in the displayed list.  To view past trades, the <b>Past Trades</b> button
+ * on the screen can be clicked.
  */
 public class TradesActivity extends AppCompatActivity implements Observer {
 
@@ -36,6 +42,12 @@ public class TradesActivity extends AppCompatActivity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trades);
     }
+
+
+
+
+
+
 
     /**
      * onClick method for button that directs to past trades.
