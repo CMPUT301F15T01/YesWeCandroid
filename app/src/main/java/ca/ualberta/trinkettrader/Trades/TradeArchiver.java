@@ -20,8 +20,12 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.Trades.Trade;
 
 /**
- * Responsible for the storage of a user's current (active) and
- * past (inactive) trades.
+ * Responsible for the storage and manipulation of a user's current (active) and
+ * past (inactive) trades. This class also mediates the access of trades
+ * with methods that allow a single trade or an entire list of trades to be
+ * accessed.
+ * Each time a trade is created, deleted, or has its status changed (changes from
+ * active trade to inactive trade), this class will need to be used.
  */
 public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
 
@@ -37,7 +41,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Add a trade to currentTrades ArrayList.
-     * The added trade will be added to the top of the currentTrades list,
+     * The added trade will be added to the top of the currentTrades ArrayList,
      * so it will be at the top of the user's list of current trades when the user views the list
      * in the app.
      * @param trade
@@ -50,9 +54,9 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * Deletes trade in currentTrades ArrayList, updates status of trade and
      * inserts specified trade into pastTrades ArrayList. Only trades that have been
      * accepted or declined will be archived. The archived trade will be added to the top
-     * of the pastTrades list, so it will be at the top of the user's list of past trades
+     * of the pastTrades ArrayList, so it will be at the top of the user's list of past trades
      * when the user views the list in the app.
-     * 
+     *
      * A trade will <b>not</b> be archived if it is deleted.
      * @param trade
      * @param status
@@ -97,7 +101,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
 
     // TODO I can see how this would be useful, but currently it's useless.
     /**
-     * Returns specified trade from list of past trades.
+     * Returns specified trade from list of current trades.
      *
      * @param trade
      * @return Trade
