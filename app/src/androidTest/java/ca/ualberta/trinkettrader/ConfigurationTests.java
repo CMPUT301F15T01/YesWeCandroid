@@ -187,6 +187,10 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         loginActivity.finish();
         profileActivity.finish();
         refreshedProfileActivity.finish();
+        getInstrumentation().removeMonitor(homePageActivityMonitor);
+        getInstrumentation().removeMonitor(editProfileMonitor);
+        getInstrumentation().removeMonitor(profilePageMonitor);
+        getInstrumentation().removeMonitor(refreshedProfileMonitor);
     }
 
     public void testEnablePhotoDownload() {
@@ -312,6 +316,10 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         loginActivity.finish();
         profileActivity.finish();
         refreshedProfileActivity.finish();
+        getInstrumentation().removeMonitor(homePageActivityMonitor);
+        getInstrumentation().removeMonitor(editProfileMonitor);
+        getInstrumentation().removeMonitor(profilePageMonitor);
+        getInstrumentation().removeMonitor(refreshedProfileMonitor);
     }
 
     public void testDisablePhotoDownload() {
@@ -402,5 +410,10 @@ public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
         homePageActivity.finish();
         refreshedProfileActivity.finish();
         profileActivity.finish();
+        getInstrumentation().removeMonitor(homePageMonitor);
+        getInstrumentation().removeMonitor(editProfileMonitor);
+        getInstrumentation().removeMonitor(profilePageMonitor);
+        getInstrumentation().removeMonitor(refreshedProfileMonitor);
+
     }
 }
