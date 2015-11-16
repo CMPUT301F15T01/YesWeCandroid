@@ -40,6 +40,7 @@ public class FriendsProfileController {
         LoggedInUser.getInstance().getFriendsList().remove(exFriend);
         Intent intent = new Intent(this.activity, FriendsListActivity.class);
         activity.startActivity(intent);
+        //NavUtils.navigateUpFromSameTask(activity);
     }
 
     /**
