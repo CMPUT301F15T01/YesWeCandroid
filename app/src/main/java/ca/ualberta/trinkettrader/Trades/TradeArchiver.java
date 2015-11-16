@@ -40,18 +40,23 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      *
      * @param trade
      */
-    public void addTrade(Trade trade) {
-
+    public void addTrade(Trade trade) { //TODO currently no duplicate trade check. is this needed?
+        currentTrades.add(trade);
     }
 
     /**
-     * Inserts specified trade into pastTrades ArrayList. Only trades that have been
+     * Deletes trade in currentTrades ArrayList, updates status of trade and
+     * inserts specified trade into pastTrades ArrayList. Only trades that have been
      * accepted or declined will be archived.
      * A trade will <b>not</b> be archived if it is deleted.
      * @param trade
+     * @param status
      */
-    public void archiveTrade(Trade trade) {
-
+    public void archiveTrade(Trade trade, String status) {
+        // TODO implementation needs to be tested
+        trade.setStatus(status);
+        pastTrades.add(trade);
+        currentTrades.remove(trade);
     }
 
     // TODO implementation details: will only be used to update currentTrades
@@ -62,7 +67,8 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * @param trade
      */
     public void deleteTrade(Trade trade) {
-
+        // TODO implementation needs to be tested
+        currentTrades.remove(trade);
     }
 
     public ArrayList<Trade> getPastTrades() {
@@ -81,7 +87,10 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * @param trade
      * @return Trade
      */
-    public Trade getPastTrade(Trade trade) { return trade; }
+    public Trade getPastTrade(Trade trade) {
+        // TODO implementation not complete
+        return trade;
+    }
 
     /**
      * Returns boolean indicating if a trade is a current (active) trade.
@@ -92,7 +101,8 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * @return Boolean
      */
     public Boolean hasCurrentTrade(Trade trade) {
-        return Boolean.TRUE;
+        // TODO implementation needs to be tested
+        return currentTrades.contains(trade);
     }
 
     /**
@@ -104,7 +114,8 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * @return Boolean
      */
     public Boolean hasPastTrade(Trade trade) {
-        return Boolean.TRUE;
+        // TODO implementation needs to be tested
+        return pastTrades.contains(trade);
     }
 
     /**
