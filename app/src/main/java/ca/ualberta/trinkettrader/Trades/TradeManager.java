@@ -25,13 +25,15 @@ import ca.ualberta.trinkettrader.Trades.TradeArchiver;
  */
 public class TradeManager {
 
-    private NotificationManager notificationManager = new NotificationManager();
-    private TradeArchiver tradeArchiver = new TradeArchiver();
+    private NotificationManager notificationManager;
+    private TradeArchiver tradeArchiver;
 
     /**
      * Public Constructor
      */
     public TradeManager() {
+        notificationManager = new NotificationManager();
+        tradeArchiver = new TradeArchiver();
     }
 
     /**

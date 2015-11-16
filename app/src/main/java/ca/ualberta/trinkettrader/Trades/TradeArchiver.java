@@ -30,6 +30,8 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
     private ArrayList<Trade> pastTrades;
 
     public TradeArchiver() {
+        currentTrades = new ArrayList<>();
+        pastTrades = new ArrayList<>();
     }
 
 
