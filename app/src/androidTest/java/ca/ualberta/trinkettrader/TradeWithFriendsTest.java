@@ -65,6 +65,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
         loginEmailTextView = loginActivity.getEmailTextView();
@@ -86,7 +87,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         });
 
         // Test that the HomePageActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("HomePageActivity is null", homePageActivity);
@@ -118,6 +119,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
         loginEmailTextView = loginActivity.getEmailTextView();
@@ -139,7 +142,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         });
 
         // Test that the HomePageActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("HomePageActivity is null", homePageActivity);
@@ -175,6 +178,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
         loginEmailTextView = loginActivity.getEmailTextView();
@@ -196,7 +201,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         });
 
         // Test that the HomePageActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("HomePageActivity is null", homePageActivity);
@@ -230,6 +235,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
         loginEmailTextView = loginActivity.getEmailTextView();
@@ -251,7 +258,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         });
 
         // Test that the HomePageActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("HomePageActivity is null", homePageActivity);
@@ -284,6 +291,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
         loginEmailTextView = loginActivity.getEmailTextView();
@@ -305,7 +314,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         });
 
         // Test that the HomePageActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("HomePageActivity is null", homePageActivity);
@@ -335,6 +344,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
         loginEmailTextView = loginActivity.getEmailTextView();
@@ -356,7 +367,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         });
 
         // Test that the HomePageActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("HomePageActivity is null", homePageActivity);
@@ -385,6 +396,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
         loginEmailTextView = loginActivity.getEmailTextView();
@@ -406,7 +419,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         });
 
         // Test that the HomePageActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("HomePageActivity is null", homePageActivity);
@@ -436,6 +449,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
         loginEmailTextView = loginActivity.getEmailTextView();
@@ -457,7 +472,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         });
 
         // Test that the HomePageActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("HomePageActivity is null", homePageActivity);
@@ -476,6 +491,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
         loginEmailTextView = loginActivity.getEmailTextView();
@@ -497,13 +514,15 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         });
 
         // Test that the HomePageActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("HomePageActivity is null", homePageActivity);
         assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        Instrumentation.ActivityMonitor displayTradesActivityMonitor = getInstrumentation().addMonitor(TradesActivity.class.getName(), null, false);
 
         // Hardcode in trades for user
         LoggedInUser currentUser = LoggedInUser.getInstance();
@@ -536,7 +555,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         });
 
         // Test that the TradesActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor displayTradesActivityMonitor = getInstrumentation().addMonitor(TradesActivity.class.getName(), null, false);
+        //Instrumentation.ActivityMonitor displayTradesActivityMonitor = getInstrumentation().addMonitor(TradesActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
         TradesActivity displayTradesActivity = (TradesActivity) displayTradesActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("TradesActivity is null", displayTradesActivity);
@@ -576,6 +595,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
+        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+
         // On the login page: click the email input box and write an arbitrary email.
         // Test that the text was successfully written.
         loginEmailTextView = loginActivity.getEmailTextView();
@@ -597,7 +618,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         });
 
         // Test that the HomePageActivity started correctly after the clicking the login button.
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
+        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("HomePageActivity is null", homePageActivity);
