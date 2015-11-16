@@ -28,6 +28,7 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
+// TODO clarify trade statuses.
 /**
  * Shows list of user's <i>active trades</i>. Active trades are trades with the status
  * "pending" (user's current trades).  If a trade has been offered to the user, it will appear in
@@ -84,7 +85,8 @@ public class TradesActivity extends AppCompatActivity implements Observer {
     public Button getPastTradesButton(){return pastTradesButton; }
 
     /**
-     * Returns currentTradesListView.
+     * Returns currentTradesListView.  This method is used by the ActiveTradesController
+     * to get the clicked trade on the screen.
      * @return ListView
      */
     public ListView getCurrentTradesListView() { return currentTradesListView; }

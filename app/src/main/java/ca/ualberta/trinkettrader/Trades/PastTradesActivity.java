@@ -24,6 +24,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.R;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 // TODO clarify trade statuses.
 /**
@@ -44,7 +45,26 @@ public class PastTradesActivity extends AppCompatActivity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_trades);
+        pastTradesListView = (ListView)findViewById(R.id.pastTradesList);
+        userPastTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades();
+        controller = new PastTradesController(this);
+        controller.setPastTradesListViewItemOnClick();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        pastTradesAdapter = new ArrayAdapter<Trade>(this, R.layout.listview_item, userPastTradesList);
+        pastTradesListView.setAdapter(pastTradesAdapter);
+    }
+
+    /**
+     * Returns pastTradesListView.  This method is used by the PastTradesController
+     * to get the clicked trade on the screen.
+     * @return ListView
+     */
+    public ListView getPastTradesListView(){ return pastTradesListView; }
+
 
     /**
      * This method is called if the specified {@code Observable} object's
