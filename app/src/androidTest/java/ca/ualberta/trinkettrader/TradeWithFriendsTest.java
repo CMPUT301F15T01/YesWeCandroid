@@ -98,6 +98,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
+        assertNotNull(null);
     }
 
     // TODO User Case: Accept a proposed trade
@@ -266,10 +267,11 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
-        assertNotNull(null);
+
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
+        assertNotNull(null);
     }
 
     // Test that friend has the item that user is proposing in their offered trade
@@ -428,10 +430,11 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
-        assertNotNull(null);
+
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
+        assertNotNull(null);
     }
 
     // TODO User Case: delete a proposed trade
@@ -565,12 +568,13 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected TradesActivity", TradesActivity.class, displayTradesActivity.getClass());
         getInstrumentation().removeMonitor(displayTradesActivityMonitor);
 
-        assertNotNull(null);
-        
+
+
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
         displayTradesActivity.finish();
+        assertNotNull(null);
     }
 
 
