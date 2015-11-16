@@ -14,14 +14,19 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.Trades.Trade;
 import ca.ualberta.trinkettrader.Trades.TradeArchiver;
+import ca.ualberta.trinkettrader.User.User;
 
 /**
  * Manages a user's trades.
- * Each user will have a TradeManager which will interact with another user's
- * TradeManager throughout the lifecycle of the trade (trade creation to completion).
+ * Each user will have a TradeManager. The TradeManager will be used when
+ * a user creates a new trade, deletes a trade, proposes a counter trade,
+ * or changes the status of a trade (accepts or declines the trade).
+ * Trade manager works with the TradeArchiver class to store and access a user's trades
+ * and with the NotificationManager class to notify
  */
 public class TradeManager {
 
@@ -36,12 +41,14 @@ public class TradeManager {
         tradeArchiver = new TradeArchiver();
     }
 
+    // TODO think that receiver of trade proposal should be added to input. will
+    // TODO make it easier to send notifications.
     /**
      * Propose trade.
      *
      * @param trade
      */
-    public void proposeTrade(Trade trade) {
+    public void proposeTrade(Trade trade, Friend offerReceiver) {
         //TODO add trade to currentTrades lists of borrower and owner
         // TODO notify trade receiver (person who did not instantiate trade)
     }
@@ -53,7 +60,7 @@ public class TradeManager {
      * @param counterTrade
      */
     public void proposeCounterTrade(Trade trade, Trade counterTrade) {
-        //TODO replace trade in currentTrades list (delete old, add new)
+        //TODO replace trade in currentTrades list (find old trade and delete it, add new trade)
     }
 
     /**
@@ -63,7 +70,8 @@ public class TradeManager {
      * @param comments
      */
     public void acceptTrade(Trade trade, String comments) {
-        // TODO call appropriate
+        // TODO delete trade from currentTrades list, and use archive method to add it to pastTrades and change status
+        // TODO send notification emails to both parties
     }
 
     /**
@@ -72,7 +80,7 @@ public class TradeManager {
      * @param trade
      */
     public void declineTrade(Trade trade) {
-
+        // TODO delete trade from current trades list, change trade status and add to past trades list (archive it)
     }
 
     // TODO this could be deleted, because there is already a TradeArchiver deleteTrade method.
