@@ -18,6 +18,11 @@ import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.Trades.Trade;
 import ca.ualberta.trinkettrader.Trades.TradeArchiver;
 
+/**
+ * Manages a user's trades.
+ * Each user will have a TradeManager which will interact with another user's
+ * TradeManager throughout the lifecycle of the trade (trade creation to completion).
+ */
 public class TradeManager {
 
     private NotificationManager notificationManager = new NotificationManager();
