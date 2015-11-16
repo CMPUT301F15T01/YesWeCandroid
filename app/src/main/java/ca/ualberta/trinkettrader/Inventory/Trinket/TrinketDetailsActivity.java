@@ -31,6 +31,12 @@ import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.R;
 
+/**
+ * Android activity for displaying the details of a trinket.  Some of the trinkets details are
+ * displayed statically, and there are buttons that allow you to delete the trinket or edit its
+ * details with the AddOrEditTrinketActivity.  If the trinket has photos attached to it those will
+ * be displayed, too.
+ */
 public class TrinketDetailsActivity extends AppCompatActivity implements Observer {
 
     private Button deleteButton;
@@ -80,45 +86,50 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
     }
 
     /**
-     * Returns button for deleting item.
+     * Returns the button from the activity's user interface that lets the user delete the trinket.
      *
-     * @return Button
+     * @return Button - button for deleting the trinket being displayed in the activity
      */
     public Button getDeleteButton() {
         return deleteButton;
     }
 
     /**
-     * Returns button for editing item.
+     * Returns the button from the activity's user interface that lets the user edit the trinket's
+     * details through the AddOrEditTrinketActivity.
      *
-     * @return Button
+     * @return Button - button for editing the trinket's details
      */
     public Button getEditButton() {
         return editButton;
     }
 
     /**
-     * Returns image views.
+     * Returns the list of ImageViews displaying the photos of the trinket.  If the trinket has
+     * no attached photos an empty list is returned
      *
-     * @return ArrayList
+     * @return ArrayList - list of ImageViews, one for each photo attached to the trinket.  If no
+     * photos are attached to the trinket then an empty list is returned
      */
     public ArrayList<ImageView> getImageViews() {
         return this.imageViews;
     }
 
     /**
-     * Returns trinke currently being viewed.
+     * Returns the trinket object whose details are currently being displayed.
      *
-     * @return Trinket
+     * @return Trinket - trinket currently being displayed by the activity
      */
     public Trinket getItem() {
         return item;
     }
 
     /**
-     * Handles click on delete item button.
+     * Method called when the "Delete" button is clicked.  This button allows the trinket currently
+     * being displayed to be deleted from the user's inventory.  When the button is clicked a dialog
+     * is displayed prompting the user to confirm the deletion.
      *
-     * @param view
+     * @param view - the button that was clicked
      */
     public void deleteClick(View view) {
         dialog.show();
@@ -128,6 +139,12 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
         return dialog;
     }
 
+    /**
+     * Method called with the "Edit Trinket" button is clicked.  Directs the activity's controller
+     * to switch the user to the AddOrEditTrinketActivity.
+     *
+     * @param view - the button that was clicked
+     */
     public void editClick(View view) {
         controller.onEditClick();
     }

@@ -49,7 +49,7 @@ public class InventoryController {
 
     /**
      * Handles click from the "Inventory Details" button in the InventoryActivity.  Starts the
-     * InventoryDetailsActivity..
+     * InventoryDetailsActivity.
      */
     public void onDetailsClick() {
         Intent intent = new Intent(this.activity, InventoryDetailsActivity.class);
