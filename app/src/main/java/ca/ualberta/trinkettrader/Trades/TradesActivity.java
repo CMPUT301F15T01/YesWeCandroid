@@ -77,8 +77,16 @@ public class TradesActivity extends AppCompatActivity implements Observer {
         startActivity(intent);
     }
 
+    /**
+     * Returns Past Trades button.
+     * @return Button
+     */
     public Button getPastTradesButton(){return pastTradesButton; }
 
+    /**
+     * Returns currentTradesListView.
+     * @return ListView
+     */
     public ListView getCurrentTradesListView() { return currentTradesListView; }
 
     /**

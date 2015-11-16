@@ -16,18 +16,29 @@ package ca.ualberta.trinkettrader.Trades;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import java.util.ArrayList;
 
 import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.R;
 
+// TODO clarify trade statuses.
 /**
- *
- *
- *
+ * Shows list of user's <i>past trades</i>. Past trades are trades with the status
+ * "accepted" or "declined" (inactive trades).  Trades that are no longer active will appear in
+ * the list on this screen. Clicking a trade in the list will open up the trade details page,
+ * and show the relevant trade information for that trade (ie. items offered, quanity of
+ * items offered).
  */
 public class PastTradesActivity extends AppCompatActivity implements Observer {
+    ListView pastTradesListView;
+    private PastTradesController controller;
+    private ArrayAdapter<Trade> pastTradesAdapter;
+    private ArrayList<Trade> userPastTradesList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
