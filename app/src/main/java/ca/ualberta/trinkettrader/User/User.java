@@ -36,7 +36,11 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
     private ArrayList<Observer> observers;
 
     /**
-     * Public constructor for user: initializes all attribute classes
+     * Public constructor for user: initializes all attribute classes as empty classes with no
+     * active data.
+     *
+     * This constructor is called when the application has no information about the user (i.e. a new
+     * User) 
      */
     public User() {
         this.friendsList = new FriendsList();
