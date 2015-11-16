@@ -63,7 +63,7 @@ public class TradesActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onStart() {
         super.onStart();
-        currentTradesAdapter = new ArrayAdapter<Trade>(this, R.layout.listview_item, userCurrentTradesList);
+        currentTradesAdapter = new ArrayAdapter<Trade>(this, R.layout.activity_trades_trade_box, userCurrentTradesList);
         currentTradesListView.setAdapter(currentTradesAdapter);
     }
 

@@ -54,7 +54,7 @@ public class PastTradesActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onStart() {
         super.onStart();
-        pastTradesAdapter = new ArrayAdapter<Trade>(this, R.layout.listview_item, userPastTradesList);
+        pastTradesAdapter = new ArrayAdapter<Trade>(this, R.layout.activity_trades_trade_box, userPastTradesList);
         pastTradesListView.setAdapter(pastTradesAdapter);
     }
 
