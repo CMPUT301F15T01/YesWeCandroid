@@ -40,6 +40,17 @@ import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 
+/**
+ * Android activity class for adding a new trinket to the user's activity, or viewing and editing the
+ * details of an existing trinket.
+ *
+ * The layout contains fields for setting the accessibility, description, name, quality, quantity,
+ * and category of the trinket, as well as the photos attached to it.  If a new trinket is being
+ * created fields will be set to their default values, or empty if that field has no default value.
+ * If an existing trinket is being edited, these fields will be populated with the trinket's current
+ * values.  A photo can be attached to the trinket to show what the trinket looks like.  This photo
+ * can be taken from the phone's camera or gallery.
+ */
 public class AddOrEditTrinketActivity extends AppCompatActivity implements Observer {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -124,9 +135,11 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     }
 
     /**
-     * Click method for taking a picture to attach to an item.
+     * Click method for the "Take Photo" button that handles taking a picture to attach to a trinket.
+     * Creates a unique filename for the photo and sets the directory it will be saved to, then
+     * starts the phone's camera app to take the photo.
      *
-     * @param view current view
+     * @param view - button that was clicked
      */
     public void takePictureClick(View view) {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -150,7 +163,8 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     }
 
     /**
-     * Click method for selecting a picture from the android gallery.
+     * Click method for the "Photo Library" button that selects a picture from the android gallery.
+     * Open's phone's picture gallery so that a photo can be selected.
      *
      * @param view current view
      */
@@ -163,7 +177,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     }
 
     /**
-     * Method to be called after use has taken or selected a picture.
+     * Method to be called after user has taken or selected a picture.
      *
      * @param requestCode type of request that was issued
      * @param resultCode state of the request's execution
@@ -200,9 +214,10 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     }
 
     /**
-     * Click method directing controller to remove attached image.
+     * Click method for "Remove Picture" button that directs controller to remove an attached image
+     * from the trinket.
      *
-     * @param view current view
+     * @param view - button that was clicked
      */
     public void removePictureClick(View view) {
         try {
@@ -243,90 +258,96 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     }
 
     /**
-     * Gets checkbox indicating if item is public or private.
+     * Returns checkbox from the activity's user interface indicating if trinket is public or private.
      *
-     * @return CheckBox
+     * @return CheckBox - checkbox indicating it's accessibility.  The box being checked indicates
+     * that the item is public, while uncheck means the item is private.
      */
     public CheckBox getTrinketAccessibility() {
         return trinketAccessibility;
     }
 
     /**
-     * Gets spinner indicating items category.
+     * Returns spinner from the activity's user interface indicating the trinket's category.
      *
-     * @return Spinner
+     * @return Spinner - spinner used for selecting the trinket's category from one of 10 categories.
      */
     public Spinner getTrinketCategory() {
         return trinketCategory;
     }
 
     /**
-     * Gets EditText for item's description.
+     * Returns the text field from the activity's user interface for writing trinket's description.
      *
-     * @return EditText
+     * @return EditText - editable text field where the trinket's description can be added or edited.
      */
     public EditText getTrinketDescription() {
         return trinketDescription;
     }
 
     /**
-     * Gets EditText field for item's name
+     * Returns the text field from the activity's user interface for writing trinket's name.
      *
-     * @return EditText
+     * @return EditText - editable text field where the trinket's name can be added or edited.
      */
     public EditText getTrinketName() {
         return trinketName;
     }
 
     /**
-     * Gets Spinner indicating item's quality.
+     * Returns spinner from the activity's user interface indicating the trinket's quality.
      *
-     * @return Spinner
+     * @return Spinner - spinner used for selecting the trinket's quality as either "good", "average"
+     * or "poor".
      */
     public Spinner getTrinketQuality() {
         return trinketQuality;
     }
 
     /**
-     * Gets EditText field for item's quantity.
+     * Returns the text field from the activity's user interface for setting the trinket's quantity.
+     * The trinket's default quantity is 1.
      *
-     * @return EditText
+     * @return EditText - editable text field where the trinket's quantity can be added or edited.
      */
     public EditText getTrinketQuantity() {
         return trinketQuantity;
     }
 
     /**
-     * Gets the button that will allow a user to select a picture from the library and attach it to the item.
+     * Returns the "Picture Library" button from the activity's user interface that will allow a
+     * user to select a picture from the library and attach it to the item.
      *
-     * @return Button
+     * @return Button - button for selecting a photo from the phone's gallery to attach to the trinket
      */
     public Button getPictureLibraryButton() {
         return pictureLibraryButton;
     }
 
     /**
-     * Gets the button that will remove an image attached to the item.
+     * Returns the button from the activity's user interface that will remove an image attached to the item.
      *
-     * @return Button
+     * @return Button - button for removing a photo that has been attached to the trinket
      */
     public Button getRemovePictureButton() {
         return removePictureButton;
     }
 
     /**
-     * Gets the button that will save the item.
+     * Returns the button from the activity's user interface that will save the trinket to the user's
+     * inventory.
      *
-     * @return Button
+     * @return Button - button for saving the new or edited trinket
      */
     public Button getSaveButton() {
         return saveButton;
     }
 
     /**
-     * Gets the button that will allow a user to take a new picture and attach it to the item.
+     * Returns the button from the activity's user interface that will allow a user to take a new
+     * picture and attach it to the item.
      *
-     * @return Button
+     * @return Button - button for taking a new photo to attach to the trinket
      */
     public Button getTakePictureButton() {
         return takePictureButton;
