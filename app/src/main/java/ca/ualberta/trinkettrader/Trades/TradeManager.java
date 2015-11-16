@@ -48,7 +48,7 @@ public class TradeManager {
      *
      * @param trade
      */
-    public void proposeTrade(Trade trade, Friend offerReceiver) {
+    public void proposeTrade(Trade trade, User offerReceiver) {
         //TODO add trade to currentTrades lists of borrower and owner
         // TODO notify trade receiver (person who did not instantiate trade)
     }
