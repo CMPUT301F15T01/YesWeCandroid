@@ -16,5 +16,8 @@ package ca.ualberta.trinkettrader.Friends.TrackedFriends;
 
 import ca.ualberta.trinkettrader.Friends.FriendsList;
 
+/**
+ * Subclass of current user's FriendList that contains subset of Friends that the current user is tracking.
+ */
 public class TrackedFriendsList extends FriendsList {
 }

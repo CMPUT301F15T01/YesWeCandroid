@@ -56,7 +56,7 @@ public class TrackedFriendsListActivity extends AppCompatActivity implements Obs
     }
 
     /**
-     * Directs controller to return to friends list activity.
+     * Directs controller to return to FriendsListActivity.
      *
      * @param v
      */
@@ -65,7 +65,7 @@ public class TrackedFriendsListActivity extends AppCompatActivity implements Obs
     }
 
     /**
-     * Returns the back button to go back to the friends list page.
+     * Returns the back button to return to FriendsListActivity.
      *
      * @return back button
      */

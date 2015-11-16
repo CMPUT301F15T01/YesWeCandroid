@@ -43,7 +43,7 @@ public class Friend extends User {
     }
 
     /**
-     * Returns boolean indicating if friend is tracked or not.
+     * Returns boolean indicating whether a friend is tracked or not.
      *
      * @return Boolean
      */
@@ -52,7 +52,8 @@ public class Friend extends User {
     }
 
     /**
-     * Sets if friend is tracked or not.
+     * Sets if friend is tracked or not. To be called when adding a new friend to current User's
+     * TrackedFriendList
      *
      * @param isTracked
      */

@@ -26,6 +26,9 @@ import ca.ualberta.trinkettrader.Friends.FriendsProfileActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
+ * Controller for TrackedFriendsListActivity. Used for selecting items in TrackedFriendsList View and
+ * returning to the FriendsList View.
+ *
  * Created by RV on 11/5/2015.
  */
 public class TrackedFriendsListController {
@@ -44,7 +47,7 @@ public class TrackedFriendsListController {
     }
 
     /**
-     * onClick method for clicking an item in the FriendsList ListView.
+     * onClick method for selecting an item in the FriendsList ListView.
      */
     public void setTrackedFriendsListViewItemOnClick() {
         ListView trackedFriendsListView = activity.getTrackedFriendsListView();
