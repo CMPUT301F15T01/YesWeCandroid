@@ -27,6 +27,10 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
+/**
+ * Activity to edit and append to the current user's UserProfile instance.
+ * This allows edits to the User's personal information.
+ */
 public class EditUserProfileActivity extends AppCompatActivity implements Observer {
 
 
