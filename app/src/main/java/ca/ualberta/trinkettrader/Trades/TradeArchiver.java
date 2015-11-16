@@ -37,17 +37,22 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Add a trade to currentTrades ArrayList.
-     *
+     * The added trade will be added to the top of the currentTrades list,
+     * so it will be at the top of the user's list of current trades when the user views the list
+     * in the app.
      * @param trade
      */
     public void addTrade(Trade trade) { //TODO currently no duplicate trade check. is this needed?
-        currentTrades.add(trade); // TODO change to add to top of list
+        currentTrades.add(0,trade);
     }
 
     /**
      * Deletes trade in currentTrades ArrayList, updates status of trade and
      * inserts specified trade into pastTrades ArrayList. Only trades that have been
-     * accepted or declined will be archived.
+     * accepted or declined will be archived. The archived trade will be added to the top
+     * of the pastTrades list, so it will be at the top of the user's list of past trades
+     * when the user views the list in the app.
+     * 
      * A trade will <b>not</b> be archived if it is deleted.
      * @param trade
      * @param status
@@ -55,11 +60,10 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
     public void archiveTrade(Trade trade, String status) {
         // TODO implementation needs to be tested
         trade.setStatus(status);
-        pastTrades.add(trade); // TODO change to add to top of list
+        pastTrades.add(0,trade);
         currentTrades.remove(trade);
     }
 
-    // TODO implementation details: will only be used to update currentTrades
     /**
      * Deletes specified trade from currentTrades ArrayList. Trades will <b>never</b> be
      * deleted from pastTrades ArrayList.  This method will only be used to update the currentTrades
