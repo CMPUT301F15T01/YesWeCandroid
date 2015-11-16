@@ -19,26 +19,76 @@ import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
+import ca.ualberta.trinkettrader.Trades.Trade;
 
+/**
+ * Singleton utility class responsible for handling the clicking of friends in a user's friend's list,
+ * trinkets in a user's inventory, and trades in the user's active and past trade lists.
+ *
+ * Each time a friend, trinket, or trade is clicked in a list, this class will be used in the
+ * <b>onItemClick</b> method of the respective controller to set the object which was clicked.
+ *
+ * For more information, please see the respective controllers:
+ * for clicked friends - FriendsListController
+ * for clicked trinkets - InventoryController
+ * for clicked trades - ActiveTradesController , PastTradesController
+ */
 public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
 
     private static ApplicationState ourInstance = new ApplicationState();
     private ArrayList<Observer> observers;
     private Trinket clickedTrinket;
     private Friend clickedFriend;
+    private Trade clickedTrade;
+
 
     private ApplicationState() {
-
     }
 
     /**
-     * Returns the instance of the singletom
+     * Returns the instance of the singleton
      *
      * @return ApplicationState
      */
-    public static ApplicationState getInstance() {
-        return ourInstance;
-    }
+    public static ApplicationState getInstance() { return ourInstance;  }
+
+    /**
+     * Returns the friend most recently clicked on from the Friends List ListView.
+     *
+     * @return Friend
+     */
+    public Friend getClickedFriend() { return this.clickedFriend; }
+
+    /**
+     * Sets the friend most recently clicked on from the Friends List ListView.
+     */
+    public void setClickedFriend(Friend clickedFriend) { this.clickedFriend = clickedFriend; }
+
+    /**
+     * Returns the trinket most recently clicked on from the Inventory ListView.
+     *
+     * @return Trinket
+     */
+    public Trinket getClickedTrinket() { return this.clickedTrinket; }
+
+    /**
+     * Sets the trinket most recently clicked on from the Inventory ListView.
+     */
+    public void setClickedTrinket(Trinket clickedTrinket) { this.clickedTrinket = clickedTrinket; }
+
+    /**
+     * Sets the trinket most recently clicked on from the Active Trades ListView (currentTradesListView)
+     * or the Past Trades ListView (pastTradesListView).
+     * @param clickedTrade trade that was clicked
+     */
+    public void setClickedTrade(Trade clickedTrade){ this.clickedTrade = clickedTrade; }
+
+    /**
+     * Returns the trade most recently clicked on from the Active Trades ListView (currentTradesListView)
+     * or the Past Trades ListView (pastTradesListView).
+     * @return Trade returns clicked trade
+     */
+    public Trade getClickedTrade() {return this.clickedTrade; }
 
     /**
      * Adds the specified observer to the list of observers. If it is already
@@ -76,35 +126,4 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
         }
     }
 
-    /**
-     * Returns the friend most recently clicked on from the Friends List ListView.
-     *
-     * @return Friend
-     */
-    public Friend getClickedFriend() {
-        return this.clickedFriend;
-    }
-
-    /**
-     * Sets the friend most recently clicked on from the Friends List ListView.
-     */
-    public void setClickedFriend(Friend clickedFriend) {
-        this.clickedFriend = clickedFriend;
-    }
-
-    /**
-     * Returns the trinket most recently clicked on from the Inventory ListView.
-     *
-     * @return Trinket
-     */
-    public Trinket getClickedTrinket() {
-        return this.clickedTrinket;
-    }
-
-    /**
-     * Sets the friend most recently clicked on from the Friends List ListView.
-     */
-    public void setClickedTrinket(Trinket clickedTrinket) {
-        this.clickedTrinket = clickedTrinket;
-    }
 }

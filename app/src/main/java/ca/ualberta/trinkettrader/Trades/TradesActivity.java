@@ -18,35 +18,53 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.R;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
- * Shows list of user's <i>current trades</i>. Current trades are trades with the status
- * "pending".  If a trade has been offered to the user, it will appear here.
- * Clicking a trade in the list will open up the trade details page, and show the
- * relevant trade information for that trade (ie. items offered, quanity of
+ * Shows list of user's <i>active trades</i>. Active trades are trades with the status
+ * "pending" (user's current trades).  If a trade has been offered to the user, it will appear in
+ * the list on this screen. Clicking a trade in the list will open up the trade details page,
+ * and show the relevant trade information for that trade (ie. items offered, quanity of
  * items offered).
  *
- * Trades which have been accepted or declined are considered "past" trades and will
+ * Trades which have been accepted or declined are considered <i>past</i> trades and will
  * not be shown in the displayed list.  To view past trades, the <b>Past Trades</b> button
  * on the screen can be clicked.
  */
 public class TradesActivity extends AppCompatActivity implements Observer {
 
+    Button pastTradesButton;
+    ListView currentTradesListView;
+    private ActiveTradesController controller;
+    private ArrayAdapter<Trade> currentTradesAdapter;
+    private ArrayList<Trade> userCurrentTradesList;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trades);
+        currentTradesListView = (ListView)findViewById(R.id.currentTradesList);
+        pastTradesButton = (Button)findViewById(R.id.past_trades_button);
+        userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
+        controller = new ActiveTradesController(this);
+        controller.setCurrentTradesListViewItemOnClick();
     }
 
-
-
-
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentTradesAdapter = new ArrayAdapter<Trade>(this, R.layout.listview_item, userCurrentTradesList);
+        currentTradesListView.setAdapter(currentTradesAdapter);
+    }
 
 
     /**
@@ -58,6 +76,10 @@ public class TradesActivity extends AppCompatActivity implements Observer {
         Intent intent = new Intent(this, PastTradesActivity.class);
         startActivity(intent);
     }
+
+    public Button getPastTradesButton(){return pastTradesButton; }
+
+    public ListView getCurrentTradesListView() { return currentTradesListView; }
 
     /**
      * This method is called if the specified {@code Observable} object's

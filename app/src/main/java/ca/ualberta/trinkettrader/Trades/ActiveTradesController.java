@@ -14,5 +14,37 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import java.util.ArrayList;
+
+import ca.ualberta.trinkettrader.ApplicationState;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
+
+/**
+ * Active Trades Controller
+ * This class
+ */
 public class ActiveTradesController {
+    private TradesActivity activity;
+
+    public ActiveTradesController(TradesActivity activity) {
+        this.activity = activity;
+    }
+
+    public void setCurrentTradesListViewItemOnClick() {
+        ListView currentTradesListView = activity.getCurrentTradesListView();
+        currentTradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> v, View view, int position, long id) {
+                ArrayList<Trade> userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
+                Trade clickedTrade = userCurrentTradesList.get(position);
+                ApplicationState.getInstance().setClickedTrade(clickedTrade);
+                Intent intent = new Intent(activity, TradeDetailsActivity.class);  // TODO set parent to be previous activity -DisplayTradesActivity
+                activity.startActivity(intent);
+            }
+        });
+    }
+
 }
