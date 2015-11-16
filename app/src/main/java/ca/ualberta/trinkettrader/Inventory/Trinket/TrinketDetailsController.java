@@ -18,24 +18,38 @@ import android.content.Intent;
 
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
+/**
+ * Controller for handling interactions from the TrinketDetailsActivity.
+ */
 public class TrinketDetailsController {
+
     private TrinketDetailsActivity activity;
 
+    /**
+     * Constructs a controller with the activity this constructor is attached to.  Each controller
+     * can only be used by one activity.
+     *
+     * @param activity - The activity this controller is attached to
+     */
     public TrinketDetailsController(TrinketDetailsActivity activity) {
         this.activity = activity;
     }
 
     /**
-     * Removes trinket from the logged in user's inventory.
+     * Handles removing the trinket displayed in the TrinketDetailsActivity from the user's
+     * inventory after the user clicks the "Delete Trinket" button and then clicks the "Confirm"
+     * button on the ensuing deletion confirmation dialog.
      *
-     * @param trinket trinket to remove
+     * @param trinket - trinket to remove from the user's inventory
      */
     public void onDeleteClick(Trinket trinket) {
         LoggedInUser.getInstance().getInventory().remove(trinket);
     }
 
     /**
-     * Starts activity to edit trinket.
+     * Handles click form the "Edit Trinket" button in the TrinketDetailsActivity.  Starts the
+     * AddOrEditTrinketActivity with its trinket editing functionality (rather than its adding
+     * functionality).
      */
     public void onEditClick() {
         Intent intent = new Intent(this.activity, AddOrEditTrinketActivity.class);

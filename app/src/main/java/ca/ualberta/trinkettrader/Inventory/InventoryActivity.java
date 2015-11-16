@@ -65,6 +65,7 @@ public class InventoryActivity extends AppCompatActivity implements Observer {
         inventoryItemsList.setAdapter(trinketArrayAdapter);
 
         final InventoryActivity activity = this;
+        // When a trinket in the ListView is clicked, user is directed to its TrinketDetailsActivity
         inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
                 Trinket clickedTrinket = LoggedInUser.getInstance().getInventory().get(position);
@@ -111,7 +112,7 @@ public class InventoryActivity extends AppCompatActivity implements Observer {
     }
 
     /**
-     * Method called with the "Add Trinket" button is clocked.  Directs the activity's controller
+     * Method called with the "Add Trinket" button is clicked.  Directs the activity's controller
      * to switch the user to the AddOrEditTrinketActivity.
      *
      * @param view - the button that was clicked
@@ -121,7 +122,7 @@ public class InventoryActivity extends AppCompatActivity implements Observer {
     }
 
     /**
-     * Method called with the "Details" button is clocked.  Directs the activity's controller
+     * Method called with the "Details" button is clicked.  Directs the activity's controller
      * to switch the user to the InventoryDetailsActivity.
      *
      * @param view - the button that was clicked
