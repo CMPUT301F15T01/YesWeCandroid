@@ -30,6 +30,10 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 
 public class LoggedInUser extends User {
+    /**
+     * A singleton class that stores the current instance of the User class that has logged into the
+     * current instance of the application.
+     */
 
     private static String FILENAME = "profile.sav";
     private static LoggedInUser ourInstance = new LoggedInUser();
@@ -37,15 +41,23 @@ public class LoggedInUser extends User {
     private LoggedInUser() {
     }
 
+    /**
+     * Returns the current (and single) instance of logged in user.
+     * To be called when any changes are made to user's profile, i.e. adding/deleting a friend or
+     * making a trade.
+     * @return LoggedInUser
+     */
     public static LoggedInUser getInstance() {
         return ourInstance;
     }
 
+    /**
+     * Pass in the Context to cache the any changes to the current user's data. This method check's
+     * whether there are any changes to LoggedInUser that need to be saved before doing so.
+     * @param c
+     */
     //Taken from LonelyTwitter https://github.com/joshua2ua/lonelyTwitter
     public void saveInFile(Context c) {
-        /**
-         * saves LoggedInUser Data to file
-         */
         if (this.getNeedToSave()) {
             return;
         }
@@ -66,11 +78,13 @@ public class LoggedInUser extends User {
         needToSave = Boolean.FALSE;
     }
 
+    /**
+     * Pass in the context to load the cached data of the user of the current application instance
+     * into the LoggedInUser singleton class.
+     * @param c
+     */
     //Taken from LonelyTwitter https://github.com/joshua2ua/lonelyTwitter
     public void loadFromFile(Context c) {
-        /**
-         * Loads LoggedInUser data from file
-         */
         try {
 
             FileInputStream fis = c.openFileInput(FILENAME);
