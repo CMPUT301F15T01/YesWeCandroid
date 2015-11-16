@@ -19,9 +19,11 @@ import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 
+// TODO add info from specs about number of items (0 to many)
 /**
  * Trade object which holds all relevant information for a trade. Each trade has
- * an inventory which is a list of the items involved in the trade
+ * an inventory which is a list of the items involved in the trade, a unique TradeManager for the borrower
+ * and the owner, and a status.
  *
  */
 public class Trade implements ca.ualberta.trinkettrader.Observable {
