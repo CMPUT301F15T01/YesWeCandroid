@@ -24,6 +24,10 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.R;
 
+/**
+ * Android activity for displaying the details of a user's inventory.  Some of the inventory's details
+ * are displayed statically, such as the number of items in it.
+ */
 public class InventoryDetailsActivity extends AppCompatActivity implements Observer {
 
     TextView numItems;
