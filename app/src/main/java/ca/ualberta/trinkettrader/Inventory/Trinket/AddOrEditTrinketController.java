@@ -28,18 +28,28 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.User;
 
+/**
+ * Controller for handling interactions from the AddOrEditTrinketActivity.
+ */
 public class AddOrEditTrinketController {
 
     private AddOrEditTrinketActivity activity;
     private Trinket trinket = new Trinket();
     private User user = LoggedInUser.getInstance();
 
+    /**
+     * Constructs a controller with the activity this constructor is attached to.  Each controller
+     * can only be used by one activity.
+     *
+     * @param activity - The activity this controller is attached to
+     */
     public AddOrEditTrinketController(AddOrEditTrinketActivity activity) {
         this.activity = activity;
     }
 
     /**
-     * Adds picture to trinket being added/edited.
+     * Adds a picture to trinket being added/edited.  This picture will then be visible when a
+     * user views the trinket's details.
      *
      * @param path filepath of the picture being added
      * @throws IOException
@@ -49,7 +59,7 @@ public class AddOrEditTrinketController {
     }
 
     /**
-     * Removes a picture from trinket being added/edited.
+     * Removes a picture from trinket currently being added/edited.
      *
      * @param picture specific picture to remove
      */
@@ -58,7 +68,10 @@ public class AddOrEditTrinketController {
     }
 
     /**
-     * onClick behaviour for when a new item is being saved.
+     * Handles click from the "Save" button in the AddOrEditTrinketActivity in the event that a new
+     * trinket should be added (rather than editing an existing trinket).  A new trinket will be
+     * created with the details specified in the AddOrEditTrinketActivity and added to the user's
+     * inventory.  The user will then be directed back to the InventoryActivity.
      */
     public void onSaveNewClick() {
         prepareTrinketForSave();
@@ -81,7 +94,10 @@ public class AddOrEditTrinketController {
     }
 
     /**
-     * onClick behaviour for when an existing item is being saved.
+     * Handles click from the "Save" button in the AddOrEditTrinketActivity in the event that an
+     * existing trinket is being edited (rather than a new one being created).  The existing trinket
+     * int he user's inventory will be updated with the details specified in the AddOrEditTrinketActivity.
+     * The user will then be directed back to the InventoryActivity.
      */
     public void onSaveEditClick() {
         prepareTrinketForSave();
