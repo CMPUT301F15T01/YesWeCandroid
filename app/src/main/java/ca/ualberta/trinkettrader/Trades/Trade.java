@@ -19,6 +19,9 @@ import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 
+/**
+ * Trade object.
+ */
 public class Trade implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
