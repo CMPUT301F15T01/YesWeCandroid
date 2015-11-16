@@ -266,6 +266,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
+        assertNotNull(null);
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
@@ -427,6 +428,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
+        assertNotNull(null);
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
@@ -563,6 +565,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected TradesActivity", TradesActivity.class, displayTradesActivity.getClass());
         getInstrumentation().removeMonitor(displayTradesActivityMonitor);
 
+        assertNotNull(null);
+        
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
