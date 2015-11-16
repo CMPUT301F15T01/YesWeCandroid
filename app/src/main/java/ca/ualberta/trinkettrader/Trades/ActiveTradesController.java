@@ -47,4 +47,12 @@ public class ActiveTradesController {
         });
     }
 
+    /*
+    * For trades displayed on current and past trades pages
+    * Trade box format:
+    * Trade id
+    * Other user invloved in trade (not yourself)
+     * status of trade
+     * category of items involved
+    * */
 }
