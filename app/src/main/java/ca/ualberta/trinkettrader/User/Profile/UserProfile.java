@@ -17,6 +17,10 @@ package ca.ualberta.trinkettrader.User.Profile;
 import java.util.ArrayList;
 import java.util.Observer;
 
+/**
+ * A profile class containing the User's personal information and whether photos will be
+ * automatically downloaded to their device.
+ */
 public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
@@ -73,7 +77,9 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns Boolean on whether photo download setting is set
+     * Returns Boolean on whether photo download setting is set. This setting determines
+     * whether the photos of foreign trinkets are automatically downloaded to the device.
+     * If false, the user must manually select which photos to download.
      *
      * @return Boolean
      */
@@ -111,7 +117,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns User's Contact Information
+     * Returns User's ContactInfo instance.
      *
      * @return ContactInfo
      */
@@ -120,7 +126,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Sets user's contact information
+     * Sets user's ContactInfo instance
      *
      * @param contactInfo
      */
@@ -207,7 +213,8 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns whether the user's profile data needs to be saved
+     * Returns whether the user's profile data needs to be saved. This variable is set when there
+     * are changes to any of the User's personal information. 
      *
      * @return
      */
