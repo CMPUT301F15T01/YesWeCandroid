@@ -24,8 +24,8 @@ import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
- * Active Trades Controller
- * This class
+ * This class is responsible for switching to the trade details page for a trade when a trade
+ * is clicked in the active trades list.
  */
 public class ActiveTradesController {
     private TradesActivity activity;

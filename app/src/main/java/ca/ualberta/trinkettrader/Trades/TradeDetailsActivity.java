@@ -28,8 +28,8 @@ import ca.ualberta.trinkettrader.R;
  *
  * Screen will display the relevant trade information for a trade (ie. items offered, quanity of
  * items offered).
- * This screen will appear when a trade is clicked in the user's current trades' list
- * or past trades' list.
+ * This screen will appear when a trade is clicked in the user's current trades list
+ * or past trades list.
  */
 public class TradeDetailsActivity extends AppCompatActivity implements Observer {
 
