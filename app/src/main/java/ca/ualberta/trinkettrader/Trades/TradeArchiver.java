@@ -41,7 +41,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * @param trade
      */
     public void addTrade(Trade trade) { //TODO currently no duplicate trade check. is this needed?
-        currentTrades.add(trade);
+        currentTrades.add(trade); // TODO change to add to top of list
     }
 
     /**
@@ -55,7 +55,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
     public void archiveTrade(Trade trade, String status) {
         // TODO implementation needs to be tested
         trade.setStatus(status);
-        pastTrades.add(trade);
+        pastTrades.add(trade); // TODO change to add to top of list
         currentTrades.remove(trade);
     }
 
@@ -71,13 +71,36 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
         currentTrades.remove(trade);
     }
 
+    // TODO do angle brackets by themselves break JavaDocs?
+    /**
+     * Returns entire ArrayList of past (inactive) trades.  This method is
+     * used by the PastTradesActivity to display the user's past trades.
+     * @return ArrayList<Trade>
+     */
     public ArrayList<Trade> getPastTrades() {
         return pastTrades;
     }
 
-
+    // TODO do angle brackets by themselves break JavaDocs?
+    /**
+     * Returns entire ArrayList of current (active) trades.  This method is
+     * used by the TradesActivity to display the user's current trades.
+     * @return ArrayList<Trade>
+     */
     public ArrayList<Trade> getCurrentTrades() {
         return currentTrades;
+    }
+
+    // TODO I can see how this would be useful, but currently it's useless.
+    /**
+     * Returns specified trade from list of past trades.
+     *
+     * @param trade
+     * @return Trade
+     */
+    public Trade getCurrentTrade(Trade trade) {
+        // TODO implementation not complete
+        return trade;
     }
 
     // TODO I can see how this would be useful, but currently it's useless.
