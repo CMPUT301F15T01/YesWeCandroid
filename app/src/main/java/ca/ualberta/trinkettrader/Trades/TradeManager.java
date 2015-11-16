@@ -14,6 +14,8 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+import java.util.ArrayList;
+
 import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.Trades.Trade;
@@ -48,10 +50,25 @@ public class TradeManager {
      *
      * @param trade
      */
-    public void proposeTrade(Trade trade, User offerReceiver) {
+    public void proposeTrade(Trade trade) {
         //TODO add trade to currentTrades lists of borrower and owner
         // TODO notify trade receiver (person who did not instantiate trade)
     }
+
+    // TODO pulling trades once the phone has connectivity.
+    // TODO do <> break javaDocs? if not used for bold, italics,....
+    /**
+     * Pulls offered trades when user is online.
+     *
+     * When a user is offline, they will not be able to receive trade offers from other users.
+     * When the user is online, this method will be called to update the user's currentTrades ArrayList.
+     *
+     * @return ArrayList<Trade> ArrayList of trades that were offered to the user when they were offline
+     */
+    public ArrayList<Trade> pullTrades(){
+        return new ArrayList<Trade>();
+    }
+
 
     /**
      * Propose counter trade
