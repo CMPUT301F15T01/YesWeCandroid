@@ -24,7 +24,7 @@ public class NotificationManager {
     private User user;
 
     /**
-     * Returns if there is a notification or not.
+     * Returns if this user has a notification or not.
      *
      * @return Boolean
      */

@@ -38,7 +38,8 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
- * Basic login screen that allows users to login with their email.
+ * Activity that allows users to log in with email. Verifies that the email is of valid format
+ * and loads the saved user data if the User already has a UserProfile.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, Observer {
 

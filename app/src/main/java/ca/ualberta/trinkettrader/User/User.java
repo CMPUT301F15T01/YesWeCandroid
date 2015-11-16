@@ -40,7 +40,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
      * active data.
      *
      * This constructor is called when the application has no information about the user (i.e. a new
-     * User) 
+     * User)
      */
     public User() {
         this.friendsList = new FriendsList();
@@ -53,7 +53,8 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Public constructor for user: sets all attribute classes
+     * A public constructor for User in the case where the user's details are known for all its
+     * attribute classes.
      */
     public User(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager) {
         this.friendsList = friendsList;
@@ -102,7 +103,8 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns whether User data needs to be locally cached
+     * Returns whether User's data needs to be locally cached. This variable is set when a change is
+     * made to the User's data.
      *
      * @return Boolean
      */
@@ -112,7 +114,8 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Sets whether User data needs to be locally cached
+     * Sets whether User data needs to be locally cached. This Boolean should on be set only when
+     * changes to the User's data is made.
      *
      * @param needToSave
      */
@@ -130,7 +133,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Sets user's friends
+     * Sets user's list of friends
      *
      * @param friendsList
      */

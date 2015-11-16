@@ -214,7 +214,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns whether the user's profile data needs to be saved. This variable is set when there
-     * are changes to any of the User's personal information. 
+     * are changes to any of the User's personal information.
      *
      * @return
      */
