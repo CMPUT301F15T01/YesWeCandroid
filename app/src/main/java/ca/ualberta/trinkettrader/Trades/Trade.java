@@ -20,7 +20,9 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 
 /**
- * Trade object.
+ * Trade object which holds all relevant information for a trade. Each trade has
+ * an inventory which is a list of the items involved in the trade
+ *
  */
 public class Trade implements ca.ualberta.trinkettrader.Observable {
 

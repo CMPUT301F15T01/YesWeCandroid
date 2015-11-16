@@ -37,12 +37,13 @@ public class TradeManager {
     }
 
     /**
-     * Propose trade
+     * Propose trade.
      *
      * @param trade
      */
     public void proposeTrade(Trade trade) {
-
+        //TODO add trade to currentTrades lists of borrower and owner
+        // TODO notify trade receiver (person who did not instantiate trade)
     }
 
     /**
@@ -52,7 +53,7 @@ public class TradeManager {
      * @param counterTrade
      */
     public void proposeCounterTrade(Trade trade, Trade counterTrade) {
-
+        //TODO replace trade in currentTrades list (delete old, add new)
     }
 
     /**
@@ -62,7 +63,7 @@ public class TradeManager {
      * @param comments
      */
     public void acceptTrade(Trade trade, String comments) {
-
+        // TODO call appropriate
     }
 
     /**
@@ -74,6 +75,8 @@ public class TradeManager {
 
     }
 
+    // TODO this could be deleted, because there is already a TradeArchiver deleteTrade method.
+    // TODO we would be calling deleteTrade.deleteTrade
     /**
      * Delete trade
      *
@@ -84,17 +87,19 @@ public class TradeManager {
     }
 
     /**
-     * Return trade archiver
+     * Returns user's trade archiver.
      *
+     * Please see TradeArchiver for more information.
      * @return TradeArchiver
      */
     public TradeArchiver getTradeArchiver() {
         return tradeArchiver;
     }
-
+    // TODO think that one is already instantiated in User class.  need to check.
     /**
-     * Return notification manager
+     * Returns  user's notification manager.
      *
+     * Please see NotificationManager class for more information.
      * @return NotificationManager
      */
     public NotificationManager getNotificationManager() {
