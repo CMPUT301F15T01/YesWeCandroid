@@ -14,9 +14,11 @@
 
 package ca.ualberta.trinkettrader.User.Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,11 +26,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.R;
+import ca.ualberta.trinkettrader.Trades.TradesActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 public class UserProfileActivity extends AppCompatActivity implements Observer {
 
     private Button editUserProfileButton;
+    private Button tradesButton;
     private UserProfileController controller;
     private Handler handler;
     private Runnable populateTextFieldsWithExistingValuesRunnable = new Runnable() {
@@ -67,6 +71,7 @@ public class UserProfileActivity extends AppCompatActivity implements Observer {
 
         editUserProfileButton = (Button) findViewById(R.id.edit_button);
         editUserProfileButton.setOnClickListener(controller.getEditButtonListener());
+        tradesButton = (Button) findViewById(R.id.trade_button_user_profile);
     }
 
     @Override
@@ -93,6 +98,21 @@ public class UserProfileActivity extends AppCompatActivity implements Observer {
         return editUserProfileButton;
     }
 
+    /**
+     * Returns button directing to list of user's current(active) trades.
+     *
+     * @return Button
+     */
+    public Button getTradesButton(){ return tradesButton; }
+
+    /**
+     * Links to Activity which displays list of user's current trades.
+     * @param view
+     */
+    public void openCurrentTrades(View view){
+        Intent intent = new Intent(this, TradesActivity.class);
+        startActivity(intent);
+    }
     /**
      * This method is called if the specified {@code Observable} object's
      * {@code notifyObservers} method is called (because the {@code Observable}

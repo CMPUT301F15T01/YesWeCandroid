@@ -130,6 +130,7 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
     // adarshr, accessed on 2015-11-16, http://stackoverflow.com/questions/10734106/how-to-override-tostring-properly-in-java
 
     // TODO unfinished. Everything mentioned in JavaDoc comment below will be implemented in next prototype.
+    // TODO may remodel after profile page with updatable fields
     /**
      * This method override is responsible for determining how trades will be shown to the
      * user when they view their Current Trades list and PAst Trades list.
