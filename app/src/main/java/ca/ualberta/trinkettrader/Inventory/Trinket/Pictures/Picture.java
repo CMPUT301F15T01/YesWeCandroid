@@ -30,7 +30,9 @@ public class Picture implements ca.ualberta.trinkettrader.Observable {
     private volatile File file;
 
     /**
-     * @param file
+     * Creates a new picture from a file containing a compressed jpeg image.
+     *
+     * @param file file containing the compressed jpeg image
      * @throws IOException
      */
     public Picture(File file) throws IOException {
@@ -78,12 +80,16 @@ public class Picture implements ca.ualberta.trinkettrader.Observable {
         }
     }
 
+    /**
+     * Deletes information related to the picture from the device's memory.
+     */
     public void delete() {
         this.file.delete();
     }
 
     /**
-     * Returns bitmap of the picture.
+     * Returns a bitmap representation of the picture. This should be used
+     * anytime the image needs to be displayed.
      *
      * @return Bitmap
      */
@@ -92,7 +98,7 @@ public class Picture implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns size of the picture.
+     * Returns the size of the picture in the device's memory.
      *
      * @return Long
      */
