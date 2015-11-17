@@ -29,7 +29,11 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.User;
 
 /**
- * Controller for handling interactions from the AddOrEditTrinketActivity.
+ * Controller for handling interactions from the AddOrEditTrinketActivity.  The controller manages
+ * clicks to the "Add Picture", "Remove Picture" , and "Save" buttons in the
+ * AddOrEditTrinketActivity's layout.  Clicking the photo buttons attaches a photograph of the
+ * trinket to it, the save button either creates a new trinket or updates the details of an existing
+ * one in order to complete the user's request.
  */
 public class AddOrEditTrinketController {
 

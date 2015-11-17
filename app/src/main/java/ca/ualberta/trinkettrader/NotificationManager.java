@@ -18,13 +18,17 @@ import java.util.ArrayList;
 
 import ca.ualberta.trinkettrader.User.User;
 
+/**
+ * Represents a manager that transmits notifications to the user.
+ */
 public class NotificationManager {
-    ArrayList<Notification> pendingNotifications = new ArrayList<Notification>();
-    Integer displayNotificationCountOnHomeScreen;  // TODO this sounds more like a method
+
+    private ArrayList<Notification> pendingNotifications = new ArrayList<Notification>();
+    private Integer displayNotificationCountOnHomeScreen;
     private User user;
 
     /**
-     * Returns if this user has a notification or not.
+     * Returns if this user has a notification waiting to be read.
      *
      * @return Boolean
      */
@@ -32,10 +36,9 @@ public class NotificationManager {
         return Boolean.TRUE;
     }
 
-    public void sendEmail() {
-
-    }
-
+    /**
+     * Displays notifications to the user and removes them from pending notifications.
+     */
     public void notifyUser() {
 
     }
