@@ -47,4 +47,12 @@ public class NotificationManager {
     public void notifyUser() {
 
     }
+
+    /**
+     * Sends email containing relevant trade information to borrower
+     * and an owner after a trade has been accepted.
+     */
+    public void sendEmail(){
+
+    }
 }

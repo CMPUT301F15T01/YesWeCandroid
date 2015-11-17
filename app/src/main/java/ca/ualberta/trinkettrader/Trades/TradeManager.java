@@ -84,7 +84,13 @@ public class TradeManager {
 
     /**
      * Accept trade
-     *
+     * Sets status of trade to "accepted", deletes trade in borrower's and
+     * owner's currentTrades ArrayLists, and adds trade to borrower's and
+     * owner's pastTrades ArrayLists. Calls method which will send a notification email
+     * to both borrower and owner with relevant trade information and comments.  Comments will be determined
+     * by owner.
+     * currentTrades and pastTrades ArrayLists
+     * are accessed through TradeArchiver.
      * @param trade
      * @param comments
      */
@@ -94,7 +100,11 @@ public class TradeManager {
     }
 
     /**
-     * Decline trade
+     * Decline trade.
+     * Sets status of trade to "declined", deletes trade in borrower's and
+     * owner's currentTrades ArrayLists, and adds trade to borrower's and
+     * owner's pastTrades ArrayLists. currentTrades and pastTrades ArrayLists
+     * are accessed through TradeArchiver.
      *
      * @param trade
      */
