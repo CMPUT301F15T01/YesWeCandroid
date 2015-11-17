@@ -30,6 +30,8 @@ import ca.ualberta.trinkettrader.Trades.Trade;
 import ca.ualberta.trinkettrader.Trades.TradesActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
+import ca.ualberta.trinkettrader.User.Profile.UserProfile;
+import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
 import ca.ualberta.trinkettrader.User.User;
 
 public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
@@ -490,46 +492,88 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         homePageActivity.finish();
     }
 
-    // TODO is this redundant?
-    // Test that user has current trades they are involved in
+
+    // User can view a list of trades they are currently involved in
+    // TODO is there a way to view the current trades lists of the other person involved in the trade
     public void testViewCurrentTrades() {
-        // Start the UI test from the login page (beginning of the app).
+        // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
+        /******** HomePageActivity ********/
+        // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
 
-        // On the login page: click the email input box and write an arbitrary email.
-        // Test that the text was successfully written.
-        loginEmailTextView = loginActivity.getEmailTextView();
+        // actions which lead to next activity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emailTextView.setText(test_email);
+            }
+        });
+        final Button homePageButton = loginActivity.getLoginButton();
         loginActivity.runOnUiThread(new Runnable() {
             public void run() {
-                loginEmailTextView.performClick();
-                loginEmailTextView.setText("user@gmail.com");
+                homePageButton.performClick();
             }
         });
         getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
 
-        // Click the login button to proceed to the home page.
-        loginButton = loginActivity.getLoginButton();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginButton.performClick();
-            }
-        });
-
-        // Test that the HomePageActivity started correctly after the clicking the login button.
-        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
+        // Validate that ReceiverActivity is started
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("HomePageActivity is null", homePageActivity);
-        assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
+        assertNotNull("ReceiverActivity is null", homePageActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called", 1, homePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type", HomePageActivity.class, homePageActivity.getClass());
+
+        // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
-        Instrumentation.ActivityMonitor displayTradesActivityMonitor = getInstrumentation().addMonitor(TradesActivity.class.getName(), null, false);
+        /****UserProfileActivity****/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor profilePageActivityMonitor = getInstrumentation().addMonitor(UserProfileActivity.class.getName(), null, false);
 
-        // Hardcode in trades for user
+        // actions which lead to next activity
+        final Button tradesHomePageButton = homePageActivity.getTradeButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                tradesHomePageButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        UserProfileActivity userProfileActivity = (UserProfileActivity) profilePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", userProfileActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called", 1, profilePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type", UserProfileActivity.class, userProfileActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(profilePageActivityMonitor);
+
+        /****ActiveTradesActivity****/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor currentTradesActivityMonitor = getInstrumentation().addMonitor(TradesActivity.class.getName(), null, false);
+
+        // actions which lead to next activity
+        final Button tradesProfilePageButton = userProfileActivity.getTradesButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                tradesProfilePageButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        TradesActivity currentTradesActivity = (TradesActivity) currentTradesActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", currentTradesActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called", 1, currentTradesActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type", TradesActivity.class, currentTradesActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(currentTradesActivityMonitor);
+
+        /****Hardcode in trade to click****/
         LoggedInUser currentUser = LoggedInUser.getInstance();
 
         // create inventories of items to trade
@@ -545,35 +589,18 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
 
         // trade with self
         Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, currentUser.getTradeManager());
-        currentUser.getTradeManager().proposeTrade(trade);
+        //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
         currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
         assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
 
-        // TODO will implement like Friends List
 
-        // Click the trades button to proceed to the current trades page.
-        tradeButton = homePageActivity.getTradeButton();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                tradeButton.performClick();
-            }
-        });
-
-        // Test that the TradesActivity started correctly after the clicking the login button.
-        //Instrumentation.ActivityMonitor displayTradesActivityMonitor = getInstrumentation().addMonitor(TradesActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        TradesActivity displayTradesActivity = (TradesActivity) displayTradesActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("TradesActivity is null", displayTradesActivity);
-        assertEquals("Monitor for TradesActivity has not been called", 1, displayTradesActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected TradesActivity", TradesActivity.class, displayTradesActivity.getClass());
-        getInstrumentation().removeMonitor(displayTradesActivityMonitor);
 
 
 
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
-        displayTradesActivity.finish();
+        userProfileActivity.finish();
         assertNotNull(null);
     }
 
