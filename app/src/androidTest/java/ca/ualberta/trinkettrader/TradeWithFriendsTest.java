@@ -392,10 +392,10 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     public void testEditTrade() {
         User user = LoggedInUser.getInstance();
         Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
-        trade.setNumberOfItems(1);  // TODO should this instead be a count of how many items included in the trade?
+        trade.setNumberOfTrinkets(1);  // TODO should this instead be a count of how many trinkets included in the trade?
         user.getTradeManager().proposeTrade(trade);
-        trade.setNumberOfItems(2);
-        assertEquals((Integer) 2, trade.getNumberOfItems());
+        trade.setNumberOfTrinkets(2);
+        assertEquals((Integer) 2, trade.getNumberOfTrinkets());
 
         /*
         *
@@ -507,7 +507,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         /****Hardcode in trades to click****/
         LoggedInUser currentUser = LoggedInUser.getInstance();
 
-        // create inventories of items to trade
+        // create inventories of trinkets to trade
         Inventory borrowerInventory = new Inventory();
         Inventory ownerInventory = new Inventory();
         Inventory secondInventory = new Inventory();
@@ -661,7 +661,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         /****Hardcode in trades to click****/
         LoggedInUser currentUser = LoggedInUser.getInstance();
 
-        // create inventories of items to trade
+        // create inventories of trinkets to trade
         Inventory borrowerInventory = new Inventory();
         Inventory ownerInventory = new Inventory();
         Inventory secondInventory = new Inventory();
