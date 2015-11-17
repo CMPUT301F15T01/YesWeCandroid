@@ -72,7 +72,7 @@ public class TrackedFriendsListActivity extends AppCompatActivity implements Obs
     /**
      * Directs controller to return to FriendsListActivity.
      *
-     * @param v
+     * @param v Go Back button
      */
     public void backToFriendsListButtonOnClick(View v) {
         controller.backToFriendsListOnClick();
