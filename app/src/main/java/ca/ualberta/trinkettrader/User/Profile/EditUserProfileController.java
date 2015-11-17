@@ -21,9 +21,17 @@ import android.widget.EditText;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
+/**
+ * Controller for EditUserProfileActivity.
+ */
 public class EditUserProfileController {
 
     private EditUserProfileActivity activity;
+
+    /**
+     * This listener encapsulates the act of saving all the information in the
+     * user's profile. It can be accessed through the relevant getter.
+     */
     private View.OnClickListener saveButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -47,17 +55,17 @@ public class EditUserProfileController {
             Boolean photoDownloadEnabled = photoDownload.isChecked();
 
             //Set the LoggedInUser with new data
-            activity.getUserProfile().setName(_name);
-            activity.getUserProfile().getContactInfo().setAddress(_address);
-            activity.getUserProfile().setCity(_city);
-            activity.getUserProfile().setPostalCode(_postalCode);
-            activity.getUserProfile().getContactInfo().setPhoneNumber(_phoneNum);
-            activity.getUserProfile().setArePhotosDownloadable(photoDownloadEnabled);
+            UserProfile userProfile = LoggedInUser.getInstance().getProfile();
+            userProfile.setName(_name);
+            userProfile.getContactInfo().setAddress(_address);
+            userProfile.setCity(_city);
+            userProfile.setPostalCode(_postalCode);
+            userProfile.getContactInfo().setPhoneNumber(_phoneNum);
+            userProfile.setArePhotosDownloadable(photoDownloadEnabled);
 
             LoggedInUser.getInstance().saveInFile(activity.getBaseContext());
             //exit the activity
             activity.finish();
-
         }
     };
 
@@ -73,6 +81,4 @@ public class EditUserProfileController {
     public View.OnClickListener getSaveButtonListener() {
         return saveButtonListener;
     }
-
-
 }

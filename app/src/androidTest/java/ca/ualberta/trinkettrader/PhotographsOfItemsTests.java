@@ -37,6 +37,7 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.Profile.EditUserProfileActivity;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
@@ -859,7 +860,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(editProfileActivityMonitor);
 
-        UserProfile userProfile = editUserProfileActivity.getUserProfile();
+        UserProfile userProfile = LoggedInUser.getInstance().getProfile();
         userProfile.setArePhotosDownloadable(Boolean.TRUE);
         assertTrue(userProfile.getArePhotosDownloadable());
 
@@ -982,7 +983,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(editProfileActivityMonitor);
 
-        UserProfile userProfile = editUserProfileActivity.getUserProfile();
+        UserProfile userProfile = LoggedInUser.getInstance().getProfile();
         userProfile.setArePhotosDownloadable(Boolean.TRUE);
         assertTrue(userProfile.getArePhotosDownloadable());
 
