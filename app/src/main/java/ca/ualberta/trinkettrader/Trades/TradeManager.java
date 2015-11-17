@@ -74,9 +74,12 @@ public class TradeManager {
 
     /**
      * Propose counter trade.
-     *
-     * @param trade
-     * @param counterTrade
+     * Replaces previously offered trade in the currentTrades ArrayList of both
+     * the borrower and the owner with updated trade. Previous trade will be deleted
+     * and updated trade will be added.  Counter trade details will be determined by
+     * the user who was last offered the trade.
+     * @param trade previous trade to delete
+     * @param counterTrade updated counter trade to add
      */
     public void proposeCounterTrade(Trade trade, Trade counterTrade) {
         //TODO replace trade in currentTrades list (find old trade and delete it, add new trade)
