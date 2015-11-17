@@ -22,6 +22,9 @@ import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
 import ca.ualberta.trinkettrader.Trades.TradesActivity;
 import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
 
+/**
+ * Controller for HomePageActivity.
+ */
 public class HomePageController {
 
     Activity activity;
