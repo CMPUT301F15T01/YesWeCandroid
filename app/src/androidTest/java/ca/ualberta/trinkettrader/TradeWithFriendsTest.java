@@ -573,12 +573,14 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(currentTradesActivityMonitor);
 
+        //TODO move up!!!!!!!!!!!!!!!!!!
         /****Hardcode in trade to click****/
         LoggedInUser currentUser = LoggedInUser.getInstance();
 
         // create inventories of items to trade
         Inventory borrowerInventory = new Inventory();
         Inventory ownerInventory = new Inventory();
+        Inventory secondInventory = new Inventory();
 
         Trinket necklace = new Trinket();
         necklace.setName("Amulet of Fire");
@@ -593,7 +595,18 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
         assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
 
+        // make one more trade
+        Trinket bracelet = new Trinket();
+        bracelet.setName("Bronze bracer");
+        secondInventory.add(bracelet);
 
+        Trade trade1 = new Trade(borrowerInventory, currentUser.getTradeManager(), secondInventory, currentUser.getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        currentUser.getTradeManager().getTradeArchiver().addTrade(trade1);
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
+
+
+        // trade at 1st index should be the first trade that was added
 
 
 
