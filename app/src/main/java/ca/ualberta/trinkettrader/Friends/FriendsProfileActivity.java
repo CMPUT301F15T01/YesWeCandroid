@@ -98,7 +98,7 @@ public class FriendsProfileActivity extends AppCompatActivity implements Observe
     /**
      * Directs controller to handle Remove Friends button click.
      *
-     * @param v
+     * @param v remove friends button
      */
     public void removeFriendButtonOnClick(View v) {
         controller.removeFriendButtonOnClick();
@@ -107,7 +107,7 @@ public class FriendsProfileActivity extends AppCompatActivity implements Observe
     /**
      * Directs controller to handle track friends radio button click.
      *
-     * @param v
+     * @param v track friends radio button
      */
     public void trackedRadioButtonOnClick(View v) {
         controller.trackedRadioButtonOnClick();
@@ -116,7 +116,7 @@ public class FriendsProfileActivity extends AppCompatActivity implements Observe
     /**
      * Directs controller to handle click to return to Friends List activity.
      *
-     * @param v
+     * @param v back to friends list button
      */
     public void backToFriendsListButtonFromProfileOnClick(View v) {
         controller.backToFriendsListButtonFromProfileOnClick();

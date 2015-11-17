@@ -92,7 +92,7 @@ public class FriendsListActivity extends AppCompatActivity implements Observer {
     /**
      * Sets the friends information so that their profile can be viewed
      *
-     * @param v
+     * @param v the find friends button
      */
     public void findFriendsOnClick(View v) {
         controller.findFriendsOnClick();
@@ -102,12 +102,13 @@ public class FriendsListActivity extends AppCompatActivity implements Observer {
     /**
      * viewTrackedFriendsOnCLick navigates to tracked friends
      *
-     * @param v tracked friends button view
+     * @param v tracked friends button
      */
 
     public void viewTrackedFriendsOnClick(View v) {
         controller.viewTrackedFriendsOnClick();
     }
+
 
     public void updateFriendsListView() {
         userFriendList = LoggedInUser.getInstance().getFriendsList();

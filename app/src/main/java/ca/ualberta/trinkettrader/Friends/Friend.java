@@ -30,10 +30,28 @@ public class Friend extends User {
         this.isTracked = Boolean.FALSE;
     }
 
+    /**
+     * Constructor for friend that uses all the users attributes.
+     * Friend will be initialized using the specified parameters.
+     *
+     * @param friendsList the users' friendlist
+     * @param inventory the users' inventory
+     * @param notificationManager the users' notification manager
+     * @param profile the users profile
+     * @param trackedFriends a list of the user's tracked friends
+     * @param tradeManager the users trade manager
+     * @param isTracked boolean for if a friend is tracked
+     */
     public Friend(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager, Boolean isTracked) {
         super(friendsList, inventory, notificationManager, profile, trackedFriends, tradeManager);
         this.isTracked = isTracked;
     }
+
+    /**
+     * Constructor for friend using just the username.
+     *
+     * @param username the friends' username
+     */
 
     public Friend(String username) {
         // this constructor will probably be unnecessary and removed once the webservice is working
@@ -55,7 +73,7 @@ public class Friend extends User {
      * Sets if friend is tracked or not. To be called when adding a new friend to current User's
      * TrackedFriendList
      *
-     * @param isTracked
+     * @param isTracked boolean for if a friend is tracked
      */
     public void setIsTracked(Boolean isTracked) {
         this.isTracked = isTracked;
