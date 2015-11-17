@@ -22,15 +22,32 @@ import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.User;
 
+/**
+ * Controller for handling interactions from the FriendsProfileActivity.  The controller manages clicks to
+ * the "Remove Friend", "Back" and "Track Friend" buttons in the FriendsProfileActivity's layout.
+ * Clicking the remove button will remove the friend whose profile was being viewed in the
+ * FriendsProfileActivity from the user's friend's list, the track button toggles whether the user
+ * is tracking that friend or not, and the back button returns the user back to the previous
+ * FriendsListActivity.
+ */
 public class FriendsProfileController {
     private FriendsProfileActivity activity;
 
+    /**
+     * Constructs a controller with the activity this constructor is attached to.  Each controller
+     * can only be used by one activity.
+     *
+     * @param activity - The activity this controller is attached to
+     */
     public FriendsProfileController(FriendsProfileActivity activity) {
         this.activity = activity;
     }
 
     /**
-     * onClick method for removing friends.
+     * Handles removing the friend displayed in the FriendsProfileActivity from the user's
+     * friends list after the user clicks the "Delete Friend" button.  The system uses an state
+     * variable that remembers which friend in the user's friends list was clicked on last to know
+     * which friend to remove.
      */
     public void removeFriendButtonOnClick() {
         Friend exFriend = ApplicationState.getInstance().getClickedFriend();
@@ -44,7 +61,12 @@ public class FriendsProfileController {
     }
 
     /**
-     * onCLick method for tracking/untracking friends.
+     * Handles click form the "Track Friends" radio button in the FriendsProfileActivity.  This
+     * button toggles whether a friend is tracked by the user or not.  If the friend was untracked
+     * by the user before the click, they will become tracked.  If the friend was tracked before the
+     * click, they will be removed from the user's tacked friends list and will become untracked.
+     * The system uses an state variable that remembers which friend in the user's friends list was
+     * clicked on last to know which friend to track/untrack.
      */
     public void trackedRadioButtonOnClick() {
         RadioButton tracked = activity.getTrackedRadioButton();
@@ -60,7 +82,9 @@ public class FriendsProfileController {
     }
 
     /**
-     * onClick method for returning to Friends List activity.
+     * Handles click to the "Back To Friends List" button, which returns the user to their to
+     * FriendsListActivity.  Any changes made to the friends list, such as untracking the friend,
+     * will be shown in the FriendsListActivity they return to.
      */
     public void backToFriendsListButtonFromProfileOnClick() {
         activity.onBackPressed();
