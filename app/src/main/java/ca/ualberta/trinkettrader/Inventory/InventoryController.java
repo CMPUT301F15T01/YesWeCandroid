@@ -20,7 +20,9 @@ import android.content.Intent;
 import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
 
 /**
- * Controller for handling interactions from the InventoryActivity.
+ * Controller for handling interactions from the InventoryActivity.  The controller manages clicks to
+ * the "Add Item" and "Inventory Details" buttons in the InventoryActivity's layout.  Clicking these
+ * buttons navigates the user to a new activity in order to complete the user's request.
  */
 public class InventoryController {
 
