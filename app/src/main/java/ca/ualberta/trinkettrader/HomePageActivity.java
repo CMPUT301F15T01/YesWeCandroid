@@ -22,6 +22,10 @@ import android.widget.Button;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Activity serving as the home page of the app. This should be navigated to
+ * immediately after having logged in.
+ */
 public class HomePageActivity extends AppCompatActivity implements Observer {
 
     private Button friendsButton;

@@ -17,12 +17,21 @@ package ca.ualberta.trinkettrader;
 import java.util.ArrayList;
 import java.util.Observer;
 
+/**
+ * Represents a message to be read by the user.
+ */
 public class Notification implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
     private String message;
     private String type;
 
+    /**
+     * Generates a new notification. This class is used to encode a message to be read by the user.
+     *
+     * Typical uses of this class include encoding a message for the user that a trade has been
+     * accepted/rejected.
+     */
     public Notification() {
     }
 

@@ -71,7 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/view_inventory_button"
         android:layout_centerVertical="true"
-        android:text="Trade" />
+        android:text="Trades"
+        android:onClick="openCurrentTrades"/>
 
     <TextView
         android:id="@+id/phone_number"

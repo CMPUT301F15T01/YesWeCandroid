@@ -19,7 +19,10 @@ import android.content.Intent;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
- * Controller for handling interactions from the TrinketDetailsActivity.
+ * Controller for handling interactions from the TrinketDetailsActivity.  The controller manages
+ * clicks to the "Delete" and "Edit" buttons in the InventoryActivity's layout.  Clicking the delete
+ * button generates an AlertDialog to confirm the deletion of the trinket, and the edit button
+ * navigates the user to a new activity in order to complete the user's request.
  */
 public class TrinketDetailsController {
 

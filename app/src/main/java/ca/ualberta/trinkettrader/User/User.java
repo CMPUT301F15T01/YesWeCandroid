@@ -24,6 +24,11 @@ import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.Trades.TradeManager;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 
+/**
+ * Abstract class representing a user of the app. This user may be either the
+ * LoggedInUser or a Friend. This class mainly acts as a container for all of
+ * the various classes that make up a user.
+ */
 public abstract class User implements ca.ualberta.trinkettrader.Observable {
 
     protected FriendsList friendsList;
@@ -40,7 +45,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
      * active data.
      *
      * This constructor is called when the application has no information about the user (i.e. a new
-     * User)
+     * User) or when not all information about the user is available yet.
      */
     public User() {
         this.friendsList = new FriendsList();

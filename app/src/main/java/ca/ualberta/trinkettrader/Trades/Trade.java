@@ -126,4 +126,25 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
     public void setNumberOfItems(Integer numberOfItems) {
         this.numberOfItems = numberOfItems;
     }
+
+    // adarshr, accessed on 2015-11-16, http://stackoverflow.com/questions/10734106/how-to-override-tostring-properly-in-java
+
+    // TODO unfinished. Everything mentioned in JavaDoc comment below will be implemented in next prototype.
+    // TODO may remodel after profile page with updatable fields
+    /**
+     * This method override is responsible for determining how trades will be shown to the
+     * user when they view their Current Trades list and PAst Trades list.
+     *
+     * For each trade in the list, it's number, the other person involved in the trade
+     * (not LoggedInUser), it's status and the categories of the items involved will be
+     * displayed.
+     * @return
+     */
+    @Override
+    public String toString(){
+
+        // need to display name of other person involved in trade
+        // also need to find categories of items invloved
+        return "Trade No. 1 " + "with status " + this.getStatus();
+    }
 }

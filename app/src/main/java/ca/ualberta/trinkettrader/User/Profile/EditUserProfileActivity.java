@@ -37,6 +37,11 @@ public class EditUserProfileActivity extends AppCompatActivity implements Observ
     private EditUserProfileController controller;
     private ToggleButton arePhotosDownloadableButton;
     private Handler handler;
+
+    /**
+     * This runnable serves to populate the edit profile interface with the
+     * current information of the user.
+     */
     private Runnable populateEditFieldsWithExistingValuesRunnable = new Runnable() {
         @Override
         public void run() {
@@ -46,17 +51,14 @@ public class EditUserProfileActivity extends AppCompatActivity implements Observ
             EditText postalCode = (EditText) findViewById(R.id.edit_postal_code);
             EditText phoneNum = (EditText) findViewById(R.id.edit_phone_number);
 
-            name.setText(getUserProfile().getName());
-            address.setText(getUserProfile().getContactInfo().getAddress());
-            city.setText(getUserProfile().getCity());
-            postalCode.setText(getUserProfile().getContactInfo().getPostalCode());
-            phoneNum.setText(getUserProfile().getContactInfo().getPhoneNumber());
+            name.setText(LoggedInUser.getInstance().getProfile().getName());
+            address.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getAddress());
+            city.setText(LoggedInUser.getInstance().getProfile().getCity());
+            postalCode.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getPostalCode());
+            phoneNum.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getPhoneNumber());
 
         }
     };
-
-    public EditUserProfileActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,21 +80,13 @@ public class EditUserProfileActivity extends AppCompatActivity implements Observ
     }
 
     /**
-     * Returns ToggleButton specifying if photos are downloadable or not.
+     * Returns ToggleButton specifying if photos are downloadable or not. This
+     * should be primarily used for testing purposes.
      *
      * @return ToggleButton
      */
     public ToggleButton getArePhotosDownloadableButton() {
         return arePhotosDownloadableButton;
-    }
-
-    /**
-     * Returns profile of current LoggedInUser.
-     *
-     * @return UserProfile
-     */
-    public UserProfile getUserProfile() {
-        return LoggedInUser.getInstance().getProfile();
     }
 
     /**
@@ -105,6 +99,5 @@ public class EditUserProfileActivity extends AppCompatActivity implements Observ
      */
     @Override
     public void update(Observable observable, Object data) {
-
     }
 }
