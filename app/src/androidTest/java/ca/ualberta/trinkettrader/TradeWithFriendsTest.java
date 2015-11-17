@@ -496,6 +496,39 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     // User can view a list of trades they are currently involved in
     // TODO is there a way to view the current trades lists of the other person involved in the trade
     public void testViewCurrentTrades() {
+
+        /****Hardcode in trades to click****/
+        LoggedInUser currentUser = LoggedInUser.getInstance();
+
+        // create inventories of items to trade
+        Inventory borrowerInventory = new Inventory();
+        Inventory ownerInventory = new Inventory();
+        Inventory secondInventory = new Inventory();
+
+        Trinket necklace = new Trinket();
+        necklace.setName("Amulet of Fire");
+        Trinket ring = new Trinket();
+        ring.setName("Ring of Swirling Mist");
+        borrowerInventory.add(necklace);
+        ownerInventory.add(ring);
+
+        // trade with self
+        Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, currentUser.getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+
+        // make one more trade
+        Trinket bracelet = new Trinket();
+        bracelet.setName("Bronze bracer");
+        secondInventory.add(bracelet);
+
+        Trade trade1 = new Trade(borrowerInventory, currentUser.getTradeManager(), secondInventory, currentUser.getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        currentUser.getTradeManager().getTradeArchiver().addTrade(trade1);
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
+
+
         // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
@@ -573,41 +606,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(currentTradesActivityMonitor);
 
-        //TODO move up!!!!!!!!!!!!!!!!!!
-        /****Hardcode in trade to click****/
-        LoggedInUser currentUser = LoggedInUser.getInstance();
 
-        // create inventories of items to trade
-        Inventory borrowerInventory = new Inventory();
-        Inventory ownerInventory = new Inventory();
-        Inventory secondInventory = new Inventory();
-
-        Trinket necklace = new Trinket();
-        necklace.setName("Amulet of Fire");
-        Trinket ring = new Trinket();
-        ring.setName("Ring of Swirling Mist");
-        borrowerInventory.add(necklace);
-        ownerInventory.add(ring);
-
-        // trade with self
-        Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, currentUser.getTradeManager());
-        //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
-        currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
-        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
-
-        // make one more trade
-        Trinket bracelet = new Trinket();
-        bracelet.setName("Bronze bracer");
-        secondInventory.add(bracelet);
-
-        Trade trade1 = new Trade(borrowerInventory, currentUser.getTradeManager(), secondInventory, currentUser.getTradeManager());
-        //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
-        currentUser.getTradeManager().getTradeArchiver().addTrade(trade1);
-        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
-
-
-        // trade at 1st index should be the first trade that was added
-
+        // trade at 1st index should be the first trade that was added. let's click it
+        
 
 
         // finish activities
