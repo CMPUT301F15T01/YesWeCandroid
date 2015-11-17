@@ -31,28 +31,33 @@ import ca.ualberta.trinkettrader.R;
 public class TrackedFriendsListActivity extends AppCompatActivity implements Observer {
 
     private TrackedFriendsList trackedFriendsList;
-    private ArrayAdapter<Friend> trackedFriendAdapter;
+    private ArrayAdapter<Friend> trackedFriendsAdapter;
     private ListView trackedFriendsListView;
     private Button backToFriendsListButton;
     private TrackedFriendsListController controller;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tracked_friends);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_tracked_friends);
 
-        trackedFriendsList = LoggedInUser.getInstance().getTrackedFriends();
-        trackedFriendsListView = (ListView) findViewById(R.id.trackedFriendsListView);
-        backToFriendsListButton = (Button) findViewById(R.id.backToFriendsListButton);
-        controller = new TrackedFriendsListController(this);
-        controller.setTrackedFriendsListViewItemOnClick();
+            trackedFriendsList = LoggedInUser.getInstance().getTrackedFriendsList();
+            trackedFriendsListView = (ListView) findViewById(R.id.trackedFriendsListView);
+            backToFriendsListButton = (Button) findViewById(R.id.backToFriendsListButton);
+            controller = new TrackedFriendsListController(this);
+            controller.setTrackedFriendsListViewItemOnClick();
+        }
+
+        @Override
+        protected void onStart() {
+        super.onStart();
+        updateTrackedFriendsListView();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        trackedFriendAdapter = new ArrayAdapter<Friend>(this, R.layout.activity_friends_friend, trackedFriendsList);
-        trackedFriendsListView.setAdapter(trackedFriendAdapter);
+    protected void onResume() {
+        super.onResume();
+        updateTrackedFriendsListView();
     }
 
     /**
@@ -80,6 +85,12 @@ public class TrackedFriendsListActivity extends AppCompatActivity implements Obs
      */
     public ListView getTrackedFriendsListView() {
         return trackedFriendsListView;
+    }
+
+    public void updateTrackedFriendsListView() {
+        trackedFriendsList = LoggedInUser.getInstance().getTrackedFriendsList();
+        trackedFriendsAdapter = new ArrayAdapter<Friend>(this, R.layout.activity_friends_friend, trackedFriendsList);
+        trackedFriendsListView.setAdapter(trackedFriendsAdapter);
     }
 
     @Override

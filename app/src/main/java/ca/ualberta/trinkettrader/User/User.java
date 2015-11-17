@@ -29,7 +29,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
     protected FriendsList friendsList;
     protected Inventory inventory;
     protected NotificationManager notificationManager;
-    protected TrackedFriendsList trackedFriends;
+    protected TrackedFriendsList trackedFriendsList;
     protected TradeManager tradeManager;
     protected UserProfile profile;
     protected Boolean needToSave;
@@ -46,7 +46,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
         this.friendsList = new FriendsList();
         this.inventory = new Inventory();
         this.notificationManager = new NotificationManager();
-        this.trackedFriends = new TrackedFriendsList();
+        this.trackedFriendsList = new TrackedFriendsList();
         this.tradeManager = new TradeManager();
         this.profile = new UserProfile();
         this.needToSave = Boolean.TRUE;
@@ -61,7 +61,7 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
         this.inventory = inventory;
         this.notificationManager = notificationManager;
         this.profile = profile;
-        this.trackedFriends = trackedFriends;
+        this.trackedFriendsList = trackedFriends;
         this.tradeManager = tradeManager;
         this.needToSave = Boolean.TRUE;
     }
@@ -203,17 +203,17 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
      *
      * @return TrackedFriendsList
      */
-    public TrackedFriendsList getTrackedFriends() {
-        return trackedFriends;
+    public TrackedFriendsList getTrackedFriendsList() {
+        return trackedFriendsList;
     }
 
     /**
      * Sets user's list of tracked friends
      *
-     * @param trackedFriends
+     * @param trackedFriendsList
      */
-    public void setTrackedFriends(TrackedFriendsList trackedFriends) {
-        this.trackedFriends = trackedFriends;
+    public void setTrackedFriends(TrackedFriendsList trackedFriendsList) {
+        this.trackedFriendsList = trackedFriendsList;
     }
 
     /**
