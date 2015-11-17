@@ -47,6 +47,9 @@ public class TradeManager {
     // TODO make it easier to send notifications.
     /**
      * Propose trade.
+     * Adds created trade to the currentTrades ArrayLists of both the borrower
+     * and the owner.  Notifies the user who did not instantiate the trade that
+     * they have been made a new offer.
      *
      * @param trade
      */

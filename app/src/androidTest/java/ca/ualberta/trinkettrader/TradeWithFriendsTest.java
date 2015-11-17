@@ -623,7 +623,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         currentTradesActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View tradeBox1 = currentTradesList.getChildAt(1);
-                currentTradesList.performItemClick(tradeBox1, 0, tradeBox1.getId());
+                currentTradesList.performItemClick(tradeBox1, 1, tradeBox1.getId());
                 // check that we clicked the correct trade
                 assertTrue((trade.toString()).equals(ApplicationState.getInstance().getClickedTrade().toString()));
             }
@@ -799,7 +799,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         currentTradesActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View tradeBox1 = pastTradesList.getChildAt(1);
-                pastTradesList.performItemClick(tradeBox1, 0, tradeBox1.getId());
+                pastTradesList.performItemClick(tradeBox1, 1, tradeBox1.getId());
                 // check that we clicked the correct trade
                 assertTrue((trade.toString()).equals(ApplicationState.getInstance().getClickedTrade().toString()));
             }
