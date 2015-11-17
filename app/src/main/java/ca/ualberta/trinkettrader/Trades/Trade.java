@@ -19,11 +19,13 @@ import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 
-// TODO add info from specs about number of items (0 to many)
+// TODO how are counter trades affected by 0 to many thing? are borrower and owner
+// TODO roles reversed?
 /**
  * Trade object which holds all relevant information for a trade. Each trade has
  * an inventory which is a list of the items involved in the trade, a unique TradeManager for the borrower
- * and the owner, and a status.
+ * and the owner, and a status.  A borrower's inventory must contain 0 or more items. The owner's inventory will
+ * contain one item.
  *
  */
 public class Trade implements ca.ualberta.trinkettrader.Observable {
@@ -36,6 +38,13 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
     private TradeManager sender;
     private Integer numberOfItems;
 
+    /**
+     * public constructor
+     * @param offeredItems
+     * @param receiver
+     * @param requestedItems
+     * @param sender
+     */
     public Trade(Inventory offeredItems, TradeManager receiver, Inventory requestedItems, TradeManager sender) {
         this.offeredItems = offeredItems;
         this.receiver = receiver;
@@ -80,18 +89,34 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Inventory getOfferedItems() {
         return offeredItems;
     }
 
+    /**
+     *
+     * @return
+     */
     public TradeManager getReceiver() {
         return receiver;
     }
 
+    /**
+     *
+     * @return
+     */
     public Inventory getRequestedItems() {
         return requestedItems;
     }
 
+    /**
+     *
+     * @return
+     */
     public TradeManager getSender() {
         return sender;
     }
@@ -105,6 +130,10 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
         return status;
     }
 
+    /**
+     * Sets status of a trade.  Can be pending, accepted, or declined.
+     * @param status
+     */
     public void setStatus(String status) {
         this.status = status;
     }
@@ -138,7 +167,8 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
      * For each trade in the list, it's number, the other person involved in the trade
      * (not LoggedInUser), it's status and the categories of the items involved will be
      * displayed.
-     * @return
+     * @return String Text displayed for each trade in current trades list of
+     * ActiveTradesActivity and in past trades list of PastTradesActivity.
      */
     @Override
     public String toString(){
