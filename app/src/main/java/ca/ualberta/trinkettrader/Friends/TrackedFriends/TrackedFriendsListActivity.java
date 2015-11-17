@@ -28,6 +28,15 @@ import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.R;
 
+/**
+ * Android activity class for displaying a user's tracked friendslist. From this activity all of the
+ * user's tracked friends can be viewed in the tracked friends list.
+ * This activity contains a "Go Back" button which will connect the user to the FriendsListActivity.
+ * Clicking on a friend within the friends list will connect the user to the FriendsProfileActivity,
+ * which will allow the user to view the details of that friend, and choose whether to untrack the
+ * friend, or to remove them.
+ */s
+
 public class TrackedFriendsListActivity extends AppCompatActivity implements Observer {
 
     private TrackedFriendsList trackedFriendsList;

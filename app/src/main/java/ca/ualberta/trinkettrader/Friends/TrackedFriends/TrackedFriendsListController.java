@@ -27,10 +27,8 @@ import ca.ualberta.trinkettrader.Friends.FriendsProfileActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
- * Controller for TrackedFriendsListActivity. Used for selecting items in TrackedFriendsList View and
- * returning to the FriendsList View.
- *
- * Created by RV on 11/5/2015.
+ * Controller for TrackedFriendsListActivity. Used for selecting items in TrackedFriendsList View
+ * and returning to the FriendsList View.
  */
 public class TrackedFriendsListController {
     private TrackedFriendsListActivity activity;
@@ -40,14 +38,15 @@ public class TrackedFriendsListController {
     }
 
     /**
-     * onClick method to return to FriendsListActivity.
+     * onClick method for the back button in order to return to FriendsListActivity.
      */
     public void backToFriendsListOnClick() {
         activity.onBackPressed();
     }
 
     /**
-     * onClick method for selecting an item in the FriendsList ListView.
+     * onClick method for the tracked friends radio button for selecting an item in the
+     * FriendsList ListView.
      */
     public void setTrackedFriendsListViewItemOnClick() {
         ListView trackedFriendsListView = activity.getTrackedFriendsListView();
