@@ -30,8 +30,7 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
-// TODO clarify trade statuses.
-// TODO clarify what should appear in tradeBox.
+
 /**
  * Shows list of user's <i>active trades</i>. Active trades are trades with the status
  * "pending" (user's current trades).  If a trade has been offered to the user, it will appear in

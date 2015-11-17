@@ -26,6 +26,7 @@ import ca.ualberta.trinkettrader.Trades.Trade;
  * accessed.
  * Each time a trade is created, deleted, or has its status changed (changes from
  * active trade to inactive trade), this class will need to be used.
+ * Each user has one TradeArchiver.
  */
 public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
 
@@ -57,7 +58,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * of the pastTrades ArrayList, so it will be at the top of the user's list of past trades
      * when the user views the list in the app.
      *
-     * A trade will <b>not</b> be archived if it is deleted.
+     * A trade will <b>not</b> be archived if it is deleted by the user.
      * @param trade
      * @param status
      */

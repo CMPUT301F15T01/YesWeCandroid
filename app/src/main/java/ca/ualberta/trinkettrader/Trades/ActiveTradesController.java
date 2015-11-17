@@ -25,7 +25,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * This class is responsible for switching to the trade details page for a trade when a trade
- * is clicked in the active trades list.
+ * is clicked in the current(active) trades list.
  */
 public class ActiveTradesController {
     private TradesActivity activity;
@@ -47,12 +47,4 @@ public class ActiveTradesController {
         });
     }
 
-    /*
-    * For trades displayed on current and past trades pages
-    * Trade box format:
-    * Trade id
-    * Other user invloved in trade (not yourself)
-     * status of trade
-     * category of items involved
-    * */
 }

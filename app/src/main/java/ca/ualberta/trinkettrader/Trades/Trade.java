@@ -97,7 +97,7 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns status of the trade. Can be pending, accepted, or rejected.
+     * Returns status of the trade. Can be pending, accepted, or declined.
      *
      * @return String
      */
@@ -110,7 +110,7 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns number of items involved in the trades.
+     * Returns number of items involved in a particular trade.
      *
      * @return Integer
      */

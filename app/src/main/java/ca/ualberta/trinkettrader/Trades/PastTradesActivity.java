@@ -26,8 +26,7 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
-// TODO clarify trade statuses.
-// TODO clarify what should appear in tradeBox.
+
 /**
  * Shows list of user's <i>past trades</i>. Past trades are trades with the status
  * "accepted" or "declined" (inactive trades).  Trades that are no longer active will appear in
