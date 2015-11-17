@@ -27,6 +27,7 @@ import ca.ualberta.trinkettrader.Friends.FriendsListActivity;
 import ca.ualberta.trinkettrader.Friends.FriendsProfileActivity;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Trades.Trade;
+import ca.ualberta.trinkettrader.Trades.TradeDetailsActivity;
 import ca.ualberta.trinkettrader.Trades.TradesActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
@@ -606,15 +607,30 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(currentTradesActivityMonitor);
 
+        /****TradeDetailsActivity****/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor tradeDetailsActivityMonitor = getInstrumentation().addMonitor(TradeDetailsActivity.class.getName(), null, false);
 
         // trade at 1st index should be the first trade that was added. let's click it
-        
+        // actions which lead to next activity
+        final ListView currentTradesList = currentTradesActivity.getCurrentTradesListView();
+        currentTradesActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                View tradeBox1 = currentTradesList.getChildAt(1);
+                currentTradesList.performItemClick(tradeBox1, 0, tradeBox1.getId());
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+
+
 
 
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
         userProfileActivity.finish();
+        currentTradesActivity.finish();
         assertNotNull(null);
     }
 
