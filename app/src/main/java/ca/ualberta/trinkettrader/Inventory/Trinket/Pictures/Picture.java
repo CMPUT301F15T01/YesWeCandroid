@@ -23,6 +23,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observer;
 
+/**
+ * Represents a compressed picture. This is most likely attached to a trinket.
+ */
 public class Picture implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
