@@ -54,8 +54,13 @@ public class FriendsListActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onStart() {
         super.onStart();
-        friendAdapter = new ArrayAdapter<Friend>(this, R.layout.activity_friends_friend, userFriendList);
-        friendsListView.setAdapter(friendAdapter);
+        updateFriendsListView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateFriendsListView();
     }
 
     /**
@@ -102,6 +107,12 @@ public class FriendsListActivity extends AppCompatActivity implements Observer {
 
     public void viewTrackedFriendsOnClick(View v) {
         controller.viewTrackedFriendsOnClick();
+    }
+
+    public void updateFriendsListView() {
+        userFriendList = LoggedInUser.getInstance().getFriendsList();
+        friendAdapter = new ArrayAdapter<Friend>(this, R.layout.activity_friends_friend, userFriendList);
+        friendsListView.setAdapter(friendAdapter);
     }
 
     /**

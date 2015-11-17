@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader.Friends.TrackedFriends;
 
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -42,8 +43,7 @@ public class TrackedFriendsListController {
      * onClick method to return to FriendsListActivity.
      */
     public void backToFriendsListOnClick() {
-        Intent intent = new Intent(this.activity, FriendsListActivity.class);
-        activity.startActivity(intent);
+        activity.onBackPressed();
     }
 
     /**
@@ -53,7 +53,7 @@ public class TrackedFriendsListController {
         ListView trackedFriendsListView = activity.getTrackedFriendsListView();
         trackedFriendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
-                Friend clickedFriend = LoggedInUser.getInstance().getFriendsList().get(position);
+                Friend clickedFriend = LoggedInUser.getInstance().getTrackedFriendsList().get(position);
                 ApplicationState.getInstance().setClickedFriend(clickedFriend);
                 Intent intent = new Intent(activity, FriendsProfileActivity.class);
                 activity.startActivity(intent);

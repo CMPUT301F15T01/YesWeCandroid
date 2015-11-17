@@ -33,11 +33,14 @@ public class FriendsProfileController {
      * onClick method for removing friends.
      */
     public void removeFriendButtonOnClick() {
-        User exFriend = ApplicationState.getInstance().getClickedFriend();
+        Friend exFriend = ApplicationState.getInstance().getClickedFriend();
         LoggedInUser.getInstance().getFriendsList().remove(exFriend);
-        Intent intent = new Intent(this.activity, FriendsListActivity.class);
-        activity.startActivity(intent);
-        //NavUtils.navigateUpFromSameTask(activity);
+
+        if (exFriend.isTracked()) {
+            LoggedInUser.getInstance().getTrackedFriendsList().remove(exFriend);
+        }
+
+        activity.onBackPressed();
     }
 
     /**
@@ -50,9 +53,9 @@ public class FriendsProfileController {
         tracked.setChecked(!wasChecked);
         clickedFriend.setIsTracked(!wasChecked);
         if (wasChecked) {
-            LoggedInUser.getInstance().getTrackedFriends().remove(clickedFriend);
+            LoggedInUser.getInstance().getTrackedFriendsList().remove(clickedFriend);
         } else {
-            LoggedInUser.getInstance().getTrackedFriends().add(clickedFriend);
+            LoggedInUser.getInstance().getTrackedFriendsList().add(clickedFriend);
         }
     }
 
@@ -60,6 +63,6 @@ public class FriendsProfileController {
      * onClick method for returning to Friends List activity.
      */
     public void backToFriendsListButtonFromProfileOnClick() {
-        NavUtils.navigateUpFromSameTask(activity);
+        activity.onBackPressed();
     }
 }
