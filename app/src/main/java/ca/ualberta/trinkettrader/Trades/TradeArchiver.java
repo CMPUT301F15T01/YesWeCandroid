@@ -84,7 +84,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
     /**
      * Returns entire ArrayList of past (inactive) trades.  This method is
      * used by the PastTradesActivity to display the user's past trades.
-     * @return ArrayList<Trade>
+     * @return ArrayList&lt;Trade&gt;
      */
     public ArrayList<Trade> getPastTrades() {
         return pastTrades;
@@ -94,7 +94,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
     /**
      * Returns entire ArrayList of current (active) trades.  This method is
      * used by the TradesActivity to display the user's current trades.
-     * @return ArrayList<Trade>
+     * @return ArrayList&lt;Trade&gt;
      */
     public ArrayList<Trade> getCurrentTrades() {
         return currentTrades;
@@ -176,7 +176,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * If {@code hasChanged()} returns {@code true}, calls the {@code update()}
      * method for every observer in the list of observers using null as the
      * argument. Afterwards, calls {@code clearChanged()}.
-     * <p/>
+     *
      * Equivalent to calling {@code notifyObservers(null)}.
      */
     @Override

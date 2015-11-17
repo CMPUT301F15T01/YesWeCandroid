@@ -65,7 +65,7 @@ public class TradeManager {
      * When a user is offline, they will not be able to receive trade offers from other users.
      * When the user is online, this method will be called to update the user's currentTrades ArrayList.
      *
-     * @return ArrayList<Trade> ArrayList of trades that were offered to the user when they were offline
+     * @return ArrayList&lt;Trade&gt; ArrayList of trades that were offered to the user when they were offline
      */
     public ArrayList<Trade> pullTrades(){
         return new ArrayList<Trade>();
@@ -139,7 +139,7 @@ public class TradeManager {
     }
     // TODO think that one is already instantiated in User class.  need to check.
     /**
-     * Returns  user's notification manager. Notification manager is responisble for
+     * Returns  user's notification manager. Notification manager is responsible for
      * notifying a user of a new trades (new offer) and a completed trades.
      *
      * Please see NotificationManager class for more information.

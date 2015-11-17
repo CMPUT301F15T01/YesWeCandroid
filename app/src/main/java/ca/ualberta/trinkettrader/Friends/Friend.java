@@ -21,63 +21,79 @@ import ca.ualberta.trinkettrader.Trades.TradeManager;
 import ca.ualberta.trinkettrader.User.User;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 
+/**
+ * Class representing a friend of a user. All friends are users and therefore have all attributes
+ * and methods of a user. Friends have an additional attribute to specify if they are tracked, and
+ * they have methods to view and modify their tracking status.
+ */
 public class Friend extends User {
 
     private Boolean isTracked;
 
+
+    /**
+     * Default constructor. Runs the default constructor of User, initializing all of the
+     * friend's attributes to empty objects.
+     * By default, the tracked status is <code>False</code>.
+     */
     public Friend() {
         super();
         this.isTracked = Boolean.FALSE;
     }
 
+
     /**
-     * Constructor for friend that uses all the users attributes.
-     * Friend will be initialized using the specified parameters.
+     * Constructor that uses all the attributes of User.
+     * Initializes the Friend using these attributes (using User's constructor), then sets the
+     * tracked status.
      *
-     * @param friendsList the users' friendlist
-     * @param inventory the users' inventory
-     * @param notificationManager the users' notification manager
-     * @param profile the users profile
+     * @param friendsList the user's list of Friends
+     * @param inventory the user's inventory
+     * @param notificationManager the user's notification manager
+     * @param profile the user's profile
      * @param trackedFriends a list of the user's tracked friends
-     * @param tradeManager the users trade manager
-     * @param isTracked boolean for if a friend is tracked
+     * @param tradeManager the user's trade manager
+     * @param isTracked Boolean representing the friend's tracking status
      */
     public Friend(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager, Boolean isTracked) {
         super(friendsList, inventory, notificationManager, profile, trackedFriends, tradeManager);
         this.isTracked = isTracked;
     }
 
-    /**
-     * Constructor for friend using just the username.
-     *
-     * @param username the friends' username
-     */
 
+    /**
+     * Constructor that sets only the username of the Friend. All other attributes are initialized
+     * using the default constructor of User (to empty objects).
+     *
+     * @param username the friend's username
+     */
     public Friend(String username) {
-        // this constructor will probably be unnecessary and removed once the webservice is working
         super();
         this.getProfile().setUsername(username);
         this.isTracked = Boolean.FALSE;
     }
 
+
     /**
-     * Returns boolean indicating whether a friend is tracked or not.
+     * Returns the tracked status of the friend as a Boolean.
      *
-     * @return Boolean
+     * @return <code>True</code> if the friend is tracked; <code>False</code> otherwise
      */
     public Boolean isTracked() {
         return isTracked;
     }
 
+
     /**
-     * Sets if friend is tracked or not. To be called when adding a new friend to current User's
-     * TrackedFriendList
+     * Sets the tracked status of the friend to the specified Boolean value.
+     * This method is used when adding and removing a friend from a <code>TrackedFriendsList</code>.
      *
-     * @param isTracked boolean for if a friend is tracked
+     * @param isTracked Boolean representing the tracking status of the friend
      */
     public void setIsTracked(Boolean isTracked) {
         this.isTracked = isTracked;
     }
+
 
     @Override
     public String toString() {

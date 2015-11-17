@@ -20,21 +20,47 @@ import java.util.Observer;
 
 import ca.ualberta.trinkettrader.User.User;
 
+/**
+ * An extension of the built-in Java ArrayList representing a list of Friends.
+ * In addition to the functionality of ArrayList, a FriendsList can be searched by username.
+ * Also, duplicate Friends (Friends with the same username) cannot be added to the same
+ * FriendsList (the ArrayList add() method is overriden).
+ */
 public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
 
+    /**
+     * Default constructor. Uses the ArrayList default constructor; creates an empty list.
+     */
     public FriendsList() {
         super();
     }
 
-    public FriendsList(Collection<? extends User> c) {
-        super();
+
+    /**
+     * Constructs a FriendsList using an arbitrary Collection of Users or Friends (subclasses of
+     * User). Runs the equivalent constructor in ArrayList.
+     * In other words, creates a FriendsList using the specified Collection argument.
+     *
+     * @param c a Collection of Friend objects; a list of the user's Friends
+     */
+    public FriendsList(Collection<? extends Friend> c) {
+        super(c);
     }
 
+
+    /**
+     * Initializes a FriendsList to the specified capacity.
+     * Useful if the user knows the number of Friends in advance.
+     * Runs the equivalent constructor in ArrayList.
+     *
+     * @param initialCapacity capacity of the FriendsList
+     */
     public FriendsList(int initialCapacity) {
         super();
     }
+
 
     /**
      * Adds the specified observer to the list of observers. If it is already
@@ -47,6 +73,7 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
         observers.add(observer);
     }
 
+
     /**
      * Removes the specified observer from the list of observers. Passing null
      * won't do anything.
@@ -58,11 +85,11 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
         observers.remove(observer);
     }
 
+
     /**
      * If {@code hasChanged()} returns {@code true}, calls the {@code update()}
      * method for every observer in the list of observers using null as the
      * argument. Afterwards, calls {@code clearChanged()}.
-     * <p/>
      * Equivalent to calling {@code notifyObservers(null)}.
      */
     @Override
@@ -72,6 +99,14 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
         }
     }
 
+
+    /**
+     * Searches for a Friend in the FriendsList using the specified username.
+     * Returns the Friend if the username is found; otherwise, returns <code>null</code>
+     *
+     * @param username the username of the friend to be searched
+     * @return the Friend with the specified username if found; otherwise, null
+     */
     public Friend getFriendByUsername(String username) {
         for (Friend f : this) {
             if (f.getProfile().getUsername().equals(username)) {
@@ -81,11 +116,12 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
         return null;
     }
 
+
     /**
-     * Add friend to friends list.  If that friend is already in your friends list it will not be added again.
+     * Add friend to friends list.  If that friend is already in the FriendsList it will not be added again.
      *
-     * @param friend
-     * @return boolean
+     * @param friend the Friend to be added to the FriendsList
+     * @return True if the Friend is successfully added; otherwise, False
      */
     @Override
     public boolean add(Friend friend) {
