@@ -35,7 +35,7 @@ import ca.ualberta.trinkettrader.R;
  * Clicking on a friend within the friends list will connect the user to the FriendsProfileActivity,
  * which will allow the user to view the details of that friend, and choose whether to untrack the
  * friend, or to remove them.
- */s
+ */
 
 public class TrackedFriendsListActivity extends AppCompatActivity implements Observer {
 
@@ -72,7 +72,7 @@ public class TrackedFriendsListActivity extends AppCompatActivity implements Obs
     /**
      * Directs controller to return to FriendsListActivity.
      *
-     * @param v Go Back button
+     * @param v Back button
      */
     public void backToFriendsListButtonOnClick(View v) {
         controller.backToFriendsListOnClick();
