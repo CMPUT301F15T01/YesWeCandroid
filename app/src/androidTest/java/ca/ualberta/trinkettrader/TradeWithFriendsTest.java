@@ -495,7 +495,13 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
 
 
     // User can view a list of trades they are currently involved in
-    // TODO is there a way to view the current trades lists of the other person involved in the trade
+    // TODO is there a way to view the current trades lists of the other person involved in the trade. not currently
+    /*
+    * Please note: This test only is concerned with a trade being in the currentTrades list, NOT
+    * viewing the trade details activity.  TradeDetailsActivity will not be implemented for this prototype.
+    * TradeDetailsActivity just included for completeness.
+    * */
+
     public void testViewCurrentTrades() {
 
         /****Hardcode in trades to click****/
@@ -524,7 +530,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         bracelet.setName("Bronze bracer");
         secondInventory.add(bracelet);
 
-        Trade trade1 = new Trade(borrowerInventory, currentUser.getTradeManager(), secondInventory, currentUser.getTradeManager());
+        final Trade trade1 = new Trade(borrowerInventory, currentUser.getTradeManager(), secondInventory, currentUser.getTradeManager());
         //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
         currentUser.getTradeManager().getTradeArchiver().addTrade(trade1);
         assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
@@ -568,10 +574,10 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         Instrumentation.ActivityMonitor profilePageActivityMonitor = getInstrumentation().addMonitor(UserProfileActivity.class.getName(), null, false);
 
         // actions which lead to next activity
-        final Button tradesHomePageButton = homePageActivity.getTradeButton();
+        final Button homePageProfileButton = homePageActivity.getProfileButton();
         loginActivity.runOnUiThread(new Runnable() {
             public void run() {
-                tradesHomePageButton.performClick();
+                homePageProfileButton.performClick();
             }
         });
         getInstrumentation().waitForIdleSync();
@@ -619,14 +625,14 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
                 View tradeBox1 = currentTradesList.getChildAt(1);
                 currentTradesList.performItemClick(tradeBox1, 0, tradeBox1.getId());
                 // check that we clicked the correct trade
-                assertEquals(trade,ApplicationState.getInstance().getClickedTrade());
+                assertTrue((trade.toString()).equals(ApplicationState.getInstance().getClickedTrade().toString()));
             }
         });
         getInstrumentation().waitForIdleSync();
 
         // regular activity check stuff
         // Validate that ReceiverActivity is started
-        TradesActivity tradeDetailsActivity = (TradesActivity) tradeDetailsActivityMonitor.waitForActivityWithTimeout(1000);
+        TradeDetailsActivity tradeDetailsActivity = (TradeDetailsActivity) tradeDetailsActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", tradeDetailsActivity);
         assertEquals("Monitor for ReceiverActivity has not been called", 1, tradeDetailsActivityMonitor.getHits());
         assertEquals("Activity is of wrong type", TradeDetailsActivity.class, tradeDetailsActivity.getClass());
