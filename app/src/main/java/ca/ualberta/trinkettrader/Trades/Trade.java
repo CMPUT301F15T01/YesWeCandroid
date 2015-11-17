@@ -40,10 +40,10 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * public constructor
-     * @param offeredTrinkets
-     * @param receiver
-     * @param requestedTrinkets
-     * @param sender
+     * @param offeredTrinkets inventory containing offered trinkets
+     * @param receiver TradeManager of user who was offered the trade
+     * @param requestedTrinkets inventory containing requested trinkets
+     * @param sender TradeManager of user who instantiated trade
      */
     public Trade(Inventory offeredTrinkets, TradeManager receiver, Inventory requestedTrinkets, TradeManager sender) {
         this.offeredTrinkets = offeredTrinkets;
@@ -79,7 +79,7 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
      * If {@code hasChanged()} returns {@code true}, calls the {@code update()}
      * method for every observer in the list of observers using null as the
      * argument. Afterwards, calls {@code clearChanged()}.
-     * <p/>
+     *
      * Equivalent to calling {@code notifyObservers(null)}.
      */
     @Override
@@ -91,7 +91,8 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns trinket offered by trade sender.
-     * @return Inventory
+     *
+     * @return Inventory Inventory containing offered trinkets
      */
     public Inventory getOfferedTrinkets() {
         return offeredTrinkets;
@@ -99,7 +100,8 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns TradeManager of receiver of trade (user who receives trade offer).
-     * @return TradeManager
+     *
+     * @return TradeManager TradeManager of user who was offered the trade
      */
     public TradeManager getReceiver() {
         return receiver;
@@ -107,7 +109,8 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Return trinket(s) requested by trade sender.
-     * @return Inventory
+     *
+     * @return Inventory Inventory containing requested trinkets
      */
     public Inventory getRequestedTrinkets() {
         return requestedTrinkets;
@@ -115,7 +118,8 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns TradeManager of sender of trade (user who proposes trade offer).
-     * @return
+     *
+     * @return TradeManager TradeManager of user who instantiated trade
      */
     public TradeManager getSender() {
         return sender;
@@ -125,7 +129,8 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
      * Returns status of the trade. Can be pending, accepted, or declined.
      * Current(active) trades have a status of pending.  Past (inactive)
      * trades have a status of accepted or declined.
-     * @return String
+     *
+     * @return String Status of trade (pending, accepted or declined)
      */
     public String getStatus() {
         return status;
@@ -135,7 +140,9 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
      * Sets status of a trade.  Can be pending, accepted, or declined.
      * Current(active) trades have a status of pending.  Past (inactive)
      * trades have a status of accepted or declined.
-     * @param status
+     *
+     * @param status Status of trade (pending, accepted or declined)
+
      */
     public void setStatus(String status) {
         this.status = status;
@@ -144,16 +151,17 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
     /**
      * Returns number of trinkets involved in a particular trade.
      *
-     * @return Integer
+     * @return Integer Number of offered and requested trinkets in trade
      */
     public Integer getNumberOfTrinkets() {
         return numberOfTrinkets;
     }
 
+    // TODO useful?
     /**
      * Sets number of trinkets in a particular trade.
      *
-     * @param numberOfTrinkets
+     * @param numberOfTrinkets Number of offered and requested trinkets in a trade
      */
     public void setNumberOfTrinkets(Integer numberOfTrinkets) { this.numberOfTrinkets = numberOfTrinkets;
     }
@@ -164,19 +172,19 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
     // TODO may remodel after profile page with updatable fields
     /**
      * This method override is responsible for determining how trades will be shown to the
-     * user when they view their Current Trades list and PAst Trades list.
+     * user when they view their Current Trades list and Past Trades list.
      *
      * For each trade in the list, it's number, the other person involved in the trade
      * (not LoggedInUser), it's status and the categories of the trinkets involved will be
      * displayed.
      * @return String Text displayed for each trade in current trades list of
-     * ActiveTradesActivity and in past trades list of PastTradesActivity.
+     * ActiveTradesActivity and in past trades list of PastTradesActivity
      */
     @Override
     public String toString(){
 
         // need to display name of other person involved in trade
-        // also need to find categories of trinkets invloved
+        // also need to find categories of trinkets involved
         return "Trade No. 1 " + "with status " + this.getStatus();
     }
 }

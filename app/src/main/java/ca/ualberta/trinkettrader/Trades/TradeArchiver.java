@@ -34,6 +34,9 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
     private ArrayList<Trade> currentTrades;
     private ArrayList<Trade> pastTrades;
 
+    /**
+     * Public Constructor
+     */
     public TradeArchiver() {
         currentTrades = new ArrayList<>();
         pastTrades = new ArrayList<>();
@@ -45,10 +48,11 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * The added trade will be added to the top of the currentTrades ArrayList,
      * so it will be at the top of the user's list of current trades when the user views the list
      * in the app.
-     * @param trade
+     *
+     * @param trade Trinket exchange between a borrower and an owner
      */
     public void addTrade(Trade trade) { //TODO currently no duplicate trade check. is this needed?
-        currentTrades.add(0,trade);
+        currentTrades.add(0, trade);
     }
 
     /**
@@ -59,8 +63,10 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * when the user views the list in the app.
      *
      * A trade will <b>not</b> be archived if it is deleted by the user.
-     * @param trade
-     * @param status
+     *
+     * @param trade Trinket exchange between a borrower and an owner
+     * @param status Status of trade (pending, accepted or declined)
+
      */
     public void archiveTrade(Trade trade, String status) {
         // TODO implementation needs to be tested
@@ -73,7 +79,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * Deletes specified trade from currentTrades ArrayList. Trades will <b>never</b> be
      * deleted from pastTrades ArrayList.  This method will only be used to update the currentTrades
      * ArrayList when a trade is no longer active (ie. trade has been accepted, declined or deleted).
-     * @param trade
+     * @param trade Trinket exchange between a borrower and an owner
      */
     public void deleteTrade(Trade trade) {
         // TODO implementation needs to be tested
@@ -94,43 +100,37 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
     /**
      * Returns entire ArrayList of current (active) trades.  This method is
      * used by the TradesActivity to display the user's current trades.
-     * @return ArrayList&lt;Trade&gt;
+     *
+     * @return ArrayList&lt;Trade&gt; List of user's current (active) trades
      */
     public ArrayList<Trade> getCurrentTrades() {
         return currentTrades;
     }
 
-    // TODO I can see how this would be useful, but currently it's useless.
-    /**
-     * Returns specified trade from list of current trades.
-     *
-     * @param trade
-     * @return Trade
-     */
-    public Trade getCurrentTrade(Trade trade) {
-        // TODO implementation not complete
-        return trade;
-    }
 
-    // TODO I can see how this would be useful, but currently it's useless.
     /**
-     * Returns specified trade from list of past trades.
+     * Returns trade at sepcified index in list of current trades.
      *
-     * @param trade
-     * @return Trade
+     * @param index Index (position) of trade in list of current trades
+     * @return Trade Trinket exchange between a borrower and an owner
      */
-    public Trade getPastTrade(Trade trade) {
-        // TODO implementation not complete
-        return trade;
-    }
+    public Trade getCurrentTradeAt(Integer index) { return currentTrades.get(index); }
+
+    /**
+     * Returns trade at specifed index in list of past trades.
+     *
+     * @param index Index (position) of trade in list of past trades
+     * @return Trade Trinket exchange between a borrower and an owner
+     */
+    public Trade getPastTradeAt(Integer index) { return pastTrades.get(index); }
 
     /**
      * Returns boolean indicating if a trade is a current (active) trade.
      * Current trades are trades that <b>have not</b> been accepted or declined, and are stored
      * in the currentTrades ArrayList. A current trade's status is "pending".
      *
-     * @param trade
-     * @return Boolean
+     * @param trade Trinket exchange between a borrower and an owner
+     * @return Boolean Returns TRUE if trade was found in list.  FALSE if trade was not found.
      */
     public Boolean hasCurrentTrade(Trade trade) {
         // TODO implementation needs to be tested
@@ -142,8 +142,8 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * Past trades are trades that <b>have</b> been accepted or declined, and are stored
      * in the pastTrades ArrayList.  A past trade's status is either "accepted" or "declined".
      *
-     * @param trade
-     * @return Boolean
+     * @param trade Trinket exchange between a borrower and an owner
+     * @return Boolean Returns TRUE if trade was found in list.  FALSE if trade was not found.
      */
     public Boolean hasPastTrade(Trade trade) {
         // TODO implementation needs to be tested

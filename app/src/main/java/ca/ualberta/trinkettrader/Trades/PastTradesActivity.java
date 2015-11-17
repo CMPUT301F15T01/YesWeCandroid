@@ -61,7 +61,7 @@ public class PastTradesActivity extends AppCompatActivity implements Observer {
     /**
      * Returns pastTradesListView.  This method is used by the PastTradesController
      * to get the clicked trade on the screen.
-     * @return ListView
+     * @return ListView ListView of past trades
      */
     public ListView getPastTradesListView(){ return pastTradesListView; }
 
