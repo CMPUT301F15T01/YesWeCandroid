@@ -514,7 +514,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         ownerInventory.add(ring);
 
         // trade with self
-        Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, currentUser.getTradeManager());
+        final Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, currentUser.getTradeManager());
         //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
         currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
         assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
@@ -618,20 +618,28 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
             public void run() {
                 View tradeBox1 = currentTradesList.getChildAt(1);
                 currentTradesList.performItemClick(tradeBox1, 0, tradeBox1.getId());
+                // check that we clicked the correct trade
+                assertEquals(trade,ApplicationState.getInstance().getClickedTrade());
             }
         });
         getInstrumentation().waitForIdleSync();
 
+        // regular activity check stuff
+        // Validate that ReceiverActivity is started
+        TradesActivity tradeDetailsActivity = (TradesActivity) tradeDetailsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", tradeDetailsActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called", 1, tradeDetailsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type", TradeDetailsActivity.class, tradeDetailsActivity.getClass());
 
-
-
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(tradeDetailsActivityMonitor);
 
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
         userProfileActivity.finish();
         currentTradesActivity.finish();
-        assertNotNull(null);
+        tradeDetailsActivity.finish();
     }
 
 
