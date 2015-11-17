@@ -15,7 +15,7 @@
 package ca.ualberta.trinkettrader.Trades;
 
 /**
- *
+ * Will be implemented in next prototype.
  */
 public class TradeCommunicationsManager {
 }

@@ -20,6 +20,11 @@ import ca.ualberta.trinkettrader.User.User;
 
 /**
  * Represents a manager that transmits notifications to the user.
+ * Two types of notifications can be sent to a user:
+ * 1. new trade offer notification - user will be notified when another user sends them a
+ * new trade offer,
+ * 2. completion of trade notification - user will be emailed relevant trade information
+ * for a completed trade.
  */
 public class NotificationManager {
 

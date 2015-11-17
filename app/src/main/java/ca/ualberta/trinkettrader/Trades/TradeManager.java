@@ -59,7 +59,6 @@ public class TradeManager {
     }
 
     // TODO pulling trades once the phone has connectivity.
-    // TODO do <> break javaDocs? if not used for bold, italics,....
     /**
      * Pulls offered trades when user is online.
      *
@@ -74,7 +73,7 @@ public class TradeManager {
 
 
     /**
-     * Propose counter trade
+     * Propose counter trade.
      *
      * @param trade
      * @param counterTrade
@@ -106,8 +105,9 @@ public class TradeManager {
     // TODO this could be deleted, because there is already a TradeArchiver deleteTrade method.
     // TODO we would be calling deleteTrade.deleteTrade
     /**
-     * Delete trade
-     *
+     * Deletes specified trade from currentTrades ArrayList. Trades will <b>never</b> be
+     * deleted from pastTrades ArrayList.  This method will only be used to update the currentTrades
+     * ArrayList when a trade is no longer active (ie. trade has been accepted, declined or deleted).
      * @param trade
      */
     public void deleteTrade(Trade trade) {
@@ -115,7 +115,8 @@ public class TradeManager {
     }
 
     /**
-     * Returns user's trade archiver.
+     * Returns user's trade archiver. Trade archiver is needed to access
+     * and manipulate a user's current and past trades.
      *
      * Please see TradeArchiver for more information.
      * @return TradeArchiver
@@ -125,7 +126,8 @@ public class TradeManager {
     }
     // TODO think that one is already instantiated in User class.  need to check.
     /**
-     * Returns  user's notification manager.
+     * Returns  user's notification manager. Notification manager is responisble for
+     * notifying a user of a new trades (new offer) and a completed trades.
      *
      * Please see NotificationManager class for more information.
      * @return NotificationManager
