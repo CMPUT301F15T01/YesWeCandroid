@@ -17,6 +17,11 @@ package ca.ualberta.trinkettrader.User.Profile;
 import java.util.ArrayList;
 import java.util.Observer;
 
+/**
+ * Class that serves as a container for contact information. This should
+ * appear as an attribute of a user. Whenever this class is used it should
+ * have been obtained by the getter contained in the user.
+ */
 public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
