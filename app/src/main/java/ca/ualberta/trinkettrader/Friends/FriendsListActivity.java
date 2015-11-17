@@ -28,6 +28,16 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.R;
 
+/**
+ * Android activity class for displaying a user's friendslist.  From this activity all of the
+ * friends in the user's friendslist can be viewed.
+ * This activity contains a "Find Friend" button which will add a friend to the friendslist.
+ * It also contains a "View Tracked Friends" button that will connect the user to the
+ * TrackedFriendsListActivity. Clicking on a friend within the friends list will connect the
+ * user to the FriendsProfileActivity, which will allow the user to view the details of that friend,
+ * and choose whether to track the friend, or to remove them.
+ */
+
 public class FriendsListActivity extends AppCompatActivity implements Observer {
 
     private Button findFriendsButton;

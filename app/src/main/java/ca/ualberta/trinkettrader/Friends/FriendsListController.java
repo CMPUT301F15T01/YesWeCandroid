@@ -24,6 +24,13 @@ import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsListActivity;
 
+/**
+ * Controller for handling interactions from the FriendsListActivity.  The controller manages clicks to
+ * the "Find Friends", "View Tracked Friends" buttons in the FriendsListActivity's layout.
+ * Clicking the Find Friends button will add the friend to the friends list, and the View Tracked Friends
+ * starts the TrackedFriendsListActivity.
+ */
+
 public class FriendsListController {
     private FriendsListActivity activity;
 

@@ -28,6 +28,11 @@ import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.User;
 
+/**
+ * Android activity for displaying a user's friends profile. Displays the friends details,
+ * such as their username, name, etc. It also displays whether the friend is currently tracked,
+ */
+
 public class FriendsProfileActivity extends AppCompatActivity implements Observer {
 
     private User friend;
