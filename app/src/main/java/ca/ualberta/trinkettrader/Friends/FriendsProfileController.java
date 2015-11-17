@@ -22,9 +22,6 @@ import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.User;
 
-/**
- * Created by Me on 2015-11-05.
- */
 public class FriendsProfileController {
     private FriendsProfileActivity activity;
 
