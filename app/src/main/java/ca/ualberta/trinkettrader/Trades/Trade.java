@@ -31,24 +31,24 @@ import ca.ualberta.trinkettrader.Inventory.Inventory;
 public class Trade implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
-    private Inventory offeredItems;
-    private Inventory requestedItems;
+    private Inventory offeredTrinkets;
+    private Inventory requestedTrinkets;
     private String status;
     private TradeManager receiver;
     private TradeManager sender;
-    private Integer numberOfItems;
+    private Integer numberOfTrinkets;
 
     /**
      * public constructor
-     * @param offeredItems
+     * @param offeredTrinkets
      * @param receiver
-     * @param requestedItems
+     * @param requestedTrinkets
      * @param sender
      */
-    public Trade(Inventory offeredItems, TradeManager receiver, Inventory requestedItems, TradeManager sender) {
-        this.offeredItems = offeredItems;
+    public Trade(Inventory offeredTrinkets, TradeManager receiver, Inventory requestedTrinkets, TradeManager sender) {
+        this.offeredTrinkets = offeredTrinkets;
         this.receiver = receiver;
-        this.requestedItems = requestedItems;
+        this.requestedTrinkets = requestedTrinkets;
         this.sender = sender;
         this.status = "pending"; // TODO need to clarify what status names will be
     }
@@ -90,31 +90,31 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     *
-     * @return
+     * Returns trinket offered by trade sender.
+     * @return Inventory
      */
-    public Inventory getOfferedItems() {
-        return offeredItems;
+    public Inventory getOfferedTrinkets() {
+        return offeredTrinkets;
     }
 
     /**
-     *
-     * @return
+     * Returns TradeManager of receiver of trade (user who receives trade offer).
+     * @return TradeManager
      */
     public TradeManager getReceiver() {
         return receiver;
     }
 
     /**
-     *
-     * @return
+     * Return trinket(s) requested by trade sender.
+     * @return Inventory
      */
-    public Inventory getRequestedItems() {
-        return requestedItems;
+    public Inventory getRequestedTrinkets() {
+        return requestedTrinkets;
     }
 
     /**
-     *
+     * Returns TradeManager of sender of trade (user who proposes trade offer).
      * @return
      */
     public TradeManager getSender() {
@@ -123,7 +123,8 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Returns status of the trade. Can be pending, accepted, or declined.
-     *
+     * Current(active) trades have a status of pending.  Past (inactive)
+     * trades have a status of accepted or declined.
      * @return String
      */
     public String getStatus() {
@@ -132,6 +133,8 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets status of a trade.  Can be pending, accepted, or declined.
+     * Current(active) trades have a status of pending.  Past (inactive)
+     * trades have a status of accepted or declined.
      * @param status
      */
     public void setStatus(String status) {
@@ -139,21 +142,20 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns number of items involved in a particular trade.
+     * Returns number of trinkets involved in a particular trade.
      *
      * @return Integer
      */
-    public Integer getNumberOfItems() {
-        return numberOfItems;
+    public Integer getNumberOfTrinkets() {
+        return numberOfTrinkets;
     }
 
     /**
-     * Sets number of items in the trade.
+     * Sets number of trinkets in a particular trade.
      *
-     * @param numberOfItems
+     * @param numberOfTrinkets
      */
-    public void setNumberOfItems(Integer numberOfItems) {
-        this.numberOfItems = numberOfItems;
+    public void setNumberOfTrinkets(Integer numberOfTrinkets) { this.numberOfTrinkets = numberOfTrinkets;
     }
 
     // adarshr, accessed on 2015-11-16, http://stackoverflow.com/questions/10734106/how-to-override-tostring-properly-in-java
@@ -165,7 +167,7 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
      * user when they view their Current Trades list and PAst Trades list.
      *
      * For each trade in the list, it's number, the other person involved in the trade
-     * (not LoggedInUser), it's status and the categories of the items involved will be
+     * (not LoggedInUser), it's status and the categories of the trinkets involved will be
      * displayed.
      * @return String Text displayed for each trade in current trades list of
      * ActiveTradesActivity and in past trades list of PastTradesActivity.
@@ -174,7 +176,7 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
     public String toString(){
 
         // need to display name of other person involved in trade
-        // also need to find categories of items invloved
+        // also need to find categories of trinkets invloved
         return "Trade No. 1 " + "with status " + this.getStatus();
     }
 }
