@@ -35,6 +35,7 @@ public class FriendsProfileActivity extends AppCompatActivity implements Observe
     private Button backButton;
     private RadioButton trackedRadioButton;
     private TextView usernameTextView;
+    private TextView nameTextView;
     private FriendsProfileController controller;
 
     @Override
@@ -48,6 +49,7 @@ public class FriendsProfileActivity extends AppCompatActivity implements Observe
         controller = new FriendsProfileController(this);
 
         usernameTextView = (TextView) findViewById(R.id.usernameText);
+        nameTextView = (TextView) findViewById(R.id.nameText);
 
         updateFields();
     }
@@ -64,6 +66,15 @@ public class FriendsProfileActivity extends AppCompatActivity implements Observe
      */
     public TextView getUsernameTextView() {
         return usernameTextView;
+    }
+
+    /**
+     * Gets textView for displaying friend's name.
+     *
+     * @return TextView
+     */
+    public TextView getNameTextView() {
+        return nameTextView;
     }
 
     /**

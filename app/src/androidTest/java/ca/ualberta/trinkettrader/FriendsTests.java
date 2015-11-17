@@ -521,8 +521,10 @@ public class FriendsTests extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected FriendsProfileActivity", FriendsProfileActivity.class, displayFriendsProfileActivity.getClass());
         getInstrumentation().removeMonitor(displayFriendsProfileActivityMonitor);
 
-        // Test that the friend being viewed is the same as the friend that was added earlier (compare the usernames).
+        // Test that the friend's profile being viewed corresponds to the friend that was added earlier (compare the usernames, names, and tracked status).
         assertTrue(displayFriendsProfileActivity.getUsernameTextView().getText().toString().equals("test@gmail.com"));
+        assertTrue(displayFriendsProfileActivity.getNameTextView().getText().toString().equals("Name"));
+        assertFalse(displayFriendsProfileActivity.getTrackedRadioButton().isChecked());
 
         // The tests have completed; clear the friends lists and finish all activities (cleanup).
         LoggedInUser.getInstance().getFriendsList().clear();
