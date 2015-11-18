@@ -71,9 +71,9 @@ public class TradesActivity extends AppCompatActivity implements Observer {
 
 
     /**
-     * onClick method for button that directs to past trades.
+     *  Directs user to past trades screen when clicked.
      *
-     * @param view
+     * @param view View object used to change activities
      */
     public void openPastTrades(View view) {
         Intent intent = new Intent(this, PastTradesActivity.class);
@@ -82,14 +82,14 @@ public class TradesActivity extends AppCompatActivity implements Observer {
 
     /**
      * Returns Past Trades button.
-     * @return Button
+     * @return Button Links to page which displays list of user's past(inactive) trades
      */
     public Button getPastTradesButton(){return pastTradesButton; }
 
     /**
      * Returns currentTradesListView.  This method is used by the ActiveTradesController
      * to get the clicked trade on the screen.
-     * @return ListView
+     * @return ListView ListView of user's current trades
      */
     public ListView getCurrentTradesListView() { return currentTradesListView; }
 

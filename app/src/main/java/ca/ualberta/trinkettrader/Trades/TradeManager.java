@@ -51,7 +51,7 @@ public class TradeManager {
      * and the owner.  Notifies the user who did not instantiate the trade that
      * they have been made a new offer.
      *
-     * @param trade
+     * @param trade Trinket exchange between a borrower and an owner
      */
     public void proposeTrade(Trade trade) {
         //TODO add trade to currentTrades lists of borrower and owner
@@ -94,8 +94,9 @@ public class TradeManager {
      * by owner.
      * currentTrades and pastTrades ArrayLists
      * are accessed through TradeArchiver.
-     * @param trade
-     * @param comments
+     *
+     * @param trade Trinket exchange between a borrower and an owner
+     * @param comments Important trade related comments determined by owner
      */
     public void acceptTrade(Trade trade, String comments) {
         // TODO delete trade from currentTrades list, and use archive method to add it to pastTrades and change status
@@ -109,7 +110,7 @@ public class TradeManager {
      * owner's pastTrades ArrayLists. currentTrades and pastTrades ArrayLists
      * are accessed through TradeArchiver.
      *
-     * @param trade
+     * @param trade Trinket exchange between a borrower and an owner
      */
     public void declineTrade(Trade trade) {
         // TODO delete trade from current trades list, change trade status and add to past trades list (archive it)
@@ -121,7 +122,8 @@ public class TradeManager {
      * Deletes specified trade from currentTrades ArrayList. Trades will <b>never</b> be
      * deleted from pastTrades ArrayList.  This method will only be used to update the currentTrades
      * ArrayList when a trade is no longer active (ie. trade has been accepted, declined or deleted).
-     * @param trade
+     *
+     * @param trade Trinket exchange between a borrower and an owner
      */
     public void deleteTrade(Trade trade) {
 
@@ -132,7 +134,8 @@ public class TradeManager {
      * and manipulate a user's current and past trades.
      *
      * Please see TradeArchiver for more information.
-     * @return TradeArchiver
+     * @return TradeArchiver Responsible for the storage and manipulation of a user's current (active) and
+     * past (inactive) trades
      */
     public TradeArchiver getTradeArchiver() {
         return tradeArchiver;
@@ -143,7 +146,8 @@ public class TradeManager {
      * notifying a user of a new trades (new offer) and a completed trades.
      *
      * Please see NotificationManager class for more information.
-     * @return NotificationManager
+     *
+     * @return NotificationManager Manages receiving, sending and displaying of notifications for user
      */
     public NotificationManager getNotificationManager() {
         return notificationManager;

@@ -90,7 +90,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
     /**
      * Returns entire ArrayList of past (inactive) trades.  This method is
      * used by the PastTradesActivity to display the user's past trades.
-     * @return ArrayList&lt;Trade&gt;
+     * @return ArrayList&lt;Trade&gt; List of user's past(inactive) trades
      */
     public ArrayList<Trade> getPastTrades() {
         return pastTrades;
