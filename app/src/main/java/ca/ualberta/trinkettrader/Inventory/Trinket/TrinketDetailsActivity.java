@@ -31,7 +31,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.ApplicationState;
-import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.ImageButtonArrayAdapter;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.ImageViewArrayAdapter;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.R;
 
@@ -72,7 +72,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
             this.bitmaps.add(picture.getBitmap());
         }
 
-        this.adapter = new ImageButtonArrayAdapter(this, R.layout.activity_trinket_details_picture, this.bitmaps);
+        this.adapter = new ImageViewArrayAdapter(this, R.layout.activity_trinket_details_picture, this.bitmaps);
         this.gallery.setAdapter(this.adapter);
         this.adapter.notifyDataSetChanged();
 
