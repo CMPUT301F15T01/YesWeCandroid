@@ -47,7 +47,7 @@ public class FriendsProfileActivity extends AppCompatActivity implements Observe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_profile);
-        friend = ApplicationState.getInstance().getClickedFriend();
+        friend = ApplicationState.getInstance().getClickedFriend().getActualFriend();
         removeFriendButton = (Button) findViewById(R.id.removeFriendButton);
         backButton = (Button) findViewById(R.id.backToFriendsListFromProfile);
         trackedRadioButton = (RadioButton) findViewById(R.id.trackedRadioButton);
