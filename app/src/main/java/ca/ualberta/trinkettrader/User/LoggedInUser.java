@@ -99,4 +99,8 @@ public class LoggedInUser extends User {
         }
         this.setNeedToSave(Boolean.FALSE);
     }
+
+    public void loadFromNetwork(String email){
+        //LoggedInUser.getInstance().searchOnNetwork(email, 'User', new User());
+    }
 }

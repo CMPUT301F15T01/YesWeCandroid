@@ -77,6 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             emailTextView.setError(getString(R.string.error_invalid_email));
         } else {
             // TODO Get user info from internet
+
             LoggedInUser.getInstance().getProfile().setEmail(email);
             Intent intent = new Intent(this, HomePageActivity.class);
             startActivity(intent);

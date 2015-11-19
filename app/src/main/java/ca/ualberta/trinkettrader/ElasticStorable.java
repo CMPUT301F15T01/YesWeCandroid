@@ -8,8 +8,10 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -58,13 +60,16 @@ public abstract class ElasticStorable {
     }
 
     /**
-     * Search for ElasticStorable objects on the network by matching query.
-     * @param searchString String to match in query.
-     * @param field String to match the searchString in.
+     * Search for ElasticStorable objects on the network by matching the attribute and attribute
+     * value pairs
+     *
+     * @param postParameters Pairs of attributes and their values to equate to.
      * @param storable An instance of the ElasticStorable subclass that we look for, specifically.
      * @return
      */
-    public ArrayList<ElasticStorable> searchOnNetwork(String searchString, String field, ElasticStorable storable) {
+    //This method was modified under the guidance of http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost
+    //by Android-Droid
+    public ArrayList<ElasticStorable> searchOnNetwork(ArrayList<NameValuePair> postParameters, ElasticStorable storable) {
 
         ArrayList<ElasticStorable> result = new ArrayList<ElasticStorable>();
         /**
@@ -72,15 +77,13 @@ public abstract class ElasticStorable {
          */
 
         HttpPost searchRequest = new HttpPost(storable.getSearchUrl());
-
-        String[] fields = null;
-        if (field != null) {
-            throw new UnsupportedOperationException("Not implemented!");
+        try{
+            searchRequest.setEntity(new UrlEncodedFormEntity(postParameters));
+        }catch (UnsupportedEncodingException e){
+            e.printStackTrace();
         }
 
-        SimpleSearchCommand command = new SimpleSearchCommand(searchString);
-
-        String query = gson.toJson(command);
+        String query = gson.toJson(postParameters);
         Log.i(storable.getTag(), "Json command: " + query);
 
         StringEntity stringEntity = null;
@@ -91,8 +94,6 @@ public abstract class ElasticStorable {
         }
 
         searchRequest.setHeader("Accept", "application/json");
-        searchRequest.setEntity(stringEntity);
-
         HttpClient httpClient = new DefaultHttpClient();
 
         HttpResponse response = null;
