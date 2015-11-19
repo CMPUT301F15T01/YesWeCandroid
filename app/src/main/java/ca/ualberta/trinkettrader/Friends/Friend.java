@@ -98,6 +98,6 @@ public class Friend {
 
     @Override
     public String toString() {
-        return this.getProfile().getUsername();
+        return this.actualFriend.getProfile().getUsername();
     }
 }
