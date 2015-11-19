@@ -33,7 +33,7 @@ import ca.ualberta.trinkettrader.User.Profile.UserProfile;
  * the various classes that make up a user.
  */
 
-public class User extends ElasticStorable implements ca.ualberta.trinkettrader.Observable {
+public class User extends ElasticStorable implements ca.ualberta.trinkettrader.Observable, Friendable {
 
     protected FriendsList friendsList;
     protected Inventory inventory;
@@ -130,6 +130,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return Boolean
      */
+
     public Boolean getNeedToSave() {
         //TODO: need to implement needToSave for friendslist as well...
         return this.needToSave | this.profile.getNeedToSave() | this.inventory.getNeedToSave();
@@ -150,6 +151,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return FriendList
      */
+
     public FriendsList getFriendsList() {
         return friendsList;
     }
@@ -159,6 +161,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @param friendsList
      */
+
     public void setFriendsList(FriendsList friendsList) {
         this.friendsList = friendsList;
         this.needToSave = Boolean.TRUE;
@@ -169,6 +172,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return Inventory
      */
+
     public Inventory getInventory() {
         return inventory;
     }
@@ -178,6 +182,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @param inventory
      */
+
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
         this.needToSave = Boolean.TRUE;
@@ -188,6 +193,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return NotificationManager
      */
+
     public NotificationManager getNotificationManager() {
         return notificationManager;
     }
@@ -197,6 +203,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @param notificationManager
      */
+
     public void setNotificationManager(NotificationManager notificationManager) {
         this.notificationManager = notificationManager;
     }
@@ -206,6 +213,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return UserProfile
      */
+
     public UserProfile getProfile() {
         return profile;
     }
@@ -215,6 +223,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @param profile
      */
+
     public void setProfile(UserProfile profile) {
         this.profile = profile;
         this.needToSave = Boolean.TRUE;
@@ -225,6 +234,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return TrackedFriendsList
      */
+
     public TrackedFriendsList getTrackedFriendsList() {
         return trackedFriendsList;
     }
@@ -234,6 +244,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @param trackedFriendsList
      */
+
     public void setTrackedFriends(TrackedFriendsList trackedFriendsList) {
         this.trackedFriendsList = trackedFriendsList;
     }
@@ -243,6 +254,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return TradeManager
      */
+
     public TradeManager getTradeManager() {
         return tradeManager;
     }
@@ -252,6 +264,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @param tradeManager
      */
+
     public void setTradeManager(TradeManager tradeManager) {
         this.tradeManager = tradeManager;
     }

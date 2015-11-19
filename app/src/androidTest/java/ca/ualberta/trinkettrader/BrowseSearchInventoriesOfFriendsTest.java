@@ -39,6 +39,7 @@ import ca.ualberta.trinkettrader.Inventory.Searcher;
 import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
+import ca.ualberta.trinkettrader.User.Friendable;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.User;
 import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
@@ -448,10 +449,10 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         borrowerInventory.add(trinket2);
 
         borrower.getFriendsList().add(friend1);
-        friend1.getActualFriend().getFriendsList().add((Friend) borrower);
+        friend1.getActualFriend().getFriendsList().add((Friendable) borrower);
 
         //TODO: check that we are viewing the borrower's inventory and not someone else's
-        //Setup monitor for InventoryActivity for borrower
+        //Setup monitor for InventoryActivity for BORROWER
         Instrumentation.ActivityMonitor inventoryMonitor = instrumentation.addMonitor(
                 InventoryActivity.class.getName(), null, false);
 

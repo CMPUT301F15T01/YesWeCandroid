@@ -18,6 +18,7 @@ import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsList;
 import ca.ualberta.trinkettrader.Trades.TradeManager;
+import ca.ualberta.trinkettrader.User.Friendable;
 import ca.ualberta.trinkettrader.User.User;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 
@@ -26,7 +27,7 @@ import ca.ualberta.trinkettrader.User.Profile.UserProfile;
  * and methods of a user. Friends have an additional attribute to specify if they are tracked, and
  * they have methods to view and modify their tracking status.
  */
-public class Friend {
+public class Friend implements Friendable{
 
     private Boolean isTracked;
     private String email;
