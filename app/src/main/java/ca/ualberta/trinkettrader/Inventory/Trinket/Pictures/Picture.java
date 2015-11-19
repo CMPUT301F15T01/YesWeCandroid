@@ -23,10 +23,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.ElasticStorable;
+
 /**
  * Represents a compressed picture. This is most likely attached to a trinket.
  */
-public class Picture implements ca.ualberta.trinkettrader.Observable {
+public class Picture extends ElasticStorable implements ca.ualberta.trinkettrader.Observable {
+
+    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/";
+    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/_search";
+    private static final String TAG = "User";
+
 
     private ArrayList<Observer> observers;
     private byte[] image;
@@ -45,6 +52,10 @@ public class Picture implements ca.ualberta.trinkettrader.Observable {
         image = new byte[(int) file.length()];
         fileInputStream.read(image);
         fileInputStream.close();
+    }
+
+    public void loadPicture() {
+
     }
 
     /**
@@ -107,5 +118,24 @@ public class Picture implements ca.ualberta.trinkettrader.Observable {
      */
     public Long size() {
         return file.length();
+    }
+    @Override
+    public String getResourceUrl() {
+        return RESOURCE_URL;
+    }
+
+    @Override
+    public String getSearchUrl() {
+        return SEARCH_URL;
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getId() {
+        return String.valueOf(this.image.hashCode());
     }
 }

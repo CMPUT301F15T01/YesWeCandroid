@@ -16,18 +16,22 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.ApplicationState;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.ImageViewArrayAdapter;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.R;
 
@@ -39,31 +43,48 @@ import ca.ualberta.trinkettrader.R;
  */
 public class TrinketDetailsActivity extends AppCompatActivity implements Observer {
 
+    private AlertDialog dialog;
     private Button deleteButton;
     private Button editButton;
-    private ArrayList<ImageView> imageViews;
+    private ListView gallery;
     private Trinket item;
-    private TrinketDetailsController controller;
     private TrinketDetailsActivity activity = this;
-    private AlertDialog dialog;
+    private TrinketDetailsController controller;
+    private ArrayList<Picture> pictures;
+    private ArrayList<Bitmap> bitmaps;
+    private ArrayAdapter<Bitmap> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_details);
+        setContentView(R.layout.activity_trinket_details);
 
         this.item = ApplicationState.getInstance().getClickedTrinket();
 
         this.deleteButton = (Button) findViewById(R.id.deleteItemButton);
         this.editButton = (Button) findViewById(R.id.edit_button);
         this.controller = new TrinketDetailsController(this);
+        this.gallery = (ListView) findViewById(R.id.gallery);
 
-        imageViews = new ArrayList<>();
-        imageViews.add((ImageView) findViewById(R.id.imageView));
-        ArrayList<Picture> pictures = item.getPictures();
-        if (!pictures.isEmpty()) {
-            imageViews.get(0).setImageBitmap(pictures.get(0).getBitmap());
+        this.pictures = item.getPictures();
+        this.bitmaps = new ArrayList<>();
+        for (Picture picture: pictures) {
+            this.bitmaps.add(picture.getBitmap());
         }
+
+        this.adapter = new ImageViewArrayAdapter(this, R.layout.activity_trinket_details_picture, this.bitmaps);
+        this.gallery.setAdapter(this.adapter);
+        this.adapter.notifyDataSetChanged();
+
+        this.gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Picture picture = pictures.get(position);
+                picture.loadPicture();
+                bitmaps.set(position, picture.getBitmap());
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         this.dialog = setupAlertDialog();
     }
@@ -105,14 +126,12 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
     }
 
     /**
-     * Returns the list of ImageViews displaying the photos of the trinket.  If the trinket has
-     * no attached photos an empty list is returned
+     * Returns the Gallery displaying all of the photos attached to the trinket.
      *
-     * @return ArrayList - list of ImageViews, one for each photo attached to the trinket.  If no
-     * photos are attached to the trinket then an empty list is returned
+     * @return Gallery - gallery containing each photo attached to the trinket
      */
-    public ArrayList<ImageView> getImageViews() {
-        return this.imageViews;
+    public ListView getGallery() {
+        return this.gallery;
     }
 
     /**

@@ -28,6 +28,8 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.User;
 
+import static java.util.Collections.sort;
+
 /**
  * Controller for handling interactions from the AddOrEditTrinketActivity.  The controller manages
  * clicks to the "Add Picture", "Remove Picture" , and "Save" buttons in the
@@ -40,6 +42,7 @@ public class AddOrEditTrinketController {
     private AddOrEditTrinketActivity activity;
     private Trinket trinket = new Trinket();
     private User user = LoggedInUser.getInstance();
+    private ArrayList<Picture> pictures = new ArrayList<>();
 
     /**
      * Constructs a controller with the activity this constructor is attached to.  Each controller
@@ -52,14 +55,23 @@ public class AddOrEditTrinketController {
     }
 
     /**
+     * Returns the current trinket being edited.
+     *
+     * @return Trinket currently being edited
+     */
+    public Trinket getTrinket() {
+        return trinket;
+    }
+
+    /**
      * Adds a picture to trinket being added/edited.  This picture will then be visible when a
      * user views the trinket's details.
      *
-     * @param path filepath of the picture being added
+     * @param picture the picture being added
      * @throws IOException
      */
-    public void addPicture(String path) throws IOException {
-        trinket.getPictures().add(new Picture(new File(path)));
+    public void addPicture(Picture picture) throws IOException {
+        pictures.add(picture);
     }
 
     /**
@@ -68,7 +80,7 @@ public class AddOrEditTrinketController {
      * @param picture specific picture to remove
      */
     public void removePicture(Picture picture) {
-        trinket.getPictures().remove(picture);
+        pictures.remove(picture);
     }
 
     /**
@@ -95,6 +107,7 @@ public class AddOrEditTrinketController {
         this.trinket.setName(this.activity.getTrinketName().getText().toString());
         this.trinket.setQuantity(this.activity.getTrinketQuantity().getText().toString());
         this.trinket.setQuality(new ArrayList<>(Arrays.asList(this.activity.getResources().getStringArray(R.array.spinner_qualities))).get(this.activity.getTrinketQuality().getSelectedItemPosition()));
+        this.trinket.setPictures(pictures);
     }
 
     /**
@@ -108,5 +121,9 @@ public class AddOrEditTrinketController {
         this.user.getInventory().set(this.user.getInventory().indexOf(ApplicationState.getInstance().getClickedTrinket()), this.trinket);
         Intent intent = new Intent(activity, InventoryActivity.class);
         activity.startActivity(intent);
+    }
+
+    public ArrayList<Picture> getPictures() {
+        return pictures;
     }
 }

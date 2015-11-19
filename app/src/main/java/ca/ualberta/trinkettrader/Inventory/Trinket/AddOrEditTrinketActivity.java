@@ -16,15 +16,19 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.io.File;
@@ -37,6 +41,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.ApplicationState;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.ImageViewArrayAdapter;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 
@@ -53,9 +58,10 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
  */
 public class AddOrEditTrinketActivity extends AppCompatActivity implements Observer {
 
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int SELECT_PICTURE = 2;
     private AddOrEditTrinketController controller;
+    private ArrayAdapter<Bitmap> adapter;
+    private ArrayList<Bitmap> bitmaps;
+    private ArrayList<Picture> pictures;
     private Button pictureLibraryButton;
     private Button removePictureButton;
     private Button saveButton;
@@ -64,8 +70,11 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     private EditText trinketDescription;
     private EditText trinketName;
     private EditText trinketQuantity;
+    private ListView gallery;
     private Spinner trinketCategory;
     private Spinner trinketQuality;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int SELECT_PICTURE = 2;
     private Uri uri;
 
     /**
@@ -94,6 +103,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
 
         this.controller = new AddOrEditTrinketController(this);
 
+        this.gallery = (ListView) findViewById(R.id.gallery);
         this.saveButton = (Button) findViewById(R.id.save_button);
         this.trinketAccessibility = (CheckBox) findViewById(R.id.accessibility_checkbox);
         this.trinketCategory = (Spinner) findViewById(R.id.category_spinner);
@@ -101,6 +111,8 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
         this.trinketName = (EditText) findViewById(R.id.name_text);
         this.trinketQuality = (Spinner) findViewById(R.id.quality_spinner);
         this.trinketQuantity = (EditText) findViewById(R.id.quantity_text);
+
+        this.bitmaps = new ArrayList<>();
 
         // Lalit Poptani; http://stackoverflow.com/questions/8119526/android-get-previous-activity; 2015-11-06
         Intent intent = getIntent();
@@ -114,6 +126,12 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             this.trinketName.setText(edited.getName());
             this.trinketQuality.setSelection(new ArrayList<>(Arrays.asList(this.getResources().getStringArray(R.array.spinner_qualities))).indexOf(edited.getQuality()));
             this.trinketQuantity.setText(edited.getQuantity());
+            this.controller.getTrinket().setPictures(edited.getPictures());
+
+            this.pictures = edited.getPictures();
+            for (Picture picture: pictures) {
+                this.bitmaps.add(picture.getBitmap());
+            }
 
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -124,6 +142,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
         } else {
             this.trinketAccessibility.setChecked(true);
             this.trinketQuantity.setText("1");
+            this.pictures = new ArrayList<>();
 
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -132,6 +151,18 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
                 }
             });
         }
+
+        this.adapter = new ImageViewArrayAdapter(this, R.layout.activity_trinket_details_picture, this.bitmaps);
+        this.gallery.setAdapter(this.adapter);
+        this.adapter.notifyDataSetChanged();
+
+        this.gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                controller.removePicture(pictures.get(position));
+                updatePictures();
+            }
+        });
     }
 
     /**
@@ -185,20 +216,43 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            try {
-                // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
-                controller.addPicture(uri.getPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK) {
-            try {
-                controller.addPicture(getPath(data.getData()));
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                try {
+                    // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
+                    this.addPicture(new Picture(new File(uri.getPath())));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            } else if (requestCode == SELECT_PICTURE) {
+                try {
+                    this.addPicture(new Picture(new File(getPath(data.getData()))));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
             }
         }
+    }
+
+    private void addPicture(Picture newPicture) {
+        try {
+            this.controller.addPicture(newPicture);
+            this.updatePictures();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void updatePictures() {
+        bitmaps.clear();
+        pictures = controller.getPictures();
+        for (Picture picture: pictures) {
+            bitmaps.add(picture.getBitmap());
+        }
+        adapter.notifyDataSetChanged();
     }
 
     // mad; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05
@@ -211,20 +265,6 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             cursor.moveToFirst();
             return cursor.getString(column_index);
         } else return null;
-    }
-
-    /**
-     * Click method for "Remove Picture" button that directs controller to remove an attached image
-     * from the trinket.
-     *
-     * @param view - button that was clicked
-     */
-    public void removePictureClick(View view) {
-        try {
-            controller.removePicture(new Picture(new File("/")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**

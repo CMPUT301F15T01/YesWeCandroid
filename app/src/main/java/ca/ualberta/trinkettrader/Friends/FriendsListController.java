@@ -47,7 +47,7 @@ public class FriendsListController {
         String username = textField.getText().toString();
 
         // TODO testing for offline purposes only - will redo once web service intact
-        newFriend.getProfile().setUsername(username);
+        newFriend.getActualFriend().getProfile().setUsername(username);
         LoggedInUser.getInstance().getFriendsList().add(newFriend);
     }
 
