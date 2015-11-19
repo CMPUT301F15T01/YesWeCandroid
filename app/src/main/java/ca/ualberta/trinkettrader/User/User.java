@@ -14,6 +14,8 @@
 
 package ca.ualberta.trinkettrader.User;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Observer;
 
@@ -30,7 +32,12 @@ import ca.ualberta.trinkettrader.User.Profile.UserProfile;
  * LoggedInUser or a Friend. This class mainly acts as a container for all of
  * the various classes that make up a user.
  */
-public abstract class User extends ElasticStorable implements ca.ualberta.trinkettrader.Observable {
+
+public class User extends ElasticStorable implements ca.ualberta.trinkettrader.Observable, Friendable {
+
+    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/";
+    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/_search";
+    private static final String TAG = "User";
 
     protected FriendsList friendsList;
     protected Inventory inventory;
@@ -40,6 +47,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
     protected UserProfile profile;
     protected Boolean needToSave;
     private ArrayList<Observer> observers;
+
 
     /**
      * Public constructor for user: initializes all attribute classes as empty classes with no
@@ -77,7 +85,8 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
     }
 
     protected String getJson() {
-        return new String();
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        return gson.toJson(this); // serializes target to Json
     }
 
     protected void queueUpdate() {
@@ -126,6 +135,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @return Boolean
      */
+
     public Boolean getNeedToSave() {
         //TODO: need to implement needToSave for friendslist as well...
         return this.needToSave | this.profile.getNeedToSave() | this.inventory.getNeedToSave();
@@ -146,6 +156,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @return FriendList
      */
+
     public FriendsList getFriendsList() {
         return friendsList;
     }
@@ -155,6 +166,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @param friendsList
      */
+
     public void setFriendsList(FriendsList friendsList) {
         this.friendsList = friendsList;
         this.needToSave = Boolean.TRUE;
@@ -165,6 +177,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @return Inventory
      */
+
     public Inventory getInventory() {
         return inventory;
     }
@@ -174,6 +187,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @param inventory
      */
+
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
         this.needToSave = Boolean.TRUE;
@@ -184,6 +198,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @return NotificationManager
      */
+
     public NotificationManager getNotificationManager() {
         return notificationManager;
     }
@@ -193,6 +208,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @param notificationManager
      */
+
     public void setNotificationManager(NotificationManager notificationManager) {
         this.notificationManager = notificationManager;
     }
@@ -202,6 +218,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @return UserProfile
      */
+
     public UserProfile getProfile() {
         return profile;
     }
@@ -211,6 +228,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @param profile
      */
+
     public void setProfile(UserProfile profile) {
         this.profile = profile;
         this.needToSave = Boolean.TRUE;
@@ -221,6 +239,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @return TrackedFriendsList
      */
+
     public TrackedFriendsList getTrackedFriendsList() {
         return trackedFriendsList;
     }
@@ -230,6 +249,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @param trackedFriendsList
      */
+
     public void setTrackedFriends(TrackedFriendsList trackedFriendsList) {
         this.trackedFriendsList = trackedFriendsList;
     }
@@ -239,6 +259,7 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @return TradeManager
      */
+
     public TradeManager getTradeManager() {
         return tradeManager;
     }
@@ -248,7 +269,28 @@ public abstract class User extends ElasticStorable implements ca.ualberta.trinke
      *
      * @param tradeManager
      */
+
     public void setTradeManager(TradeManager tradeManager) {
         this.tradeManager = tradeManager;
+    }
+
+    @Override
+    public String getResourceUrl() {
+        return RESOURCE_URL;
+    }
+
+    @Override
+    public String getSearchUrl() {
+        return SEARCH_URL;
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getId() {
+        return this.profile.getEmail();
     }
 }

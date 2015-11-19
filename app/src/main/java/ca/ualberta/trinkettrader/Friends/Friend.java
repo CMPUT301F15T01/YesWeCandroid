@@ -18,6 +18,7 @@ import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsList;
 import ca.ualberta.trinkettrader.Trades.TradeManager;
+import ca.ualberta.trinkettrader.User.Friendable;
 import ca.ualberta.trinkettrader.User.User;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 
@@ -26,10 +27,11 @@ import ca.ualberta.trinkettrader.User.Profile.UserProfile;
  * and methods of a user. Friends have an additional attribute to specify if they are tracked, and
  * they have methods to view and modify their tracking status.
  */
-public class Friend extends User {
+public class Friend implements Friendable{
 
     private Boolean isTracked;
-
+    private String email;
+    private transient User actualFriend;
 
     /**
      * Default constructor. Runs the default constructor of User, initializing all of the
@@ -37,8 +39,8 @@ public class Friend extends User {
      * By default, the tracked status is <code>False</code>.
      */
     public Friend() {
-        super();
         this.isTracked = Boolean.FALSE;
+        actualFriend = new User();
     }
 
 
@@ -56,7 +58,7 @@ public class Friend extends User {
      * @param isTracked Boolean representing the friend's tracking status
      */
     public Friend(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager, Boolean isTracked) {
-        super(friendsList, inventory, notificationManager, profile, trackedFriends, tradeManager);
+        actualFriend = new User(friendsList, inventory, notificationManager, profile, trackedFriends, tradeManager);
         this.isTracked = isTracked;
     }
 
@@ -68,15 +70,24 @@ public class Friend extends User {
      * @param username the friend's username
      */
     public Friend(String username) {
-        super();
-        this.getProfile().setUsername(username);
+        actualFriend = new User();
+        this.actualFriend.getProfile().setEmail(username);
         this.isTracked = Boolean.FALSE;
     }
 
 
+    public User getActualFriend() {
+        return actualFriend;
+    }
+
+    public void setActualFriend(User actualFriend) {
+        this.actualFriend = actualFriend;
+    }
+
     /**
      * Returns the tracked status of the friend as a Boolean.
      *
+
      * @return <code>True</code> if the friend is tracked; <code>False</code> otherwise
      */
     public Boolean isTracked() {
@@ -97,6 +108,6 @@ public class Friend extends User {
 
     @Override
     public String toString() {
-        return this.getProfile().getUsername();
+        return this.actualFriend.getProfile().getUsername();
     }
 }

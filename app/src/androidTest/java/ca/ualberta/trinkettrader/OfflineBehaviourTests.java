@@ -53,8 +53,8 @@ public class OfflineBehaviourTests extends ActivityInstrumentationTestCase2 {
         //UserSettings state = new UserSettings();
         //assertFalse(state.hasActiveInternetConnection());
         User user = LoggedInUser.getInstance();
-        User user1 = new Friend();
-        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user1.getInventory(), user1.getTradeManager());
+        //User user1 = new Friend();
+        //Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user1.getInventory(), user1.getTradeManager());
 
 
         /*Assert internet connection*/

@@ -39,11 +39,6 @@ import ca.ualberta.trinkettrader.User.User;
 public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     AutoCompleteTextView loginEmailTextView;
     Button loginButton;
-    ListView friendsList;
-    Button friendsButton;
-    Button findFriendsButton;
-    EditText findFriendTextField;
-    Button tradeButton;
 
 
     public TradeWithFriendsTest() {
