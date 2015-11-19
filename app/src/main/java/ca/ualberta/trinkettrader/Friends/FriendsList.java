@@ -109,7 +109,7 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
      */
     public Friend getFriendByUsername(String username) {
         for (Friend f : this) {
-            if (f.getProfile().getUsername().equals(username)) {
+            if (f.getActualFriend().getProfile().getUsername().equals(username)) {
                 return f;
             }
         }
@@ -126,7 +126,7 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
     @Override
     public boolean add(Friend friend) {
         for (Friend f : this) {
-            if (f.getProfile().getUsername().equals(friend.getProfile().getUsername())) {
+            if (f.getActualFriend().getProfile().getUsername().equals(friend.getActualFriend().getProfile().getUsername())) {
                 return false;
             }
         }
