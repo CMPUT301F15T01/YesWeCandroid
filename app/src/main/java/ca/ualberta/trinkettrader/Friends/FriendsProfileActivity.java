@@ -110,6 +110,16 @@ public class FriendsProfileActivity extends AppCompatActivity implements Observe
     }
 
     /**
+     * On-click method for the View Inventory button on the Friend's Profile page.
+     * Directs controller to handle the View Inventory button click.
+     *
+     * @param v the View Inventory button in the FriendsProfileActivity
+     */
+    public void viewInventoryButtonOnClick(View v) {
+        controller.viewInventoryButtonOnClick();
+    }
+
+    /**
      * Directs controller to handle track friends radio button click.
      *
      * @param v track friends radio button

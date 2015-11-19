@@ -125,6 +125,22 @@
             android:name=".Trades.TradeDetailsActivity"
             android:label="@string/title_activity_trade_details" >
         </activity>
+        <activity
+            android:name=".Friends.FriendsInventoryActivity"
+            android:label="@string/title_activity_friends_inventory"
+            android:parentActivityName=".Friends.FriendsProfileActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.trinkettrader.Friends.FriendsProfileActivity" />
+        </activity>
+        <activity
+            android:name=".Friends.FriendsTrinketDetailsActivity"
+            android:label="@string/title_activity_friends_trinket_details"
+            android:parentActivityName=".Friends.FriendsInventoryActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.trinkettrader.Friends.FriendsInventoryActivity" />
+        </activity>
     </application>
 
 </manifest>

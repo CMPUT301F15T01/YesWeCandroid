@@ -45,9 +45,10 @@ public class FriendsProfileController {
 
     /**
      * Handles removing the friend displayed in the FriendsProfileActivity from the user's
-     * friends list after the user clicks the "Delete Friend" button.  The system uses an state
+     * friends list after the user clicks the "Delete Friend" button.  The system uses a state
      * variable that remembers which friend in the user's friends list was clicked on last to know
      * which friend to remove.
+     * If the friend is being tracked, remove the friend from the tracked friends list as well.
      */
     public void removeFriendButtonOnClick() {
         Friend exFriend = ApplicationState.getInstance().getClickedFriend();
@@ -61,7 +62,16 @@ public class FriendsProfileController {
     }
 
     /**
-     * Handles click form the "Track Friends" radio button in the FriendsProfileActivity.  This
+     * Handles the "View Inventory" button click in the FriendsProfileActivity.
+     * Sends the user to the FriendsInventoryActivity.
+     */
+    public void viewInventoryButtonOnClick() {
+        Intent intent = new Intent(activity, FriendsInventoryActivity.class);
+        activity.startActivity(intent);
+    }
+
+    /**
+     * Handles click for the "Track Friends" radio button in the FriendsProfileActivity.  This
      * button toggles whether a friend is tracked by the user or not.  If the friend was untracked
      * by the user before the click, they will become tracked.  If the friend was tracked before the
      * click, they will be removed from the user's tacked friends list and will become untracked.

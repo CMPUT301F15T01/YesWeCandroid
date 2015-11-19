@@ -50,4 +50,7 @@
     <string name="title_activity_trade_details">TradeDetailsActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_friends_inventory">FriendsInventoryActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_friends_trinket_details">FriendsTrinketDetailsActivity</string>
 </resources>
