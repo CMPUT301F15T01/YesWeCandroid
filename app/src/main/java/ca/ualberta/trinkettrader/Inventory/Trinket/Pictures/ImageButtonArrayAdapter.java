@@ -51,7 +51,7 @@ public class ImageButtonArrayAdapter extends ArrayAdapter<Bitmap> {
         if (convertView == null) {
             holder = new ViewHolder();
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            convertView = inflater.inflate(R.layout.activity_item_details_picture, parent, false);
+            convertView = inflater.inflate(R.layout.activity_trinket_details_picture, parent, false);
             holder.imageButton = (ImageButton) convertView.findViewById(R.id.image_button);
             convertView.setTag(holder);
         } else {

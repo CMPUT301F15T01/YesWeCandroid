@@ -152,7 +152,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             });
         }
 
-        this.adapter = new ImageButtonArrayAdapter(this, R.layout.activity_item_details_picture, this.bitmaps);
+        this.adapter = new ImageButtonArrayAdapter(this, R.layout.activity_trinket_details_picture, this.bitmaps);
         this.gallery.setAdapter(this.adapter);
         this.adapter.notifyDataSetChanged();
 

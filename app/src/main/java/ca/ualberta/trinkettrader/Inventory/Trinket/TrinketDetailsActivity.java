@@ -16,20 +16,15 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Gallery;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SpinnerAdapter;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -62,7 +57,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_details);
+        setContentView(R.layout.activity_trinket_details);
 
         this.item = ApplicationState.getInstance().getClickedTrinket();
 
@@ -77,7 +72,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
             this.bitmaps.add(picture.getBitmap());
         }
 
-        this.adapter = new ImageButtonArrayAdapter(this, R.layout.activity_item_details_picture, this.bitmaps);
+        this.adapter = new ImageButtonArrayAdapter(this, R.layout.activity_trinket_details_picture, this.bitmaps);
         this.gallery.setAdapter(this.adapter);
         this.adapter.notifyDataSetChanged();
 
