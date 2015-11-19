@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -21,7 +22,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
- * Created by anju on 18/11/15.
+ * Methods using HTTPRequest in this class are taken from AndroidElasticSearch //TODO: add github link
  */
 public abstract class ElasticStorable {
 
@@ -33,6 +34,10 @@ public abstract class ElasticStorable {
     public abstract String getId();
 
 
+    /**
+     * Save an ElasticStorable object to the network
+     * @param item ElasticStorable instance to add or update on the network
+     */
     public void saveToNetwork(ElasticStorable item) {
         HttpClient httpClient = new DefaultHttpClient();
 
@@ -52,7 +57,14 @@ public abstract class ElasticStorable {
         }
     }
 
-    public ArrayList<ElasticStorable> searchMovies(String searchString, String field, ElasticStorable storable) {
+    /**
+     * Search for ElasticStorable objects on the network by matching query.
+     * @param searchString String to match in query.
+     * @param field String to match the searchString in.
+     * @param storable An instance of the ElasticStorable subclass that we look for, specifically.
+     * @return
+     */
+    public ArrayList<ElasticStorable> searchOnNetwork(String searchString, String field, ElasticStorable storable) {
 
         ArrayList<ElasticStorable> result = new ArrayList<ElasticStorable>();
         /**
@@ -120,5 +132,26 @@ public abstract class ElasticStorable {
         }
 
         return result;
+    }
+
+    /***
+     * This is an accessory method when removing an ElasticStorable. To be called before clearing
+     * the local version of the same data.
+     * @param storable ElasticStorable object that is on the network
+     */
+    public void deleteFromNetwork(ElasticStorable storable) {
+        HttpClient httpClient = new DefaultHttpClient();
+
+        try {
+            HttpDelete deleteRequest = new HttpDelete(storable.getResourceUrl() + storable.getId());
+            deleteRequest.setHeader("Accept", "application/json");
+
+            HttpResponse response = httpClient.execute(deleteRequest);
+            String status = response.getStatusLine().toString();
+            Log.i(storable.getTag(), status);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -17,6 +17,7 @@ package ca.ualberta.trinkettrader.Trades;
 import java.util.ArrayList;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.ElasticStorable;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 
 // TODO how are counter trades affected by 0 to many thing? are borrower and owner
@@ -28,7 +29,12 @@ import ca.ualberta.trinkettrader.Inventory.Inventory;
  * contain one item.
  *
  */
-public class Trade implements ca.ualberta.trinkettrader.Observable {
+public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.Observable {
+
+    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/trade/";
+    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/trade/_search";
+    private static final String TAG = "Trade";
+
 
     private ArrayList<Observer> observers;
     private Inventory offeredTrinkets;
@@ -186,5 +192,26 @@ public class Trade implements ca.ualberta.trinkettrader.Observable {
         // need to display name of other person involved in trade
         // also need to find categories of trinkets involved
         return "Trade No. 1 " + "with status " + this.getStatus();
+    }
+
+    @Override
+    public String getResourceUrl() {
+        return RESOURCE_URL;
+    }
+
+    @Override
+    public String getSearchUrl() {
+        return SEARCH_URL;
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getId() {
+        //TODO: confirm this is the key we want for trades
+        return String.valueOf(this.hashCode());
     }
 }
