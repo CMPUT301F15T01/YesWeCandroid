@@ -16,12 +16,14 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Methods using HTTPRequest in this class are taken from AndroidElasticSearch //TODO: add github link
@@ -49,7 +51,7 @@ public abstract class ElasticStorable {
             StringEntity stringEntity = new StringEntity(gson.toJson(item));
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
-
+            
             HttpResponse response = httpClient.execute(addRequest);
             String status = response.getStatusLine().toString();
             Log.i(item.getTag(), status);
@@ -69,7 +71,7 @@ public abstract class ElasticStorable {
      */
     //This method was modified under the guidance of http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost
     //by Android-Droid
-    public ArrayList<ElasticStorable> searchOnNetwork(ArrayList<NameValuePair> postParameters, ElasticStorable storable) {
+    public ArrayList<ElasticStorable> searchOnNetwork(List<BasicNameValuePair> postParameters, ElasticStorable storable) {
 
         ArrayList<ElasticStorable> result = new ArrayList<ElasticStorable>();
         /**
