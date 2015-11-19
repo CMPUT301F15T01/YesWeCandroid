@@ -16,12 +16,15 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -38,6 +41,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.ApplicationState;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.ImageButtonArrayAdapter;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 
@@ -55,6 +59,9 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 public class AddOrEditTrinketActivity extends AppCompatActivity implements Observer {
 
     private AddOrEditTrinketController controller;
+    private ArrayAdapter<Bitmap> adapter;
+    private ArrayList<Bitmap> bitmaps;
+    private ArrayList<Picture> pictures;
     private Button pictureLibraryButton;
     private Button removePictureButton;
     private Button saveButton;
@@ -105,6 +112,8 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
         this.trinketQuality = (Spinner) findViewById(R.id.quality_spinner);
         this.trinketQuantity = (EditText) findViewById(R.id.quantity_text);
 
+        this.bitmaps = new ArrayList<>();
+
         // Lalit Poptani; http://stackoverflow.com/questions/8119526/android-get-previous-activity; 2015-11-06
         Intent intent = getIntent();
         String prevActivity = intent.getStringExtra("activityName");
@@ -119,6 +128,11 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             this.trinketQuantity.setText(edited.getQuantity());
             this.controller.getTrinket().setPictures(edited.getPictures());
 
+            this.pictures = edited.getPictures();
+            for (Picture picture: pictures) {
+                this.bitmaps.add(picture.getBitmap());
+            }
+
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -128,6 +142,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
         } else {
             this.trinketAccessibility.setChecked(true);
             this.trinketQuantity.setText("1");
+            this.pictures = new ArrayList<>();
 
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -136,6 +151,20 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
                 }
             });
         }
+
+        this.adapter = new ImageButtonArrayAdapter(this, R.layout.activity_item_details_picture, this.bitmaps);
+        this.gallery.setAdapter(this.adapter);
+        this.adapter.notifyDataSetChanged();
+
+        this.gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                controller.removePicture(pictures.get(position));
+                pictures.remove(position);
+                bitmaps.remove(position);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     /**
@@ -189,19 +218,37 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            try {
-                // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
-                controller.addPicture(uri.getPath());
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                try {
+                    // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
+                    this.addPicture(new Picture(new File(uri.getPath())));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            } else if (requestCode == SELECT_PICTURE) {
+                try {
+                    this.addPicture(new Picture(new File(getPath(data.getData()))));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
             }
-        } else if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK) {
-            try {
-                controller.addPicture(getPath(data.getData()));
-            } catch (IOException e) {
-                e.printStackTrace();
+        }
+    }
+
+    private void addPicture(Picture newPicture) {
+        try {
+            this.controller.addPicture(newPicture);
+            this.pictures = this.controller.getPictures();
+            for (Picture picture: this.pictures) {
+                this.bitmaps.add(picture.getBitmap());
             }
+            this.adapter.notifyDataSetChanged();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -215,20 +262,6 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             cursor.moveToFirst();
             return cursor.getString(column_index);
         } else return null;
-    }
-
-    /**
-     * Click method for "Remove Picture" button that directs controller to remove an attached image
-     * from the trinket.
-     *
-     * @param view - button that was clicked
-     */
-    public void removePictureClick(View view) {
-        try {
-            controller.removePicture(new Picture(new File("/")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
