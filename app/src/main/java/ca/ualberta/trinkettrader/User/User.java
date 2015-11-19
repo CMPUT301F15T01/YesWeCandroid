@@ -17,6 +17,7 @@ package ca.ualberta.trinkettrader.User;
 import java.util.ArrayList;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.ElasticStorable;
 import ca.ualberta.trinkettrader.Friends.FriendsList;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsList;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
@@ -29,7 +30,7 @@ import ca.ualberta.trinkettrader.User.Profile.UserProfile;
  * LoggedInUser or a Friend. This class mainly acts as a container for all of
  * the various classes that make up a user.
  */
-public abstract class User implements ca.ualberta.trinkettrader.Observable {
+public abstract class User extends ElasticStorable implements ca.ualberta.trinkettrader.Observable {
 
     protected FriendsList friendsList;
     protected Inventory inventory;
@@ -69,6 +70,18 @@ public abstract class User implements ca.ualberta.trinkettrader.Observable {
         this.trackedFriendsList = trackedFriends;
         this.tradeManager = tradeManager;
         this.needToSave = Boolean.TRUE;
+    }
+
+    public User(String email) {
+
+    }
+
+    protected String getJson() {
+        return new String();
+    }
+
+    protected void queueUpdate() {
+
     }
 
     /**
