@@ -29,7 +29,7 @@ import ca.ualberta.trinkettrader.User.Profile.UserProfile;
  * LoggedInUser or a Friend. This class mainly acts as a container for all of
  * the various classes that make up a user.
  */
-public abstract class User implements ca.ualberta.trinkettrader.Observable {
+public class User implements ca.ualberta.trinkettrader.Observable {
 
     protected FriendsList friendsList;
     protected Inventory inventory;
