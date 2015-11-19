@@ -69,10 +69,8 @@ public class LoggedInUser extends User {
             out.flush();
             fos.close();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             throw new RuntimeException(e);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             throw new RuntimeException(e);
         }
         needToSave = Boolean.FALSE;
