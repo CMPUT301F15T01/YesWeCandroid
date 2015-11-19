@@ -20,7 +20,7 @@ import android.net.NetworkInfo;
 
 /**
  * A singleton class.
- * When asked, this class will let the asker know if an internet connection is available.
+ * When asked, this class will let the asking activity know if an internet connection is available.
  */
 public class InternetConnection {
     private static InternetConnection ourInstance = new InternetConnection();
