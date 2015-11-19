@@ -160,9 +160,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 controller.removePicture(pictures.get(position));
-                pictures.remove(position);
-                bitmaps.remove(position);
-                adapter.notifyDataSetChanged();
+                updatePictures();
             }
         });
     }
@@ -241,16 +239,20 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     private void addPicture(Picture newPicture) {
         try {
             this.controller.addPicture(newPicture);
-            this.bitmaps.clear();
-            this.pictures = this.controller.getPictures();
-            for (Picture picture: this.pictures) {
-                this.bitmaps.add(picture.getBitmap());
-            }
-            this.adapter.notifyDataSetChanged();
+            this.updatePictures();
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    private void updatePictures() {
+        bitmaps.clear();
+        pictures = controller.getPictures();
+        for (Picture picture: pictures) {
+            bitmaps.add(picture.getBitmap());
+        }
+        adapter.notifyDataSetChanged();
     }
 
     // mad; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05
