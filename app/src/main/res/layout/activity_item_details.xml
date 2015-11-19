@@ -28,15 +28,6 @@
         android:text="Accessibility: public"
         android:textSize="20dp" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/accessibility_textview"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
-
     <Button
         android:id="@+id/deleteItemButton"
         android:layout_width="wrap_content"
@@ -47,4 +38,10 @@
         android:onClick="deleteClick"
         android:text="Delete" />
 
+    <Gallery
+        android:id="@+id/gallery"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
 </RelativeLayout>

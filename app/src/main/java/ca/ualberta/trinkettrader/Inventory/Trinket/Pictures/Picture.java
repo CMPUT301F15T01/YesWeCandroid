@@ -47,6 +47,10 @@ public class Picture implements ca.ualberta.trinkettrader.Observable {
         fileInputStream.close();
     }
 
+    public void loadPicture() {
+
+    }
+
     /**
      * Adds the specified observer to the list of observers. If it is already
      * registered, it is not added a second time.
