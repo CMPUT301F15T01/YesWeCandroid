@@ -241,6 +241,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     private void addPicture(Picture newPicture) {
         try {
             this.controller.addPicture(newPicture);
+            this.bitmaps.clear();
             this.pictures = this.controller.getPictures();
             for (Picture picture: this.pictures) {
                 this.bitmaps.add(picture.getBitmap());
