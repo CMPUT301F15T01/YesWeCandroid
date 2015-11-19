@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.io.File;
@@ -53,8 +54,6 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
  */
 public class AddOrEditTrinketActivity extends AppCompatActivity implements Observer {
 
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int SELECT_PICTURE = 2;
     private AddOrEditTrinketController controller;
     private Button pictureLibraryButton;
     private Button removePictureButton;
@@ -64,8 +63,11 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     private EditText trinketDescription;
     private EditText trinketName;
     private EditText trinketQuantity;
+    private ListView gallery;
     private Spinner trinketCategory;
     private Spinner trinketQuality;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int SELECT_PICTURE = 2;
     private Uri uri;
 
     /**
@@ -94,6 +96,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
 
         this.controller = new AddOrEditTrinketController(this);
 
+        this.gallery = (ListView) findViewById(R.id.gallery);
         this.saveButton = (Button) findViewById(R.id.save_button);
         this.trinketAccessibility = (CheckBox) findViewById(R.id.accessibility_checkbox);
         this.trinketCategory = (Spinner) findViewById(R.id.category_spinner);
@@ -114,6 +117,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             this.trinketName.setText(edited.getName());
             this.trinketQuality.setSelection(new ArrayList<>(Arrays.asList(this.getResources().getStringArray(R.array.spinner_qualities))).indexOf(edited.getQuality()));
             this.trinketQuantity.setText(edited.getQuantity());
+            this.controller.getTrinket().setPictures(edited.getPictures());
 
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override

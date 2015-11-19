@@ -13,35 +13,33 @@
         android:id="@+id/edit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="168dp"
         android:onClick="editClick"
-        android:text="Edit" />
+        android:text="Edit"
+        android:layout_below="@+id/accessibility_textview"
+        android:layout_alignStart="@+id/deleteItemButton"/>
 
     <TextView
         android:id="@+id/accessibility_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:text="Accessibility: public"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/deleteItemButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/edit_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="82dp"
         android:onClick="deleteClick"
-        android:text="Delete" />
+        android:text="Delete"
+        android:layout_below="@+id/edit_button"
+        android:layout_centerHorizontal="true"/>
 
-    <Gallery
+    <ListView
         android:id="@+id/gallery"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/deleteItemButton"
+        android:layout_alignParentStart="true"/>
 </RelativeLayout>

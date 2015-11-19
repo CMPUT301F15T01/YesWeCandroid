@@ -66,16 +66,15 @@
         android:onClick="takePictureClick"
         android:text="@string/activity_add_or_edit_trinket_take_picture_button_text" />
 
-    <Button
-        android:id="@+id/remove_picture_button"
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="removePictureClick"
-        android:text="@string/activity_add_or_edit_trinket_remove_picture_button_text" />
+        android:id="@+id/gallery"
+        android:layout_gravity="center_horizontal"/>
 
     <Button
         android:id="@+id/save_button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/activity_add_or_edit_trinket_save_button_text" />
 </LinearLayout>

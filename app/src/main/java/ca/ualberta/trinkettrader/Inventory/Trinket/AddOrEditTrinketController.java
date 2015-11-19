@@ -52,6 +52,15 @@ public class AddOrEditTrinketController {
     }
 
     /**
+     * Returns the current trinket being edited.
+     *
+     * @return Trinket currently being edited
+     */
+    public Trinket getTrinket() {
+        return trinket;
+    }
+
+    /**
      * Adds a picture to trinket being added/edited.  This picture will then be visible when a
      * user views the trinket's details.
      *

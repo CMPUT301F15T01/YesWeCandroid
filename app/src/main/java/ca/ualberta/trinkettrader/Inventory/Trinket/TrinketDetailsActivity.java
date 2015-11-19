@@ -28,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SpinnerAdapter;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.ApplicationState;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.ImageButtonArrayAdapter;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.R;
 
@@ -49,13 +51,13 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
     private AlertDialog dialog;
     private Button deleteButton;
     private Button editButton;
-    private Gallery gallery;
+    private ListView gallery;
     private Trinket item;
     private TrinketDetailsActivity activity = this;
     private TrinketDetailsController controller;
     private ArrayList<Picture> pictures;
     private ArrayList<Bitmap> bitmaps;
-    private ArrayAdapter<Bitmap> spinnerAdapter;
+    private ArrayAdapter<Bitmap> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
         this.deleteButton = (Button) findViewById(R.id.deleteItemButton);
         this.editButton = (Button) findViewById(R.id.edit_button);
         this.controller = new TrinketDetailsController(this);
-        this.gallery = (Gallery) findViewById(R.id.gallery);
+        this.gallery = (ListView) findViewById(R.id.gallery);
 
         this.pictures = item.getPictures();
         this.bitmaps = new ArrayList<>();
@@ -75,8 +77,9 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
             this.bitmaps.add(picture.getBitmap());
         }
 
-        this.spinnerAdapter = new ArrayAdapter<Bitmap>(this, R.layout.activity_item_details_picture, this.bitmaps);
-        this.gallery.setAdapter(this.spinnerAdapter);
+        this.adapter = new ImageButtonArrayAdapter(this, R.layout.activity_item_details_picture, this.bitmaps);
+        this.gallery.setAdapter(this.adapter);
+        this.adapter.notifyDataSetChanged();
 
         this.gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -84,7 +87,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
                 Picture picture = pictures.get(position);
                 picture.loadPicture();
                 bitmaps.set(position, picture.getBitmap());
-                spinnerAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -132,7 +135,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
      *
      * @return Gallery - gallery containing each photo attached to the trinket
      */
-    public Gallery getGallery() {
+    public ListView getGallery() {
         return this.gallery;
     }
 
