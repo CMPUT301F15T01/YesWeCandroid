@@ -59,6 +59,9 @@ public class FriendsListActivity extends AppCompatActivity implements Observer {
         userFriendList = LoggedInUser.getInstance().getFriendsList();
         controller = new FriendsListController(this);
         controller.setFriendsListViewItemOnClick();
+
+        LoggedInUser.getInstance().getFriendsList().add(new Friend("test123"));
+        LoggedInUser.getInstance().getFriendsList().getFriendByUsername("test123").getProfile().
     }
 
     @Override

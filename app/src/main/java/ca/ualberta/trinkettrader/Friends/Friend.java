@@ -61,6 +61,8 @@ public class Friend extends User {
     }
 
 
+
+
     /**
      * Constructor that sets only the username of the Friend. All other attributes are initialized
      * using the default constructor of User (to empty objects).
