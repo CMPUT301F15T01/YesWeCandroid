@@ -96,7 +96,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         friend1Inventory.add(trinket3);
 
         borrower.getFriendsList().add(friend1);
-        //friend1.getActualFriend().getFriendsList().add((Friend) borrower);
+        //friend1.getActualFriend().getFriendsList().add((Friend) borrower); // //Hi Jenna and Raghav
 
         // Start the UI test from the login page (beginning of the app).
         LoginActivity loginActivity = (LoginActivity) getActivity();
@@ -215,7 +215,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         friend1Inventory.add(trinket3);
 
         borrower.getFriendsList().add(friend1);
-        //friend1.getActualFriend().getFriendsList().add((Friend) borrower);
+        //friend1.getActualFriend().getFriendsList().add((Friend) borrower); // //Hi Jenna and Raghav
 
         //Set an activity monitor for FriendsListActivity
         Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(FriendsListActivity.class.getName(), null, false);
@@ -344,7 +344,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         friend1Inventory.add(trinket3);
 
         borrower.getFriendsList().add(friend1);
-        //friend1.getFriendsList().add((Friend) borrower);
+        //friend1.getFriendsList().add((Friend) borrower); // //Hi Jenna and Raghav
 
         //Set an activity monitor for FriendsListActivity
         Instrumentation.ActivityMonitor displayFriendsMonitor = instrumentation.addMonitor(FriendsListActivity.class.getName(), null, false);
@@ -449,7 +449,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         borrowerInventory.add(trinket2);
 
         borrower.getFriendsList().add(friend1);
-        //friend1.getActualFriend().getFriendsList().add((Friend) borrower);
+        //friend1.getActualFriend().getFriendsList().add((Friend) borrower); //Hi Jenna and Raghav
 
         //TODO: check that we are viewing the borrower's inventory and not someone else's
         //Setup monitor for InventoryActivity for BORROWER
