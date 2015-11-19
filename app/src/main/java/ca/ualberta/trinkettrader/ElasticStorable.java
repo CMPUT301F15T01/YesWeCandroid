@@ -18,5 +18,5 @@ package ca.ualberta.trinkettrader;
  * Manager for communication between the app and off device services. This is
  * the main interface for interacting with the elasticsearch database.
  */
-public class CommunicationsManager {
+public class ElasticStorable {
 }

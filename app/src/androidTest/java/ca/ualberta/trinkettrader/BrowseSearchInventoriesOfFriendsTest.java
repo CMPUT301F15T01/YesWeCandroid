@@ -188,6 +188,7 @@ public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentatio
         instrumentation.removeMonitor(inventoryMonitor);
         instrumentation.removeMonitor(displayFriendsMonitor);
         instrumentation.removeMonitor(userProfileMonitor);
+        instrumentation.removeMonitor(homePageActivityMonitor);
     }
 
     public ArrayList<Trinket> getDisplayedItems(ListView view) {
