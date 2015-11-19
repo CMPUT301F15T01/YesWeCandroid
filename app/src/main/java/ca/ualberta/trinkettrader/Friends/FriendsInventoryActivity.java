@@ -56,7 +56,7 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_friends_inventory);
 
         this.controller = new FriendsInventoryController(this);
-        this.inventory = ApplicationState.getInstance().getClickedFriend().getInventory();
+        this.inventory = ApplicationState.getInstance().getClickedFriend().getActualFriend().getInventory();
         this.inventoryItemsList = (ListView) findViewById(R.id.friendsDisplayedTrinkets);
 
         trinketArrayAdapter = new ArrayAdapter<>(this, R.layout.activity_inventory_trinket, inventory);
@@ -66,9 +66,11 @@ public class FriendsInventoryActivity extends AppCompatActivity {
         // When a trinket in the ListView is clicked, user is directed to its TrinketDetailsActivity
         inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
-                Trinket clickedTrinket = LoggedInUser.getInstance().getInventory().get(position);
+                Friend clickedFriend = ApplicationState.getInstance().getClickedFriend();
+                String friendsUsername = clickedFriend.getActualFriend().getProfile().getUsername();
+                Trinket clickedTrinket = LoggedInUser.getInstance().getFriendsList().getFriendByUsername(friendsUsername).getActualFriend().getInventory().get(position);
                 ApplicationState.getInstance().setClickedTrinket(clickedTrinket);
-                Intent intent = new Intent(FriendsInventoryActivity.this, TrinketDetailsActivity.class);
+                Intent intent = new Intent(FriendsInventoryActivity.this, FriendsTrinketDetailsActivity.class);
                 activity.startActivity(intent);
             }
         });

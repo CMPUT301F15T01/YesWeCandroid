@@ -25,6 +25,7 @@ import android.widget.ListView;
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.R;
 
@@ -60,8 +61,15 @@ public class FriendsListActivity extends AppCompatActivity implements Observer {
         controller = new FriendsListController(this);
         controller.setFriendsListViewItemOnClick();
 
-        LoggedInUser.getInstance().getFriendsList().add(new Friend("test123"));
-        LoggedInUser.getInstance().getFriendsList().getFriendByUsername("test123").getProfile().
+        Friend f = new Friend("test123");
+        LoggedInUser.getInstance().getFriendsList().add(f);
+        Trinket testTrinket = new Trinket();
+        testTrinket.setName("earrings");
+        testTrinket.setCategory("Tiara");
+        testTrinket.setDescription("really nice earring/tiara");
+        testTrinket.setQuality("Great");
+        testTrinket.setQuantity("2");
+        LoggedInUser.getInstance().getFriendsList().getFriendByUsername("test123").getActualFriend().getInventory().add(testTrinket);
     }
 
     @Override

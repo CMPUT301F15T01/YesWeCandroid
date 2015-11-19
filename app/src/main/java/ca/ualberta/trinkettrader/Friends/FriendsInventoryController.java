@@ -52,7 +52,7 @@ public class FriendsInventoryController {
         ListView friendsInventoryListView = activity.getInventoryItemsList();
         friendsInventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
-                Trinket clickedTrinket = ApplicationState.getInstance().getClickedFriend().getInventory().get(position);
+                Trinket clickedTrinket = ApplicationState.getInstance().getClickedFriend().getActualFriend().getInventory().get(position);
                 ApplicationState.getInstance().setClickedTrinket(clickedTrinket);
                 Intent intent = new Intent(activity, FriendsTrinketDetailsActivity.class);
                 activity.startActivity(intent);

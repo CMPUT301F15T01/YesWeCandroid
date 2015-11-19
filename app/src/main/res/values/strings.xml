@@ -16,6 +16,8 @@
     <string name="title_activity_trinket_details">Trinket Details</string>
     <string name="title_activity_user_profile">User Profile</string>
     <string name="title_activity_tracked_friends">Tracked Friends</string>
+    <string name="title_activity_friends_inventory">Friends Inventory</string>
+    <string name="title_activity_friends_trinket_details">Friends Trinket</string>
 
     <!-- activity_display_inventory -->
     <string name="activity_display_inventory_category_prompt">Filter by Category</string>
@@ -50,7 +52,5 @@
     <string name="title_activity_trade_details">TradeDetailsActivity</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_friends_inventory">FriendsInventoryActivity</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_friends_trinket_details">FriendsTrinketDetailsActivity</string>
+
 </resources>

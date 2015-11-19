@@ -19,8 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Trinket Name"
-        android:id="@+id/friendsTrinketName"
+        android:text="Trinket:"
+        android:id="@+id/friendsTrinketNameTitle"
         android:layout_alignEnd="@+id/gallery"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -29,9 +29,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Trinket Name"
+        android:id="@+id/friendsTrinketName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="84dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Description:"
+        android:id="@+id/friendsTrinketDescriptionTitle"
+        android:layout_below="@+id/friendsTrinketName"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Trinket Description"
         android:id="@+id/friendsTrinketDescription"
-        android:layout_below="@+id/friendsTrinketName"
+        android:layout_alignTop="@+id/friendsTrinketDescriptionTitle"
+        android:layout_alignStart="@+id/friendsTrinketName"
+        android:layout_marginStart="48dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Quantity:"
+        android:id="@+id/friendsTrinketQuantityTitle"
+        android:layout_below="@+id/friendsTrinketDescription"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
 
@@ -41,9 +71,19 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Trinket Quantity"
         android:id="@+id/friendsTrinketQuantity"
+        android:layout_alignTop="@+id/friendsTrinketQuantityTitle"
+        android:layout_alignStart="@+id/friendsTrinketName"
+        android:layout_marginStart="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Quality:"
+        android:id="@+id/friendsTrinketQualityTitle"
+        android:layout_below="@+id/friendsTrinketQuantity"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/friendsTrinketDescription"
-        android:layout_alignEnd="@+id/gallery" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,9 +91,19 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Trinket Quality"
         android:id="@+id/friendsTrinketQuality"
-        android:layout_below="@+id/friendsTrinketQuantity"
+        android:layout_alignTop="@+id/friendsTrinketQualityTitle"
+        android:layout_alignStart="@+id/friendsTrinketName"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Category:"
+        android:id="@+id/friendsTrinketCategoryTitle"
+        android:layout_below="@+id/friendsTrinketQuality"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/gallery" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,7 +111,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Trinket Category"
         android:id="@+id/friendsTrinketCategory"
-        android:layout_below="@+id/friendsTrinketQuality"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignTop="@+id/friendsTrinketCategoryTitle"
+        android:layout_alignStart="@+id/friendsTrinketName"
+        android:layout_marginStart="20dp" />
 </RelativeLayout>

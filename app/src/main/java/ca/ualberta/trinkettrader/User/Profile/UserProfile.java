@@ -152,6 +152,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      */
     public void setEmail(String email) {
         this.email = email;
+        this.username = email;
         this.needToSave = Boolean.TRUE;
     }
 
@@ -210,6 +211,8 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      */
     public void setUsername(String username) {
         this.username = username;
+        this.email = username;
+        this.needToSave = Boolean.TRUE;
     }
 
     /**
