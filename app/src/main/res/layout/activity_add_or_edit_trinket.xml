@@ -11,11 +11,36 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity">
 
-    <EditText
-        android:id="@+id/name_text"
+    <Button
+        android:id="@+id/save_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/activity_add_or_edit_trinket_name_hint" />
+        android:text="@string/activity_add_or_edit_trinket_save_button_text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <EditText
+            android:id="@+id/name_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/activity_add_or_edit_trinket_name_hint" />
+
+        <EditText
+            android:id="@+id/quantity_text"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/activity_add_or_edit_trinket_quantity_hint" />
+
+        <CheckBox
+            android:id="@+id/accessibility_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/activity_add_or_edit_trinket_accessibility_checkbox" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/description_text"
@@ -23,59 +48,51 @@
         android:layout_height="wrap_content"
         android:hint="@string/activity_add_or_edit_trinket_description_hint" />
 
-    <Spinner
-        android:id="@+id/category_spinner"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/spinner_categories"
-        android:prompt="@string/activity_add_or_edit_trinket_spinner_categories_prompt"
-        android:spinnerMode="dropdown" />
+        android:orientation="horizontal" >
 
-    <Spinner
-        android:id="@+id/quality_spinner"
+        <Spinner
+            android:id="@+id/category_spinner"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/spinner_categories"
+            android:prompt="@string/activity_add_or_edit_trinket_spinner_categories_prompt"
+            android:spinnerMode="dropdown" />
+
+        <Spinner
+            android:id="@+id/quality_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/spinner_qualities"
+            android:prompt="@string/activity_add_or_edit_trinket_spinner_qualities_prompt"
+            android:spinnerMode="dropdown" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/spinner_qualities"
-        android:prompt="@string/activity_add_or_edit_trinket_spinner_qualities_prompt"
-        android:spinnerMode="dropdown" />
+        android:orientation="horizontal" >
 
-    <CheckBox
-        android:id="@+id/accessibility_checkbox"
+        <Button
+            android:id="@+id/picture_library_button"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:onClick="pictureLibraryClick"
+            android:text="@string/activity_add_or_edit_trinket_picture_library_button_text" />
+
+        <Button
+            android:id="@+id/take_picture_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="takePictureClick"
+            android:text="@string/activity_add_or_edit_trinket_take_picture_button_text" />
+    </LinearLayout>
+
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="@string/activity_add_or_edit_trinket_accessibility_checkbox" />
-
-    <EditText
-        android:id="@+id/quantity_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/activity_add_or_edit_trinket_quantity_hint" />
-
-    <Button
-        android:id="@+id/picture_library_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="pictureLibraryClick"
-        android:text="@string/activity_add_or_edit_trinket_picture_library_button_text" />
-
-    <Button
-        android:id="@+id/take_picture_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="takePictureClick"
-        android:text="@string/activity_add_or_edit_trinket_take_picture_button_text" />
-
-    <Button
-        android:id="@+id/remove_picture_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="removePictureClick"
-        android:text="@string/activity_add_or_edit_trinket_remove_picture_button_text" />
-
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/activity_add_or_edit_trinket_save_button_text" />
+        android:id="@+id/gallery"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>
