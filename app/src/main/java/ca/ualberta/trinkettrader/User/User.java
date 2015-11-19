@@ -14,6 +14,8 @@
 
 package ca.ualberta.trinkettrader.User;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Observer;
 
@@ -78,7 +80,8 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     protected String getJson() {
-        return new String();
+        Gson gson = new Gson(); // Or use new GsonBuilder().create();
+        return gson.toJson(this); // serializes target to Json
     }
 
     protected void queueUpdate() {
