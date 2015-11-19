@@ -30,7 +30,6 @@ public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinket
 
     private ArrayList<Observer> observers;
     private Boolean needToSave;
-    private String FILE_NAME;
 
     /**
      * Constructs an inventory containing the Trinkets of the specified collection, in the order

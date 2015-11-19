@@ -75,9 +75,18 @@ public class Friend {
     }
 
 
+    public User getActualFriend() {
+        return actualFriend;
+    }
+
+    public void setActualFriend(User actualFriend) {
+        this.actualFriend = actualFriend;
+    }
+
     /**
      * Returns the tracked status of the friend as a Boolean.
      *
+
      * @return <code>True</code> if the friend is tracked; <code>False</code> otherwise
      */
     public Boolean isTracked() {
