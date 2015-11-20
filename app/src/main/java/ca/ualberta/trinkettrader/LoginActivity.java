@@ -36,6 +36,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.User.LoggedInUser;
+import ca.ualberta.trinkettrader.User.User;
 
 /**
  * Activity that allows users to log in with email. Verifies that the email is of valid format
@@ -76,8 +77,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else if (!isEmailValid(email)) {
             emailTextView.setError(getString(R.string.error_invalid_email));
         } else {
-            // TODO Get user info from internet
-            LoggedInUser.getInstance().getProfile().setEmail(email);
+            SetUpUserThread thread = new SetUpUserThread(email);
+            thread.start();
             Intent intent = new Intent(this, HomePageActivity.class);
             startActivity(intent);
         }
@@ -168,5 +169,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
+    }
+
+
+    class SetUpUserThread extends Thread {
+        private String email;
+        public SetUpUserThread(String email) {
+            this.email = email;
+        }
+
+        @Override
+        public void run() {
+            try {
+                LoggedInUser.getInstance().loadFromNetwork(email);
+                Thread.sleep(500);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
