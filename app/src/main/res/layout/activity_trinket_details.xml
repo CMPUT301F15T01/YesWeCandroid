@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,39 +7,35 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity">
+    tools:context="ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity"
+    android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/edit_button"
+    <com.meetme.android.horizontallistview.HorizontalListView
+        android:id="@+id/gallery"
+        android:layout_height="250dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="editClick"
-        android:text="Edit"
-        android:layout_below="@+id/accessibility_textview"
-        android:layout_alignStart="@+id/deleteItemButton"/>
+        widget:dividerWidth="10dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:widget="http://schemas.android.com/apk/res-auto" />
 
     <TextView
         android:id="@+id/accessibility_textview"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:text="Accessibility: public"
-        android:textSize="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/edit_button"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:onClick="editClick"
+        android:text="Edit" />
 
     <Button
         android:id="@+id/deleteItemButton"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:onClick="deleteClick"
-        android:text="Delete"
-        android:layout_below="@+id/edit_button"
-        android:layout_centerHorizontal="true"/>
-
-    <ListView
-        android:id="@+id/gallery"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/deleteItemButton"
-        android:layout_alignParentStart="true"/>
-</RelativeLayout>
+        android:text="Delete" />
+</LinearLayout>

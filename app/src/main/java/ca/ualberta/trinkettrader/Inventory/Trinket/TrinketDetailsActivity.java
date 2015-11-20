@@ -26,6 +26,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.meetme.android.horizontallistview.HorizontalListView;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -46,7 +48,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
     private AlertDialog dialog;
     private Button deleteButton;
     private Button editButton;
-    private ListView gallery;
+    private HorizontalListView gallery;
     private Trinket item;
     private TrinketDetailsActivity activity = this;
     private TrinketDetailsController controller;
@@ -64,7 +66,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
         this.deleteButton = (Button) findViewById(R.id.deleteItemButton);
         this.editButton = (Button) findViewById(R.id.edit_button);
         this.controller = new TrinketDetailsController(this);
-        this.gallery = (ListView) findViewById(R.id.gallery);
+        this.gallery = (HorizontalListView) findViewById(R.id.gallery);
 
         this.pictures = item.getPictures();
         this.bitmaps = new ArrayList<>();
@@ -130,7 +132,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
      *
      * @return Gallery - gallery containing each photo attached to the trinket
      */
-    public ListView getGallery() {
+    public HorizontalListView getGallery() {
         return this.gallery;
     }
 
