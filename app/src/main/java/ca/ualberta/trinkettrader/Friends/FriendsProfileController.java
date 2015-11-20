@@ -58,6 +58,8 @@ public class FriendsProfileController {
             LoggedInUser.getInstance().getTrackedFriendsList().remove(exFriend);
         }
 
+        ApplicationState.getInstance().setClickedFriend(null);
+
         activity.onBackPressed();
     }
 

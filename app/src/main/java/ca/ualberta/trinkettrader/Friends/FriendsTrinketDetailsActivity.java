@@ -16,19 +16,23 @@ package ca.ualberta.trinkettrader.Friends;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import ca.ualberta.trinkettrader.R;
 
-public class FriendsTrinketDetailsActivity extends ActionBarActivity {
+public class FriendsTrinketDetailsActivity extends AppCompatActivity {
 
     private TextView name;
     private TextView description;
     private TextView quantity;
     private TextView quality;
     private TextView category;
+    private Button addToTradeButton;
 
     FriendsTrinketDetailsController controller;
 
@@ -42,6 +46,7 @@ public class FriendsTrinketDetailsActivity extends ActionBarActivity {
         quantity = (TextView) findViewById(R.id.friendsTrinketQuantity);
         quality = (TextView) findViewById(R.id.friendsTrinketQuality);
         category = (TextView) findViewById(R.id.friendsTrinketCategory);
+        addToTradeButton = (Button) findViewById(R.id.addToTradeButton);
         controller = new FriendsTrinketDetailsController(this);
         controller.updateTextViews();
     }
@@ -66,6 +71,13 @@ public class FriendsTrinketDetailsActivity extends ActionBarActivity {
         return category;
     }
 
+    public Button getAddToTradeButton() {
+        return addToTradeButton;
+    }
+
+    public void addToTradeButtonOnClick(View v){
+        controller.addToTradeButtonOnClick();
+    }
 
 
 

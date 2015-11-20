@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/currentTradesList"
-        android:layout_below="@+id/current_trades_title" />
+        android:layout_below="@+id/create_trades_button" />
 
 
     <Button
@@ -26,14 +26,23 @@
         android:layout_alignParentEnd="true"
         android:onClick="openPastTrades"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Trade"
+        android:id="@+id/create_trades_button"
+        android:layout_below="@+id/past_trades_button"
+        android:layout_alignEnd="@+id/currentTradesList"
+        android:onClick="createTradeButtonOnClick"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Current Trades"
         android:id="@+id/current_trades_title"
-        android:layout_below="@+id/past_trades_button"
-        android:layout_toStartOf="@+id/past_trades_button" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

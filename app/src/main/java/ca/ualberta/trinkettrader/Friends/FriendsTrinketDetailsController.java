@@ -14,10 +14,13 @@
 
 package ca.ualberta.trinkettrader.Friends;
 
+import android.content.Intent;
+import android.view.View;
 import android.widget.TextView;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
+import ca.ualberta.trinkettrader.Trades.CreateTradeActivity;
 
 /**
  * Created by RV on 11/19/2015.
@@ -30,6 +33,15 @@ public class FriendsTrinketDetailsController {
 
     public FriendsTrinketDetailsController(FriendsTrinketDetailsActivity activity) {
         this.activity = activity;
+
+    }
+
+    public void addToTradeButtonOnClick() {
+        Trinket clickedTrinket = ApplicationState.getInstance().getClickedTrinket();
+        ApplicationState.getInstance().getFriendsTradeTrinkets().add(clickedTrinket);
+
+        Intent intent = new Intent(activity, CreateTradeActivity.class);
+        activity.startActivity(intent);
 
     }
 

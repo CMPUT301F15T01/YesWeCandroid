@@ -44,8 +44,9 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  */
 public class TradesActivity extends AppCompatActivity implements Observer {
 
-    Button pastTradesButton;
-    ListView currentTradesListView;
+    private Button pastTradesButton;
+    private Button createTradeButton;
+    private ListView currentTradesListView;
     private ActiveTradesController controller;
     private ArrayAdapter<Trade> currentTradesAdapter;
     private ArrayList<Trade> userCurrentTradesList;
@@ -57,6 +58,7 @@ public class TradesActivity extends AppCompatActivity implements Observer {
         setContentView(R.layout.activity_trades);
         currentTradesListView = (ListView)findViewById(R.id.currentTradesList);
         pastTradesButton = (Button)findViewById(R.id.past_trades_button);
+        createTradeButton = (Button)findViewById(R.id.create_trades_button);
         userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();
@@ -80,11 +82,18 @@ public class TradesActivity extends AppCompatActivity implements Observer {
         startActivity(intent);
     }
 
+    public void createTradeButtonOnClick(View v) {
+        Intent intent = new Intent(this, CreateTradeActivity.class);
+        startActivity(intent);
+    }
+
     /**
      * Returns Past Trades button.
      * @return Button Links to page which displays list of user's past(inactive) trades
      */
     public Button getPastTradesButton(){return pastTradesButton; }
+
+    public Button getCreateTradeButton() {return createTradeButton;}
 
     /**
      * Returns currentTradesListView.  This method is used by the ActiveTradesController

@@ -118,6 +118,23 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
 
 
     /**
+     * Searches for the index of the Friend in the FriendsList using the specified username.
+     * Returns the index if the username is found; otherwise, returns <code>null</code>
+     *
+     * @param username the username of the friend to be searched
+     * @return the Friend with the specified username if found; otherwise, null
+     */
+    public Integer getFriendIndexByUsername(String username) {
+        for (int i=0; i<this.size(); i++) {
+            if (this.get(i).getActualFriend().getProfile().getUsername().equals(username)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+
+    /**
      * Add friend to friends list.  If that friend is already in the FriendsList it will not be added again.
      *
      * @param friend the Friend to be added to the FriendsList

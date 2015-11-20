@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/friendsTrinketCategory" />
+        android:layout_below="@+id/friendsTrinketCategory"
+        android:layout_above="@+id/addToTradeButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -114,4 +115,13 @@
         android:layout_alignTop="@+id/friendsTrinketCategoryTitle"
         android:layout_alignStart="@+id/friendsTrinketName"
         android:layout_marginStart="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add to Trade"
+        android:id="@+id/addToTradeButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="addToTradeButtonOnClick"/>
 </RelativeLayout>
