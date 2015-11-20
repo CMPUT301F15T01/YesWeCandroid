@@ -19,7 +19,6 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
@@ -119,4 +118,6 @@ public class LoggedInUser extends User {
         }
 
     }
+
+
 }
