@@ -31,6 +31,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.meetme.android.horizontallistview.HorizontalListView;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -70,7 +72,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     private EditText trinketDescription;
     private EditText trinketName;
     private EditText trinketQuantity;
-    private ListView gallery;
+    private HorizontalListView gallery;
     private Spinner trinketCategory;
     private Spinner trinketQuality;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -103,7 +105,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
 
         this.controller = new AddOrEditTrinketController(this);
 
-        this.gallery = (ListView) findViewById(R.id.gallery);
+        this.gallery = (HorizontalListView) findViewById(R.id.gallery);
         this.saveButton = (Button) findViewById(R.id.save_button);
         this.trinketAccessibility = (CheckBox) findViewById(R.id.accessibility_checkbox);
         this.trinketCategory = (Spinner) findViewById(R.id.category_spinner);
