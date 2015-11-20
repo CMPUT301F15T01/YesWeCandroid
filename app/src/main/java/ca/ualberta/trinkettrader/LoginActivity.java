@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else if (!isEmailValid(email)) {
             emailTextView.setError(getString(R.string.error_invalid_email));
         } else {
-            SetUpUserThread thread = new SetUpUserThread(LoggedInUser.getInstance());
+            SetUpUserThread thread = new SetUpUserThread(email);
             thread.start();
             Intent intent = new Intent(this, HomePageActivity.class);
             startActivity(intent);
@@ -173,17 +173,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
     class SetUpUserThread extends Thread {
-        private User user;
-        public SetUpUserThread(User user) {
-            this.user = user;
+        private String email;
+        public SetUpUserThread(String email) {
+            this.email = email;
         }
 
         @Override
         public void run() {
-            user.saveToNetwork(user);
-            // Give some time to get updated info
             try {
+                LoggedInUser.getInstance().loadFromNetwork(email);
                 Thread.sleep(500);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

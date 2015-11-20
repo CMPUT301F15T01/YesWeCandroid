@@ -47,6 +47,7 @@ public abstract class ElasticStorable {
 
         try {
             HttpPost addRequest = new HttpPost(item.getResourceUrl() + item.getId());
+            Log.d("SAVE URL", item.getResourceUrl()+item.getId());
 
             StringEntity stringEntity = new StringEntity(gson.toJson(item));
             addRequest.setEntity(stringEntity);
