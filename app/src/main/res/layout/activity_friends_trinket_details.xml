@@ -8,6 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.ualberta.trinkettrader.Friends.FriendsTrinketDetailsActivity">
 
+    <!-- Bill Donahue; https://github.com/MeetMe/Android-HorizontalListView; 2015-11-20 -->
     <com.meetme.android.horizontallistview.HorizontalListView
         android:id="@+id/gallery"
         android:layout_above="@+id/addToTradeButton"

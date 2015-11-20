@@ -90,6 +90,7 @@
             android:text="@string/activity_add_or_edit_trinket_take_picture_button_text" />
     </LinearLayout>
 
+    <!-- Bill Donahue; https://github.com/MeetMe/Android-HorizontalListView; 2015-11-20 -->
     <com.meetme.android.horizontallistview.HorizontalListView
         android:id="@+id/gallery"
         android:layout_height="250dp"

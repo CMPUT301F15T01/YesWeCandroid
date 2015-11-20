@@ -10,6 +10,7 @@
     tools:context="ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity"
     android:orientation="vertical" >
 
+    <!-- Bill Donahue; https://github.com/MeetMe/Android-HorizontalListView; 2015-11-20 -->
     <com.meetme.android.horizontallistview.HorizontalListView
         android:id="@+id/gallery"
         android:layout_height="250dp"
