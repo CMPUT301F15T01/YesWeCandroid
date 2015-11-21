@@ -1,8 +1,11 @@
 package ca.ualberta.trinkettrader;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -27,10 +30,11 @@ import java.util.List;
 
 /**
  * Methods using HTTPRequest in this class are taken from AndroidElasticSearch //TODO: add github link
+ * Parcelable stuff from http://stackoverflow.com/questions/1626667/how-to-use-parcel-in-android by emmby
  */
-public abstract class ElasticStorable {
+public abstract class ElasticStorable  {
 
-    Gson gson = new Gson();
+
 
     public abstract String getResourceUrl();
     public abstract String getSearchUrl();
@@ -42,7 +46,7 @@ public abstract class ElasticStorable {
      * Save an ElasticStorable object to the network
      * @param item ElasticStorable instance to add or update on the network
      */
-    public void saveToNetwork(ElasticStorable item) {
+    public void saveToNetwork(ElasticStorable item, Gson gson) {
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
@@ -72,7 +76,7 @@ public abstract class ElasticStorable {
      */
     //This method was modified under the guidance of http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost
     //by Android-Droid
-    public ArrayList<ElasticStorable> searchOnNetwork(List<BasicNameValuePair> postParameters, ElasticStorable storable) {
+    public ArrayList<ElasticStorable> searchOnNetwork(List<BasicNameValuePair> postParameters, ElasticStorable storable, Gson gson) {
 
         ArrayList<ElasticStorable> result = new ArrayList<ElasticStorable>();
         /**

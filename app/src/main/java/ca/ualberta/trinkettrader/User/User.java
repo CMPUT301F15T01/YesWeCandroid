@@ -293,4 +293,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     public String getId() {
         return this.profile.getEmail();
     }
+
+
 }

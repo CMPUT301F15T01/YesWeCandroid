@@ -17,6 +17,7 @@ package ca.ualberta.trinkettrader.User;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import ca.ualberta.trinkettrader.ElasticStorable;
+import ca.ualberta.trinkettrader.User.Profile.UserAdapter;
 
 public class LoggedInUser extends User {
     /**
@@ -107,10 +109,14 @@ public class LoggedInUser extends User {
 
     public void loadFromNetwork(String email) throws NoSuchFieldException {
 
-        ArrayList<ElasticStorable> foundUsers = LoggedInUser.getInstance().searchOnNetwork(Arrays.asList(new BasicNameValuePair("email", email)), new User());
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(User.class, new UserAdapter());
+
+        Gson gson = gsonBuilder.create();
+        ArrayList<ElasticStorable> foundUsers = LoggedInUser.getInstance().searchOnNetwork(Arrays.asList(new BasicNameValuePair("email", email)), new User(), gson);
         if(foundUsers.size() == 0){
             ourInstance.getProfile().setEmail(email);
-            ourInstance.saveToNetwork(ourInstance);
+            ourInstance.saveToNetwork(ourInstance, gson);
         }else if(foundUsers.size() == 1){
             ourInstance = (LoggedInUser) foundUsers.get(0);
         }else{
