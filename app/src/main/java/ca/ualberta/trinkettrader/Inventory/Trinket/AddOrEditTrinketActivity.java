@@ -179,7 +179,6 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
                     public void onClick(DialogInterface dialog, int id) {
                         controller.removePicture(pictures.get(position));
                         updatePictures();
-                        NavUtils.navigateUpFromSameTask(activity);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
