@@ -117,7 +117,6 @@ public abstract class ElasticStorable  {
          */
         Type searchResponseType = new TypeToken<SearchResponse<ElasticStorable>>() {
         }.getType();
-
         SearchResponse<ElasticStorable> esResponse;
 
         try {
@@ -135,9 +134,10 @@ public abstract class ElasticStorable  {
         }
 
 
-        for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {
-            result.add(hit.getSource());
-        }
+        if(esResponse.numHits() >= 1){
+            for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {
+                result.add(hit.getSource());
+        }}
 
         return result;
     }

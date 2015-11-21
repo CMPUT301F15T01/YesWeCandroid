@@ -44,6 +44,11 @@ public class SearchResponse<T> {
     public void setHits(Hits<T> hits) {
         this.hits = hits;
     }
+    public Integer numHits(){
+            if(hits != null){
+                return hits.numHits();
+            }else
+                return 0;
 }
 
 
@@ -73,4 +78,4 @@ class Shard {
     public void setFailed(int failed) {
         this.failed = failed;
     }
-}
+}}
