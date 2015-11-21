@@ -93,7 +93,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
 
     private AlertDialog setupAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Delete item?")
+        builder.setMessage("Delete trinket?")
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         controller.onDeleteClick(item);
