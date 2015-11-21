@@ -19,9 +19,6 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -31,10 +28,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import ca.ualberta.trinkettrader.ElasticStorable;
 
 public class LoggedInUser extends User {
     /**
@@ -95,7 +88,8 @@ public class LoggedInUser extends User {
             FileInputStream fis = c.openFileInput(FILENAME);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             //https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/dcom/google/gson/Gson.html, 2015-09-23
-            Type loggedInUserType = new TypeToken<LoggedInUser>() {}.getType();
+            Type loggedInUserType = new TypeToken<LoggedInUser>() {
+            }.getType();
             Gson gson = new Gson();
             ourInstance = gson.fromJson(in, loggedInUserType);
 
@@ -106,17 +100,7 @@ public class LoggedInUser extends User {
         this.setNeedToSave(Boolean.FALSE);
     }
 
-    public void loadFromNetwork(String email) throws NoSuchFieldException {
-
-        ArrayList<ElasticStorable> foundUsers = LoggedInUser.getInstance().searchOnNetwork(Arrays.asList(new BasicNameValuePair("email", email)), new User());
-        if(foundUsers.size() == 0){
-            ourInstance.getProfile().setEmail(email);
-            ourInstance.saveToNetwork(ourInstance);
-        }else if(foundUsers.size() == 1){
-            ourInstance = (LoggedInUser) foundUsers.get(0);
-        }else{
-            throw new NoSuchFieldException();
-        }
-
+    public void loadFromNetwork(String email){
+        //LoggedInUser.getInstance().searchOnNetwork(email, 'User', new User());
     }
 }
