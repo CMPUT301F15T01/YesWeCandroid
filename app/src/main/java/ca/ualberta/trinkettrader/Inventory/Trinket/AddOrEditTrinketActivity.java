@@ -14,6 +14,10 @@
 
 package ca.ualberta.trinkettrader.Inventory.Trinket;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -21,6 +25,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -161,10 +166,28 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
         this.gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                controller.removePicture(pictures.get(position));
-                updatePictures();
+                deletePictureDialog(position);
             }
         });
+    }
+
+    private void deletePictureDialog(final Integer position) {
+        final Activity activity = this;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Delete picture?")
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        controller.removePicture(pictures.get(position));
+                        updatePictures();
+                        NavUtils.navigateUpFromSameTask(activity);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
     }
 
     /**
