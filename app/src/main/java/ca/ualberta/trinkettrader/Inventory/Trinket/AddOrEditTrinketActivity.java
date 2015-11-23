@@ -68,8 +68,7 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 public class AddOrEditTrinketActivity extends AppCompatActivity implements Observer {
 
     private AddOrEditTrinketController controller;
-    private ArrayAdapter<Bitmap> adapter;
-    private ArrayList<Bitmap> bitmaps;
+    private ArrayAdapter<Picture> adapter;
     private ArrayList<Picture> pictures;
     private Button pictureLibraryButton;
     private Button removePictureButton;
@@ -121,8 +120,6 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
         this.trinketQuality = (Spinner) findViewById(R.id.quality_spinner);
         this.trinketQuantity = (EditText) findViewById(R.id.quantity_text);
 
-        this.bitmaps = new ArrayList<>();
-
         // Lalit Poptani; http://stackoverflow.com/questions/8119526/android-get-previous-activity; 2015-11-06
         Intent intent = getIntent();
         String prevActivity = intent.getStringExtra("activityName");
@@ -138,9 +135,6 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             this.controller.getTrinket().setPictures(edited.getPictures());
 
             this.pictures = edited.getPictures();
-            for (Picture picture: pictures) {
-                this.bitmaps.add(picture.getBitmap());
-            }
 
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -161,7 +155,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             });
         }
 
-        this.adapter = new ImageViewArrayAdapter(this, R.layout.activity_trinket_details_picture, this.bitmaps);
+        this.adapter = new ImageViewArrayAdapter(this, R.layout.activity_trinket_details_picture, this.pictures, Boolean.TRUE);
         this.gallery.setAdapter(this.adapter);
         this.adapter.notifyDataSetChanged();
 
@@ -274,11 +268,8 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     }
 
     private void updatePictures() {
-        bitmaps.clear();
-        pictures = controller.getPictures();
-        for (Picture picture: pictures) {
-            bitmaps.add(picture.getBitmap());
-        }
+        pictures.clear();
+        pictures.addAll(controller.getPictures());
         adapter.notifyDataSetChanged();
     }
 

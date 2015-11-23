@@ -53,8 +53,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
     private TrinketDetailsActivity activity = this;
     private TrinketDetailsController controller;
     private ArrayList<Picture> pictures;
-    private ArrayList<Bitmap> bitmaps;
-    private ArrayAdapter<Bitmap> adapter;
+    private ArrayAdapter<Picture> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +68,8 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
         this.gallery = (HorizontalListView) findViewById(R.id.gallery);
 
         this.pictures = item.getPictures();
-        this.bitmaps = new ArrayList<>();
-        for (Picture picture: pictures) {
-            this.bitmaps.add(picture.getBitmap());
-        }
 
-        this.adapter = new ImageViewArrayAdapter(this, R.layout.activity_trinket_details_picture, this.bitmaps);
+        this.adapter = new ImageViewArrayAdapter(this, R.layout.activity_trinket_details_picture, this.pictures, Boolean.FALSE);
         this.gallery.setAdapter(this.adapter);
         this.adapter.notifyDataSetChanged();
 
@@ -83,7 +78,6 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Picture picture = pictures.get(position);
                 picture.loadPicture();
-                bitmaps.set(position, picture.getBitmap());
                 adapter.notifyDataSetChanged();
             }
         });
