@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Inventory.Trinket.Pictures;
 
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -33,29 +34,26 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/";
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/_search";
     private static final String TAG = "User";
-
-
     private ArrayList<Observer> observers;
-    private byte[] image;
+    private byte[] pictureByteArray;
     private volatile File file;
 
     /**
      * Creates a new picture from a file containing a compressed jpeg image.
      *
-     * @param file file containing the compressed jpeg image
+     * @param picture file containing the compressed jpeg image
      * @throws IOException
      */
-    public Picture(File file) throws IOException {
-        this.file = file;
-        FileInputStream fileInputStream = new FileInputStream(file);
+    public Picture(File picture, PictureDirectoryManager directoryManager) throws IOException, PackageManager.NameNotFoundException {
+        this.file = directoryManager.compressPicture(picture);
         // \u00d3scar L\u00f3pez; http://stackoverflow.com/questions/8721262/how-to-get-file-size-in-java; 2015-11-04
-        image = new byte[(int) file.length()];
-        fileInputStream.read(image);
+        pictureByteArray = new byte[(int) this.file.length()];
+        FileInputStream fileInputStream = new FileInputStream(this.file);
+        fileInputStream.read(pictureByteArray);
         fileInputStream.close();
     }
 
     public void loadPicture() {
-
     }
 
     /**
@@ -108,7 +106,11 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      * @return Bitmap
      */
     public Bitmap getBitmap() {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
+        return BitmapFactory.decodeByteArray(pictureByteArray, 0, pictureByteArray.length);
+    }
+
+    public File getFile() {
+        return this.file;
     }
 
     /**
@@ -119,6 +121,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     public Long size() {
         return file.length();
     }
+
     @Override
     public String getResourceUrl() {
         return RESOURCE_URL;
@@ -136,6 +139,6 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
 
     @Override
     public String getId() {
-        return String.valueOf(this.image.hashCode());
+        return String.valueOf(this.pictureByteArray.hashCode());
     }
 }

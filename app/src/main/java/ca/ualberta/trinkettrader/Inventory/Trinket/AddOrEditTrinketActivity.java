@@ -19,6 +19,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -49,6 +50,7 @@ import java.util.Observer;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.ImageViewArrayAdapter;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.PictureDirectoryManager;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 
@@ -241,18 +243,19 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
+            PictureDirectoryManager directoryManager = new PictureDirectoryManager(this);
             if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 try {
                     // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
-                    this.addPicture(new Picture(new File(uri.getPath())));
-                } catch (IOException e) {
+                    this.addPicture(new Picture(new File(uri.getPath()), directoryManager));
+                } catch (IOException | PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                     throw new RuntimeException(e);
                 }
             } else if (requestCode == SELECT_PICTURE) {
                 try {
-                    this.addPicture(new Picture(new File(getPath(data.getData()))));
-                } catch (IOException e) {
+                    this.addPicture(new Picture(new File(getPath(data.getData())), directoryManager));
+                } catch (IOException | PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                     throw new RuntimeException(e);
                 }
