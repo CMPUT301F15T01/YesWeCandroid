@@ -35,9 +35,9 @@ import ca.ualberta.trinkettrader.ElasticStorable;
  */
 public class Picture extends ElasticStorable implements ca.ualberta.trinkettrader.Observable {
 
-    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/";
-    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/_search";
-    private static final String TAG = "User";
+    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/picture/";
+    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/picture/_search";
+    private static final String TAG = "Picture";
     private ArrayList<Observer> observers;
     private byte[] pictureByteArray;
     private volatile File file;
@@ -86,6 +86,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      * Loads this picture into memory so that it can be later viewed.
      */
     public void loadPicture() {
+        saveToNetwork(this);
     }
 
     /**
@@ -165,7 +166,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      *
      * @return JSON representation of the picture
      */
-    public String toJson() {
+    public String getJson() {
         return "{ \"filename:\" " + file.getName() + ", \"bytes:\" " + new String(pictureByteArray) + " }";
     }
 
@@ -186,6 +187,6 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
 
     @Override
     public String getId() {
-        return String.valueOf(this.pictureByteArray.hashCode());
+        return file.getName();
     }
 }
