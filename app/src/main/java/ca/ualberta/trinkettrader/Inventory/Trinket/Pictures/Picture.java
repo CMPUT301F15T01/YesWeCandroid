@@ -17,10 +17,18 @@ package ca.ualberta.trinkettrader.Inventory.Trinket.Pictures;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,7 +45,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
 
     private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/picture/";
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/picture/_search";
-    private static final String TAG = "Picture";
+    private static final String TAG = "picture";
     private ArrayList<Observer> observers;
     private byte[] pictureByteArray;
     private volatile File file;
@@ -166,8 +174,8 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      *
      * @return JSON representation of the picture
      */
-    public String getJson() {
-        return "{ \"filename:\" " + file.getName() + ", \"bytes:\" " + new String(pictureByteArray) + " }";
+    protected String getJson() {
+        return "{ \"filename:\" \"" + file.getName() + "\", \"bytes:\" \"" + Base64.encodeToString(pictureByteArray, Base64.DEFAULT) + "\" }";
     }
 
     @Override

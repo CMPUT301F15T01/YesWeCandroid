@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -17,6 +18,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -40,23 +42,28 @@ public abstract class ElasticStorable {
      * Save an ElasticStorable object to the network
      * @param item ElasticStorable instance to add or update on the network
      */
-    public void saveToNetwork(ElasticStorable item) {
-        HttpClient httpClient = new DefaultHttpClient();
+    public void saveToNetwork(final ElasticStorable item) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpPost addRequest = new HttpPost(item.getResourceUrl() + item.getId());
+                    StringEntity stringEntity = new StringEntity(item.getJson());
+                    addRequest.setEntity(stringEntity);
+                    addRequest.setHeader("Accept", "application/json");
+                    HttpResponse response = httpClient.execute(addRequest);
+                    Log.i("HttpResponse", response.getStatusLine().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
 
-        try {
-            HttpPost addRequest = new HttpPost(item.getResourceUrl() + item.getId());
-
-            StringEntity stringEntity = new StringEntity(gson.toJson(item));
-            addRequest.setEntity(stringEntity);
-            addRequest.setHeader("Accept", "application/json");
-
-            HttpResponse response = httpClient.execute(addRequest);
-            String status = response.getStatusLine().toString();
-            Log.i(item.getTag(), status);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    protected String getJson() {
+        return gson.toJson(this);
     }
 
     /**
