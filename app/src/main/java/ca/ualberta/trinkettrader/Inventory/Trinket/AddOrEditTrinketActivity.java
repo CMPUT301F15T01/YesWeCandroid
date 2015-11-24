@@ -120,6 +120,8 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
         this.trinketQuality = (Spinner) findViewById(R.id.quality_spinner);
         this.trinketQuantity = (EditText) findViewById(R.id.quantity_text);
 
+        this.pictures = new ArrayList<>();
+
         // Lalit Poptani; http://stackoverflow.com/questions/8119526/android-get-previous-activity; 2015-11-06
         Intent intent = getIntent();
         String prevActivity = intent.getStringExtra("activityName");
@@ -134,8 +136,6 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             this.trinketQuantity.setText(edited.getQuantity());
             this.controller.getTrinket().setPictures(edited.getPictures());
 
-            this.pictures = edited.getPictures();
-
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -145,7 +145,6 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
         } else {
             this.trinketAccessibility.setChecked(true);
             this.trinketQuantity.setText("1");
-            this.pictures = new ArrayList<>();
 
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -157,7 +156,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
 
         this.adapter = new ImageViewArrayAdapter(this, R.layout.activity_trinket_details_picture, this.pictures, Boolean.TRUE);
         this.gallery.setAdapter(this.adapter);
-        this.adapter.notifyDataSetChanged();
+        updatePictures();
 
         this.gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
