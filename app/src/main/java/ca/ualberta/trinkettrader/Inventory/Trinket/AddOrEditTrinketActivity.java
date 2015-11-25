@@ -134,7 +134,13 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             this.trinketName.setText(edited.getName());
             this.trinketQuality.setSelection(new ArrayList<>(Arrays.asList(this.getResources().getStringArray(R.array.spinner_qualities))).indexOf(edited.getQuality()));
             this.trinketQuantity.setText(edited.getQuantity());
-            this.controller.getTrinket().setPictures(edited.getPictures());
+            for (Picture picture: edited.getPictures()) {
+                try {
+                    this.controller.addPicture(picture);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
