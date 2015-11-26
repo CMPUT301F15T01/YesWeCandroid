@@ -36,10 +36,9 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
 
-
-// Running tests help: Janne Oksanen, http://stackoverflow.com/questions/19516289/exception-in-thread-main-java-lang-noclassdeffounderror-junit-textui-resultpr, 2015-10-31
-
 public class InventoryTests extends ActivityInstrumentationTestCase2 {
+
+    // Janne Oksanen; http://stackoverflow.com/questions/19516289/exception-in-thread-main-java-lang-noclassdeffounderror-junit-textui-resultpr; 2015-10-31
 
     public ListView list;
     public Button addItemButton;

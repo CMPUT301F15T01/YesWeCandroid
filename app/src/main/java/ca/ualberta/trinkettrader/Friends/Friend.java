@@ -42,7 +42,7 @@ import ca.ualberta.trinkettrader.User.User;
  * A friend, like the current user, is identified on the system by their email address.  Friends are
  * searched for and listed by their emails, so the current user must know their friend's email address
  * in order to find them.
- *
+ * <p/>
  * Friending is a one-way opperation, so one user adding a second as a friend does not cause the first
  * user to become the second user's friend as well.  The second user would have to manually add the first
  * user as their friend to make the friending mutual.

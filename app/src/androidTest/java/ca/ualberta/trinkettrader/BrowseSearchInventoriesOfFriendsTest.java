@@ -45,10 +45,10 @@ import ca.ualberta.trinkettrader.User.User;
 
 /**
  * Testing file for "Browse Search Inventories Of Friends" use cases.
- * Multiple-activity testing tutorial taken from:
- * http://stackoverflow.com/questions/1759626/how-do-you-test-an-android-application-across-multiple-activities
  */
 public class BrowseSearchInventoriesOfFriendsTest extends ActivityInstrumentationTestCase2 {
+
+    // SingleShot; http://stackoverflow.com/questions/1759626/how-do-you-test-an-android-application-across-multiple-activities; 2015-11-26
 
     User borrower;
     Friend friend1;

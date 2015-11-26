@@ -30,7 +30,8 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
 
 public class FriendsTests extends ActivityInstrumentationTestCase2<LoginActivity> {
-// Instrumentation code is from: https://developer.android.com/training/activity-testing/activity-functional-testing.html 2015-11-03
+
+    // https://developer.android.com/training/activity-testing/activity-functional-testing.html; 2015-11-03
 
     private LoginActivity loginActivity;
     private HomePageActivity homePageActivity;
