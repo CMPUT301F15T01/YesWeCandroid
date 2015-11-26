@@ -14,16 +14,13 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.ToggleButton;

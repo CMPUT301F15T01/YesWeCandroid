@@ -1,20 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="ca.ualberta.trinkettrader.Trades.CreateTradeActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context="ca.ualberta.trinkettrader.Trades.CreateTradeActivity">
 
 
     <TextView
+        android:id="@+id/createTradeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Create Trade"
-        android:id="@+id/createTradeTitle"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:text="Create Trade"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <Spinner
         android:id="@+id/friends_spinner"
@@ -22,62 +24,62 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
         android:prompt="@string/activity_create_trade_friend_prompt"
-        android:spinnerMode="dialog" />
+        android:spinnerMode="dialog"/>
 
     <TextView
+        android:id="@+id/selectFriendTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Select a Friend"
-        android:id="@+id/selectFriendTextView"
-        android:layout_alignTop="@+id/friends_spinner"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="-20dp" />
+        android:layout_alignTop="@+id/friends_spinner"
+        android:layout_marginTop="-20dp"
+        android:text="Select a Friend"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <Button
+        android:id="@+id/addFriendsItemsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Friends Items"
-        android:id="@+id/addFriendsItemsButton"
-        android:layout_below="@+id/friends_spinner"
         android:layout_alignParentStart="true"
-        android:onClick="addFriendsItemsButtonOnClick"/>
+        android:layout_below="@+id/friends_spinner"
+        android:onClick="addFriendsItemsButtonOnClick"
+        android:text="Add Friends Items"/>
 
     <ListView
+        android:id="@+id/friendsItemsListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/friendsItemsListView"
+        android:layout_above="@+id/addYourItemsButton"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/addFriendsItemsButton"
-        android:layout_above="@+id/addYourItemsButton" />
+        android:layout_below="@+id/addFriendsItemsButton"/>
 
     <Button
+        android:id="@+id/addYourItemsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Your Items"
-        android:id="@+id/addYourItemsButton"
-        android:layout_marginBottom="113dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:onClick="addYourItemsButtonOnClick"/>
+        android:layout_marginBottom="113dp"
+        android:onClick="addYourItemsButtonOnClick"
+        android:text="Add Your Items"/>
 
     <ListView
+        android:id="@+id/yourItemsListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/yourItemsListView"
-        android:layout_below="@+id/friendsItemsListView"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/friendsItemsListView"
         android:layout_marginTop="54dp"
-        android:layout_toStartOf="@+id/proposeTradeButton" />
+        android:layout_toStartOf="@+id/proposeTradeButton"/>
 
     <Button
+        android:id="@+id/proposeTradeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Propose Trade"
-        android:id="@+id/proposeTradeButton"
         android:layout_alignBottom="@+id/yourItemsListView"
         android:layout_alignParentEnd="true"
-        android:onClick="proposeTradeButtonOnClick"/>
+        android:onClick="proposeTradeButtonOnClick"
+        android:text="Propose Trade"/>
 
 
 </RelativeLayout>

@@ -25,11 +25,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import ca.ualberta.trinkettrader.User.Profile.EditUserProfileActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
-import ca.ualberta.trinkettrader.User.User;
+import ca.ualberta.trinkettrader.User.Profile.EditUserProfileActivity;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
+import ca.ualberta.trinkettrader.User.User;
 
 public class ConfigurationTests extends ActivityInstrumentationTestCase2 {
 

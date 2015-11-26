@@ -15,7 +15,7 @@
         android:id="@+id/save_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/activity_add_or_edit_trinket_save_button_text" />
+        android:text="@string/activity_add_or_edit_trinket_save_button_text"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,32 +26,32 @@
             android:id="@+id/name_text"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:hint="@string/activity_add_or_edit_trinket_name_hint" />
+            android:hint="@string/activity_add_or_edit_trinket_name_hint"/>
 
         <EditText
             android:id="@+id/quantity_text"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:hint="@string/activity_add_or_edit_trinket_quantity_hint" />
+            android:hint="@string/activity_add_or_edit_trinket_quantity_hint"/>
 
         <CheckBox
             android:id="@+id/accessibility_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/activity_add_or_edit_trinket_accessibility_checkbox" />
+            android:text="@string/activity_add_or_edit_trinket_accessibility_checkbox"/>
     </LinearLayout>
 
     <EditText
         android:id="@+id/description_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/activity_add_or_edit_trinket_description_hint" />
+        android:hint="@string/activity_add_or_edit_trinket_description_hint"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/category_spinner"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:entries="@array/spinner_categories"
             android:prompt="@string/activity_add_or_edit_trinket_spinner_categories_prompt"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"/>
 
         <Spinner
             android:id="@+id/quality_spinner"
@@ -67,35 +67,35 @@
             android:layout_height="wrap_content"
             android:entries="@array/spinner_qualities"
             android:prompt="@string/activity_add_or_edit_trinket_spinner_qualities_prompt"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/picture_library_button"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:onClick="pictureLibraryClick"
-            android:text="@string/activity_add_or_edit_trinket_picture_library_button_text" />
+            android:text="@string/activity_add_or_edit_trinket_picture_library_button_text"/>
 
         <Button
             android:id="@+id/take_picture_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="takePictureClick"
-            android:text="@string/activity_add_or_edit_trinket_take_picture_button_text" />
+            android:text="@string/activity_add_or_edit_trinket_take_picture_button_text"/>
     </LinearLayout>
 
     <!-- Bill Donahue; https://github.com/MeetMe/Android-HorizontalListView; 2015-11-20 -->
     <com.meetme.android.horizontallistview.HorizontalListView
         android:id="@+id/gallery"
-        android:layout_height="250dp"
-        android:layout_width="wrap_content"
-        widget:dividerWidth="10dp"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:widget="http://schemas.android.com/apk/res-auto" />
+        xmlns:widget="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        widget:dividerWidth="10dp"/>
 </LinearLayout>
