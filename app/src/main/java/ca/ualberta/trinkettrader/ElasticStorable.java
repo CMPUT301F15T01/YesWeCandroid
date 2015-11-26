@@ -74,7 +74,7 @@ public abstract class ElasticStorable {
 
     protected ElasticStorable fromJson(String json) {
         return gson.fromJson(json, ElasticStorable.class);
-    };
+    }
 
     /**
      * Search for ElasticStorable objects on the network by matching the attribute and attribute
