@@ -45,6 +45,17 @@ public class CreateTradeController {
         activity.startActivity(intent);
     }
 
+    public void proposeTradeButtonOnClick() {
+        Trade proposedTrade = new Trade(ApplicationState.getInstance().getYourTradeTrinkets(), ApplicationState.getInstance().getClickedFriend().getActualFriend().getTradeManager(), ApplicationState.getInstance().getFriendsTradeTrinkets(), LoggedInUser.getInstance().getTradeManager());
+        LoggedInUser.getInstance().getTradeManager().proposeTrade(proposedTrade);
+
+        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades().add(proposedTrade);
+
+        Intent intent = new Intent(activity, TradesActivity.class);
+        activity.startActivity(intent);
+    }
+
+
     public void updateClickedFriend() {
         Spinner friendSpinner = activity.getFriendSpinner();
         Friend clickedFriend = ApplicationState.getInstance().getClickedFriend();
@@ -71,9 +82,11 @@ public class CreateTradeController {
                 Friend selectedFriend = (Friend) spinner.getItemAtPosition(pos);
                 if(!selectedFriend.getActualFriend().getProfile().getEmail().equals(ApplicationState.getInstance().getClickedFriend().getActualFriend().getProfile().getEmail())){
                     ApplicationState.getInstance().setFriendsTradeTrinkets(new Inventory());
+                    ApplicationState.getInstance().setYourTradeTrinkets(new Inventory());
                 }
                 ApplicationState.getInstance().setClickedFriend(selectedFriend);
                 activity.updateFriendTradeTrinketListView();
+                activity.updateYourTradeTrinketListView();
             }
 
             public void onNothingSelected(AdapterView<?> spinner) {

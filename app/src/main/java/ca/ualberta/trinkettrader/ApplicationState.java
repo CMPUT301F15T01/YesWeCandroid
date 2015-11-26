@@ -42,6 +42,7 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     private Friend clickedFriend;
     private Trade clickedTrade;
     private Inventory friendsTradeTrinkets = new Inventory();
+    private Inventory yourTradeTrinkets = new Inventory();
 
 
     private ApplicationState() {
@@ -88,6 +89,7 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
         return friendsTradeTrinkets;
     }
 
+
     /**
      * Sets the Inventory (list of Trinkets) that the user wants from the friend.
      */
@@ -95,6 +97,22 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
         this.friendsTradeTrinkets = friendsTradeTrinkets;
     }
 
+
+    /**
+     * Gets the Inventory (list of Trinkets) that the user wants to give to the friend.
+     *
+     * @return the Inventory (list of Trinkets) representing what the user wants to give to the friend
+     */
+    public Inventory getYourTradeTrinkets() {
+        return yourTradeTrinkets;
+    }
+
+    /**
+     * Sets the Inventory (list of Trinkets) that the user wants to give to the friend.
+     */
+    public void setYourTradeTrinkets(Inventory yourTradeTrinkets) {
+        this.yourTradeTrinkets = yourTradeTrinkets;
+    }
 
     /**
      * Sets the trinket most recently clicked on from the Active Trades ListView (currentTradesListView)

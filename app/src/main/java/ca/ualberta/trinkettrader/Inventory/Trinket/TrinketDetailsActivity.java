@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.meetme.android.horizontallistview.HorizontalListView;
 
@@ -45,9 +46,17 @@ import ca.ualberta.trinkettrader.R;
  */
 public class TrinketDetailsActivity extends AppCompatActivity implements Observer {
 
+
+    private TextView name;
+    private TextView description;
+    private TextView quantity;
+    private TextView quality;
+    private TextView category;
+
     private AlertDialog dialog;
     private Button deleteButton;
     private Button editButton;
+    private Button addToTradeButton;
     private HorizontalListView gallery;
     private Trinket item;
     private TrinketDetailsActivity activity = this;
@@ -62,8 +71,15 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
 
         this.item = ApplicationState.getInstance().getClickedTrinket();
 
+        name = (TextView) findViewById(R.id.trinketName);
+        description = (TextView) findViewById(R.id.trinketDescription);
+        quantity = (TextView) findViewById(R.id.trinketQuantity);
+        quality = (TextView) findViewById(R.id.trinketQuality);
+        category = (TextView) findViewById(R.id.trinketCategory);
+
         this.deleteButton = (Button) findViewById(R.id.deleteItemButton);
         this.editButton = (Button) findViewById(R.id.edit_button);
+        this.addToTradeButton = (Button) findViewById(R.id.addYourTrinketToTradeButton);
         this.controller = new TrinketDetailsController(this);
         this.gallery = (HorizontalListView) findViewById(R.id.gallery);
 
@@ -82,6 +98,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
             }
         });
 
+        controller.updateTextViews();
         this.dialog = setupAlertDialog();
     }
 
@@ -102,6 +119,27 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
         return builder.create();
     }
 
+
+    public TextView getNameTextView() {
+        return name;
+    }
+
+    public TextView getDescriptionTextView() {
+        return description;
+    }
+
+    public TextView getQuantityTextView() {
+        return quantity;
+    }
+
+    public TextView getQualityTextView() {
+        return quality;
+    }
+
+    public TextView getCategoryTextView() {
+        return category;
+    }
+
     /**
      * Returns the button from the activity's user interface that lets the user delete the trinket.
      *
@@ -109,6 +147,16 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
      */
     public Button getDeleteButton() {
         return deleteButton;
+    }
+
+    /**
+     * Returns the button from the activity's user interface that lets the user add the trinket
+     * to the user's trade.
+     *
+     * @return Button - button for adding the trinket to a trade
+     */
+    public Button getAddToTradeButton() {
+        return addToTradeButton;
     }
 
     /**
@@ -162,6 +210,10 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
      */
     public void editClick(View view) {
         controller.onEditClick();
+    }
+
+    public void addYourTrinketToTradeButtonOnClick(View v){
+        controller.addYourTrinketToTradeButtonOnClick();
     }
 
     /**

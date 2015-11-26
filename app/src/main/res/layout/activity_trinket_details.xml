@@ -8,18 +8,120 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <!-- Bill Donahue; https://github.com/MeetMe/Android-HorizontalListView; 2015-11-20 -->
     <com.meetme.android.horizontallistview.HorizontalListView
         android:id="@+id/gallery"
-        android:layout_height="250dp"
+        android:layout_height="64dp"
         android:layout_width="wrap_content"
         widget:dividerWidth="10dp"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:widget="http://schemas.android.com/apk/res-auto" />
+        xmlns:widget="http://schemas.android.com/apk/res-auto"
+        android:layout_weight="0.73" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Trinket:"
+        android:id="@+id/trinketNameTitle"
+        android:layout_alignEnd="@+id/gallery"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Trinket Name"
+        android:id="@+id/trinketName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="84dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Description:"
+        android:id="@+id/trinketDescriptionTitle"
+        android:layout_below="@+id/trinketName"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Trinket Description"
+        android:id="@+id/trinketDescription"
+        android:layout_alignTop="@+id/trinketDescriptionTitle"
+        android:layout_alignStart="@+id/trinketName"
+        android:layout_marginStart="48dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Quantity:"
+        android:id="@+id/trinketQuantityTitle"
+        android:layout_below="@+id/trinketDescription"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Trinket Quantity"
+        android:id="@+id/trinketQuantity"
+        android:layout_alignTop="@+id/trinketQuantityTitle"
+        android:layout_alignStart="@+id/trinketName"
+        android:layout_marginStart="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Quality:"
+        android:id="@+id/trinketQualityTitle"
+        android:layout_below="@+id/trinketQuantity"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Trinket Quality"
+        android:id="@+id/trinketQuality"
+        android:layout_alignTop="@+id/trinketQualityTitle"
+        android:layout_alignStart="@+id/trinketName"
+        android:layout_marginStart="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Category:"
+        android:id="@+id/trinketCategoryTitle"
+        android:layout_below="@+id/trinketQuality"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Trinket Category"
+        android:id="@+id/trinketCategory"
+        android:layout_alignTop="@+id/trinketCategoryTitle"
+        android:layout_alignStart="@+id/trinketName"
+        android:layout_marginStart="20dp" />
+
+    TextView
         android:id="@+id/accessibility_textview"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -39,4 +141,11 @@
         android:layout_width="match_parent"
         android:onClick="deleteClick"
         android:text="Delete" />
+
+    <Button
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:text="Add to Trade"
+        android:id="@+id/addYourTrinketToTradeButton"
+        android:onClick="addYourTrinketToTradeButtonOnClick"/>
 </LinearLayout>

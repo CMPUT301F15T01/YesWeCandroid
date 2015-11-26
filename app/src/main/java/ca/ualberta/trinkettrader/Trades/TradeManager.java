@@ -16,10 +16,12 @@ package ca.ualberta.trinkettrader.Trades;
 
 import java.util.ArrayList;
 
+import ca.ualberta.trinkettrader.ElasticStorable;
 import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.Trades.Trade;
 import ca.ualberta.trinkettrader.Trades.TradeArchiver;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.User;
 
 /**
@@ -30,7 +32,11 @@ import ca.ualberta.trinkettrader.User.User;
  * Trade manager works with the TradeArchiver class to store and access a user's trades
  * and with the NotificationManager class to notify
  */
-public class TradeManager {
+public class TradeManager extends ElasticStorable {
+
+    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/trade/";
+    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/trade/_search";
+    private static final String TAG = "trade";
 
     private NotificationManager notificationManager;
     private TradeArchiver tradeArchiver;
@@ -153,4 +159,23 @@ public class TradeManager {
         return notificationManager;
     }
 
+    @Override
+    public String getResourceUrl() {
+        return RESOURCE_URL;
+    }
+
+    @Override
+    public String getSearchUrl() {
+        return SEARCH_URL;
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getId() {
+        return LoggedInUser.getInstance().getProfile().getUsername();
+    }
 }

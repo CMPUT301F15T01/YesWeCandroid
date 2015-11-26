@@ -16,6 +16,8 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 
 import android.content.Intent;
 
+import ca.ualberta.trinkettrader.ApplicationState;
+import ca.ualberta.trinkettrader.Trades.CreateTradeActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
@@ -27,6 +29,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
 public class TrinketDetailsController {
 
     private TrinketDetailsActivity activity;
+    private Trinket clickedTrinket = ApplicationState.getInstance().getClickedTrinket();
 
     /**
      * Constructs a controller with the activity this constructor is attached to.  Each controller
@@ -59,5 +62,21 @@ public class TrinketDetailsController {
         intent.putExtra("activityName", "edit");
         activity.startActivity(intent);
 
+    }
+
+    public void addYourTrinketToTradeButtonOnClick(){
+        Trinket clickedTrinket = ApplicationState.getInstance().getClickedTrinket();
+        ApplicationState.getInstance().getYourTradeTrinkets().add(clickedTrinket);
+
+        Intent intent = new Intent(activity, CreateTradeActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public void updateTextViews() {
+        activity.getNameTextView().setText(clickedTrinket.getName());
+        activity.getDescriptionTextView().setText(clickedTrinket.getDescription());
+        activity.getQuantityTextView().setText(clickedTrinket.getQuantity());
+        activity.getQualityTextView().setText(clickedTrinket.getQuality());
+        activity.getCategoryTextView().setText(clickedTrinket.getCategory());
     }
 }

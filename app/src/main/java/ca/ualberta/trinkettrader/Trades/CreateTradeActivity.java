@@ -38,13 +38,17 @@ public class CreateTradeActivity extends AppCompatActivity {
 
     private Button addFriendsItemsButton;
     private Button addYourItemsButton;
+    private Button proposeTradeButton;
     private CreateTradeController controller;
     private FriendsList userFriendList;
     private ArrayAdapter<Friend> friendAdapter;
     private Spinner friendSpinner;
     private Inventory friendTradeTrinkets;
+    private Inventory yourTradeTrinkets;
     private ListView friendTradeTrinketListView;
+    private ListView yourTradeTrinketListView;
     private ArrayAdapter<Trinket> friendTrinketAdapter;
+    private ArrayAdapter<Trinket> yourTrinketAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +57,13 @@ public class CreateTradeActivity extends AppCompatActivity {
 
         addFriendsItemsButton = (Button) findViewById(R.id.addFriendsItemsButton);
         addYourItemsButton = (Button) findViewById(R.id.addYourItemsButton);
+        proposeTradeButton = (Button) findViewById(R.id.proposeTradeButton);
         userFriendList = LoggedInUser.getInstance().getFriendsList();
         friendSpinner = (Spinner) findViewById(R.id.friends_spinner);
         friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
         friendTradeTrinketListView = (ListView) findViewById(R.id.friendsItemsListView);
+        yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
+        yourTradeTrinketListView = (ListView) findViewById(R.id.yourItemsListView);
         controller = new CreateTradeController(this);
         controller.setFriendSpinnerItemOnClick();
         controller.updateClickedFriend();
@@ -68,6 +75,7 @@ public class CreateTradeActivity extends AppCompatActivity {
         super.onStart();
         updateFriendsSpinner();
         updateFriendTradeTrinketListView();
+        updateYourTradeTrinketListView();
         controller.updateClickedFriend();
     }
 
@@ -76,6 +84,7 @@ public class CreateTradeActivity extends AppCompatActivity {
         super.onResume();
         updateFriendsSpinner();
         updateFriendTradeTrinketListView();
+        updateYourTradeTrinketListView();
         controller.updateClickedFriend();
     }
 
@@ -85,6 +94,10 @@ public class CreateTradeActivity extends AppCompatActivity {
 
     public Button getAddYourItemsButton() {
         return addYourItemsButton;
+    }
+
+    public Button getProposeTradeButton() {
+        return proposeTradeButton;
     }
 
     public Spinner getFriendSpinner() {
@@ -103,6 +116,10 @@ public class CreateTradeActivity extends AppCompatActivity {
         controller.addYourItemsButtonOnClick();
     }
 
+    public void proposeTradeButtonOnClick(View v) {
+        controller.proposeTradeButtonOnClick();
+    }
+
     public void updateFriendsSpinner() {
         userFriendList = LoggedInUser.getInstance().getFriendsList();
         friendAdapter = new ArrayAdapter<Friend>(this, android.R.layout.simple_list_item_1, userFriendList);
@@ -114,6 +131,12 @@ public class CreateTradeActivity extends AppCompatActivity {
         friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
         friendTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, friendTradeTrinkets);
         friendTradeTrinketListView.setAdapter(friendTrinketAdapter);
+    }
+
+    public void updateYourTradeTrinketListView() {
+        yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
+        yourTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, yourTradeTrinkets);
+        yourTradeTrinketListView.setAdapter(yourTrinketAdapter);
     }
 
 }
