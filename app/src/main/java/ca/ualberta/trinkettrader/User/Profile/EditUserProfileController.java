@@ -64,6 +64,8 @@ public class EditUserProfileController {
             userProfile.setArePhotosDownloadable(photoDownloadEnabled);
 
             LoggedInUser.getInstance().saveInFile(activity.getBaseContext());
+
+            LoggedInUser.getInstance().saveToNetwork();
             //exit the activity
             activity.finish();
         }
