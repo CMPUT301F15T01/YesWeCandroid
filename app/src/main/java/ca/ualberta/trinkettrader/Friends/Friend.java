@@ -42,6 +42,10 @@ import ca.ualberta.trinkettrader.User.User;
  * A friend, like the current user, is identified on the system by their email address.  Friends are
  * searched for and listed by their emails, so the current user must know their friend's email address
  * in order to find them.
+ *
+ * Friending is a one-way opperation, so one user adding a second as a friend does not cause the first
+ * user to become the second user's friend as well.  The second user would have to manually add the first
+ * user as their friend to make the friending mutual.
  */
 public class Friend implements Friendable {
 
@@ -51,21 +55,23 @@ public class Friend implements Friendable {
 
     /**
      * Default constructor. Runs the default constructor of User, initializing all of the
-     * friend's attributes to empty objects.
-     * By default, the tracked status is <code>False</code>.
+     * friend's attributes to empty objects.  This constructor should only be used for testing purposes,
+     * as during normal app operation all friends should be initialized with a valid email address.
+     * By default, the tracked status is <code>False</code>, so the friend is only included in the
+     * current user's friends list, and not their tracked friends list.
      */
     public Friend() {
         this.isTracked = Boolean.FALSE;
-        actualFriend = new User();
+        this.actualFriend = new User();
     }
 
-// reader must be able to find whateach term means, when should they be using (5 w's).  what uses it, etc.
-    // who calls it, what they are calling it with.  who loads it.  should be useable by another developer
-    // structure, etc. can be described by uml.  need to know what stuff is actually useful for.
+
     /**
-     * Constructor that uses all the attributes of User.
-     * Initializes the Friend using these attributes (using User's constructor), then sets the
-     * tracked status.
+     * Constructor that sets all attributes of Friend from the inputs.  It sets the friend's inventory,
+     * profile, friend information, and trade information.  This constructor would be called invoked
+     * when friend data is being pulled off the network, either when initializing friend data when a user
+     * logs in, or when an existing user or friend is searched-for when the app is online.  The data
+     * found on the Elastic Search will be used to instantiate the Friend object.
      *
      * @param friendsList         the user's list of Friends
      * @param inventory           the user's inventory
@@ -76,19 +82,23 @@ public class Friend implements Friendable {
      * @param isTracked           Boolean representing the friend's tracking status
      */
     public Friend(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager, Boolean isTracked) {
-        actualFriend = new User(friendsList, inventory, notificationManager, profile, trackedFriends, tradeManager);
+        this.actualFriend = new User(friendsList, inventory, notificationManager, profile, trackedFriends, tradeManager);
         this.isTracked = isTracked;
     }
 
     /**
-     * Constructor that sets only the username of the Friend. All other attributes are initialized
-     * using the default constructor of User (to empty objects).
+     * Constructor that sets only the email address of the Friend. All other attributes are initialized
+     * using the default constructor of User (to empty objects), and the tracked status is initialized to
+     * the default value of false (not tracked).  This constructor would be invoked if the current user searches
+     * for a user whose email address is not on the network, or they search for a user, whose data they have
+     * not cached, while the app is offline.  In this case, a friend object with only the email
+     * address the current user searched for will be returned.
      *
-     * @param username the friend's username
+     * @param email the friend's email address
      */
-    public Friend(String username) {
+    public Friend(String email) {
         actualFriend = new User();
-        this.actualFriend.getProfile().setEmail(username);
+        this.actualFriend.getProfile().setEmail(email);
         this.isTracked = Boolean.FALSE;
     }
 
