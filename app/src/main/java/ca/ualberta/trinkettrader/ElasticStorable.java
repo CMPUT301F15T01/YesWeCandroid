@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
@@ -46,7 +47,7 @@ public abstract class ElasticStorable {
         final HttpClient httpClient = new DefaultHttpClient();
         final HttpPost addRequest = new HttpPost(this.getResourceUrl() + this.getId());
         try {
-            final StringEntity stringEntity = new StringEntity(this.getJson());
+            final StringEntity stringEntity = new StringEntity(this.toJson());
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
         } catch (IOException e) {
@@ -67,8 +68,12 @@ public abstract class ElasticStorable {
         thread.start();
     }
 
-    protected String getJson() {
+    protected String toJson() {
         return gson.toJson(this);
+    }
+
+    protected ElasticStorable fromJson(String json) {
+        return gson.fromJson(json, ElasticStorable.class);
     }
 
     /**
