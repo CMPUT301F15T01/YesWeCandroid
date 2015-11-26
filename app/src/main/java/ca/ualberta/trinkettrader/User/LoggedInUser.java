@@ -35,7 +35,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import ca.ualberta.trinkettrader.ElasticStorable;
-import ca.ualberta.trinkettrader.User.Profile.UserAdapter;
 
 public class LoggedInUser extends User {
     /**
@@ -103,7 +102,6 @@ public class LoggedInUser extends User {
     public void loadFromNetwork(String email) throws NoSuchFieldException {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(User.class, new UserAdapter());
 
         Gson gson = gsonBuilder.create();
 
