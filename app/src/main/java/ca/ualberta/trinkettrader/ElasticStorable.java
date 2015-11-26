@@ -41,18 +41,21 @@ public abstract class ElasticStorable {
 
     /**
      * Save an ElasticStorable object to the network
-     * @param item ElasticStorable instance to add or update on the network
      */
-    public void saveToNetwork(final ElasticStorable item) {
+    public void saveToNetwork() {
+        final HttpClient httpClient = new DefaultHttpClient();
+        final HttpPost addRequest = new HttpPost(this.getResourceUrl() + this.getId());
+        try {
+            final StringEntity stringEntity = new StringEntity(this.getJson());
+            addRequest.setEntity(stringEntity);
+            addRequest.setHeader("Accept", "application/json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost addRequest = new HttpPost(item.getResourceUrl() + item.getId());
-                    StringEntity stringEntity = new StringEntity(item.getJson());
-                    addRequest.setEntity(stringEntity);
-                    addRequest.setHeader("Accept", "application/json");
                     HttpResponse response = httpClient.execute(addRequest);
                     Log.i("HttpResponse", response.getStatusLine().toString());
                     Log.i("HttpResponse Body", EntityUtils.toString(response.getEntity(), "UTF-8"));
