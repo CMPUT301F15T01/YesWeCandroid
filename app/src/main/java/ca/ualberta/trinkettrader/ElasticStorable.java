@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
@@ -67,9 +68,13 @@ public abstract class ElasticStorable {
         thread.start();
     }
 
-    protected String getJson() {
+    protected String toJson() {
         return gson.toJson(this);
     }
+
+    protected ElasticStorable fromJson(String json) {
+        return gson.fromJson(json, ElasticStorable.class);
+    };
 
     /**
      * Search for ElasticStorable objects on the network by matching the attribute and attribute
