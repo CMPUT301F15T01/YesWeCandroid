@@ -21,8 +21,8 @@ import android.widget.TextView;
 import java.util.Observable;
 import java.util.Observer;
 
-import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.R;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Android activity for displaying the details of a user's inventory.  Some of the inventory's details

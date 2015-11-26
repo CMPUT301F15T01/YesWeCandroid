@@ -16,7 +16,7 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -24,11 +24,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.meetme.android.horizontallistview.HorizontalListView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -93,7 +93,11 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Picture picture = pictures.get(position);
-                picture.loadPicture();
+                try {
+                    picture.loadPicture();
+                } catch (IOException | PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
                 adapter.notifyDataSetChanged();
             }
         });
@@ -212,7 +216,7 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
         controller.onEditClick();
     }
 
-    public void addYourTrinketToTradeButtonOnClick(View v){
+    public void addYourTrinketToTradeButtonOnClick(View v) {
         controller.addYourTrinketToTradeButtonOnClick();
     }
 

@@ -17,7 +17,6 @@ package ca.ualberta.trinkettrader.Inventory;
 import java.util.ArrayList;
 import java.util.Observer;
 
-import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.User.User;
 
 public class Searcher implements ca.ualberta.trinkettrader.Observable {

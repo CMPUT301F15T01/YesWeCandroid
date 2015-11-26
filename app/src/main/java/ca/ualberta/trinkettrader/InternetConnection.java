@@ -24,28 +24,33 @@ import android.net.NetworkInfo;
  */
 public class InternetConnection {
     private static InternetConnection ourInstance = new InternetConnection();
+
     /**
      * Public Constructor
      */
-    private InternetConnection(){
+    private InternetConnection() {
     }
 
     /**
      * Returns instance of InternetConnection class.
+     *
      * @return InternetConnection Single instance of InternetConnection class
      */
-    public static InternetConnection  getInstance(){ return ourInstance; }
+    public static InternetConnection getInstance() {
+        return ourInstance;
+    }
 
     /**
      * Method used by classes to determine if there is an internet connection available.
      * When calling this method, pass in current activity.
+     *
      * @param context Current activity
      * @return Boolean True is internet connection is available, false if unavailable
      */
-    public Boolean internetConnectionAvailable(Context context){
+    public Boolean internetConnectionAvailable(Context context) {
         // TODO check for network being disabled?
         // Android Developers, Accessed on 2015-11-18, http://developer.android.com/training/monitoring-device-state/connectivity-monitoring.html
-        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         Boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         return isConnected;

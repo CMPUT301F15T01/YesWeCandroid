@@ -66,6 +66,19 @@ public class PictureDirectoryManager {
      */
     public File compressPicture(String filename, byte[] pictureByteArray) throws IOException, PackageManager.NameNotFoundException {
         Bitmap bitmap = BitmapFactory.decodeByteArray(pictureByteArray, 0, pictureByteArray.length);
+        return compressPicture(filename, bitmap);
+    }
+
+    /**
+     * Compresses a picture to under 65536 bytes and stores it in the application's pictures directory.
+     *
+     * @param filename name of the file to store the picture in
+     * @param bitmap   bitmap to compress and store
+     * @return file containing the compressed picture
+     * @throws IOException
+     * @throws PackageManager.NameNotFoundException
+     */
+    public File compressPicture(String filename, Bitmap bitmap) throws IOException, PackageManager.NameNotFoundException {
         File outfile = new File(getPictureDirectory() + "/files/" + filename);
         BitmapCompressor compressor = new BitmapCompressor(activity);
         compressor.compressBitmap(bitmap, outfile);

@@ -16,17 +16,14 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,7 +31,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.meetme.android.horizontallistview.HorizontalListView;
@@ -50,14 +46,14 @@ import java.util.Observer;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.ImageViewArrayAdapter;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.PictureDirectoryManager;
 import ca.ualberta.trinkettrader.R;
-import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 
 /**
  * Android activity class for adding a new trinket to the user's activity, or viewing and editing the
  * details of an existing trinket.
- *
+ * <p/>
  * The layout contains fields for setting the accessibility, description, name, quality, quantity,
  * and category of the trinket, as well as the photos attached to it.  If a new trinket is being
  * created fields will be set to their default values, or empty if that field has no default value.
@@ -67,6 +63,8 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
  */
 public class AddOrEditTrinketActivity extends AppCompatActivity implements Observer {
 
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int SELECT_PICTURE = 2;
     private AddOrEditTrinketController controller;
     private ArrayAdapter<Picture> adapter;
     private ArrayList<Picture> pictures;
@@ -81,8 +79,6 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     private HorizontalListView gallery;
     private Spinner trinketCategory;
     private Spinner trinketQuality;
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int SELECT_PICTURE = 2;
     private Uri uri;
 
     /**
@@ -134,7 +130,7 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             this.trinketName.setText(edited.getName());
             this.trinketQuality.setSelection(new ArrayList<>(Arrays.asList(this.getResources().getStringArray(R.array.spinner_qualities))).indexOf(edited.getQuality()));
             this.trinketQuantity.setText(edited.getQuantity());
-            for (Picture picture: edited.getPictures()) {
+            for (Picture picture : edited.getPictures()) {
                 try {
                     this.controller.addPicture(picture);
                 } catch (IOException e) {
@@ -170,6 +166,12 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
                 deletePictureDialog(position);
             }
         });
+    }
+
+    private void updatePictures() {
+        pictures.clear();
+        pictures.addAll(controller.getPictures());
+        adapter.notifyDataSetChanged();
     }
 
     private void deletePictureDialog(final Integer position) {
@@ -236,8 +238,8 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
      * Method to be called after user has taken or selected a picture.
      *
      * @param requestCode type of request that was issued
-     * @param resultCode state of the request's execution
-     * @param data resulting data of the request
+     * @param resultCode  state of the request's execution
+     * @param data        resulting data of the request
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -270,12 +272,6 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }
-
-    private void updatePictures() {
-        pictures.clear();
-        pictures.addAll(controller.getPictures());
-        adapter.notifyDataSetChanged();
     }
 
     // mad; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05

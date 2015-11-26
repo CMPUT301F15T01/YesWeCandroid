@@ -15,8 +15,6 @@
 package ca.ualberta.trinkettrader.Friends;
 
 import android.content.Intent;
-import android.view.View;
-import android.widget.TextView;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;

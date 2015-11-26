@@ -17,22 +17,14 @@ package ca.ualberta.trinkettrader.Friends;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-
-import java.util.Observable;
-import java.util.Observer;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
-import ca.ualberta.trinkettrader.Inventory.InventoryController;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
-import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 

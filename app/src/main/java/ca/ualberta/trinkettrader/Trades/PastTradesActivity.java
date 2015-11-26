@@ -18,8 +18,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -45,7 +45,7 @@ public class PastTradesActivity extends AppCompatActivity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_trades);
-        pastTradesListView = (ListView)findViewById(R.id.pastTradesList);
+        pastTradesListView = (ListView) findViewById(R.id.pastTradesList);
         userPastTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades();
         controller = new PastTradesController(this);
         controller.setPastTradesListViewItemOnClick();
@@ -61,9 +61,12 @@ public class PastTradesActivity extends AppCompatActivity implements Observer {
     /**
      * Returns pastTradesListView.  This method is used by the PastTradesController
      * to get the clicked trade on the screen.
+     *
      * @return ListView ListView of past trades
      */
-    public ListView getPastTradesListView(){ return pastTradesListView; }
+    public ListView getPastTradesListView() {
+        return pastTradesListView;
+    }
 
 
     /**

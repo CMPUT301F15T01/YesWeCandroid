@@ -17,8 +17,6 @@ package ca.ualberta.trinkettrader.Trades;
 import java.util.ArrayList;
 import java.util.Observer;
 
-import ca.ualberta.trinkettrader.Trades.Trade;
-
 /**
  * Responsible for the storage and manipulation of a user's current (active) and
  * past (inactive) trades. This class also mediates the access of trades
@@ -61,17 +59,16 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * accepted or declined will be archived. The archived trade will be added to the top
      * of the pastTrades ArrayList, so it will be at the top of the user's list of past trades
      * when the user views the list in the app.
-     *
+     * <p/>
      * A trade will <b>not</b> be archived if it is deleted by the user.
      *
-     * @param trade Trinket exchange between a borrower and an owner
+     * @param trade  Trinket exchange between a borrower and an owner
      * @param status Status of trade (pending, accepted or declined)
-
      */
     public void archiveTrade(Trade trade, String status) {
         // TODO implementation needs to be tested
         trade.setStatus(status);
-        pastTrades.add(0,trade);
+        pastTrades.add(0, trade);
         currentTrades.remove(trade);
     }
 
@@ -79,6 +76,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * Deletes specified trade from currentTrades ArrayList. Trades will <b>never</b> be
      * deleted from pastTrades ArrayList.  This method will only be used to update the currentTrades
      * ArrayList when a trade is no longer active (ie. trade has been accepted, declined or deleted).
+     *
      * @param trade Trinket exchange between a borrower and an owner
      */
     public void deleteTrade(Trade trade) {
@@ -87,9 +85,11 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
     }
 
     // TODO do angle brackets by themselves break JavaDocs?
+
     /**
      * Returns entire ArrayList of past (inactive) trades.  This method is
      * used by the PastTradesActivity to display the user's past trades.
+     *
      * @return ArrayList&lt;Trade&gt; List of user's past(inactive) trades
      */
     public ArrayList<Trade> getPastTrades() {
@@ -97,6 +97,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
     }
 
     // TODO do angle brackets by themselves break JavaDocs?
+
     /**
      * Returns entire ArrayList of current (active) trades.  This method is
      * used by the TradesActivity to display the user's current trades.
@@ -114,7 +115,9 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * @param index Index (position) of trade in list of current trades
      * @return Trade Trinket exchange between a borrower and an owner
      */
-    public Trade getCurrentTradeAt(Integer index) { return currentTrades.get(index); }
+    public Trade getCurrentTradeAt(Integer index) {
+        return currentTrades.get(index);
+    }
 
     /**
      * Returns trade at specifed index in list of past trades.
@@ -122,7 +125,9 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * @param index Index (position) of trade in list of past trades
      * @return Trade Trinket exchange between a borrower and an owner
      */
-    public Trade getPastTradeAt(Integer index) { return pastTrades.get(index); }
+    public Trade getPastTradeAt(Integer index) {
+        return pastTrades.get(index);
+    }
 
     /**
      * Returns boolean indicating if a trade is a current (active) trade.
@@ -176,7 +181,7 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
      * If {@code hasChanged()} returns {@code true}, calls the {@code update()}
      * method for every observer in the list of observers using null as the
      * argument. Afterwards, calls {@code clearChanged()}.
-     *
+     * <p/>
      * Equivalent to calling {@code notifyObservers(null)}.
      */
     @Override

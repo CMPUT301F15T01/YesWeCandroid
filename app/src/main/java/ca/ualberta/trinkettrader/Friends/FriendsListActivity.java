@@ -26,8 +26,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
-import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.R;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Android activity class for displaying a user's friendslist.  From this activity all of the
@@ -73,15 +73,21 @@ public class FriendsListActivity extends AppCompatActivity implements Observer {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        updateFriendsListView();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         updateFriendsListView();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateFriendsListView();
+    public void updateFriendsListView() {
+        userFriendList = LoggedInUser.getInstance().getFriendsList();
+        friendAdapter = new ArrayAdapter<Friend>(this, R.layout.activity_friends_friend, userFriendList);
+        friendsListView.setAdapter(friendAdapter);
     }
 
     /**
@@ -128,13 +134,6 @@ public class FriendsListActivity extends AppCompatActivity implements Observer {
 
     public void viewTrackedFriendsOnClick(View v) {
         controller.viewTrackedFriendsOnClick();
-    }
-
-
-    public void updateFriendsListView() {
-        userFriendList = LoggedInUser.getInstance().getFriendsList();
-        friendAdapter = new ArrayAdapter<Friend>(this, R.layout.activity_friends_friend, userFriendList);
-        friendsListView.setAdapter(friendAdapter);
     }
 
     /**

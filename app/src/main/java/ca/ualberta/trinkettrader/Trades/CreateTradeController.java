@@ -63,9 +63,7 @@ public class CreateTradeController {
         if (clickedFriend == null) {
             Friend selectedFriend = (Friend) friendSpinner.getSelectedItem();
             ApplicationState.getInstance().setClickedFriend(selectedFriend);
-        }
-
-        else {
+        } else {
             FriendsList userFriendList = LoggedInUser.getInstance().getFriendsList();
             Integer friendIndex = userFriendList.getFriendIndexByUsername(clickedFriend.getActualFriend().getProfile().getEmail());
             friendSpinner.setSelection(friendIndex);
@@ -80,7 +78,7 @@ public class CreateTradeController {
         friendSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> spinner, View view, int pos, long id) {
                 Friend selectedFriend = (Friend) spinner.getItemAtPosition(pos);
-                if(!selectedFriend.getActualFriend().getProfile().getEmail().equals(ApplicationState.getInstance().getClickedFriend().getActualFriend().getProfile().getEmail())){
+                if (!selectedFriend.getActualFriend().getProfile().getEmail().equals(ApplicationState.getInstance().getClickedFriend().getActualFriend().getProfile().getEmail())) {
                     ApplicationState.getInstance().setFriendsTradeTrinkets(new Inventory());
                     ApplicationState.getInstance().setYourTradeTrinkets(new Inventory());
                 }

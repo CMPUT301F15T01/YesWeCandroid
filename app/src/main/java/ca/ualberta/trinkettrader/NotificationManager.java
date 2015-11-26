@@ -52,7 +52,7 @@ public class NotificationManager {
      * Sends email containing relevant trade information to borrower
      * and an owner after a trade has been accepted.
      */
-    public void sendEmail(){
+    public void sendEmail() {
 
     }
 }

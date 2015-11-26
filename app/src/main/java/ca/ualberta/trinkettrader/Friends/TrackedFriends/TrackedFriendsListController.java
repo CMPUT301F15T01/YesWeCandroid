@@ -15,14 +15,12 @@
 package ca.ualberta.trinkettrader.Friends.TrackedFriends;
 
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Friends.Friend;
-import ca.ualberta.trinkettrader.Friends.FriendsListActivity;
 import ca.ualberta.trinkettrader.Friends.FriendsProfileActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 

@@ -17,12 +17,8 @@ package ca.ualberta.trinkettrader.Trades;
 import java.util.ArrayList;
 
 import ca.ualberta.trinkettrader.ElasticStorable;
-import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.NotificationManager;
-import ca.ualberta.trinkettrader.Trades.Trade;
-import ca.ualberta.trinkettrader.Trades.TradeArchiver;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
-import ca.ualberta.trinkettrader.User.User;
 
 /**
  * Manages a user's trades.
@@ -51,6 +47,7 @@ public class TradeManager extends ElasticStorable {
 
     // TODO think that receiver of trade proposal should be added to input. will
     // TODO make it easier to send notifications.
+
     /**
      * Propose trade.
      * Adds created trade to the currentTrades ArrayLists of both the borrower
@@ -65,15 +62,16 @@ public class TradeManager extends ElasticStorable {
     }
 
     // TODO pulling trades once the phone has connectivity.
+
     /**
      * Pulls offered trades when user is online.
-     *
+     * <p/>
      * When a user is offline, they will not be able to receive trade offers from other users.
      * When the user is online, this method will be called to update the user's currentTrades ArrayList.
      *
      * @return ArrayList&lt;Trade&gt; ArrayList of trades that were offered to the user when they were offline
      */
-    public ArrayList<Trade> pullTrades(){
+    public ArrayList<Trade> pullTrades() {
         return new ArrayList<Trade>();
     }
 
@@ -84,7 +82,8 @@ public class TradeManager extends ElasticStorable {
      * the borrower and the owner with updated trade. Previous trade will be deleted
      * and updated trade will be added.  Counter trade details will be determined by
      * the user who was last offered the trade.
-     * @param trade previous trade to delete
+     *
+     * @param trade        previous trade to delete
      * @param counterTrade updated counter trade to add
      */
     public void proposeCounterTrade(Trade trade, Trade counterTrade) {
@@ -101,7 +100,7 @@ public class TradeManager extends ElasticStorable {
      * currentTrades and pastTrades ArrayLists
      * are accessed through TradeArchiver.
      *
-     * @param trade Trinket exchange between a borrower and an owner
+     * @param trade    Trinket exchange between a borrower and an owner
      * @param comments Important trade related comments determined by owner
      */
     public void acceptTrade(Trade trade, String comments) {
@@ -124,6 +123,7 @@ public class TradeManager extends ElasticStorable {
 
     // TODO this could be deleted, because there is already a TradeArchiver deleteTrade method.
     // TODO we would be calling deleteTrade.deleteTrade
+
     /**
      * Deletes specified trade from currentTrades ArrayList. Trades will <b>never</b> be
      * deleted from pastTrades ArrayList.  This method will only be used to update the currentTrades
@@ -138,8 +138,9 @@ public class TradeManager extends ElasticStorable {
     /**
      * Returns user's trade archiver. Trade archiver is needed to access
      * and manipulate a user's current and past trades.
-     *
+     * <p/>
      * Please see TradeArchiver for more information.
+     *
      * @return TradeArchiver Responsible for the storage and manipulation of a user's current (active) and
      * past (inactive) trades
      */
@@ -147,10 +148,11 @@ public class TradeManager extends ElasticStorable {
         return tradeArchiver;
     }
     // TODO think that one is already instantiated in User class.  need to check.
+
     /**
      * Returns  user's notification manager. Notification manager is responsible for
      * notifying a user of a new trades (new offer) and a completed trades.
-     *
+     * <p/>
      * Please see NotificationManager class for more information.
      *
      * @return NotificationManager Manages receiving, sending and displaying of notifications for user
@@ -165,6 +167,11 @@ public class TradeManager extends ElasticStorable {
     }
 
     @Override
+    public String getId() {
+        return LoggedInUser.getInstance().getProfile().getUsername();
+    }
+
+    @Override
     public String getSearchUrl() {
         return SEARCH_URL;
     }
@@ -172,10 +179,5 @@ public class TradeManager extends ElasticStorable {
     @Override
     public String getTag() {
         return TAG;
-    }
-
-    @Override
-    public String getId() {
-        return LoggedInUser.getInstance().getProfile().getUsername();
     }
 }

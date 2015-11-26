@@ -21,12 +21,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import ca.ualberta.trinkettrader.Inventory.Inventory;
-import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
@@ -37,7 +36,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  * the list on this screen. Clicking a trade in the list will open up the trade details page,
  * and show the relevant trade information for that trade (ie. items offered, quanity of
  * items offered).
- *
+ * <p/>
  * Trades which have been accepted or declined are considered <i>past</i> trades and will
  * not be shown in the displayed list.  To view past trades, the <b>Past Trades</b> button
  * on the screen can be clicked.
@@ -56,9 +55,9 @@ public class TradesActivity extends AppCompatActivity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trades);
-        currentTradesListView = (ListView)findViewById(R.id.currentTradesList);
-        pastTradesButton = (Button)findViewById(R.id.past_trades_button);
-        createTradeButton = (Button)findViewById(R.id.create_trades_button);
+        currentTradesListView = (ListView) findViewById(R.id.currentTradesList);
+        pastTradesButton = (Button) findViewById(R.id.past_trades_button);
+        createTradeButton = (Button) findViewById(R.id.create_trades_button);
         userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();
@@ -73,7 +72,7 @@ public class TradesActivity extends AppCompatActivity implements Observer {
 
 
     /**
-     *  Directs user to past trades screen when clicked.
+     * Directs user to past trades screen when clicked.
      *
      * @param view View object used to change activities
      */
@@ -89,18 +88,26 @@ public class TradesActivity extends AppCompatActivity implements Observer {
 
     /**
      * Returns Past Trades button.
+     *
      * @return Button Links to page which displays list of user's past(inactive) trades
      */
-    public Button getPastTradesButton(){return pastTradesButton; }
+    public Button getPastTradesButton() {
+        return pastTradesButton;
+    }
 
-    public Button getCreateTradeButton() {return createTradeButton;}
+    public Button getCreateTradeButton() {
+        return createTradeButton;
+    }
 
     /**
      * Returns currentTradesListView.  This method is used by the ActiveTradesController
      * to get the clicked trade on the screen.
+     *
      * @return ListView ListView of user's current trades
      */
-    public ListView getCurrentTradesListView() { return currentTradesListView; }
+    public ListView getCurrentTradesListView() {
+        return currentTradesListView;
+    }
 
     /**
      * This method is called if the specified {@code Observable} object's

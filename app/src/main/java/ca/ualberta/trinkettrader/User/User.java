@@ -14,8 +14,6 @@
 
 package ca.ualberta.trinkettrader.User;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.Observer;
 
@@ -52,7 +50,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     /**
      * Public constructor for user: initializes all attribute classes as empty classes with no
      * active data.
-     *
+     * <p/>
      * This constructor is called when the application has no information about the user (i.e. a new
      * User) or when not all information about the user is available yet.
      */
@@ -82,12 +80,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
 
     public User(String email) {
 
-    }
-
-    @Override
-    protected String toJson() {
-        Gson gson = new Gson(); // Or use new GsonBuilder().create();
-        return gson.toJson(this); // serializes target to Json
     }
 
     protected void queueUpdate() {
@@ -281,6 +273,11 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     @Override
+    public String getId() {
+        return this.profile.getEmail();
+    }
+
+    @Override
     public String getSearchUrl() {
         return SEARCH_URL;
     }
@@ -288,10 +285,5 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     @Override
     public String getTag() {
         return TAG;
-    }
-
-    @Override
-    public String getId() {
-        return this.profile.getEmail();
     }
 }

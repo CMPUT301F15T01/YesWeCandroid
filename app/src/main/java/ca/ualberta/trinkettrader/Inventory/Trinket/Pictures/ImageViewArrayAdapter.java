@@ -38,10 +38,12 @@ public class ImageViewArrayAdapter extends ArrayAdapter<Picture> {
     /**
      * Returns a new ImageViewArrayAdapter used to display images.
      *
-     * @param context  The current context.
-     * @param resource The resource ID for a layout file containing a View to use when
-     *                 instantiating views.
-     * @param objects  The objects to represent in the ListView.
+     * @param context   The current context.
+     * @param resource  The resource ID for a layout file containing a View to use when
+     *                  instantiating views.
+     * @param objects   The objects to represent in the ListView.
+     * @param showSizes Whether or not the sizes of the images should be shown
+     *                  alongside the images.
      */
     public ImageViewArrayAdapter(Context context, int resource, List<Picture> objects, Boolean showSizes) {
         super(context, resource, objects);
@@ -51,10 +53,6 @@ public class ImageViewArrayAdapter extends ArrayAdapter<Picture> {
 
     /**
      * {@inheritDoc}
-     *
-     * @param position
-     * @param convertView
-     * @param parent
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
