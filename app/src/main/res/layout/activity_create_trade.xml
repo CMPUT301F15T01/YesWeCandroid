@@ -67,7 +67,17 @@
         android:id="@+id/yourItemsListView"
         android:layout_below="@+id/friendsItemsListView"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="54dp" />
+        android:layout_marginTop="54dp"
+        android:layout_toStartOf="@+id/proposeTradeButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Propose Trade"
+        android:id="@+id/proposeTradeButton"
+        android:layout_alignBottom="@+id/yourItemsListView"
+        android:layout_alignParentEnd="true"
+        android:onClick="proposeTradeButtonOnClick"/>
 
 
 </RelativeLayout>
