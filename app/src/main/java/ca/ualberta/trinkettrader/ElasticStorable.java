@@ -32,7 +32,7 @@ import java.util.ArrayList;
  */
 public abstract class ElasticStorable {
 
-    Gson gson = new Gson();
+    private transient Gson gson = new Gson();
 
     public abstract String getResourceUrl();
     public abstract String getSearchUrl();
