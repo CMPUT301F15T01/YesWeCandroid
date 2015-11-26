@@ -47,7 +47,7 @@ public abstract class ElasticStorable {
         final HttpClient httpClient = new DefaultHttpClient();
         final HttpPost addRequest = new HttpPost(this.getResourceUrl() + this.getId());
         try {
-            final StringEntity stringEntity = new StringEntity(this.getJson());
+            final StringEntity stringEntity = new StringEntity(this.toJson());
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
         } catch (IOException e) {

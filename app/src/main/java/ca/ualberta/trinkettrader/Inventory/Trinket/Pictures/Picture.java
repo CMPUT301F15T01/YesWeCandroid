@@ -94,7 +94,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      * Loads this picture into memory so that it can be later viewed.
      */
     public void loadPicture() {
-        saveToNetwork(this);
+        saveToNetwork();
     }
 
     /**
