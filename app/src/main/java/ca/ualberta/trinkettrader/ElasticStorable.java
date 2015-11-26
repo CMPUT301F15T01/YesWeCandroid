@@ -14,14 +14,9 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
@@ -43,14 +38,7 @@ import java.util.ArrayList;
  * Methods using HTTPRequest in this class are taken from AndroidElasticSearch //TODO: add github link
  * Parcelable stuff from http://stackoverflow.com/questions/1626667/how-to-use-parcel-in-android by emmby
  */
-public abstract class ElasticStorable  {
-
-
-
-    public abstract String getResourceUrl();
-    public abstract String getSearchUrl();
-    public abstract String getTag();
-    public abstract String getId();
+public abstract class ElasticStorable {
 
 
     /**
@@ -80,6 +68,10 @@ public abstract class ElasticStorable  {
         });
         thread.start();
     }
+
+    public abstract String getResourceUrl();
+
+    public abstract String getId();
 
     /**
      * Search for ElasticStorable objects on the network by matching the attribute and attribute
@@ -112,6 +104,10 @@ public abstract class ElasticStorable  {
 
         return result;
     }
+
+    public abstract String getSearchUrl();
+
+    public abstract String getTag();
 
     /***
      * This is an accessory method when removing an ElasticStorable. To be called before clearing

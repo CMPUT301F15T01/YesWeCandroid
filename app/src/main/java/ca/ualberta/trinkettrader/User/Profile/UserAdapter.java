@@ -1,7 +1,5 @@
 package ca.ualberta.trinkettrader.User.Profile;
 
-import android.provider.ContactsContract;
-
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -9,7 +7,6 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.Friends.FriendsList;
@@ -19,29 +16,91 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.User.User;
 
-/**
- * Created by anju on 20/11/15.
-  @Override
-    public User read(JsonReader in) throws IOException {
-        in.beginArray();
+public class UserAdapter extends TypeAdapter<User> {
 
-    } * Written with assistance from http://www.javacreed.com/gson-typeadapter-example/
- */
-public class UserAdapter extends TypeAdapter<User>{
+    // ALBERT ATTARD; http://www.javacreed.com/gson-typeadapter-example/; 2015-11-26
+
+    @Override
+    public void write(JsonWriter out, User value) throws IOException {
+        out.beginObject();
+
+        //Serialize FriendsList
+        out.name("friendsList").beginArray();
+        for (final Friend friend : value.getFriendsList()) {
+            out.beginObject();
+            out.name("username").value(friend.toString());
+            out.name("email").value(friend.getActualFriend().getProfile().getEmail());
+            out.endObject();
+        }
+        out.endArray();
+
+        //Serialize Inventory
+        out.name("inventory").beginArray();
+        for (final Trinket trinket : value.getInventory()) {
+            out.beginObject();
+
+            out.name("pictures").beginArray();
+            for (final Picture picture : trinket.getPictures()) {
+                out.value(picture.getId());
+            }
+            out.endArray();
+
+            out.name("accessibility").value(trinket.getTrinketAccessibility());
+            out.name("category").value(trinket.getCategory());
+            out.name("description").value(trinket.getDescription());
+            out.name("name").value(trinket.getName());
+            out.name("quality").value(trinket.getQuality());
+            out.name("quantity").value(trinket.getQuantity());
+
+            out.endObject();
+        }
+        out.endArray();
+
+
+        //TODO: make each tracked friend an object
+        //Serialize TrackedFriendsList
+        out.name("trackedFriendsList").beginArray();
+        for (final Friend friend : value.getTrackedFriendsList()) {
+
+            /*out.value(friend.toString());
+            out.value(friend.getActualFriend().getProfile().getEmail());*/
+            out.value("trackedFriends Not implemented");
+        }
+        out.endArray();
+
+        //Serialize profile
+        out.name("profile").beginObject();
+        out.name("arePhotosDownloadable").value(value.getProfile().getArePhotosDownloadable());
+
+        out.name("contactInfo").beginObject();
+        ContactInfo c = value.getProfile().getContactInfo();
+        out.name("name").value(c.getName());
+        out.name("address").value(c.getAddress());
+        out.name("city").value(c.getCity());
+        out.name("postalCode").value(c.getPostalCode());
+        out.name("phoneNumber").value(c.getPhoneNumber());
+        out.endObject();
+
+        out.name("email").value(value.getProfile().getEmail());
+        out.name("username").value(value.getProfile().getUsername());
+        out.endObject();
+
+        out.endObject();
+    }
 
     @Override
     public User read(JsonReader in) throws IOException {
         User r = new User();
-        while(in.hasNext()){
-            switch (in.nextName()){
+        while (in.hasNext()) {
+            switch (in.nextName()) {
                 case "friendsList":
                     in.beginArray();
                     //CHECK THIS BELOW
                     final List friends = new FriendsList();
-                    while(in.hasNext()){
+                    while (in.hasNext()) {
                         in.beginObject();
                         Friend f = new Friend();
-                        while(in.hasNext()){
+                        while (in.hasNext()) {
                             switch (in.nextName()) {
                                 case "username":
                                     f.getActualFriend().getProfile().setUsername(in.nextString());
@@ -61,10 +120,10 @@ public class UserAdapter extends TypeAdapter<User>{
                 case "inventory":
                     in.beginArray();
                     final List inventory = new Inventory();
-                    while(in.hasNext()){
+                    while (in.hasNext()) {
                         in.beginObject();
                         Trinket t = new Trinket();
-                        switch (in.nextName()){
+                        switch (in.nextName()) {
                             case "accessibility":
                                 t.setAccessibility(in.nextString());
                                 continue;
@@ -103,7 +162,7 @@ public class UserAdapter extends TypeAdapter<User>{
                 case "profile":
                     in.beginObject();
                     UserProfile p = new UserProfile();
-                    switch (in.nextName()){
+                    switch (in.nextName()) {
                         case "arePhotosDownloadable":
                             p.setArePhotosDownloadable(in.nextBoolean());
                         case "contactInfo":
@@ -123,74 +182,6 @@ public class UserAdapter extends TypeAdapter<User>{
             }
         }
         return r;
-    }
-
-    @Override
-    public void write(JsonWriter out, User value) throws IOException {
-        out.beginObject();
-
-        //Serialize FriendsList
-        out.name("friendsList").beginArray();
-        for(final Friend friend: value.getFriendsList()){
-            out.beginObject();
-            out.name("username").value(friend.toString());
-            out.name("email").value(friend.getActualFriend().getProfile().getEmail());
-            out.endObject();
-        }
-        out.endArray();
-
-        //Serialize Inventory
-        out.name("inventory").beginArray();
-        for(final Trinket trinket: value.getInventory()){
-            out.beginObject();
-
-            out.name("pictures").beginArray();
-            for(final Picture picture: trinket.getPictures()){
-                out.value(picture.getId());
-            }
-            out.endArray();
-
-            out.name("accessibility").value(trinket.getTrinketAccessibility());
-            out.name("category").value(trinket.getCategory());
-            out.name("description").value(trinket.getDescription());
-            out.name("name").value(trinket.getName());
-            out.name("quality").value(trinket.getQuality());
-            out.name("quantity").value(trinket.getQuantity());
-
-            out.endObject();
-        }
-        out.endArray();
-
-
-        //TODO: make each tracked friend an object
-        //Serialize TrackedFriendsList
-        out.name("trackedFriendsList").beginArray();
-        for(final Friend friend: value.getTrackedFriendsList()){
-
-            /*out.value(friend.toString());
-            out.value(friend.getActualFriend().getProfile().getEmail());*/
-            out.value("trackedFriends Not implemented");
-        }
-        out.endArray();
-
-        //Serialize profile
-        out.name("profile").beginObject();
-        out.name("arePhotosDownloadable").value(value.getProfile().getArePhotosDownloadable());
-
-        out.name("contactInfo").beginObject();
-        ContactInfo c = value.getProfile().getContactInfo();
-        out.name("name").value(c.getName());
-        out.name("address").value(c.getAddress());
-        out.name("city").value(c.getCity());
-        out.name("postalCode").value(c.getPostalCode());
-        out.name("phoneNumber").value(c.getPhoneNumber());
-        out.endObject();
-
-        out.name("email").value(value.getProfile().getEmail());
-        out.name("username").value(value.getProfile().getUsername());
-        out.endObject();
-
-        out.endObject();
     }
 
 }

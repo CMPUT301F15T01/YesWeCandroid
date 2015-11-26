@@ -49,10 +49,12 @@ public class Hits<T> {
         return hits;
     }
 
-    public Integer numHits(){return hits.size();}
-
     public void setHits(List<SearchHit<T>> hits) {
         this.hits = hits;
+    }
+
+    public Integer numHits() {
+        return hits.size();
     }
 
     @Override

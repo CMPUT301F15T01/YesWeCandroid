@@ -33,7 +33,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import ca.ualberta.trinkettrader.ElasticStorable;
 import ca.ualberta.trinkettrader.User.Profile.UserAdapter;
@@ -48,17 +47,6 @@ public class LoggedInUser extends User {
     private static LoggedInUser ourInstance = new LoggedInUser();
 
     private LoggedInUser() {
-    }
-
-    /**
-     * Returns the current (and single) instance of logged in user.
-     * To be called when any changes are made to user's profile, i.e. adding/deleting a friend or
-     * making a trade.
-     *
-     * @return LoggedInUser
-     */
-    public static LoggedInUser getInstance() {
-        return ourInstance;
     }
 
     /**
@@ -129,14 +117,25 @@ public class LoggedInUser extends User {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(foundUsers.size() == 0){
+        if (foundUsers.size() == 0) {
             ourInstance.getProfile().setEmail(email);
             ourInstance.saveToNetwork();
-        }else if(foundUsers.size() == 1){
+        } else if (foundUsers.size() == 1) {
             ourInstance = (LoggedInUser) foundUsers.get(0);
-        }else{
+        } else {
             throw new NoSuchFieldException();
         }
 
+    }
+
+    /**
+     * Returns the current (and single) instance of logged in user.
+     * To be called when any changes are made to user's profile, i.e. adding/deleting a friend or
+     * making a trade.
+     *
+     * @return LoggedInUser
+     */
+    public static LoggedInUser getInstance() {
+        return ourInstance;
     }
 }
