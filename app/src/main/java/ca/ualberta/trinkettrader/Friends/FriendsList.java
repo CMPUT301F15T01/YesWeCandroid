@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observer;
 
-import ca.ualberta.trinkettrader.User.User;
-
 /**
  * An extension of the built-in Java ArrayList representing a list of Friends.
  * In addition to the functionality of ArrayList, a FriendsList can be searched by username.
@@ -125,7 +123,7 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
      * @return the Friend with the specified username if found; otherwise, null
      */
     public Integer getFriendIndexByUsername(String username) {
-        for (int i=0; i<this.size(); i++) {
+        for (int i = 0; i < this.size(); i++) {
             if (this.get(i).getActualFriend().getProfile().getUsername().equals(username)) {
                 return i;
             }

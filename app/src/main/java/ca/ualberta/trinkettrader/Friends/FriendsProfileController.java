@@ -15,12 +15,10 @@
 package ca.ualberta.trinkettrader.Friends;
 
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
 import android.widget.RadioButton;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
-import ca.ualberta.trinkettrader.User.User;
 
 /**
  * Controller for handling interactions from the FriendsProfileActivity.  The controller manages clicks to

@@ -16,19 +16,16 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 
 import android.content.Intent;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
-import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
+import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.User;
-
-import static java.util.Collections.sort;
 
 /**
  * Controller for handling interactions from the AddOrEditTrinketActivity.  The controller manages

@@ -14,11 +14,8 @@
 
 package ca.ualberta.trinkettrader.Friends;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,14 +24,13 @@ import ca.ualberta.trinkettrader.R;
 
 public class FriendsTrinketDetailsActivity extends AppCompatActivity {
 
+    FriendsTrinketDetailsController controller;
     private TextView name;
     private TextView description;
     private TextView quantity;
     private TextView quality;
     private TextView category;
     private Button addToTradeButton;
-
-    FriendsTrinketDetailsController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +71,9 @@ public class FriendsTrinketDetailsActivity extends AppCompatActivity {
         return addToTradeButton;
     }
 
-    public void addToTradeButtonOnClick(View v){
+    public void addToTradeButtonOnClick(View v) {
         controller.addToTradeButtonOnClick();
     }
-
 
 
 }

@@ -95,6 +95,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
     }
 
     // TODO:  What do public and private mean
+
     /**
      * Sets trinket's accessibility,  Must be either "public" or "private".
      *
@@ -136,6 +137,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
     }
 
     // TODO:  Give an example of a description
+
     /**
      * Sets trinket's description.  The description gives extra information about the trinket and
      * is set by the user in a text field in the AddOrEditTrinketActivity.  There is no limit to the
@@ -205,7 +207,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      * AddOrEditTrinketActivity.
      *
      * @param quality - string specifying the trinket's quality, either "good", "average", or
-     * "poor"
+     *                "poor"
      */
     public void setQuality(String quality) {
         this.quality = quality;

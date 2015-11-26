@@ -21,8 +21,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import ca.ualberta.trinkettrader.ApplicationState;
-import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsListActivity;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Controller for handling interactions from the FriendsListActivity.  The controller manages clicks to

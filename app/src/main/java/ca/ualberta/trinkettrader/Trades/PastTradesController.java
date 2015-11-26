@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import java.util.ArrayList;
 
 import ca.ualberta.trinkettrader.ApplicationState;
@@ -30,7 +31,9 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
 public class PastTradesController {
     private PastTradesActivity activity;
 
-    public PastTradesController(PastTradesActivity activity) { this.activity = activity; }
+    public PastTradesController(PastTradesActivity activity) {
+        this.activity = activity;
+    }
 
     public void setPastTradesListViewItemOnClick() {
         ListView pastTradesListView = activity.getPastTradesListView();

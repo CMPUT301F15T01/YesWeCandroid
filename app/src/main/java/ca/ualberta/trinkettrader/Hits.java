@@ -12,7 +12,8 @@ public class Hits<T> {
     private float max_score;
     private List<SearchHit<T>> hits;
 
-    public Hits() {}
+    public Hits() {
+    }
 
     public int getTotal() {
         return total;

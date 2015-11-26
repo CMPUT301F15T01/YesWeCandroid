@@ -28,7 +28,7 @@ public class Notification implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Generates a new notification. This class is used to encode a message to be read by the user.
-     *
+     * <p/>
      * Typical uses of this class include encoding a message for the user that a trade has been
      * accepted/rejected.
      */

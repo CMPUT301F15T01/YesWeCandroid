@@ -14,18 +14,13 @@
 
 package ca.ualberta.trinkettrader.Friends;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import ca.ualberta.trinkettrader.ApplicationState;
-import ca.ualberta.trinkettrader.Inventory.InventoryDetailsActivity;
-import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
-import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
-import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Controller for handling interactions from the FriendsInventoryActivity.  The controller manages clicks

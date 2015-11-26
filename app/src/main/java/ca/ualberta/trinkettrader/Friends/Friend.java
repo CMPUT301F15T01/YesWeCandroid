@@ -14,13 +14,13 @@
 
 package ca.ualberta.trinkettrader.Friends;
 
+import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsList;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.NotificationManager;
-import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsList;
 import ca.ualberta.trinkettrader.Trades.TradeManager;
 import ca.ualberta.trinkettrader.User.Friendable;
-import ca.ualberta.trinkettrader.User.User;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
+import ca.ualberta.trinkettrader.User.User;
 
 /**
  * Class representing a friend of the current user.  A friend represents another user of the app who the
@@ -30,7 +30,7 @@ import ca.ualberta.trinkettrader.User.Profile.UserProfile;
  * list), which is a shortlist of the friends the current user are most interested in trading with.
  * If a friend is "untracked" then they are only included in the main friends list.  By default a friend
  * is untracked.
- *
+ * <p/>
  * A friend represents another user of the app, and so in addition to their "track" status, they also have
  * the same attributes as the current user, including an inventory and a profile.  The user can view
  * a friend's profile through the FriendsProfileActivity, and view the friend's inventory through the
@@ -38,14 +38,12 @@ import ca.ualberta.trinkettrader.User.Profile.UserProfile;
  * checking or unchecking the "Track" checkbox, respectively.  When viewing a friend's inventory you can
  * see all the trinkets the friend has added to their inventory and marked as public (any trinket added
  * to the friends inventory and marked as private will NOT be visible to the current user).
- *
+ * <p/>
  * A friend, like the current user, is identified on the system by their email address.  Friends are
  * searched for and listed by their emails, so the current user must know their friend's email address
  * in order to find them.
- *
- *
  */
-public class Friend implements Friendable{
+public class Friend implements Friendable {
 
     private Boolean isTracked;
     private String email;
@@ -67,13 +65,13 @@ public class Friend implements Friendable{
      * Initializes the Friend using these attributes (using User's constructor), then sets the
      * tracked status.
      *
-     * @param friendsList the user's list of Friends
-     * @param inventory the user's inventory
+     * @param friendsList         the user's list of Friends
+     * @param inventory           the user's inventory
      * @param notificationManager the user's notification manager
-     * @param profile the user's profile
-     * @param trackedFriends a list of the user's tracked friends
-     * @param tradeManager the user's trade manager
-     * @param isTracked Boolean representing the friend's tracking status
+     * @param profile             the user's profile
+     * @param trackedFriends      a list of the user's tracked friends
+     * @param tradeManager        the user's trade manager
+     * @param isTracked           Boolean representing the friend's tracking status
      */
     public Friend(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager, Boolean isTracked) {
         actualFriend = new User(friendsList, inventory, notificationManager, profile, trackedFriends, tradeManager);
@@ -104,7 +102,6 @@ public class Friend implements Friendable{
     /**
      * Returns the tracked status of the friend as a Boolean.
      *
-
      * @return <code>True</code> if the friend is tracked; <code>False</code> otherwise
      */
     public Boolean isTracked() {

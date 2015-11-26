@@ -14,13 +14,9 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -71,6 +67,15 @@ public class CreateTradeActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        updateFriendsSpinner();
+        updateFriendTradeTrinketListView();
+        updateYourTradeTrinketListView();
+        controller.updateClickedFriend();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         updateFriendsSpinner();
@@ -79,13 +84,23 @@ public class CreateTradeActivity extends AppCompatActivity {
         controller.updateClickedFriend();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateFriendsSpinner();
-        updateFriendTradeTrinketListView();
-        updateYourTradeTrinketListView();
-        controller.updateClickedFriend();
+    public void updateFriendsSpinner() {
+        userFriendList = LoggedInUser.getInstance().getFriendsList();
+        friendAdapter = new ArrayAdapter<Friend>(this, android.R.layout.simple_list_item_1, userFriendList);
+        friendAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        friendSpinner.setAdapter(friendAdapter);
+    }
+
+    public void updateFriendTradeTrinketListView() {
+        friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
+        friendTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, friendTradeTrinkets);
+        friendTradeTrinketListView.setAdapter(friendTrinketAdapter);
+    }
+
+    public void updateYourTradeTrinketListView() {
+        yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
+        yourTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, yourTradeTrinkets);
+        yourTradeTrinketListView.setAdapter(yourTrinketAdapter);
     }
 
     public Button getAddFriendsItemsButton() {
@@ -118,25 +133,6 @@ public class CreateTradeActivity extends AppCompatActivity {
 
     public void proposeTradeButtonOnClick(View v) {
         controller.proposeTradeButtonOnClick();
-    }
-
-    public void updateFriendsSpinner() {
-        userFriendList = LoggedInUser.getInstance().getFriendsList();
-        friendAdapter = new ArrayAdapter<Friend>(this, android.R.layout.simple_list_item_1, userFriendList);
-        friendAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        friendSpinner.setAdapter(friendAdapter);
-    }
-
-    public void updateFriendTradeTrinketListView() {
-        friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
-        friendTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, friendTradeTrinkets);
-        friendTradeTrinketListView.setAdapter(friendTrinketAdapter);
-    }
-
-    public void updateYourTradeTrinketListView() {
-        yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
-        yourTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, yourTradeTrinkets);
-        yourTradeTrinketListView.setAdapter(yourTrinketAdapter);
     }
 
 }

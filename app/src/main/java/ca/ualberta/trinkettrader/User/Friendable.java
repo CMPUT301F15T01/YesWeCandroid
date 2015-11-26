@@ -1,4 +1,3 @@
-
 package ca.ualberta.trinkettrader.User;
 
 /**

@@ -27,15 +27,15 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.ApplicationState;
-import ca.ualberta.trinkettrader.User.LoggedInUser;
-import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
+import ca.ualberta.trinkettrader.R;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Android activity class for displaying a user's inventory.  From this activity all the trinkets in
  * the user's inventory can be viewed.
- *
+ * <p/>
  * This activity contains an "Add Trinket" button that connects the user to the
  * AddOrEditTrinketActivity for adding a new trinket to their own inventory.  It also has a "Details"
  * button that connects the user to the InventoryDetailsActivity, which displays information about

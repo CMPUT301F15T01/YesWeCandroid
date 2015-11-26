@@ -64,7 +64,7 @@ public class TrinketDetailsController {
 
     }
 
-    public void addYourTrinketToTradeButtonOnClick(){
+    public void addYourTrinketToTradeButtonOnClick() {
         Trinket clickedTrinket = ApplicationState.getInstance().getClickedTrinket();
         ApplicationState.getInstance().getYourTradeTrinkets().add(clickedTrinket);
 

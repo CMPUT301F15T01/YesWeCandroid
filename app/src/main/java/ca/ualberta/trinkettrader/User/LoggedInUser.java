@@ -45,6 +45,7 @@ public class LoggedInUser extends User {
      * Returns the current (and single) instance of logged in user.
      * To be called when any changes are made to user's profile, i.e. adding/deleting a friend or
      * making a trade.
+     *
      * @return LoggedInUser
      */
     public static LoggedInUser getInstance() {
@@ -54,6 +55,7 @@ public class LoggedInUser extends User {
     /**
      * Pass in the Context to cache the any changes to the current user's data. This method check's
      * whether there are any changes to LoggedInUser that need to be saved before doing so.
+     *
      * @param c
      */
     //Taken from LonelyTwitter https://github.com/joshua2ua/lonelyTwitter
@@ -79,6 +81,7 @@ public class LoggedInUser extends User {
     /**
      * Pass in the context to load the cached data of the user of the current application instance
      * into the LoggedInUser singleton class.
+     *
      * @param c
      */
     //Taken from LonelyTwitter https://github.com/joshua2ua/lonelyTwitter
@@ -100,7 +103,7 @@ public class LoggedInUser extends User {
         this.setNeedToSave(Boolean.FALSE);
     }
 
-    public void loadFromNetwork(String email){
+    public void loadFromNetwork(String email) {
         //LoggedInUser.getInstance().searchOnNetwork(email, 'User', new User());
     }
 }

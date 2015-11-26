@@ -103,16 +103,20 @@ public class UserProfileActivity extends AppCompatActivity implements Observer {
      *
      * @return Button
      */
-    public Button getTradesButton(){ return tradesButton; }
+    public Button getTradesButton() {
+        return tradesButton;
+    }
 
     /**
      * Links to Activity which displays list of user's current trades.
+     *
      * @param view
      */
-    public void openCurrentTrades(View view){
+    public void openCurrentTrades(View view) {
         Intent intent = new Intent(this, TradesActivity.class);
         startActivity(intent);
     }
+
     /**
      * This method is called if the specified {@code Observable} object's
      * {@code notifyObservers} method is called (because the {@code Observable}
