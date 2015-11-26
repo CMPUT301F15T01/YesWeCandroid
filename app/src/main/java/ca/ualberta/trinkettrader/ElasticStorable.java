@@ -32,8 +32,6 @@ import java.util.ArrayList;
  */
 public abstract class ElasticStorable {
 
-    Gson gson = new Gson();
-
     public abstract String getResourceUrl();
     public abstract String getSearchUrl();
     public abstract String getTag();
@@ -47,7 +45,7 @@ public abstract class ElasticStorable {
         final HttpClient httpClient = new DefaultHttpClient();
         final HttpPost addRequest = new HttpPost(this.getResourceUrl() + this.getId());
         try {
-            final StringEntity stringEntity = new StringEntity(this.toJson());
+            final StringEntity stringEntity = new StringEntity(new Gson().toJson(this));
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
         } catch (IOException e) {
@@ -68,40 +66,31 @@ public abstract class ElasticStorable {
         thread.start();
     }
 
-    protected String toJson() {
-        return gson.toJson(this);
-    }
-
-    protected ElasticStorable fromJson(String json) {
-        return gson.fromJson(json, ElasticStorable.class);
-    }
-
     /**
      * Search for ElasticStorable objects on the network by matching the attribute and attribute
      * value pairs
      *
      * @param postParameters Pairs of attributes and their values to equate to.
-     * @param storable An instance of the ElasticStorable subclass that we look for, specifically.
      * @return
      */
     //This method was modified under the guidance of http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost
     //by Android-Droid
-    public ArrayList<ElasticStorable> searchOnNetwork(ArrayList<NameValuePair> postParameters, ElasticStorable storable) {
+    public ArrayList<ElasticStorable> searchOnNetwork(ArrayList<NameValuePair> postParameters) {
 
         ArrayList<ElasticStorable> result = new ArrayList<ElasticStorable>();
         /**
          * Creates a search request from a search string and a field
          */
 
-        HttpPost searchRequest = new HttpPost(storable.getSearchUrl());
+        HttpPost searchRequest = new HttpPost(this.getSearchUrl());
         try{
             searchRequest.setEntity(new UrlEncodedFormEntity(postParameters));
         }catch (UnsupportedEncodingException e){
             e.printStackTrace();
         }
 
-        String query = gson.toJson(postParameters);
-        Log.i(storable.getTag(), "Json command: " + query);
+        String query = new Gson().toJson(postParameters);
+        Log.i(this.getTag(), "Json command: " + query);
 
         StringEntity stringEntity = null;
         try {
@@ -131,7 +120,7 @@ public abstract class ElasticStorable {
         SearchResponse<ElasticStorable> esResponse;
 
         try {
-            esResponse = gson.fromJson(
+            esResponse = new Gson().fromJson(
                     new InputStreamReader(response.getEntity().getContent()),
                     searchResponseType);
         } catch (JsonIOException e) {
@@ -155,18 +144,17 @@ public abstract class ElasticStorable {
     /***
      * This is an accessory method when removing an ElasticStorable. To be called before clearing
      * the local version of the same data.
-     * @param storable ElasticStorable object that is on the network
      */
-    public void deleteFromNetwork(ElasticStorable storable) {
+    public void deleteFromNetwork() {
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            HttpDelete deleteRequest = new HttpDelete(storable.getResourceUrl() + storable.getId());
+            HttpDelete deleteRequest = new HttpDelete(this.getResourceUrl() + this.getId());
             deleteRequest.setHeader("Accept", "application/json");
 
             HttpResponse response = httpClient.execute(deleteRequest);
             String status = response.getStatusLine().toString();
-            Log.i(storable.getTag(), status);
+            Log.i(this.getTag(), status);
 
         } catch (Exception e) {
             e.printStackTrace();
