@@ -78,7 +78,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
         this.directoryManager = directoryManager;
         this.filename = filename;
         // poitroae; http://stackoverflow.com/questions/8717333/converting-drawable-resource-image-into-bitmap; 2015-11-25
-        Bitmap placeholder = BitmapFactory.decodeResource(activity.getResources(), R.drawable.bauble); // R.drawable.placeholder); // TODO change this back
+        Bitmap placeholder = BitmapFactory.decodeResource(activity.getResources(), R.drawable.placeholder);
         this.file = directoryManager.compressPicture(this.filename, placeholder);
         this.observers = new ArrayList<>();
     }
