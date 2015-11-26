@@ -18,11 +18,9 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.ArrayList;
 
-import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
-import ca.ualberta.trinkettrader.Trades.Trade;
-import ca.ualberta.trinkettrader.Trades.TradeCommunicationsManager;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
+import ca.ualberta.trinkettrader.Trades.TradeCommunicationsManager;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.User;
 

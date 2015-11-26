@@ -14,7 +14,6 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Instrumentation;
 import android.content.DialogInterface;

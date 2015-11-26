@@ -65,7 +65,6 @@ public class Friend implements Friendable {
         this.actualFriend = new User();
     }
 
-
     /**
      * Constructor that sets all attributes of Friend from the inputs.  It sets the friend's inventory,
      * profile, friend information, and trade information.  This constructor would be called invoked

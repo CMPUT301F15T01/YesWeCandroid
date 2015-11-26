@@ -19,20 +19,16 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import ca.ualberta.trinkettrader.Friends.Friend;
-import ca.ualberta.trinkettrader.Friends.FriendsListActivity;
-import ca.ualberta.trinkettrader.Friends.FriendsProfileActivity;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.Trades.PastTradesActivity;
 import ca.ualberta.trinkettrader.Trades.Trade;
 import ca.ualberta.trinkettrader.Trades.TradeDetailsActivity;
 import ca.ualberta.trinkettrader.Trades.TradesActivity;
-import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
-import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
 import ca.ualberta.trinkettrader.User.User;
 
@@ -149,7 +145,6 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
-
 
 
         // finish activities
@@ -646,7 +641,6 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     }
 
 
-
     // TODO User Case: owner/ borrower can browse all past trade involving them
     // TODO: need to test different statuses? owner/borrower cases?
     /*
@@ -673,7 +667,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // trade with self
         final Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, currentUser.getTradeManager());
         //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
-        currentUser.getTradeManager().getTradeArchiver().archiveTrade(trade,"declined");
+        currentUser.getTradeManager().getTradeArchiver().archiveTrade(trade, "declined");
         assertTrue(currentUser.getTradeManager().getTradeArchiver().hasPastTrade(trade));
 
         // make one more trade
@@ -683,7 +677,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
 
         final Trade trade1 = new Trade(borrowerInventory, currentUser.getTradeManager(), secondInventory, currentUser.getTradeManager());
         //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
-        currentUser.getTradeManager().getTradeArchiver().archiveTrade(trade1,"accepted");
+        currentUser.getTradeManager().getTradeArchiver().archiveTrade(trade1, "accepted");
         assertTrue(currentUser.getTradeManager().getTradeArchiver().hasPastTrade(trade1));
 
 

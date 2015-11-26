@@ -39,10 +39,9 @@ import ca.ualberta.trinkettrader.Inventory.Searcher;
 import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
-import ca.ualberta.trinkettrader.User.Friendable;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
-import ca.ualberta.trinkettrader.User.User;
 import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
+import ca.ualberta.trinkettrader.User.User;
 
 /**
  * Testing file for "Browse Search Inventories Of Friends" use cases.
