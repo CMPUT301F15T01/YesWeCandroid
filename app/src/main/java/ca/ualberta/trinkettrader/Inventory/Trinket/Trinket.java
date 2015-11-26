@@ -94,6 +94,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
         return accessibility;
     }
 
+    // TODO:  What do public and private mean
     /**
      * Sets trinket's accessibility,  Must be either "public" or "private".
      *
@@ -134,6 +135,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
         return description;
     }
 
+    // TODO:  Give an example of a description
     /**
      * Sets trinket's description.  The description gives extra information about the trinket and
      * is set by the user in a text field in the AddOrEditTrinketActivity.  There is no limit to the
