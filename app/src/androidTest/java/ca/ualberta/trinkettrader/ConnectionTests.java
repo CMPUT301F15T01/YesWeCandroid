@@ -27,7 +27,7 @@ public class ConnectionTests extends ActivityInstrumentationTestCase2 {
     // turn wifi on, check
     public void testHasConnection() {
         LoginActivity loginActivity = (LoginActivity) getActivity();
-        // viv, Accessed 2015-11-18, http://stackoverflow.com/questions/3930990/android-how-to-enable-disable-wifi-or-internet-connection-programmatically
+        // viv; http://stackoverflow.com/questions/3930990/android-how-to-enable-disable-wifi-or-internet-connection-programmatically; 2015-11-18
         WifiManager wifiManager = (WifiManager) loginActivity.getSystemService(LoginActivity.WIFI_SERVICE);
         wifiManager.setWifiEnabled(Boolean.FALSE); // turn off
         //assertTrue(InternetConnection.getInstance().internetConnectionAvailable(loginActivity)==Boolean.FALSE);

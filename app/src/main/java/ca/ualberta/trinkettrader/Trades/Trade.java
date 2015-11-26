@@ -182,7 +182,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         return status;
     }
 
-    // adarshr, accessed on 2015-11-16, http://stackoverflow.com/questions/10734106/how-to-override-tostring-properly-in-java
+    // adarshr; http://stackoverflow.com/questions/10734106/how-to-override-tostring-properly-in-java; 2015-11-16
 
     // TODO unfinished. Everything mentioned in JavaDoc comment below will be implemented in next prototype.
     // TODO may remodel after profile page with updatable fields

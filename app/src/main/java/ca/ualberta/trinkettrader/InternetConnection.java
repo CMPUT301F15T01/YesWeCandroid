@@ -49,7 +49,7 @@ public class InternetConnection {
      */
     public Boolean internetConnectionAvailable(Context context) {
         // TODO check for network being disabled?
-        // Android Developers, Accessed on 2015-11-18, http://developer.android.com/training/monitoring-device-state/connectivity-monitoring.html
+        // Android Developers; http://developer.android.com/training/monitoring-device-state/connectivity-monitoring.html; 2015-11-18
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         Boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();

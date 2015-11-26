@@ -58,7 +58,7 @@ public class LoggedInUser extends User {
      *
      * @param c
      */
-    //Taken from LonelyTwitter https://github.com/joshua2ua/lonelyTwitter
+    // joshua2ua; https://github.com/joshua2ua/lonelyTwitter; 2015-11-26
     public void saveInFile(Context c) {
         if (this.getNeedToSave()) {
             return;
@@ -84,13 +84,13 @@ public class LoggedInUser extends User {
      *
      * @param c
      */
-    //Taken from LonelyTwitter https://github.com/joshua2ua/lonelyTwitter
+    // joshua2ua; https://github.com/joshua2ua/lonelyTwitter; 2015-11-26
     public void loadFromFile(Context c) {
         try {
 
             FileInputStream fis = c.openFileInput(FILENAME);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            //https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/dcom/google/gson/Gson.html, 2015-09-23
+            //https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/dcom/google/gson/Gson.html; 2015-09-23
             Type loggedInUserType = new TypeToken<LoggedInUser>() {
             }.getType();
             Gson gson = new Gson();
