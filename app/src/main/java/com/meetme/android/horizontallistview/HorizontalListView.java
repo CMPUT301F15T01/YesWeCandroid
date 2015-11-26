@@ -890,6 +890,13 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
     }
 
     /**
+     * Gets the height in px this view will be rendered. (padding removed)
+     */
+    private int getRenderHeight() {
+        return getHeight() - getPaddingTop() - getPaddingBottom();
+    }
+
+    /**
      * Gets the width in px this view will be rendered. (padding removed)
      */
     private int getRenderWidth() {
@@ -1099,6 +1106,8 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
         }
     }
 
+    ;
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -1106,8 +1115,6 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
         // Cache off the measure spec
         mHeightMeasureSpec = heightMeasureSpec;
     }
-
-    ;
 
     /**
      * Draws the dividers that go in between the horizontal list view items
@@ -1151,13 +1158,6 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
                 }
             }
         }
-    }
-
-    /**
-     * Gets the height in px this view will be rendered. (padding removed)
-     */
-    private int getRenderHeight() {
-        return getHeight() - getPaddingTop() - getPaddingBottom();
     }
 
     /**

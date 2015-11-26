@@ -62,6 +62,7 @@ public class Friend implements Friendable {
 // reader must be able to find whateach term means, when should they be using (5 w's).  what uses it, etc.
     // who calls it, what they are calling it with.  who loads it.  should be useable by another developer
     // structure, etc. can be described by uml.  need to know what stuff is actually useful for.
+
     /**
      * Constructor that uses all the attributes of User.
      * Initializes the Friend using these attributes (using User's constructor), then sets the
