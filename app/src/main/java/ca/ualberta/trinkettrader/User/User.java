@@ -287,10 +287,4 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         return TAG;
     }
 
-    @Override
-    public String getId() {
-        return this.profile.getEmail();
-    }
-
-
 }

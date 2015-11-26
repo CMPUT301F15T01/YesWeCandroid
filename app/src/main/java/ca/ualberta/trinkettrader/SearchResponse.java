@@ -59,43 +59,45 @@ public class SearchResponse<T> {
     public void setHits(Hits<T> hits) {
         this.hits = hits;
     }
-    public Integer numHits(){
-            if(hits != null){
-                return hits.numHits();
-            }else
-                return 0;
-}
 
-
-class Shard {
-    private int total;
-    private int successful;
-    private int failed;
-
-    public Shard() {
+    public Integer numHits() {
+        if (hits != null) {
+            return hits.numHits();
+        } else
+            return 0;
     }
 
-    public int getTotal() {
-        return total;
-    }
 
-    public void setTotal(int total) {
-        this.total = total;
-    }
+    class Shard {
+        private int total;
+        private int successful;
+        private int failed;
 
-    public int getSuccessful() {
-        return successful;
-    }
+        public Shard() {
+        }
 
-    public void setSuccessful(int successful) {
-        this.successful = successful;
-    }
+        public int getTotal() {
+            return total;
+        }
 
-    public int getFailed() {
-        return failed;
-    }
+        public void setTotal(int total) {
+            this.total = total;
+        }
 
-    public void setFailed(int failed) {
-        this.failed = failed;
+        public int getSuccessful() {
+            return successful;
+        }
+
+        public void setSuccessful(int successful) {
+            this.successful = successful;
+        }
+
+        public int getFailed() {
+            return failed;
+        }
+
+        public void setFailed(int failed) {
+            this.failed = failed;
+        }
     }
 }

@@ -20,6 +20,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -115,10 +118,20 @@ public class LoggedInUser extends User {
         gsonBuilder.registerTypeAdapter(User.class, new UserAdapter());
 
         Gson gson = gsonBuilder.create();
-        ArrayList<ElasticStorable> foundUsers = LoggedInUser.getInstance().searchOnNetwork(Arrays.asList(new BasicNameValuePair("email", email)), new User(), gson);
+
+        ArrayList<NameValuePair> userData = new ArrayList<>();
+        NameValuePair n = new BasicNameValuePair("email", email);
+        userData.add(n);
+
+        ArrayList<ElasticStorable> foundUsers = null;
+        try {
+            foundUsers = LoggedInUser.getInstance().searchOnNetwork(userData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if(foundUsers.size() == 0){
             ourInstance.getProfile().setEmail(email);
-            ourInstance.saveToNetwork(ourInstance, gson);
+            ourInstance.saveToNetwork();
         }else if(foundUsers.size() == 1){
             ourInstance = (LoggedInUser) foundUsers.get(0);
         }else{

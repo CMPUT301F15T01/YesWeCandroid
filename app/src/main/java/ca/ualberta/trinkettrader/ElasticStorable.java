@@ -81,10 +81,6 @@ public abstract class ElasticStorable  {
         thread.start();
     }
 
-    public abstract String getResourceUrl();
-
-    public abstract String getId();
-
     /**
      * Search for ElasticStorable objects on the network by matching the attribute and attribute
      * value pairs.
@@ -116,10 +112,6 @@ public abstract class ElasticStorable  {
 
         return result;
     }
-
-    public abstract String getSearchUrl();
-
-    public abstract String getTag();
 
     /***
      * This is an accessory method when removing an ElasticStorable. To be called before clearing
