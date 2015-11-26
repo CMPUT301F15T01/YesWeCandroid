@@ -23,9 +23,27 @@ import ca.ualberta.trinkettrader.User.User;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 
 /**
- * Class representing a friend of a user. All friends are users and therefore have all attributes
- * and methods of a user. Friends have an additional attribute to specify if they are tracked, and
- * they have methods to view and modify their tracking status.
+ * Class representing a friend of the current user.  A friend represents another user of the app who the
+ * current user can trade with and, optionally, track.  Each friend has an attribute specifying
+ * whether or not they are tracked, and methods to view and modify their tracking status.  If a friend
+ * is "tracked", they get added to the user's tracked friends list (in addition to their main friends
+ * list), which is a shortlist of the friends the current user are most interested in trading with.
+ * If a friend is "untracked" then they are only included in the main friends list.  By default a friend
+ * is untracked.
+ *
+ * A friend represents another user of the app, and so in addition to their "track" status, they also have
+ * the same attributes as the current user, including an inventory and a profile.  The user can view
+ * a friend's profile through the FriendsProfileActivity, and view the friend's inventory through the
+ * FriendsInventoryActivity.  The user can track or untrack a friend by viewing the friend's profile and
+ * checking or unchecking the "Track" checkbox, respectively.  When viewing a friend's inventory you can
+ * see all the trinkets the friend has added to their inventory and marked as public (any trinket added
+ * to the friends inventory and marked as private will NOT be visible to the current user).
+ *
+ * A friend, like the current user, is identified on the system by their email address.  Friends are
+ * searched for and listed by their emails, so the current user must know their friend's email address
+ * in order to find them.
+ *
+ *
  */
 public class Friend implements Friendable{
 
@@ -61,9 +79,6 @@ public class Friend implements Friendable{
         actualFriend = new User(friendsList, inventory, notificationManager, profile, trackedFriends, tradeManager);
         this.isTracked = isTracked;
     }
-
-
-
 
     /**
      * Constructor that sets only the username of the Friend. All other attributes are initialized
