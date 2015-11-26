@@ -85,7 +85,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     @Override
-    protected String getJson() {
+    protected String toJson() {
         Gson gson = new Gson(); // Or use new GsonBuilder().create();
         return gson.toJson(this); // serializes target to Json
     }
