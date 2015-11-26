@@ -17,6 +17,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import java.io.Console;
 import java.io.IOException;
@@ -54,6 +55,7 @@ public abstract class ElasticStorable {
                     addRequest.setHeader("Accept", "application/json");
                     HttpResponse response = httpClient.execute(addRequest);
                     Log.i("HttpResponse", response.getStatusLine().toString());
+                    Log.i("HttpResponse Body", EntityUtils.toString(response.getEntity(), "UTF-8"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

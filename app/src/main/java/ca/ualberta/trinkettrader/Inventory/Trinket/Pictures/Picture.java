@@ -174,8 +174,9 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      *
      * @return JSON representation of the picture
      */
+    @Override
     protected String getJson() {
-        return "{ \"filename\": \"" + file.getName() + "\", \"bytes\": \"" + Base64.encodeToString(pictureByteArray, Base64.DEFAULT) + "\" }";
+        return "{ \"filename\": \"" + file.getName() + "\", \"bytes\": \"" + Base64.encodeToString(pictureByteArray, Base64.NO_WRAP) + "\" }";
     }
 
     @Override
