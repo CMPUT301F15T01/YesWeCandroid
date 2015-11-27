@@ -102,9 +102,9 @@ public abstract class ElasticStorable {
                     InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
                     SearchResponse<ElasticStorable> esResponse = new Gson().fromJson(streamReader, searchResponseType);
 
-                   /* for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {
+                    for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {
                         result.add(hit.getSource());
-                    }*/
+                    }
                     onSearchResult(result);
                 } catch (IOException e) {
                     e.printStackTrace();
