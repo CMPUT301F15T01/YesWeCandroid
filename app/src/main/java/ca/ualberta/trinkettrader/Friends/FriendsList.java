@@ -22,9 +22,11 @@ import java.util.Observer;
  * An ArrayList of all the {@link Friend Friends} the user has.  This list includes all tracked and
  * untracked friends.  Friends are ordered in the arraylist by the order in which the user added them
  * as friends (first-added appears first in the list).  In addition to the basic functionality of
- * {@link ArrayList ArrayLists}, FriendsLists can searched by the friend's email address.  Additionally,
+ * {@link ArrayList ArrayLists}, FriendsLists can be searched by the friend's email address.  Additionally,
  * the {@link ArrayList ArrayList's} add function is overridden so that the same Friend cannot be added
  * to the current user's FriendsList multiple times.
+ *
+ * The current user's FriendsList can be viewed, and new friends can be added to it, in the FriendsListActivity.
  */
 public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinkettrader.Observable {
 
