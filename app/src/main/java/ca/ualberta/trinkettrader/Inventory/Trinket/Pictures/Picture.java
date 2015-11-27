@@ -101,7 +101,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
                 return filename;
             }
         });
-        this.searchOnNetwork(postParameters);
+        this.searchOnNetwork(postParameters, this);
     }
 
     /**

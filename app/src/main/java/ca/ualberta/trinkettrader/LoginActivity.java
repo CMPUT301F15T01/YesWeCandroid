@@ -30,6 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -77,7 +78,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             emailTextView.setError(getString(R.string.error_invalid_email));
         } else {
             // TODO Get user info from internet
-
+            try {
+                LoggedInUser.getInstance().loadFromNetwork(email);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             LoggedInUser.getInstance().getProfile().setEmail(email);
             Intent intent = new Intent(this, HomePageActivity.class);
             startActivity(intent);
