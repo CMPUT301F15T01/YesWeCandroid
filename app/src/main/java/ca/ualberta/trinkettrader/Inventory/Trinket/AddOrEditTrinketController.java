@@ -40,6 +40,7 @@ public class AddOrEditTrinketController {
     private Trinket trinket = new Trinket();
     private User user = LoggedInUser.getInstance();
     private ArrayList<Picture> pictures = new ArrayList<>();
+    private ArrayList<Picture> picturesToDelete = new ArrayList<>();
 
     /**
      * Constructs a controller with the activity this constructor is attached to.  Each controller
@@ -78,6 +79,7 @@ public class AddOrEditTrinketController {
      */
     public void removePicture(Picture picture) {
         pictures.remove(picture);
+        picturesToDelete.add(picture);
     }
 
     /**
@@ -87,6 +89,13 @@ public class AddOrEditTrinketController {
      * inventory.  The user will then be directed back to the InventoryActivity.
      */
     public void onSaveNewClick() {
+        for (Picture picture : picturesToDelete) {
+            try {
+                picture.delete();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         prepareTrinketForSave();
         this.user.getInventory().add(this.trinket);
         Intent intent = new Intent(activity, InventoryActivity.class);
@@ -114,6 +123,13 @@ public class AddOrEditTrinketController {
      * The user will then be directed back to the InventoryActivity.
      */
     public void onSaveEditClick() {
+        for (Picture picture : picturesToDelete) {
+            try {
+                picture.delete();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         prepareTrinketForSave();
         this.user.getInventory().set(this.user.getInventory().indexOf(ApplicationState.getInstance().getClickedTrinket()), this.trinket);
         Intent intent = new Intent(activity, InventoryActivity.class);
