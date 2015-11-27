@@ -111,9 +111,13 @@ public class Friend implements Friendable {
     }
 
     /**
-     * Returns the tracked status of the friend as a Boolean.
+     * Returns the tracked status of the friend as a Boolean.  If the friend is tracked  isTracked()
+     * returns <code>True</code>, and if it is not tracked the function returns <code>False</code>. This
+     * method is called by the FriendsListActivity to determine whether a friend should be listed in
+     * the tracked friends list or not, and by the FriendsProfileActivity to set whether or not the
+     * "Tracked" checkbox is checked or not when the friend's profile is viewed.
      *
-     * @return <code>True</code> if the friend is tracked; <code>False</code> otherwise
+     * @return Boolean - <code>True</code> if the friend is tracked; <code>False</code> otherwise
      */
     public Boolean isTracked() {
         return isTracked;
@@ -121,8 +125,11 @@ public class Friend implements Friendable {
 
 
     /**
-     * Sets the tracked status of the friend to the specified Boolean value.
-     * This method is used when adding and removing a friend from a <code>TrackedFriendsList</code>.
+     * Sets the tracked status of the friend to the specified Boolean value.  The friend's tracked status
+     * can be changed by checking/unchecking the "Tracked" checkbox.  Checking the checkbox sets the
+     * tracked status to tracked, represented by the <code>True</code>, and unchecking the checkbox sets
+     * the tracked status to untracked, or <code>False</code>.  Based on how tracked is set, the friend is
+     * added or removed from the current user's <code>TrackedFriendsList</code>.
      *
      * @param isTracked Boolean representing the tracking status of the friend
      */
