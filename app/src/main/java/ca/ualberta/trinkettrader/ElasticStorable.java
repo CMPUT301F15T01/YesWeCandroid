@@ -35,25 +35,22 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
- * Methods using HTTPRequest in this class are taken from AndroidElasticSearch //TODO: add github link
- * Parcelable stuff from http://stackoverflow.com/questions/1626667/how-to-use-parcel-in-android by emmby
+ * Methods using HTTPRequest in this class are taken from AndroidElasticSearch
  */
 public abstract class ElasticStorable {
 
+    // emmby; http://stackoverflow.com/questions/1626667/how-to-use-parcel-in-android; 2015-11-26
+    // joshua2ua; https://github.com/joshua2ua/AndroidElasticSearch; 2015-11-26
 
     /**
-     * Save this object to the elasticsearch server.
+     * Save this object on the elasticsearch server.
      */
-    public void saveToNetwork() {
+    public void saveToNetwork() throws IOException {
         final HttpClient httpClient = new DefaultHttpClient();
         final HttpPost addRequest = new HttpPost(this.getResourceUrl() + this.getId());
-        try {
-            final StringEntity stringEntity = new StringEntity(new Gson().toJson(this));
-            addRequest.setEntity(stringEntity);
-            addRequest.setHeader("Accept", "application/json");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        final StringEntity stringEntity = new StringEntity(new Gson().toJson(this));
+        addRequest.setEntity(stringEntity);
+        addRequest.setHeader("Accept", "application/json");
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -74,17 +71,14 @@ public abstract class ElasticStorable {
     public abstract String getId();
 
     /**
-     * Search for ElasticStorable objects on the network by matching the attribute and attribute
-     * value pairs.
+     * Searches for ElasticStorable objects on the network matching the attribute and attribute
+     * value pairs. Calls onSearchResult with the results when the search completes.
      *
-     * @param postParameters Pairs of attributes and their values to equate to.
-     * @return response of the search
+     * @param postParameters pairs of attributes to use when searching
      * @throws IOException
      */
-    public ArrayList<ElasticStorable> searchOnNetwork(ArrayList<NameValuePair> postParameters) throws IOException {
+    public void searchOnNetwork(ArrayList<NameValuePair> postParameters) throws IOException {
         // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
-        ArrayList<ElasticStorable> result = new ArrayList<>();
-
         final HttpPost searchRequest = new HttpPost(this.getSearchUrl());
         searchRequest.setEntity(new UrlEncodedFormEntity(postParameters));
         searchRequest.setHeader("Accept", "application/json");
@@ -94,35 +88,62 @@ public abstract class ElasticStorable {
         StringEntity stringEntity = new StringEntity(query);
 
         final HttpClient httpClient = new DefaultHttpClient();
-        HttpResponse response = httpClient.execute(searchRequest);
-        Type searchResponseType = new TypeToken<SearchResponse<ElasticStorable>>() {
-        }.getType();
-        SearchResponse<ElasticStorable> esResponse = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchResponseType);
-        for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {
-            result.add(hit.getSource());
-        }
-
-        return result;
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpResponse response = null;
+                try {
+                    ArrayList<ElasticStorable> result = new ArrayList<>();
+                    response = httpClient.execute(searchRequest);
+                    Type searchResponseType = new TypeToken<SearchResponse<ElasticStorable>>() {
+                    }.getType();
+                    SearchResponse<ElasticStorable> esResponse = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchResponseType);
+                    for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {
+                        result.add(hit.getSource());
+                    }
+                    onSearchResult(result);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 
     public abstract String getSearchUrl();
 
     public abstract String getTag();
 
-    /***
-     * This is an accessory method when removing an ElasticStorable. To be called before clearing
-     * the local version of the same data.
+    /**
+     * Method called after searchOnNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of searchOnNetwork
+     */
+    public abstract void onSearchResult(ArrayList<ElasticStorable> result);
+
+    /**
+     * This method deletes this object from the elasticsearch server. This
+     * should be called when the object is no longer needed anywhere.
      *
      * @throws IOException
      */
     public void deleteFromNetwork() throws IOException {
-        HttpClient httpClient = new DefaultHttpClient();
-
-        HttpDelete deleteRequest = new HttpDelete(this.getResourceUrl() + this.getId());
+        final HttpClient httpClient = new DefaultHttpClient();
+        final HttpDelete deleteRequest = new HttpDelete(this.getResourceUrl() + this.getId());
         deleteRequest.setHeader("Accept", "application/json");
-
-        HttpResponse response = httpClient.execute(deleteRequest);
-        String status = response.getStatusLine().toString();
-        Log.i(this.getTag(), status);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpResponse response = httpClient.execute(deleteRequest);
+                    Log.i("HttpResponse", response.getStatusLine().toString());
+                    Log.i("HttpResponse Body", EntityUtils.toString(response.getEntity(), "UTF-8"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 }

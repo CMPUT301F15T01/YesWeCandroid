@@ -101,23 +101,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
                 return filename;
             }
         });
-        ArrayList<ElasticStorable> results = this.searchOnNetwork(postParameters);
-        Picture picture = (Picture) results.get(0);
-        boolean result = false;
-        while (!result) {
-            result = this.file.delete();
-        }
-        this.file = directoryManager.compressPicture(this.filename, picture.getPictureByteArray());
-        this.notifyObservers();
-    }
-
-    /**
-     * Returns the byte array containing the compressed picture.
-     *
-     * @return compressed picture in byte array
-     */
-    public byte[] getPictureByteArray() {
-        return this.pictureByteArray;
+        this.searchOnNetwork(postParameters);
     }
 
     /**
@@ -230,5 +214,32 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     @Override
     public String getTag() {
         return TAG;
+    }
+
+    /**
+     * Method called after searchOnNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of searchOnNetwork
+     */
+    @Override
+    public void onSearchResult(ArrayList<ElasticStorable> result) {
+        Picture picture = (Picture) result.get(0);
+        this.file.delete();
+        try {
+            this.file = directoryManager.compressPicture(this.filename, picture.getPictureByteArray());
+            this.notifyObservers();
+        } catch (IOException | PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Returns the byte array containing the compressed picture.
+     *
+     * @return compressed picture in byte array
+     */
+    public byte[] getPictureByteArray() {
+        return this.pictureByteArray;
     }
 }

@@ -46,7 +46,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     protected Boolean needToSave;
     private ArrayList<Observer> observers;
 
-
     /**
      * Public constructor for user: initializes all attribute classes as empty classes with no
      * active data.
@@ -285,6 +284,16 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     @Override
     public String getTag() {
         return TAG;
+    }
+
+    /**
+     * Method called after searchOnNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of searchOnNetwork
+     */
+    @Override
+    public void onSearchResult(ArrayList<ElasticStorable> result) {
     }
 
 }

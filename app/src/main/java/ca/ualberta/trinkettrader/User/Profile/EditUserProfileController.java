@@ -18,6 +18,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import java.io.IOException;
+
 import ca.ualberta.trinkettrader.InternetConnection;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
@@ -65,9 +67,13 @@ public class EditUserProfileController {
             userProfile.setArePhotosDownloadable(photoDownloadEnabled);
 
             LoggedInUser.getInstance().saveInFile(activity.getBaseContext());
-            
-            if(InternetConnection.getInstance().internetConnectionAvailable(activity.getBaseContext())){
-                LoggedInUser.getInstance().saveToNetwork();
+
+            if (InternetConnection.getInstance().internetConnectionAvailable(activity.getBaseContext())) {
+                try {
+                    LoggedInUser.getInstance().saveToNetwork();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             //exit the activity
             activity.finish();
