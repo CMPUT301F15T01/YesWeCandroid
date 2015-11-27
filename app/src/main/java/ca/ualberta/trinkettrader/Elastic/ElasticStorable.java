@@ -79,8 +79,8 @@ public abstract class ElasticStorable {
      */
     public void searchOnNetwork(ArrayList<NameValuePair> postParameters) throws IOException {
         // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
-        final HttpPost searchRequest = new HttpPost(this.getSearchUrl());
-        searchRequest.setEntity(new UrlEncodedFormEntity(postParameters));
+        final HttpPost searchRequest = new HttpPost(composeSearchRequest(this.getSearchUrl(), postParameters.get(0)));
+        //searchRequest.setEntity(new UrlEncodedFormEntity(postParameters));
         searchRequest.setHeader("Accept", "application/json");
 
         //Useless, really
@@ -98,7 +98,7 @@ public abstract class ElasticStorable {
 
                     Type searchResponseType = new TypeToken<SearchResponse<ElasticStorable>>() {}.getType();
                     InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
-                    SearchResponse<ElasticStorable> esResponse = new Gson().fromJson(streamReader, searchResponseType);
+                    //SearchResponse<ElasticStorable> esResponse = new Gson().fromJson(streamReader, searchResponseType);
                    /* for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {
                         result.add(hit.getSource());
                     }*/
@@ -146,5 +146,8 @@ public abstract class ElasticStorable {
             }
         });
         thread.start();
+    }
+    public String composeSearchRequest(String uri, NameValuePair pair){
+               return uri + "?q=" + pair.getName() + ":" + pair.getValue();
     }
 }
