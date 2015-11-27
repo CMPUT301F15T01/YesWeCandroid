@@ -102,6 +102,16 @@ public class Friend implements Friendable {
     }
 
 
+    /**
+     * Returns the  User object that Friend class delegate user-like operations to.  Friends represent
+     * other users of the system and so are like users, but they do not require all properties of User as
+     * Friends do not need to keep track of their own friends lists.  To represent these user-like qualities
+     * each Friend stores a user object.  This User object is delegated to to manage the friend's
+     * inventory and profile data.
+     *
+     * @return User - the User object that stores the Friend's profile and inventory, and performs operations
+     * on them.
+     */
     public User getActualFriend() {
         return actualFriend;
     }
