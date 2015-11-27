@@ -83,8 +83,9 @@ public abstract class ElasticStorable {
         searchRequest.setEntity(new UrlEncodedFormEntity(postParameters));
         searchRequest.setHeader("Accept", "application/json");
 
-        String query = new Gson().toJson(postParameters);
-        Log.i(this.getTag(), "Json command: " + query);
+        //Useless, really
+        //String query = new Gson().toJson(postParameters);
+        //Log.i(this.getTag(), "Json command: " + query);
 
         final HttpClient httpClient = new DefaultHttpClient();
         Thread thread = new Thread(new Runnable() {
@@ -94,10 +95,8 @@ public abstract class ElasticStorable {
                     ArrayList<ElasticStorable> result = new ArrayList<>();
                     HttpResponse response = httpClient.execute(searchRequest);
                     Log.i("HttpResponse", response.getStatusLine().toString());
-                    Log.i("HttpResponse Body", EntityUtils.toString(response.getEntity(), "UTF-8"));
 
-                    Type searchResponseType = new TypeToken<SearchResponse<ElasticStorable>>() {
-                    }.getType();
+                    Type searchResponseType = new TypeToken<SearchResponse<ElasticStorable>>() {}.getType();
                     InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
                     SearchResponse<ElasticStorable> esResponse = new Gson().fromJson(streamReader, searchResponseType);
                     for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {

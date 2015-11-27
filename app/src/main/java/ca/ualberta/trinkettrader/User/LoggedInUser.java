@@ -99,9 +99,7 @@ public class LoggedInUser extends User {
 
     public void loadFromNetwork(String email) throws NoSuchFieldException, IOException {
 
-        GsonBuilder gsonBuilder = new GsonBuilder();
-
-        Gson gson = gsonBuilder.create();
+        Gson gson = new Gson();
 
         ArrayList<NameValuePair> userData = new ArrayList<>();
         NameValuePair n = new BasicNameValuePair("email", email);
