@@ -35,7 +35,7 @@ import ca.ualberta.trinkettrader.User.User;
  * the same attributes as the current user, including an inventory and a profile.  The user can view
  * a friend's profile through the FriendsProfileActivity, and view the friend's inventory through the
  * FriendsInventoryActivity.  The user can track or untrack a friend by viewing the friend's profile and
- * checking or unchecking the "Track" checkbox, respectively.  When viewing a friend's inventory you can
+ * checking or unchecking the "Track" radio button, respectively.  When viewing a friend's inventory you can
  * see all the trinkets the friend has added to their inventory and marked as public (any trinket added
  * to the friends inventory and marked as private will NOT be visible to the current user).
  * <p/>
@@ -125,7 +125,7 @@ public class Friend implements Friendable {
      * returns <code>True</code>, and if it is not tracked the function returns <code>False</code>. This
      * method is called by the FriendsListActivity to determine whether a friend should be listed in
      * the tracked friends list or not, and by the FriendsProfileActivity to set whether or not the
-     * "Tracked" checkbox is checked or not when the friend's profile is viewed.
+     * "Tracked" radio button is checked or not when the friend's profile is viewed.
      *
      * @return Boolean - <code>True</code> if the friend is tracked; <code>False</code> otherwise
      */
@@ -136,8 +136,8 @@ public class Friend implements Friendable {
 
     /**
      * Sets the tracked status of the friend to the specified Boolean value.  The friend's tracked status
-     * can be changed by checking/unchecking the "Tracked" checkbox.  Checking the checkbox sets the
-     * tracked status to tracked, represented by the <code>True</code>, and unchecking the checkbox sets
+     * can be changed by checking/unchecking the "Tracked" radio button.  Checking the radio button sets the
+     * tracked status to tracked, represented by the <code>True</code>, and unchecking the radio button sets
      * the tracked status to untracked, or <code>False</code>.  Based on how tracked is set, the friend is
      * added or removed from the current user's <code>TrackedFriendsList</code>.
      *

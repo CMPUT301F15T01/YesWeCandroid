@@ -19,10 +19,12 @@ import java.util.Collection;
 import java.util.Observer;
 
 /**
- * An extension of the built-in Java ArrayList representing a list of Friends.
- * In addition to the functionality of ArrayList, a FriendsList can be searched by username.
- * Also, duplicate Friends (Friends with the same username) cannot be added to the same
- * FriendsList (the ArrayList add() method is overriden).
+ * An ArrayList of all the {@link Friend Friends} the user has.  This list includes all tracked and
+ * untracked friends.  Friends are ordered in the arraylist by the order in which the user added them
+ * as friends (first-added appears first in the list).  In addition to the basic functionality of
+ * {@link ArrayList ArrayLists}, FriendsLists can searched by the friend's email address.  Additionally,
+ * the {@link ArrayList ArrayList's} add function is overridden so that the same Friend cannot be added
+ * to the current user's FriendsList multiple times.
  */
 public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinkettrader.Observable {
 
