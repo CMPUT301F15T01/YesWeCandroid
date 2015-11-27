@@ -34,9 +34,6 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import ca.ualberta.trinkettrader.ElasticStorable;
-import ca.ualberta.trinkettrader.User.Profile.UserAdapter;
-
 public class LoggedInUser extends User {
     /**
      * A singleton class that stores the current instance of the User class that has logged into the
@@ -100,10 +97,9 @@ public class LoggedInUser extends User {
         this.setNeedToSave(Boolean.FALSE);
     }
 
-    public void loadFromNetwork(String email) throws NoSuchFieldException {
+    public void loadFromNetwork(String email) throws NoSuchFieldException, IOException {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(User.class, new UserAdapter());
 
         Gson gson = gsonBuilder.create();
 
@@ -111,21 +107,7 @@ public class LoggedInUser extends User {
         NameValuePair n = new BasicNameValuePair("email", email);
         userData.add(n);
 
-        ArrayList<ElasticStorable> foundUsers = null;
-        try {
-            foundUsers = LoggedInUser.getInstance().searchOnNetwork(userData);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (foundUsers.size() == 0) {
-            ourInstance.getProfile().setEmail(email);
-            ourInstance.saveToNetwork();
-        } else if (foundUsers.size() == 1) {
-            ourInstance = (LoggedInUser) foundUsers.get(0);
-        } else {
-            throw new NoSuchFieldException();
-        }
-
+        LoggedInUser.getInstance().searchOnNetwork(userData);
     }
 
     /**

@@ -16,7 +16,7 @@ package ca.ualberta.trinkettrader.Trades;
 
 import java.util.ArrayList;
 
-import ca.ualberta.trinkettrader.ElasticStorable;
+import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
@@ -45,9 +45,6 @@ public class TradeManager extends ElasticStorable {
         tradeArchiver = new TradeArchiver();
     }
 
-    // TODO think that receiver of trade proposal should be added to input. will
-    // TODO make it easier to send notifications.
-
     /**
      * Propose trade.
      * Adds created trade to the currentTrades ArrayLists of both the borrower
@@ -61,7 +58,8 @@ public class TradeManager extends ElasticStorable {
         // TODO notify trade receiver (person who did not instantiate trade)
     }
 
-    // TODO pulling trades once the phone has connectivity.
+    // TODO think that receiver of trade proposal should be added to input. will
+    // TODO make it easier to send notifications.
 
     /**
      * Pulls offered trades when user is online.
@@ -75,6 +73,7 @@ public class TradeManager extends ElasticStorable {
         return new ArrayList<Trade>();
     }
 
+    // TODO pulling trades once the phone has connectivity.
 
     /**
      * Propose counter trade.
@@ -121,9 +120,6 @@ public class TradeManager extends ElasticStorable {
         // TODO delete trade from current trades list, change trade status and add to past trades list (archive it)
     }
 
-    // TODO this could be deleted, because there is already a TradeArchiver deleteTrade method.
-    // TODO we would be calling deleteTrade.deleteTrade
-
     /**
      * Deletes specified trade from currentTrades ArrayList. Trades will <b>never</b> be
      * deleted from pastTrades ArrayList.  This method will only be used to update the currentTrades
@@ -134,6 +130,9 @@ public class TradeManager extends ElasticStorable {
     public void deleteTrade(Trade trade) {
 
     }
+
+    // TODO this could be deleted, because there is already a TradeArchiver deleteTrade method.
+    // TODO we would be calling deleteTrade.deleteTrade
 
     /**
      * Returns user's trade archiver. Trade archiver is needed to access
@@ -147,7 +146,6 @@ public class TradeManager extends ElasticStorable {
     public TradeArchiver getTradeArchiver() {
         return tradeArchiver;
     }
-    // TODO think that one is already instantiated in User class.  need to check.
 
     /**
      * Returns  user's notification manager. Notification manager is responsible for
@@ -160,6 +158,7 @@ public class TradeManager extends ElasticStorable {
     public NotificationManager getNotificationManager() {
         return notificationManager;
     }
+    // TODO think that one is already instantiated in User class.  need to check.
 
     @Override
     public String getResourceUrl() {
@@ -179,5 +178,15 @@ public class TradeManager extends ElasticStorable {
     @Override
     public String getTag() {
         return TAG;
+    }
+
+    /**
+     * Method called after searchOnNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of searchOnNetwork
+     */
+    @Override
+    public void onSearchResult(ArrayList<ElasticStorable> result) {
     }
 }
