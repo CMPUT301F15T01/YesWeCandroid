@@ -17,7 +17,7 @@ package ca.ualberta.trinkettrader.Trades;
 import java.util.ArrayList;
 import java.util.Observer;
 
-import ca.ualberta.trinkettrader.ElasticStorable;
+import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 
 // TODO how are counter trades affected by 0 to many thing? are borrower and owner

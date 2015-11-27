@@ -16,7 +16,7 @@ package ca.ualberta.trinkettrader.Trades;
 
 import java.util.ArrayList;
 
-import ca.ualberta.trinkettrader.ElasticStorable;
+import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 

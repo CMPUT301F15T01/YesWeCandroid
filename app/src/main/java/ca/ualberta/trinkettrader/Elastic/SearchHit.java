@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package ca.ualberta.trinkettrader;
+package ca.ualberta.trinkettrader.Elastic;
 
 public class SearchHit<T> {
     private String _index;
