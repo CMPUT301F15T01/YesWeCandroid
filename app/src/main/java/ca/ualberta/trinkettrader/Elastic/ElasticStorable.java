@@ -31,6 +31,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -41,6 +42,11 @@ public abstract class ElasticStorable {
 
     // emmby; http://stackoverflow.com/questions/1626667/how-to-use-parcel-in-android; 2015-11-26
     // joshua2ua; https://github.com/joshua2ua/AndroidElasticSearch; 2015-11-26
+
+    public abstract String getSearchUrl();
+    public abstract String getTag();
+    public abstract String getResourceUrl();
+    public abstract String getId();
 
     /**
      * Save this object on the elasticsearch server.
@@ -66,9 +72,6 @@ public abstract class ElasticStorable {
         thread.start();
     }
 
-    public abstract String getResourceUrl();
-
-    public abstract String getId();
 
     /**
      * Searches for ElasticStorable objects on the network matching the attribute and attribute
@@ -77,7 +80,7 @@ public abstract class ElasticStorable {
      * @param postParameters pairs of attributes to use when searching
      * @throws IOException
      */
-    public void searchOnNetwork(ArrayList<NameValuePair> postParameters) throws IOException {
+    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, T type) throws IOException {
         // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
         final HttpPost searchRequest = new HttpPost(composeSearchRequest(this.getSearchUrl(), postParameters.get(0)));
         //searchRequest.setEntity(new UrlEncodedFormEntity(postParameters));
@@ -96,9 +99,10 @@ public abstract class ElasticStorable {
                     HttpResponse response = httpClient.execute(searchRequest);
                     Log.i("HttpResponse", response.getStatusLine().toString());
 
-                    Type searchResponseType = new TypeToken<SearchResponse<ElasticStorable>>() {}.getType();
+                    Type searchResponseType = new TypeToken<SearchResponse<T>>() {}.getType();
                     InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
-                    //SearchResponse<ElasticStorable> esResponse = new Gson().fromJson(streamReader, searchResponseType);
+                    SearchResponse<ElasticStorable> esResponse = new Gson().fromJson(streamReader, searchResponseType);
+
                    /* for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {
                         result.add(hit.getSource());
                     }*/
@@ -111,9 +115,7 @@ public abstract class ElasticStorable {
         thread.start();
     }
 
-    public abstract String getSearchUrl();
 
-    public abstract String getTag();
 
     /**
      * Method called after searchOnNetwork gets a response. This method should

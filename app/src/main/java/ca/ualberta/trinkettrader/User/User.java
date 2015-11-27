@@ -294,6 +294,8 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      */
     @Override
     public void onSearchResult(ArrayList<ElasticStorable> result) {
+        //if there is anything, save it.
+        //other wise, do nothing?
     }
 
 }
