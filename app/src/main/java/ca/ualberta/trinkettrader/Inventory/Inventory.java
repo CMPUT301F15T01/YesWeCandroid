@@ -21,10 +21,17 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 
 /**
- * Specialized extension of the ArrayList class, which represents the inventory of a user.  An
- * inventory can only contain Trinkets.  In addition to all basic ArrayList functionality and
- * attributes, an inventory also has an attribute specifying if it needs to be saved to the device
- * for offline viewing.
+ * Specialized extension of the ArrayList class, which holds {@code Trinket Trinkets} to represent
+ * the inventory of a user.  An inventory can only contain Trinkets.  In addition to all basic ArrayList
+ * functionality and attributes, an inventory also has an attribute specifying if it needs to be saved to
+ * the device for offline viewing.  Trinkets are ordered in the Inventory in the order in which they were
+ * added, so the first Trinket added to the inventory is at position 0.
+ *
+ * Trinkets can be added to or deleted from the current user's inventory in the
+ * {@link ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity AddOrEditTrinketActivity}.
+ * The trinkets in the current user's inventory can be viewed in the {@link InventoryActivity InventoryActivity},
+ * and the details about the inventory, such as how many items are in it can be viewed in the
+ * {@link InventoryDetailsActivity InventoryDetailsActivity}.
  */
 public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinkettrader.Observable {
 
@@ -33,7 +40,14 @@ public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinket
 
     /**
      * Constructs an inventory containing the Trinkets of the specified collection, in the order
-     * they are returned by the collection's iterator.  By default the inventory needs to be saved.
+     * they are returned by the collection's iterator.  Constructs an Inventory from
+     * an arbitrary {@link Collection Collection} of Trinkets using the equivalent {@link ArrayList ArrayList}
+     * constructor.  The given collection can be empty.  By default the inventory needs to be saved.
+     *
+     * This constructor should be called when a user with an existing account logs in.  The Inventory is
+     * instantiated with the user's previous Inventory data.  This data is retrieved from the Elastic Search
+     * server if the device is online, or from the user's local phone storage if it is offline.  If the
+     * user has no trinkets in their Inventory, this constructor will still be called with an empty collection.
      *
      * @param collection - the collection whose elements are to be included in the inventory
      */
@@ -43,7 +57,9 @@ public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinket
     }
 
     /**
-     * Constructs an empty inventory.  By default the inventory needs to be saved.
+     Default constructor used when the current user logs in for the first time (thereby creating their
+     * account).  A user begins with no friends, so an empty FriendsList is instantiated using the
+     * default {@link ArrayList ArrayList} constructor.  By default the inventory needs to be saved.
      */
     public Inventory() {
         this.needToSave = Boolean.TRUE;
@@ -86,7 +102,12 @@ public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinket
     }
 
     /**
-     * Returns a boolean indicating if inventory needs to be saved.
+     * Returns a boolean indicating if inventory needs to be saved due to a change to any of the Trinkets
+     * in it.  If the inventory has been modified and needs to be saved, then this method returns <code>True</code>.
+     * If there have been no changes to the inventory then it does not need to be saved and this method returns
+     * <code>False</code>.  Actions that could cause the inventory to need to be saved are creating the
+     * inventory; or adding, deleting, or editing a Trinket in the inventory using the
+     * {@link ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity AddOrEditTrinketActivity}.
      *
      * @return Boolean - true if inventory needs to be saved, false if not
      */
