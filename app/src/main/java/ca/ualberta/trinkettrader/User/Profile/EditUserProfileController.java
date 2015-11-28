@@ -77,8 +77,8 @@ public class EditUserProfileController {
             userProfile.setDefaultLocation(new Location("this"));
 
             LoggedInUser.getInstance().saveInFile(activity.getBaseContext());
-
-            if (InternetConnection.getInstance().internetConnectionAvailable(activity.getBaseContext())) {
+            Boolean cnxn = InternetConnection.getInstance().internetConnectionAvailable(activity.getBaseContext());
+            if (cnxn) {
                 try {
                     LoggedInUser.getInstance().saveToNetwork();
                 } catch (IOException e) {

@@ -79,6 +79,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>, 
             emailTextView.setError(getString(R.string.error_invalid_email));
         } else {
             // TODO Get user info from internet
+            LoggedInUser.getInstance().getProfile().setEmail(email);
             try {
                 LoggedInUser.getInstance().loadFromNetwork(email);
             } catch (NoSuchFieldException e) {
@@ -86,7 +87,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>, 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            LoggedInUser.getInstance().getProfile().setEmail(email);
             Intent intent = new Intent(this, HomePageActivity.class);
             startActivity(intent);
         }

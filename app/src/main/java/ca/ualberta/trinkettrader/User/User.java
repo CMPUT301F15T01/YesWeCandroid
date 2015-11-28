@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader.User;
 
 import android.location.Location;
+import android.util.Base64;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -281,7 +282,8 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
 
     @Override
     public String getId() {
-        return this.profile.getEmail();
+        //Dark Knight; http://stackoverflow.com/questions/19743851/base64-java-encode-and-decode-a-string; 2015-11-28
+        return Base64.encodeToString(this.profile.getEmail().getBytes(), 4);
     }
 
     @Override
@@ -298,12 +300,12 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     @Override
     public <T extends ElasticStorable> void onSearchResult(T result) {
         User returned = (User) result;
-        LoggedInUser.getInstance().setProfile(returned.getProfile());
-        LoggedInUser.getInstance().setTrackedFriends(returned.getTrackedFriendsList());
-        LoggedInUser.getInstance().setFriendsList(returned.getFriendsList());
-        LoggedInUser.getInstance().setInventory(returned.getInventory());
-        LoggedInUser.getInstance().setNotificationManager(returned.getNotificationManager());
-        LoggedInUser.getInstance().setTradeManager(returned.getTradeManager());
+        this.setProfile(returned.getProfile());
+        this.setTrackedFriends(returned.getTrackedFriendsList());
+        this.setFriendsList(returned.getFriendsList());
+        this.setInventory(returned.getInventory());
+        this.setNotificationManager(returned.getNotificationManager());
+        this.setTradeManager(returned.getTradeManager());
     }
 
 
