@@ -47,8 +47,8 @@ public class EditUserProfileController {
             CheckBox photoDownload = (CheckBox) activity.findViewById(R.id.photo_download_checkbox);
             EditText address = (EditText) activity.findViewById(R.id.edit_address);
             EditText city = (EditText) activity.findViewById(R.id.edit_city);
-            EditText latitude = (EditText) activity.findViewById(R.id.latitude);
-            EditText longitude = (EditText) activity.findViewById(R.id.longitude);
+            EditText latitude = (EditText) activity.findViewById(R.id.edit_latitude);
+            EditText longitude = (EditText) activity.findViewById(R.id.edit_longitude);
             EditText name = (EditText) activity.findViewById(R.id.edit_name);
             EditText phoneNum = (EditText) activity.findViewById(R.id.edit_phone_number);
             EditText postalCode = (EditText) activity.findViewById(R.id.edit_postal_code);

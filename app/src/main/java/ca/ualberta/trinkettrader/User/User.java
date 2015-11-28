@@ -297,7 +297,13 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      */
     @Override
     public <T extends ElasticStorable> void onSearchResult(T result) {
-        Log.i("RETURNED!", ((User)result).getProfile().getName().toString());
+        User returned = (User) result;
+        LoggedInUser.getInstance().setProfile(returned.getProfile());
+        LoggedInUser.getInstance().setTrackedFriends(returned.getTrackedFriendsList());
+        LoggedInUser.getInstance().setFriendsList(returned.getFriendsList());
+        LoggedInUser.getInstance().setInventory(returned.getInventory());
+        LoggedInUser.getInstance().setNotificationManager(returned.getNotificationManager());
+        LoggedInUser.getInstance().setTradeManager(returned.getTradeManager());
     }
 
 
