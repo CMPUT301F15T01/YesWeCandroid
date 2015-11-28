@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Inventory.Trinket;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -44,7 +45,7 @@ import ca.ualberta.trinkettrader.R;
  * details with the AddOrEditTrinketActivity.  If the trinket has photos attached to it those will
  * be displayed, too.
  */
-public class TrinketDetailsActivity extends AppCompatActivity implements Observer {
+public class TrinketDetailsActivity extends Activity implements Observer {
 
 
     private TextView name;

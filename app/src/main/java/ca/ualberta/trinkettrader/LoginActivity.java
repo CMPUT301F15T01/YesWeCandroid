@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -42,7 +43,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  * Activity that allows users to log in with email. Verifies that the email is of valid format
  * and loads the saved user data if the User already has a UserProfile.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, Observer {
+public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>, Observer {
 
     private AutoCompleteTextView emailTextView;
     private Button loginButton;

@@ -61,7 +61,7 @@ import ca.ualberta.trinkettrader.R;
  * values.  A photo can be attached to the trinket to show what the trinket looks like.  This photo
  * can be taken from the phone's camera or gallery.
  */
-public class AddOrEditTrinketActivity extends AppCompatActivity implements Observer {
+public class AddOrEditTrinketActivity extends Activity implements Observer {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int SELECT_PICTURE = 2;

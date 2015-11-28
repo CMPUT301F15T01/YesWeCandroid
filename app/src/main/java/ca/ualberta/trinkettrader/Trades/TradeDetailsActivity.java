@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -31,7 +32,7 @@ import ca.ualberta.trinkettrader.R;
  * This screen will appear when a trade is clicked in the user's current trades list
  * or past trades list.
  */
-public class TradeDetailsActivity extends AppCompatActivity implements Observer {
+public class TradeDetailsActivity extends Activity implements Observer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

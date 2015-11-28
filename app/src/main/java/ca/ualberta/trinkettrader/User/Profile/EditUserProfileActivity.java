@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.User.Profile;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +32,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  * Activity to edit and append to the current user's UserProfile instance.
  * This allows edits to the User's personal information.
  */
-public class EditUserProfileActivity extends AppCompatActivity implements Observer {
+public class EditUserProfileActivity extends Activity implements Observer {
 
 
     private EditUserProfileController controller;

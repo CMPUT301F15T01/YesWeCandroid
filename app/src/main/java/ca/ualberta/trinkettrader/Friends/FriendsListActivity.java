@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Friends;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -39,7 +40,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  * and choose whether to track the friend, or to remove them.
  */
 
-public class FriendsListActivity extends AppCompatActivity implements Observer {
+public class FriendsListActivity extends Activity implements Observer {
 
     private Button findFriendsButton;
     private EditText findFriendTextField;
