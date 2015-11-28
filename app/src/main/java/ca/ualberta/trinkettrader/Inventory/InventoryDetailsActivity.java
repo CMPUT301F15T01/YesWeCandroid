@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Inventory;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  * Android activity for displaying the details of a user's inventory.  Some of the inventory's details
  * are displayed statically, such as the number of items in it.
  */
-public class InventoryDetailsActivity extends AppCompatActivity implements Observer {
+public class InventoryDetailsActivity extends Activity implements Observer {
 
     TextView numItems;
 

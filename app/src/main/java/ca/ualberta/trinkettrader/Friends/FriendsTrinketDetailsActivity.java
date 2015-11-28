@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Friends;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,7 +23,7 @@ import android.widget.TextView;
 
 import ca.ualberta.trinkettrader.R;
 
-public class FriendsTrinketDetailsActivity extends AppCompatActivity {
+public class FriendsTrinketDetailsActivity extends Activity {
 
     FriendsTrinketDetailsController controller;
     private TextView name;

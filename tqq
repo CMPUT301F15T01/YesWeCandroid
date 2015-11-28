@@ -1,0 +1,80 @@
+[1mdiff --git a/app/src/main/java/ca/ualberta/trinkettrader/Elastic/ElasticStorable.java b/app/src/main/java/ca/ualberta/trinkettrader/Elastic/ElasticStorable.java[m
+[1mindex 6e85017..3f4faeb 100644[m
+[1m--- a/app/src/main/java/ca/ualberta/trinkettrader/Elastic/ElasticStorable.java[m
+[1m+++ b/app/src/main/java/ca/ualberta/trinkettrader/Elastic/ElasticStorable.java[m
+[36m@@ -17,6 +17,7 @@[m [mpackage ca.ualberta.trinkettrader.Elastic;[m
+ import android.util.Log;[m
+ [m
+ import com.google.gson.Gson;[m
+[32m+[m[32mimport com.google.gson.internal.LinkedTreeMap;[m
+ import com.google.gson.reflect.TypeToken;[m
+ [m
+ import org.apache.http.HttpResponse;[m
+[36m@@ -34,6 +35,7 @@[m [mimport java.io.InputStreamReader;[m
+ import java.io.StringWriter;[m
+ import java.lang.reflect.Type;[m
+ import java.util.ArrayList;[m
+[32m+[m[32mimport java.util.List;[m
+ [m
+ /**[m
+  * Methods using HTTPRequest in this class are taken from AndroidElasticSearch[m
+[36m@@ -49,6 +51,14 @@[m [mpublic abstract class ElasticStorable {[m
+     public abstract String getId();[m
+ [m
+     /**[m
+[32m+[m[32m     * Method called after searchOnNetwork gets a response. This method should[m
+[32m+[m[32m     * be overridden to do something with the result.[m
+[32m+[m[32m     *[m
+[32m+[m[32m     * @param result result of searchOnNetwork[m
+[32m+[m[32m     */[m
+[32m+[m[32m    public abstract void onSearchResult(List<ElasticStorable> result);[m
+[32m+[m
+[32m+[m[32m    /**[m
+      * Save this object on the elasticsearch server.[m
+      */[m
+     public void saveToNetwork() throws IOException {[m
+[36m@@ -72,7 +82,6 @@[m [mpublic abstract class ElasticStorable {[m
+         thread.start();[m
+     }[m
+ [m
+[31m-[m
+     /**[m
+      * Searches for ElasticStorable objects on the network matching the attribute and attribute[m
+      * value pairs. Calls onSearchResult with the results when the search completes.[m
+[36m@@ -95,7 +104,7 @@[m [mpublic abstract class ElasticStorable {[m
+             @Override[m
+             public void run() {[m
+                 try {[m
+[31m-                    ArrayList<ElasticStorable> result = new ArrayList<>();[m
+[32m+[m[32m                    List<ElasticStorable> result = new ArrayList<>();[m
+                     HttpResponse response = httpClient.execute(searchRequest);[m
+                     Log.i("HttpResponse", response.getStatusLine().toString());[m
+ [m
+[36m@@ -106,6 +115,10 @@[m [mpublic abstract class ElasticStorable {[m
+                     for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {[m
+                         result.add(hit.getSource());[m
+                     }[m
+[32m+[m[32m                    for(ElasticStorable e: result){[m
+[32m+[m[32m                        Log.i("Item", e.toString());[m
+[32m+[m[32m                    }[m
+[32m+[m[32m                    Log.i("result-type", result.getClass().toString());[m
+                     onSearchResult(result);[m
+                 } catch (IOException e) {[m
+                     e.printStackTrace();[m
+[36m@@ -115,16 +128,6 @@[m [mpublic abstract class ElasticStorable {[m
+         thread.start();[m
+     }[m
+ [m
+[31m-[m
+[31m-[m
+[31m-    /**[m
+[31m-     * Method called after searchOnNetwork gets a response. This method should[m
+[31m-     * be overridden to do something with the result.[m
+[31m-     *[m
+[31m-     * @param result result of searchOnNetwork[m
+[31m-     */[m
+[31m-    public abstract void onSearchResult(ArrayList<ElasticStorable> result);[m
+[31m-[m
+     /**[m
+      * This method deletes this object from the elasticsearch server. This[m
+      * should be called when the object is no longer needed anywhere.[m

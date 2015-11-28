@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Friends;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,7 +34,7 @@ import ca.ualberta.trinkettrader.User.User;
  * such as their username, name, etc. It also displays whether the friend is currently tracked,
  */
 
-public class FriendsProfileActivity extends AppCompatActivity implements Observer {
+public class FriendsProfileActivity extends Activity implements Observer {
 
     private User friend;
     private Button removeFriendButton;

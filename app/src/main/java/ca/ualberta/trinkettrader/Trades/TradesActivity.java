@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +42,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  * not be shown in the displayed list.  To view past trades, the <b>Past Trades</b> button
  * on the screen can be clicked.
  */
-public class TradesActivity extends AppCompatActivity implements Observer {
+public class TradesActivity extends Activity implements Observer {
 
     private Button pastTradesButton;
     private Button createTradeButton;

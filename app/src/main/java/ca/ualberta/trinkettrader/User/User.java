@@ -15,8 +15,11 @@
 package ca.ualberta.trinkettrader.User;
 
 import android.location.Location;
+import android.util.Base64;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
@@ -279,7 +282,8 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
 
     @Override
     public String getId() {
-        return this.profile.getEmail();
+        //Dark Knight; http://stackoverflow.com/questions/19743851/base64-java-encode-and-decode-a-string; 2015-11-28
+        return Base64.encodeToString(this.profile.getEmail().getBytes(), 4);
     }
 
     @Override
@@ -294,10 +298,16 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      * @param result result of searchOnNetwork
      */
     @Override
-    public void onSearchResult(ArrayList<ElasticStorable> result) {
-        //if there is anything, save it.
-        //other wise, do nothing?
+    public <T extends ElasticStorable> void onSearchResult(T result) {
+        User returned = (User) result;
+        this.setProfile(returned.getProfile());
+        this.setTrackedFriends(returned.getTrackedFriendsList());
+        this.setFriendsList(returned.getFriendsList());
+        this.setInventory(returned.getInventory());
+        this.setNotificationManager(returned.getNotificationManager());
+        this.setTradeManager(returned.getTradeManager());
     }
+
 
     public Location getDefaultLocation() {
         return this.profile.getDefaultLocation();

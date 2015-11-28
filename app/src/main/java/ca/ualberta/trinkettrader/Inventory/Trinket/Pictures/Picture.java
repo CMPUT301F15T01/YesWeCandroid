@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
@@ -101,7 +102,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
                 return filename;
             }
         });
-        this.searchOnNetwork(postParameters, this);
+        this.searchOnNetwork(postParameters, Picture.class);
     }
 
     /**
@@ -223,8 +224,8 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      * @param result result of searchOnNetwork
      */
     @Override
-    public void onSearchResult(ArrayList<ElasticStorable> result) {
-        Picture picture = (Picture) result.get(0);
+    public <T extends ElasticStorable> void onSearchResult(T result) {
+        Picture picture = (Picture) result;
         this.file.delete();
         try {
             this.file = directoryManager.compressPicture(this.filename, picture.getPictureByteArray());
@@ -233,6 +234,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
             e.printStackTrace();
         }
     }
+
 
     /**
      * Returns the byte array containing the compressed picture.
