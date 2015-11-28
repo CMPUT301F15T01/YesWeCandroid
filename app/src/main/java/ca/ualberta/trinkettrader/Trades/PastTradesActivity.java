@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
@@ -34,7 +35,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  * and show the relevant trade information for that trade (ie. items offered, quanity of
  * items offered).
  */
-public class PastTradesActivity extends AppCompatActivity implements Observer {
+public class PastTradesActivity extends Activity implements Observer {
     ListView pastTradesListView;
     private PastTradesController controller;
     private ArrayAdapter<Trade> pastTradesAdapter;

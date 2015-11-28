@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Inventory;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -42,7 +43,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  * the user's inventory.  Any trinket in the inventory can be clicked on which connects to the
  * AddOrEditTrinketActivity, from which the user can view and edit the trinket's details.
  */
-public class InventoryActivity extends AppCompatActivity implements Observer {
+public class InventoryActivity extends Activity implements Observer {
 
     private ArrayAdapter<Trinket> trinketArrayAdapter;
     private Button addItemButton;

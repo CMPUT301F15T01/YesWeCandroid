@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Friends;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +35,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  * Items in the friend's inventory can be clicked to view details of the item. This will link
  * to another activity.
  */
-public class FriendsInventoryActivity extends AppCompatActivity {
+public class FriendsInventoryActivity extends Activity {
 
     private ArrayAdapter<Trinket> trinketArrayAdapter;
     private Inventory inventory;

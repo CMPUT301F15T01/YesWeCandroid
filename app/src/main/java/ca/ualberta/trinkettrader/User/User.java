@@ -15,8 +15,11 @@
 package ca.ualberta.trinkettrader.User;
 
 import android.location.Location;
+import android.util.Base64;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
@@ -279,7 +282,13 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
 
     @Override
     public String getId() {
-        return this.profile.getEmail();
+        // Vasyl Keretsman; http://stackoverflow.com/questions/15429257/how-to-convert-byte-array-to-hexstring-in-java; 2015-11-28
+        final StringBuilder builder = new StringBuilder();
+        for (byte b : this.profile.getEmail().getBytes()) {
+            builder.append(String.format("%02x", b));
+        }
+        return builder.toString();
+
     }
 
     @Override
@@ -294,10 +303,16 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      * @param result result of searchOnNetwork
      */
     @Override
-    public void onSearchResult(ArrayList<ElasticStorable> result) {
-        //if there is anything, save it.
-        //other wise, do nothing?
+    public <T extends ElasticStorable> void onSearchResult(T result) {
+        User returned = (User) result;
+        this.setProfile(returned.getProfile());
+        this.setTrackedFriends(returned.getTrackedFriendsList());
+        this.setFriendsList(returned.getFriendsList());
+        this.setInventory(returned.getInventory());
+        this.setNotificationManager(returned.getNotificationManager());
+        this.setTradeManager(returned.getTradeManager());
     }
+
 
     public Location getDefaultLocation() {
         return this.profile.getDefaultLocation();

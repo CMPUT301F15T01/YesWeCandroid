@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader.Trades;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.NotificationManager;
@@ -208,6 +209,8 @@ public class TradeManager extends ElasticStorable {
      * @param result result of searchOnNetwork
      */
     @Override
-    public void onSearchResult(ArrayList<ElasticStorable> result) {
+    public <T extends ElasticStorable> void onSearchResult(T result) {
+
     }
+
 }

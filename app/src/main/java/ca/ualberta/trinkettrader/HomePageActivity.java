@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,7 +27,7 @@ import java.util.Observer;
  * Activity serving as the home page of the app. This should be navigated to
  * immediately after having logged in.
  */
-public class HomePageActivity extends AppCompatActivity implements Observer {
+public class HomePageActivity extends Activity implements Observer {
 
     private Button friendsButton;
     private Button inventoryButton;

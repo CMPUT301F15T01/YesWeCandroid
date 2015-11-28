@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.User.Profile;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -33,7 +34,7 @@ import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.Trades.TradesActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
-public class UserProfileActivity extends AppCompatActivity implements Observer {
+public class UserProfileActivity extends Activity implements Observer {
 
     private Button editUserProfileButton;
     private Button tradesButton;
