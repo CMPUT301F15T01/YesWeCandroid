@@ -17,7 +17,18 @@ package ca.ualberta.trinkettrader.Friends.TrackedFriends;
 import ca.ualberta.trinkettrader.Friends.FriendsList;
 
 /**
- * Subclass of current user's FriendList that contains subset of Friends that the current user is tracking.
+ * Subclass of current user's {@link FriendsList FriendsList} that contains subset of Friends that the
+ * current user is tracking.  When the current user chooses to track a friend in the
+ * {@link ca.ualberta.trinkettrader.Friends.FriendsProfileActivity FriendsProfileActivity} then that
+ * {@link ca.ualberta.trinkettrader.Friends.Friend Friend} is added to the current user's TrackedFriendsList.
+ * Note that the tracked friend will now be in both the user's FriendsList and trackedFriendsList.  The
+ * current user can also remove friends from their TrackedFriendsList by setting that friend's tracked status
+ * to "untracked" in the friend's FriendsProfileActivity, in the event of which that friend will be removed
+ * from the TrackedFriendsList but will remain in the FriendsList.  Deleting the friend altogether (also done
+ * in he FriendsProfileActivity) will remove the friend from both the FriendsList and TrackedFriendsList.
+ *
+ * This class has exactly the same attributes and method implementations as FriendsList, and exists in
+ * order to better organise a user's friends as tracked and untracked.
  */
 
 public class TrackedFriendsList extends FriendsList {
