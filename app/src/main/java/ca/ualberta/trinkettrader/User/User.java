@@ -282,8 +282,13 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
 
     @Override
     public String getId() {
-        //Dark Knight; http://stackoverflow.com/questions/19743851/base64-java-encode-and-decode-a-string; 2015-11-28
-        return Base64.encodeToString(this.profile.getEmail().getBytes(), 4);
+        // Vasyl Keretsman; http://stackoverflow.com/questions/15429257/how-to-convert-byte-array-to-hexstring-in-java; 2015-11-28
+        final StringBuilder builder = new StringBuilder();
+        for (byte b : this.profile.getEmail().getBytes()) {
+            builder.append(String.format("%02x", b));
+        }
+        return builder.toString();
+
     }
 
     @Override
