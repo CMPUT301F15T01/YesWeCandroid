@@ -51,8 +51,9 @@ public class TradeDetailsActivity extends AppCompatActivity implements Observer 
         setContentView(R.layout.activity_trade_details);
        // friendInTradeTextView = (TextView) findViewById(R.id.tradeWithFriendName);
         statusOfTradeTextView = (TextView) findViewById(R.id.tradeStatus);
-       // offeredItemInTradeListView = (ListView) findViewById(R.id.offeredItems);
-        //requestedItemInTradeListView = (ListView) findViewById(R.id.requestedItemsy);
+        //TODO if stuff breaks comment this
+        offeredItemInTradeListView = (ListView) findViewById(R.id.offeredItems);
+        requestedItemInTradeListView = (ListView) findViewById(R.id.requestedItemsy);
 
         trade = ApplicationState.getInstance().getClickedTrade();
         controller = new TradeDetailsController(this);
