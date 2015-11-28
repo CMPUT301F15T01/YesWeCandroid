@@ -24,9 +24,11 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 /**
  * Class for describing one kind of trinket that a user has.  A trinket is either public or private
  * (accessibility), has a name, description, quantity, quality, belongs to one of 10 categories, and
- * may have photos attached to show what it looks like.  A user represents having more than one of
- * the same kind of trinket by setting the item's quantity (for example, if they have three identical
- * blue bracelets.  The details of a trinket are set or edited from the AddOrEditTrinketActivity.
+ * may have photos attached to show what it looks like.  The possible categories of a Trinket can be found
+ * in the app's arrays.xml resource and are: Anklet, Barrett, Belt, Bracelet, Brooch, Earrings, Headband,
+ * Necklace, Ring, Tiara.  A user represents having more than one of the same kind of trinket by setting
+ * the item's quantity (for example, if they have three identical blue bracelets.  The properties
+ * of a trinket are set or edited from the AddOrEditTrinketActivity.
  */
 public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
@@ -97,7 +99,11 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Return trinket's accessibility as a string.  Will be either "public" or "private".  By default
-     * this value is "public".
+     * this value is "public".  If a Trinket's accessibility is public then it
+     * can be viewed by other user's in the system when they view the current user's inventory
+     * (with the {@link ca.ualberta.trinkettrader.Friends.FriendsInventoryActivity FriendsInventoryActivity}).
+     * If the Trinket is "private", then other users cannot view it and it will only be viewable to the
+     * current user.
      *
      * @return String - string describing trinket's accessibility as either "public" or "private"
      */
@@ -105,10 +111,13 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
         return accessibility;
     }
 
-    // TODO:  What do public and private mean
-
     /**
-     * Sets trinket's accessibility,  Must be either "public" or "private".
+     * Sets trinket's accessibility.  Must be either "public" or "private".  If a Trinket's accessibility
+     * is set to public then it can be viewed by other user's in the system when they view the current
+     * user's inventory (with the {@link ca.ualberta.trinkettrader.Friends.FriendsInventoryActivity FriendsInventoryActivity}).
+     * If the Trinket is "private", then other users cannot view it and it will only be viewable to the
+     * current user.  This method is invoked when the user toggles a Trinket's availability setting in the
+     * {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}.
      *
      * @param accessibility - string describing desired accessibility for the trinket, either "public"
      *                      or "private"
@@ -119,17 +128,24 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Return trinket's category as a string.  The trinket can be classified as one of 10 categories.
-     * The possible categories are defined in the arrays.xml resource.
+     * The possible categories of a Trinket can be found in the app's arrays.xml resource
+     * and are: Anklet, Barrett, Belt, Bracelet, Brooch, Earrings, Headband, Necklace, Ring, or Tiara.
+     * This method is invoked to populate the Category field in the {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}
+     * when a Trinket is being edited.  It is also used to find Trinkets of the relevant category when
+     * searching an inventory by category.
      *
-     * @return String - string of which category the trinket is
+     * @return String - string of which category the trinket is.  Either Anklet, Barrett, Belt, Bracelet,
+     * Brooch, Earrings, Headband, Necklace, Ring, or Tiara.
      */
     public String getCategory() {
         return category;
     }
 
     /**
-     * Sets trinket's category as one of 10 categories.  The possible categories are defined in the
-     * arrays.xml resource.
+     * Sets trinket's category as one of 10 categories.  The possible categories of a Trinket can be found
+     * in the app's arrays.xml resource and are: Anklet, Barrett, Belt, Bracelet, Brooch, Earrings, Headband,
+     * Necklace, Ring, or Tiara.  This method is invoked when the user sets or changes a Trinket's category in the
+     * {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}.
      *
      * @param category - string naming which category the trinket belongs to
      */
@@ -138,8 +154,13 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns trinket's description.  The description gives extra information about the trinket and
-     * is set by the user.  There is no limit to the description's length.
+     * Returns trinket's description.  The description is free-form text that gives extra information about the trinket and
+     * is set by the user.  For example, a user could set the description of a "Red Bracelet" Trinket as
+     * "A deep crimson red bracelet.  The bracelet is made of bakelite and is rather heavy.  It was bequeathed to
+     * me by my great-grandmother on her deathbed.  May be cursed."  The description is an optional field and may be left blank.
+     *
+     * This method is invoked to populate the Description field in the {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}
+     * when a Trinket is being edited.
      *
      * @return String - string describing the trinket
      */
@@ -147,12 +168,16 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
         return description;
     }
 
-    // TODO:  Give an example of a description
-
     /**
      * Sets trinket's description.  The description gives extra information about the trinket and
-     * is set by the user in a text field in the AddOrEditTrinketActivity.  There is no limit to the
-     * description's length.
+     * is set by the user in a text field in the AddOrEditTrinketActivity.  For example, a user could
+     * set the description of a "Red Bracelet" Trinket as "A deep crimson red bracelet.  The
+     * bracelet is made of bakelite and is rather heavy.  It was bequeathed to me by my great-grandmother
+     * on her deathbed.  May be cursed."
+     *
+     * There is no limit to the description's length.  The description is an optional field and can be left blank.
+     * This method is invoked when the user sets or changes a Trinket's description in the
+     * {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}.
      *
      * @param description - string describing the trinket
      */
@@ -161,7 +186,12 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns trinket's name.  The name is set by the user to identify the trinket.
+     * Returns trinket's name.  The name is set by the user to identify the trinket.  The Trinket' name
+     * can be any text the user wishes, but should ideally be a concise summary of what the trinket is.
+     * For example, a silver tiara with no jewels on it could be named "Plain Silver Tiara".
+     *
+     * This method is invoked to populate the Name field in the {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}
+     * when a Trinket is being edited.
      *
      * @return String - string gives the trinket's name
      */
@@ -171,7 +201,13 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets trinket's name.  The trinket's name is its main identifier, which is displayed to
-     * represent the trinket in inventories, and by which the trinket can be searched.
+     * represent the trinket in inventories, and by which the trinket can be searched.  The Trinket' name
+     * can be any text the user wishes, but should ideally be a concise summary of what the trinket is.
+     * For example, a silver tiara with no jewels on it could be named "Plain Silver Tiara".  There is
+     * no limit to the name's length.
+     *
+     * This method is invoked when the user sets or changes a Trinket's name in the
+     * {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}.
      *
      * @param name - string to set as the trinket's name
      */
