@@ -110,12 +110,14 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
     }
 
 
+    // TODO: When is this called?
     /**
-     * Searches for a Friend in the FriendsList using the specified username.
-     * Returns the Friend if the username is found; otherwise, returns <code>null</code>
+     * Searches for a Friend in the FriendsList using the specified username (the friends email address).
+     * Returns the Friend object if a friend with that email address is found in the FriendsList; otherwise,
+     * returns <code>null</code>
      *
-     * @param username the username of the friend to be searched
-     * @return the Friend with the specified username if found; otherwise, null
+     * @param username - the username of the friend to be searched
+     * @return Friend - the Friend with the specified username if found; otherwise, null
      */
     public Friend getFriendByUsername(String username) {
         for (Friend f : this) {
@@ -127,12 +129,16 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
     }
 
 
+    // TODO: When is this called?  Testing only?
     /**
-     * Searches for the index of the Friend in the FriendsList using the specified username.
-     * Returns the index if the username is found; otherwise, returns <code>null</code>
+     * Searches for the index of the Friend in the FriendsList using the specified username (the friend's
+     * email address).  Returns the index of the Friend with that email address in the FriendsList if
+     * a Friend with that email address is found in the FriendsList; otherwise, returns <code>null</code>.
+     * Friends are ordered int the FriendsList in the order they are added, with the Friend that is added
+     * first at index 0.
      *
-     * @param username the username of the friend to be searched
-     * @return the Friend with the specified username if found; otherwise, null
+     * @param username - the username of the friend to be searched
+     * @return Integer - the index in the FriendsList of the Friend with the specified email address if found; otherwise, null
      */
     public Integer getFriendIndexByUsername(String username) {
         for (int i = 0; i < this.size(); i++) {
