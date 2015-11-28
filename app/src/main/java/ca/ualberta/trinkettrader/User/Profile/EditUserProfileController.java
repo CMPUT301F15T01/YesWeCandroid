@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.User.Profile;
 
+import android.location.Location;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -43,28 +44,37 @@ public class EditUserProfileController {
             //NOW: Controller takes data from activity, updates UserProfile in LoggedInUser
             //UserProfile (observable) updates its observer (DisplayProfileActivity)
 
-            EditText name = (EditText) activity.findViewById(R.id.edit_name);
+            CheckBox photoDownload = (CheckBox) activity.findViewById(R.id.photo_download_checkbox);
             EditText address = (EditText) activity.findViewById(R.id.edit_address);
             EditText city = (EditText) activity.findViewById(R.id.edit_city);
-            EditText postalCode = (EditText) activity.findViewById(R.id.edit_postal_code);
+            EditText latitude = (EditText) activity.findViewById(R.id.latitude);
+            EditText longitude = (EditText) activity.findViewById(R.id.longitude);
+            EditText name = (EditText) activity.findViewById(R.id.edit_name);
             EditText phoneNum = (EditText) activity.findViewById(R.id.edit_phone_number);
-            CheckBox photoDownload = (CheckBox) activity.findViewById(R.id.photo_download_checkbox);
+            EditText postalCode = (EditText) activity.findViewById(R.id.edit_postal_code);
 
-            String _name = name.getText().toString();
+            Boolean photoDownloadEnabled = photoDownload.isChecked();
+            Double _latitude = Double.valueOf(latitude.getText().toString());
+            Double _longitude = Double.valueOf(longitude.getText().toString());
             String _address = address.getText().toString();
             String _city = city.getText().toString();
-            String _postalCode = postalCode.getText().toString();
+            String _name = name.getText().toString();
             String _phoneNum = phoneNum.getText().toString();
-            Boolean photoDownloadEnabled = photoDownload.isChecked();
+            String _postalCode = postalCode.getText().toString();
 
-            //Set the LoggedInUser with new data
+            // set the LoggedInUser with new data
             UserProfile userProfile = LoggedInUser.getInstance().getProfile();
-            userProfile.setName(_name);
             userProfile.getContactInfo().setAddress(_address);
-            userProfile.setCity(_city);
-            userProfile.setPostalCode(_postalCode);
             userProfile.getContactInfo().setPhoneNumber(_phoneNum);
             userProfile.setArePhotosDownloadable(photoDownloadEnabled);
+            userProfile.setCity(_city);
+            userProfile.setName(_name);
+            userProfile.setPostalCode(_postalCode);
+
+            Location location = new Location("this");
+            location.setLatitude(_latitude);
+            location.setLongitude(_longitude);
+            userProfile.setDefaultLocation(new Location("this"));
 
             LoggedInUser.getInstance().saveInFile(activity.getBaseContext());
 
@@ -75,7 +85,8 @@ public class EditUserProfileController {
                     e.printStackTrace();
                 }
             }
-            //exit the activity
+
+            // exit the activity
             activity.finish();
         }
     };

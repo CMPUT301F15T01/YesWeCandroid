@@ -220,6 +220,10 @@ public class TrinketDetailsActivity extends AppCompatActivity implements Observe
         controller.addYourTrinketToTradeButtonOnClick();
     }
 
+    public void openMapsOnTrinketOnClick(View view) {
+        controller.openMapsOnTrinketOnClick();
+    }
+
     /**
      * This method is called if the specified {@code Observable} object's
      * {@code notifyObservers} method is called (because the {@code Observable}

@@ -161,6 +161,11 @@ public class TradeManager extends ElasticStorable {
     // TODO think that one is already instantiated in User class.  need to check.
 
     @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
     public String getResourceUrl() {
         return RESOURCE_URL;
     }
@@ -173,11 +178,6 @@ public class TradeManager extends ElasticStorable {
     @Override
     public String getSearchUrl() {
         return SEARCH_URL;
-    }
-
-    @Override
-    public String getTag() {
-        return TAG;
     }
 
     /**

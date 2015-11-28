@@ -199,6 +199,11 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     // TODO may remodel after profile page with updatable fields
 
     @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
     public String getResourceUrl() {
         return RESOURCE_URL;
     }
@@ -212,11 +217,6 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     @Override
     public String getSearchUrl() {
         return SEARCH_URL;
-    }
-
-    @Override
-    public String getTag() {
-        return TAG;
     }
 
     /**

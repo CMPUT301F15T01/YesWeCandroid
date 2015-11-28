@@ -14,6 +14,8 @@
 
 package ca.ualberta.trinkettrader.User;
 
+import android.location.Location;
+
 import java.util.ArrayList;
 import java.util.Observer;
 
@@ -36,14 +38,13 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/";
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/_search";
     private static final String TAG = "User";
-
+    protected Boolean needToSave;
     protected FriendsList friendsList;
     protected Inventory inventory;
     protected NotificationManager notificationManager;
     protected TrackedFriendsList trackedFriendsList;
     protected TradeManager tradeManager;
     protected UserProfile profile;
-    protected Boolean needToSave;
     private ArrayList<Observer> observers;
 
     /**
@@ -267,6 +268,11 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
     public String getResourceUrl() {
         return RESOURCE_URL;
     }
@@ -281,11 +287,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         return SEARCH_URL;
     }
 
-    @Override
-    public String getTag() {
-        return TAG;
-    }
-
     /**
      * Method called after searchOnNetwork gets a response. This method should
      * be overridden to do something with the result.
@@ -298,4 +299,11 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         //other wise, do nothing?
     }
 
+    public Location getDefaultLocation() {
+        return this.profile.getDefaultLocation();
+    }
+
+    public void setDefaultLocation(Location defaultLocation) {
+        this.profile.setDefaultLocation(defaultLocation);
+    }
 }

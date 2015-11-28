@@ -50,13 +50,16 @@ public class EditUserProfileActivity extends AppCompatActivity implements Observ
             EditText city = (EditText) findViewById(R.id.edit_city);
             EditText postalCode = (EditText) findViewById(R.id.edit_postal_code);
             EditText phoneNum = (EditText) findViewById(R.id.edit_phone_number);
+            EditText latitude = (EditText) findViewById(R.id.latitude);
+            EditText longitude = (EditText) findViewById(R.id.longitude);
 
             name.setText(LoggedInUser.getInstance().getProfile().getName());
             address.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getAddress());
             city.setText(LoggedInUser.getInstance().getProfile().getCity());
             postalCode.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getPostalCode());
             phoneNum.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getPhoneNumber());
-
+            latitude.setText(Double.toString(LoggedInUser.getInstance().getProfile().getDefaultLocation().getLatitude()));
+            longitude.setText(Double.toString(LoggedInUser.getInstance().getProfile().getDefaultLocation().getLongitude()));
         }
     };
 

@@ -22,7 +22,6 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -31,7 +30,6 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.StringWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -43,10 +41,7 @@ public abstract class ElasticStorable {
     // emmby; http://stackoverflow.com/questions/1626667/how-to-use-parcel-in-android; 2015-11-26
     // joshua2ua; https://github.com/joshua2ua/AndroidElasticSearch; 2015-11-26
 
-    public abstract String getSearchUrl();
     public abstract String getTag();
-    public abstract String getResourceUrl();
-    public abstract String getId();
 
     /**
      * Save this object on the elasticsearch server.
@@ -72,6 +67,9 @@ public abstract class ElasticStorable {
         thread.start();
     }
 
+    public abstract String getResourceUrl();
+
+    public abstract String getId();
 
     /**
      * Searches for ElasticStorable objects on the network matching the attribute and attribute
@@ -99,7 +97,8 @@ public abstract class ElasticStorable {
                     HttpResponse response = httpClient.execute(searchRequest);
                     Log.i("HttpResponse", response.getStatusLine().toString());
 
-                    Type searchResponseType = new TypeToken<SearchResponse<T>>() {}.getType();
+                    Type searchResponseType = new TypeToken<SearchResponse<T>>() {
+                    }.getType();
                     InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
                     SearchResponse<ElasticStorable> esResponse = new Gson().fromJson(streamReader, searchResponseType);
 
@@ -115,7 +114,11 @@ public abstract class ElasticStorable {
         thread.start();
     }
 
+    public String composeSearchRequest(String uri, NameValuePair pair) {
+        return uri + "?q=" + pair.getName() + ":" + pair.getValue();
+    }
 
+    public abstract String getSearchUrl();
 
     /**
      * Method called after searchOnNetwork gets a response. This method should
@@ -148,8 +151,5 @@ public abstract class ElasticStorable {
             }
         });
         thread.start();
-    }
-    public String composeSearchRequest(String uri, NameValuePair pair){
-               return uri + "?q=" + pair.getName() + ":" + pair.getValue();
     }
 }
