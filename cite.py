@@ -23,8 +23,13 @@ def find_lines_from_file(file):
         with open(file, "r") as infile:
             data = [line.strip() for line in infile]
             for line in data:
-                if (line[0:2] == "//") and (1 <= line.count(";") <= 2):
-                    if (len(line[line.rfind(";") + 1:].strip()) == 10):
+                if line[:2] == "//":
+                    line = line[2:]
+                elif (line[:4] == "<!--") and (line[-3:] == "-->"):
+                    line = line[4:-3]
+                else:
+                    continue
+                if (1 <= line.count(";") <= 2) and (len(line[line.rfind(";") + 1:].strip()) == 10):
                         lines.append(line)
     except UnicodeDecodeError:
         pass
@@ -49,7 +54,7 @@ def main():
         print("\t\t<td nowrap=\"nowrap\">{}</td>".format(item))
     print("\t</tr>")
     for line in sorted(list(set(find_lines_from_path("{}/app/src".format(os.getcwd()))))):
-        line = line[2:].strip().split(";")
+        line = line.strip().split(";")
         if len(line) == 2:
             line = ["N/A", line[0], line[1]]
         print("\t<tr>")
