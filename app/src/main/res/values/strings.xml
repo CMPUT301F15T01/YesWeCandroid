@@ -56,5 +56,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_create_trade">CreateTradeActivity</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
