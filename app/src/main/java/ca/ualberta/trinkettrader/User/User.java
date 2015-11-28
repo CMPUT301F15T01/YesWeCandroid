@@ -21,6 +21,7 @@ import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.Friends.FriendsList;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsList;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Maps.Location;
 import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.Trades.TradeManager;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
@@ -36,14 +37,13 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/";
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/_search";
     private static final String TAG = "User";
-
+    protected Boolean needToSave;
     protected FriendsList friendsList;
     protected Inventory inventory;
     protected NotificationManager notificationManager;
     protected TrackedFriendsList trackedFriendsList;
     protected TradeManager tradeManager;
     protected UserProfile profile;
-    protected Boolean needToSave;
     private ArrayList<Observer> observers;
 
     /**
@@ -298,4 +298,11 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         //other wise, do nothing?
     }
 
+    public Location getDefaultLocation() {
+        return this.profile.getDefaultLocation();
+    }
+
+    public void setDefaultLocation(Location defaultLocation) {
+        this.profile.setDefaultLocation(defaultLocation);
+    }
 }

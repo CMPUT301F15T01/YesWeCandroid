@@ -17,6 +17,8 @@ package ca.ualberta.trinkettrader.User.Profile;
 import java.util.ArrayList;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.Inventory.Trinket.Maps.Location;
+
 /**
  * A profile class containing the User's personal information and whether photos will be
  * automatically downloaded to their device.
@@ -25,19 +27,22 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
     private Boolean arePhotosDownloadable;
+    private Boolean needToSave;
     private ContactInfo contactInfo;
+    private Location defaultLocation;
     private String email;
     private String username;
-    private Boolean needToSave;
+
 
     /**
      * UserProfile Constructor for generating new attribute classes
      */
     public UserProfile() {
-        this.email = "";
-        this.contactInfo = new ContactInfo();
-        this.needToSave = Boolean.TRUE;
         this.arePhotosDownloadable = Boolean.FALSE;
+        this.contactInfo = new ContactInfo();
+        this.defaultLocation = new Location(0.0, 0.0);
+        this.email = "";
+        this.needToSave = Boolean.TRUE;
     }
 
     /**
@@ -223,5 +228,13 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      */
     public Boolean getNeedToSave() {
         return needToSave | this.contactInfo.getNeedToSave();
+    }
+
+    public Location getDefaultLocation() {
+        return defaultLocation;
+    }
+
+    public void setDefaultLocation(Location defaultLocation) {
+        this.defaultLocation = defaultLocation;
     }
 }

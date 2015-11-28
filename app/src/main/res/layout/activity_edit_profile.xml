@@ -63,8 +63,8 @@
         android:id="@+id/photo_download_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/edit_phone_number"
-        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/edit_latitude"
+        android:layout_below="@+id/edit_longitude"
         android:text="Photo Download Enabled"/>
 
     <TextView
@@ -117,5 +117,45 @@
         android:layout_alignParentStart="true"
         android:paddingBottom="10dp"
         android:text="Phone Number"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+    <EditText
+        android:id="@+id/edit_latitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/edit_phone_number"
+        android:layout_below="@+id/edit_phone_number"
+        android:ems="10"
+        android:hint="Longitude"
+        android:inputType="numberSigned"/>
+
+    <EditText
+        android:id="@+id/edit_longitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/photo_download_checkbox"
+        android:layout_below="@+id/edit_latitude"
+        android:ems="10"
+        android:hint="Latitude"
+        android:inputType="numberSigned"/>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/edit_latitude"
+        android:layout_alignParentStart="true"
+        android:paddingBottom="10dp"
+        android:text="Latitude"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/photo_download_checkbox"
+        android:layout_alignParentStart="true"
+        android:paddingBottom="10dp"
+        android:text="Longitude"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 </RelativeLayout>

@@ -74,6 +74,8 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
     private Button takePictureButton;
     private CheckBox trinketAccessibility;
     private EditText trinketDescription;
+    private EditText trinketLatitude;
+    private EditText trinketLongitude;
     private EditText trinketName;
     private EditText trinketQuantity;
     private HorizontalListView gallery;
@@ -115,6 +117,9 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
         this.trinketName = (EditText) findViewById(R.id.name_text);
         this.trinketQuality = (Spinner) findViewById(R.id.quality_spinner);
         this.trinketQuantity = (EditText) findViewById(R.id.quantity_text);
+        this.trinketLatitude = (EditText) findViewById(R.id.latitude);
+        this.trinketLongitude = (EditText) findViewById(R.id.longitude);
+
 
         this.pictures = new ArrayList<>();
 
@@ -130,6 +135,8 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             this.trinketName.setText(edited.getName());
             this.trinketQuality.setSelection(new ArrayList<>(Arrays.asList(this.getResources().getStringArray(R.array.spinner_qualities))).indexOf(edited.getQuality()));
             this.trinketQuantity.setText(edited.getQuantity());
+            this.trinketLatitude.setText(edited.getLocation().getLatitude().toString());
+            this.trinketLongitude.setText(edited.getLocation().getLongitude().toString());
             for (Picture picture : edited.getPictures()) {
                 try {
                     this.controller.addPicture(picture);
@@ -410,5 +417,13 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
      */
     public Button getTakePictureButton() {
         return takePictureButton;
+    }
+
+    public EditText getTrinketLatitude() {
+        return trinketLatitude;
+    }
+
+    public EditText getTrinketLongitude() {
+        return trinketLongitude;
     }
 }
