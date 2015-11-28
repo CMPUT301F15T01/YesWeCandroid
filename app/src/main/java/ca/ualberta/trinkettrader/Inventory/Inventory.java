@@ -21,10 +21,15 @@ import java.util.Observer;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 
 /**
- * Specialized extension of the ArrayList class, which represents the inventory of a user.  An
- * inventory can only contain Trinkets.  In addition to all basic ArrayList functionality and
- * attributes, an inventory also has an attribute specifying if it needs to be saved to the device
- * for offline viewing.
+ * Specialized extension of the ArrayList class, which holds {@code Trinket Trinkets} to represent
+ * the inventory of a user.  An inventory can only contain Trinkets.  In addition to all basic ArrayList
+ * functionality and attributes, an inventory also has an attribute specifying if it needs to be saved to
+ * the device for offline viewing.  Trinkets are ordered in the Inventory in the order in which they were
+ * added, so the first Trinket added to the inventory is at position 0.
+ *
+ * Trinkets can be added to or deleted from the current user's inventory in the
+ * {@link ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity AddOrEditTrinketActivity}.
+ * The
  */
 public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinkettrader.Observable {
 
