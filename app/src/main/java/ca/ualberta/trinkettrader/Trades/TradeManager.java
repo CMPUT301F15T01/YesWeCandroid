@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader.Trades;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.NotificationManager;
@@ -33,21 +34,10 @@ public class TradeManager extends ElasticStorable {
     private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/trade/";
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/trade/_search";
     private static final String TAG = "trade";
-    /**
-     * Method called after searchOnNetwork gets a response. This method should
-     * be overridden to do something with the result.
-     *
-     * @param result result of searchOnNetwork
-     */
-    @Override
-    public <T extends ElasticStorable> void onSearchRe
 
-    @Override
-    public String
-    retur
-            EARCH_URL;
     private NotificationManager notificationManager;
     private TradeArchiver tradeArchiver;
+
     private String username;
 
     /**
@@ -58,9 +48,6 @@ public class TradeManager extends ElasticStorable {
         tradeArchiver = new TradeArchiver();
     }
 
-    // TODO think that receiver of trade proposal should be added to input. will
-    // TODO make it easier to send notifications.
-
     /**
      * Public Constructor that takes in the friend's username.
      */
@@ -69,8 +56,6 @@ public class TradeManager extends ElasticStorable {
         notificationManager = new NotificationManager();
         tradeArchiver = new TradeArchiver();
     }
-
-    // TODO pulling trades once the phone has connectivity.
 
     /**
      * Propose trade.
@@ -85,6 +70,9 @@ public class TradeManager extends ElasticStorable {
         // TODO notify trade receiver (person who did not instantiate trade)
     }
 
+    // TODO think that receiver of trade proposal should be added to input. will
+    // TODO make it easier to send notifications.
+
     /**
      * Pulls offered trades when user is online.
      * <p/>
@@ -96,6 +84,8 @@ public class TradeManager extends ElasticStorable {
     public ArrayList<Trade> pullTrades() {
         return new ArrayList<Trade>();
     }
+
+    // TODO pulling trades once the phone has connectivity.
 
     /**
      * Propose counter trade.
@@ -129,9 +119,6 @@ public class TradeManager extends ElasticStorable {
         // TODO send notification emails to both parties
     }
 
-    // TODO this could be deleted, because there is already a TradeArchiver deleteTrade method.
-    // TODO we would be calling deleteTrade.deleteTrade
-
     /**
      * Decline trade.
      * Sets status of trade to "declined", deletes trade in borrower's and
@@ -155,7 +142,9 @@ public class TradeManager extends ElasticStorable {
     public void deleteTrade(Trade trade) {
 
     }
-    // TODO think that one is already instantiated in User class.  need to check.
+
+    // TODO this could be deleted, because there is already a TradeArchiver deleteTrade method.
+    // TODO we would be calling deleteTrade.deleteTrade
 
     /**
      * Returns user's trade archiver. Trade archiver is needed to access
@@ -181,6 +170,7 @@ public class TradeManager extends ElasticStorable {
     public NotificationManager getNotificationManager() {
         return notificationManager;
     }
+    // TODO think that one is already instantiated in User class.  need to check.
 
     @Override
     public String getTag() {
@@ -195,20 +185,32 @@ public class TradeManager extends ElasticStorable {
     @Override
     public String getId() {
         return LoggedInUser.getInstance().getProfile().getUsername();
-    } getSearchUrl() {
-        return S
-        username;
     }
-}
+
+    @Override
+    public String getSearchUrl() {
+        return SEARCH_URL;
+    }
+
 
     public String getUsername() {
-        rname =
-                n username;
+        return username;
     }
 
     public void setUsername(String username) {
-        this.usesult(T result) {
+        this.username = username;
+    }
 
-        }
+
+    /**
+     * Method called after searchOnNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of searchOnNetwork
+     */
+    @Override
+    public <T extends ElasticStorable> void onSearchResult(T result) {
 
     }
+
+}

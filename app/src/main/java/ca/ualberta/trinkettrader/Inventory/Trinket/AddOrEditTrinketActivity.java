@@ -195,62 +195,7 @@ public class AddOrEditTrinketActivity extends Activity implements Observer {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
                     }
-
-  "Select Picture"), SELECT_PICTURE);
-    }
-
-    /**
-     * Method to be called after user has taken or selected a picture.
-     *
-     * @param requestCode type of request that was issued
-     * @param resultCode  state of the request's execution
-     * @param data        resulting data of the request
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            PictureDirectoryManager directoryManager = new PictureDirectoryManager(this);
-            if (requestCode == REQUEST_IMAGE_CAPTURE) {
-                try {
-                    // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
-                    this.addPicture(new Picture(new File(uri.getPath()), directoryManager));
-                } catch (IOException | PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                    throw new RuntimeException(e);
-                }
-            } else if (requestCode == SELECT_PICTURE) {
-                try {
-                    this.addPicture(new Picture(new File(getPath(data.getData())), directoryManager));
-                } catch (IOException | PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                    throw new RuntimeException(e)reInte
-            }
-            }
-        }
-    }
-
-    private void addPicture(Picture newPicture) {
-        try {
-            this.controller.addPicture(newPicture);
-            this.updatePictures();
-        } catch (IOException e) {
-            e.printStackTrace();
-
-ow new RuntimeException(e);
-        }
-    }
-
-    // mad; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05
-    private String getPath(Uri uri) {
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        if (cursor != null) {
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString;
-
- });
+                });
         builder.create().show();
     }
 
@@ -278,8 +223,7 @@ ow new RuntimeException(e);
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictu   thr
-nt, REQUEST_IMAGE_CAPTURE);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
@@ -294,8 +238,58 @@ nt, REQUEST_IMAGE_CAPTURE);
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent,
-        (colum
-n_index);
+                "Select Picture"), SELECT_PICTURE);
+    }
+
+    /**
+     * Method to be called after user has taken or selected a picture.
+     *
+     * @param requestCode type of request that was issued
+     * @param resultCode  state of the request's execution
+     * @param data        resulting data of the request
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            PictureDirectoryManager directoryManager = new PictureDirectoryManager(this);
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                try {
+                    // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
+                    this.addPicture(new Picture(new File(uri.getPath()), directoryManager));
+                } catch (IOException | PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            } else if (requestCode == SELECT_PICTURE) {
+                try {
+                    this.addPicture(new Picture(new File(getPath(data.getData())), directoryManager));
+                } catch (IOException | PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    private void addPicture(Picture newPicture) {
+        try {
+            this.controller.addPicture(newPicture);
+            this.updatePictures();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    // mad; http://stackoverflow.com/questions/2169649/get-pick-an-image-from-androids-built-in-gallery-app-programmatically; 2015-11-05
+    private String getPath(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if (cursor != null) {
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
         } else return null;
     }
 

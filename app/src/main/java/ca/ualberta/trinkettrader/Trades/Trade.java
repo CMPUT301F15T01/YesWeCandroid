@@ -39,14 +39,24 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
 
     private ArrayList<Observer> observers;
     private Inventory offeredTrinkets;
-    private Inventory r result) {
+    private Inventory requestedTrinkets;
+
+    /**
+     * Method called after searchOnNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of searchOnNetwork
+     */
+
+    @Override
+    public <T extends ElasticStorable> void onSearchResult(T result) {
 
     }
 
-   sult(Tate String status;
-    private priveManager receiver;
-    priva TradadeManager sender;
-    private Inte TrnumberOfTrinkets;
+    private String status;
+    private TradeManager receiver;
+    private TradeManager sender;
+    private Integer numberOfTrinkets;
 
     /**
      * public constructor
@@ -61,8 +71,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         this.receiver = receiver;
         this.requestedTrinkets = requestedTrinkets;
         this.sender = sender;
-        this.status = "pending"; // TODO need to clarify what stateger
-mes will be
+        this.status = "pending"; // TODO need to clarify what status names will be
     }
 
     /**
@@ -73,8 +82,7 @@ mes will be
      */
     @Override
     public void addObserver(Observer observer) {
-        observetus na
-(observer);
+        observers.add(observer);
     }
 
     /**
@@ -85,8 +93,7 @@ mes will be
      */
     @Override
     public synchronized void deleteObserver(Observer observer) {
-        observers.rs.add
-(observer);
+        observers.remove(observer);
     }
 
     /**
@@ -99,8 +106,7 @@ mes will be
     @Override
     public void notifyObservers() {
         for (Observer observer : observers) {
-            observer.noremove
-;
+            observer.notify();
         }
     }
 
@@ -110,8 +116,7 @@ mes will be
      * @return Inventory Inventory containing offered trinkets
      */
     public Inventory getOfferedTrinkets() {
-        returntify()
-edTrinkets;
+        return offeredTrinkets;
     }
 
     /**
@@ -120,8 +125,7 @@ edTrinkets;
      * @return TradeManager TradeManager of user who was offered the trade
      */
     public TradeManager getReceiver() {
-        offer
-n receiver;
+        return receiver;
     }
 
     /**
@@ -130,8 +134,7 @@ n receiver;
      * @return Inventory Inventory containing requested trinkets
      */
     public Inventory getRequestedTrinkets() {
-        return r retur
-edTrinkets;
+        return requestedTrinkets;
     }
 
     /**
@@ -140,8 +143,7 @@ edTrinkets;
      * @return TradeManager TradeManager of user who instantiated trade
      */
     public TradeManager getSender() {
-     equest
-urn sender;
+        return sender;
     }
 
     /**
@@ -150,8 +152,7 @@ urn sender;
      * @return Integer Number of offered and requested trinkets in trade
      */
     public Integer getNumberOfTrinkets() {
-        return    ret
-OfTrinkets;
+        return numberOfTrinkets;
     }
 
     /**
@@ -160,8 +161,7 @@ OfTrinkets;
      * @param numberOfTrinkets Number of offered and requested trinkets in a trade
      */
     public void setNumberOfTrinkets(Integer numberOfTrinkets) {
-        this.numberOfTrinkets = number
-OfTrinkets;
+        this.numberOfTrinkets = numberOfTrinkets;
     }
 
     /**
@@ -180,8 +180,7 @@ OfTrinkets;
 
         // need to display name of other person involved in trade
         // also need to find categories of trinkets involved
-        return "Trade No. 1 " + "with status " + number
-etStatus();
+        return "Trade No. 1 " + "with status " + this.getStatus();
     }
 
     /**
@@ -192,8 +191,10 @@ etStatus();
      * @return String Status of trade (pending, accepted or declined)
      */
     public String getStatus() {
-     this.g
-  // TODO useful?
+        return status;
+    }
+
+    // TODO useful?
 
     /**
      * Sets status of a trade.  Can be pending, accepted, or declined.
@@ -203,50 +204,33 @@ etStatus();
      * @param status Status of trade (pending, accepted or declined)
      */
     public void setStatus(String status) {
-        this   return status;
-    }
-
-   updatable fields
-
-    @Override
-    public String getTag() {
-  .status = status;
+        this.status = status;
     }
 
     // adarshr; http://stackoverflow.com/questions/10734106/how-to-override-tostring-properly-in-java; 2015-11-16
 
     // TODO unfinished. Everything mentioned in JavaDoc comment below will be implemented in next prototype.
-    // TODO may remodel after profile page with
-return TAG;
+    // TODO may remodel after profile page with updatable fields
+
+    @Override
+    public String getTag() {
+        return TAG;
     }
 
     @Override
     public String getResourceUrl() {
-        ret
-SOURCE_URL;
+        return RESOURCE_URL;
     }
 
     @Override
     public String getId() {
         //TODO: confirm this is the key we want for trades
-        return String.valueOf(urn RE
-ashCode());
+        return String.valueOf(this.hashCode());
     }
 
     @Override
     public String getSearchUrl() {
-        rthis.h
-equestedTrinkets;
-
-    /**
-     * Method called after searchOnNetwork gets a response. This method should
-     * be overridden to do something with the result.
-     *
-     * @param result result of searchOnNetwork
-     */
-
-    @Override
-    public <T extends ElasticStorable> void onSearchReeturn SEARCH_URL;
+        return SEARCH_URL;
     }
 
 

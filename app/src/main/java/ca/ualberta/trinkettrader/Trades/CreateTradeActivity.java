@@ -63,18 +63,7 @@ public class CreateTradeActivity extends Activity {
         yourTradeTrinketListView = (ListView) findViewById(R.id.yourItemsListView);
         controller = new CreateTradeController(this);
         controller.setFriendSpinnerItemOnClick();
-
-    controller.updateClickedFriend();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        updateFriendsSpinner();
-        updateFriendTradeTrinketListView();
-        updateYourTradeTrinketListView();
-
-   controller.updateClickedFriend();
+        controller.updateClickedFriend();
 
     }
 
@@ -84,8 +73,16 @@ public class CreateTradeActivity extends Activity {
         updateFriendsSpinner();
         updateFriendTradeTrinketListView();
         updateYourTradeTrinketListView();
+        controller.updateClickedFriend();
+    }
 
-    controller.updateClickedFriend();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateFriendsSpinner();
+        updateFriendTradeTrinketListView();
+        updateYourTradeTrinketListView();
+        controller.updateClickedFriend();
     }
 
     public void updateFriendsSpinner() {
