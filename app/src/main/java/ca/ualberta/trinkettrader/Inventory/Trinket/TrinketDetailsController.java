@@ -72,6 +72,9 @@ public class TrinketDetailsController {
         activity.startActivity(intent);
     }
 
+    public void openMapsOnTrinketOnClick() {
+    }
+
     public void updateTextViews() {
         activity.getNameTextView().setText(clickedTrinket.getName());
         activity.getDescriptionTextView().setText(clickedTrinket.getDescription());
