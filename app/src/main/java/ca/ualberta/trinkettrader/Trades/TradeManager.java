@@ -37,10 +37,21 @@ public class TradeManager extends ElasticStorable {
     private NotificationManager notificationManager;
     private TradeArchiver tradeArchiver;
 
+    private String username;
+
     /**
      * Public Constructor
      */
     public TradeManager() {
+        notificationManager = new NotificationManager();
+        tradeArchiver = new TradeArchiver();
+    }
+
+    /**
+     * Public Constructor that takes in the friend's username.
+     */
+    public TradeManager(String username) {
+        this.username = username;
         notificationManager = new NotificationManager();
         tradeArchiver = new TradeArchiver();
     }
@@ -179,6 +190,16 @@ public class TradeManager extends ElasticStorable {
     public String getSearchUrl() {
         return SEARCH_URL;
     }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 
     /**
      * Method called after searchOnNetwork gets a response. This method should

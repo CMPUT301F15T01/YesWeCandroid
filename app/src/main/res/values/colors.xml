@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- http://www.sketchappsources.com/free-source/1049-flat-ui-color-pallete-sketch-freebie-resource.html; 2015-11-28 -->
     <color name="light_grey">#e1e1e1</color>
     <color name="dark_grey">#4b4b4b</color>
     <color name="very_dark_grey">#505050</color>
@@ -8,6 +7,7 @@
     <color name="blue">#3a44ff</color>
     <color name="green">#8fff3a</color>
     <color name="yellow">#ffdb3a</color>
+    <!-- http://www.sketchappsources.com/free-source/1049-flat-ui-color-pallete-sketch-freebie-resource.html; 2015-11-28 -->
     <color name="carrot">#e67e22</color>
     <color name="wisteria">#8e44ad</color>
     <color name="greensea">#16a085</color>

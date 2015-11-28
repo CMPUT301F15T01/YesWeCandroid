@@ -14,14 +14,20 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.ApplicationState;
+import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 
 /**
@@ -32,13 +38,78 @@ import ca.ualberta.trinkettrader.R;
  * This screen will appear when a trade is clicked in the user's current trades list
  * or past trades list.
  */
-public class TradeDetailsActivity extends Activity implements Observer {
+public class TradeDetailsActivity extends AppCompatActivity implements Observer {
+    private TextView friendInTradeTextView;
+    private TextView statusOfTradeTextView;
+    private ListView offeredItemInTradeListView;
+    private ListView requestedItemInTradeListView;
+    private Trade trade;
+    private TradeDetailsController controller;
+    private Inventory friendTradeTrinkets;
+    private Inventory yourTradeTrinkets;
+    private ArrayAdapter<Trinket> friendTrinketAdapter;
+    private ArrayAdapter<Trinket> yourTrinketAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_details);
+       // friendInTradeTextView = (TextView) findViewById(R.id.tradeWithFriendName);
+        statusOfTradeTextView = (TextView) findViewById(R.id.tradeStatus);
+        //TODO if stuff breaks comment this
+        //yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
+        //friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
+
+        offeredItemInTradeListView = (ListView) findViewById(R.id.offeredItems);
+        requestedItemInTradeListView = (ListView) findViewById(R.id.requestedItemsy);
+
+        trade = ApplicationState.getInstance().getClickedTrade();
+        controller = new TradeDetailsController(this);
+        controller.updateTextViews();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateTradeDetailsListView();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateTradeDetailsListView();
+    }
+
+
+    public void updateTradeDetailsListView() {
+        //yourTradeTrinkets = trade.getOfferedTrinkets();
+        yourTrinketAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_list_item_1, trade.getOfferedTrinkets());
+        offeredItemInTradeListView.setAdapter(yourTrinketAdapter);
+        friendTradeTrinkets = trade.getRequestedTrinkets();
+        friendTrinketAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_list_item_1, trade.getRequestedTrinkets());
+        requestedItemInTradeListView.setAdapter(friendTrinketAdapter);
+    }
+
+
+
+
+    public TextView getFriendInTradeTextView() {
+        return friendInTradeTextView;
+    }
+
+    public TextView getStatusOfTradeTextView() {
+        return statusOfTradeTextView;
+    }
+
+    public ListView getOfferedItemInTradeListView() {
+        return offeredItemInTradeListView;
+    }
+
+    public ListView getRequestedItemInTradeListView() {
+        return requestedItemInTradeListView;
+    }
+
+
 
     /**
      * This method is called if the specified {@code Observable} object's
