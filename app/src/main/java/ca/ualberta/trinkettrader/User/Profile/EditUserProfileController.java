@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.User.Profile;
 
+import android.location.Location;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -21,7 +22,6 @@ import android.widget.EditText;
 import java.io.IOException;
 
 import ca.ualberta.trinkettrader.InternetConnection;
-import ca.ualberta.trinkettrader.Inventory.Trinket.Geolocation.Location;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
@@ -68,9 +68,13 @@ public class EditUserProfileController {
             userProfile.getContactInfo().setPhoneNumber(_phoneNum);
             userProfile.setArePhotosDownloadable(photoDownloadEnabled);
             userProfile.setCity(_city);
-            userProfile.setDefaultLocation(new Location(_latitude, _longitude));
             userProfile.setName(_name);
             userProfile.setPostalCode(_postalCode);
+
+            Location location = new Location("this");
+            location.setLatitude(_latitude);
+            location.setLongitude(_longitude);
+            userProfile.setDefaultLocation(new Location("this"));
 
             LoggedInUser.getInstance().saveInFile(activity.getBaseContext());
 

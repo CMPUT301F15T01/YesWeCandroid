@@ -135,8 +135,8 @@ public class AddOrEditTrinketActivity extends AppCompatActivity implements Obser
             this.trinketName.setText(edited.getName());
             this.trinketQuality.setSelection(new ArrayList<>(Arrays.asList(this.getResources().getStringArray(R.array.spinner_qualities))).indexOf(edited.getQuality()));
             this.trinketQuantity.setText(edited.getQuantity());
-            this.trinketLatitude.setText(edited.getLocation().getLatitude().toString());
-            this.trinketLongitude.setText(edited.getLocation().getLongitude().toString());
+            this.trinketLatitude.setText(Double.toString(edited.getLocation().getLatitude()));
+            this.trinketLongitude.setText(Double.toString(edited.getLocation().getLongitude()));
             for (Picture picture : edited.getPictures()) {
                 try {
                     this.controller.addPicture(picture);

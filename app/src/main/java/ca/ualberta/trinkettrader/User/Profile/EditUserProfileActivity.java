@@ -58,8 +58,8 @@ public class EditUserProfileActivity extends AppCompatActivity implements Observ
             city.setText(LoggedInUser.getInstance().getProfile().getCity());
             postalCode.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getPostalCode());
             phoneNum.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getPhoneNumber());
-            latitude.setText(LoggedInUser.getInstance().getProfile().getDefaultLocation().getLatitude().toString());
-            longitude.setText(LoggedInUser.getInstance().getProfile().getDefaultLocation().getLongitude().toString());
+            latitude.setText(Double.toString(LoggedInUser.getInstance().getProfile().getDefaultLocation().getLatitude()));
+            longitude.setText(Double.toString(LoggedInUser.getInstance().getProfile().getDefaultLocation().getLongitude()));
         }
     };
 

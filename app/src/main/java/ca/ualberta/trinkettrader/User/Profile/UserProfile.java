@@ -14,10 +14,10 @@
 
 package ca.ualberta.trinkettrader.User.Profile;
 
+import android.location.Location;
+
 import java.util.ArrayList;
 import java.util.Observer;
-
-import ca.ualberta.trinkettrader.Inventory.Trinket.Geolocation.Location;
 
 /**
  * A profile class containing the User's personal information and whether photos will be
@@ -40,7 +40,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     public UserProfile() {
         this.arePhotosDownloadable = Boolean.FALSE;
         this.contactInfo = new ContactInfo();
-        this.defaultLocation = new Location(0.0, 0.0);
+        this.defaultLocation = new Location("this");
         this.email = "";
         this.needToSave = Boolean.TRUE;
     }
