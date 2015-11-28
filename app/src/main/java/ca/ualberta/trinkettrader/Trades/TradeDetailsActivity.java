@@ -24,8 +24,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.ApplicationState;
+import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 
 /**
@@ -43,7 +45,10 @@ public class TradeDetailsActivity extends AppCompatActivity implements Observer 
     private ListView requestedItemInTradeListView;
     private Trade trade;
     private TradeDetailsController controller;
-    private ArrayAdapter<Trinket> trinketArrayAdapter;
+    private Inventory friendTradeTrinkets;
+    private Inventory yourTradeTrinkets;
+    private ArrayAdapter<Trinket> friendTrinketAdapter;
+    private ArrayAdapter<Trinket> yourTrinketAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +57,39 @@ public class TradeDetailsActivity extends AppCompatActivity implements Observer 
        // friendInTradeTextView = (TextView) findViewById(R.id.tradeWithFriendName);
         statusOfTradeTextView = (TextView) findViewById(R.id.tradeStatus);
         //TODO if stuff breaks comment this
+        //yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
+        //friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
+
         offeredItemInTradeListView = (ListView) findViewById(R.id.offeredItems);
         requestedItemInTradeListView = (ListView) findViewById(R.id.requestedItemsy);
 
         trade = ApplicationState.getInstance().getClickedTrade();
         controller = new TradeDetailsController(this);
         controller.updateTextViews();
-
-        ///trinketArrayAdapter = new ArrayAdapter<>(this, R.layout.activity_trades, trade);
-        //offeredItemInTradeListView.setAdapter(trinketArrayAdapter);
-
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateTradeDetailsListView();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateTradeDetailsListView();
+    }
+
+
+    public void updateTradeDetailsListView() {
+        //yourTradeTrinkets = trade.getOfferedTrinkets();
+        yourTrinketAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_list_item_1, trade.getOfferedTrinkets());
+        offeredItemInTradeListView.setAdapter(yourTrinketAdapter);
+        friendTradeTrinkets = trade.getRequestedTrinkets();
+        friendTrinketAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_list_item_1, trade.getRequestedTrinkets());
+        requestedItemInTradeListView.setAdapter(friendTrinketAdapter);
+    }
+
 
 
 
