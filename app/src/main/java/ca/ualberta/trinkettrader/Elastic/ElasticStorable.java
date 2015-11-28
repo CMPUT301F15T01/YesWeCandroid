@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Elastic;
 
+import android.util.Base64;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -34,6 +35,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Methods using HTTPRequest in this class are taken from AndroidElasticSearch
@@ -108,14 +111,11 @@ public abstract class ElasticStorable {
                    /* for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {
                         result.add(hit.getSource());
                     }*/
-                    onSearchResult(returned);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
+
     }
+        });
+        thread.start
+  }
 
     public String composeSearchRequest(String uri, NameValuePair pair) {
         return uri + "?q=" + pair.getName() + ":" + pair.getValue();
@@ -124,7 +124,14 @@ public abstract class ElasticStorable {
     public abstract String getSearchUrl();
 
     /**
-     * Method called after searchOnNetwork gets a response. This method should
+     * Method called after searchOnNetwork gets a response. This method();
+
+              onSearchResult(returned);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+   shoul
+d
      * be overridden to do something with the result.
      *
      * @param result result of searchOnNetwork

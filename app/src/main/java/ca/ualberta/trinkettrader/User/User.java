@@ -15,11 +15,8 @@
 package ca.ualberta.trinkettrader.User;
 
 import android.location.Location;
-import android.util.Base64;
-import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
@@ -48,7 +45,167 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     protected TrackedFriendsList trackedFriendsList;
     protected TradeManager tradeManager;
     protected UserProfile profile;
+    /**
+     * Sets whether User data needs to be locally cached. This Boolean should on be set only when
+     * changes to the User's data is made.
+     *
+     * @param needToSave
+     */
+    protected void setNeedTo
+
+    protected void que
+    anager tradeManager
+    ic TradeManager
     private ArrayList<Observer> observers;
+
+{
+        this.tradeManager = tradeManager;
+        p
+
+
+        @Override
+        public String getTag () {
+        return TAG;
+    }
+
+        @Overhis.fr
+        public String getResourceUrl () {
+        return RESOURCE_URL;
+    }
+
+        @Override
+        public String getId () {
+        // Vasyl Keretsman; http://stackoverflow.com/questions/15429257/how-to-convert-byte-array-to-hexstring-in-java; 2015-11-28
+        final StringBuilder builder = new StringBuilder();
+        for (byte b : this.profile.getEmail().getBytes()) {
+            builder.append(S * /
+
+                    format("%02x", b));
+        }
+        return builder.toString();
+    }
+
+        @thi
+        de
+        public String getSearchUrl () {
+        return SEARCH_URL;
+    }
+
+        /**
+         * Method called after searchOnNetwork gets a response. This method should
+         * be overridden to do something with the result.
+         *
+         * @param result result of searchOnNetwork
+         */
+        @Override
+        public <T extends ElasticStorable> void onSearchResult (T result){
+        User returned = (User) result;
+        this.setProfile(returned.getProfile());
+        this.setTrackedFriends(returned.getTrackedFriendsList());
+        this.setFriendsList(returned.getFriendsList());
+        this.setInventory(returned.getInventory());
+        this.setNotificationManager(returned.getNotificatioManage
+                nager) {
+            this.notificationManager = notificationManager;
+        }
+
+        /**
+         * Returns user's UserProfle
+         *
+         * @return UserProfile
+        tionMa
+        /
+
+        public UserProfile getProfile() {
+        return profile;
+        }
+
+        /**
+         * Sets user's UserProfile
+         *
+         * @param profile
+         */
+
+        public void setProfile (UserProfile profile){
+        *
+        ist getTrackedFriendsList () {
+            return trackedFriendsList;
+        }
+
+        /**
+         * Sets user's list of tracked friends
+         *
+         * @param trackedFriendsList
+         */
+
+        public void setTrackedFriends (TrackedFriendsList track
+        this.profile = profile;
+        this.needToSave = Boolean.TRUE;
+        }
+
+        /**
+         * Returns user's list of tracked friends
+         *
+         * @return TrackedFriendsList
+         */
+
+        public TrackedFriendsL
+        Save(Boolean needToSave) {
+        this.needToSave = needToSave;
+    }
+
+        /**
+         * Returns User's friends
+         *
+         * @return FriendList
+         */
+        edFrie
+        ublic FriendsList getFriendsList() {
+        return friendsList;
+    }
+
+        /**
+         * Sets user's list of friends
+         *
+         * @param friendsList
+         */
+
+        public void setFriendsList (FriendsList friendsList){
+        t publ
+        iendsList = friendsList;
+        this.needToSave = Boolean.TRUE;
+    }
+
+        /**
+         * Returns user's inventory
+         *
+         * @return Inventory
+        TradeM
+
+        public Inventory getInventory() {
+        return inventory;
+        }
+
+        /**
+         * Sets user's inventory
+         *
+         * @param inventory
+         */
+
+        public void setInventory (Inventory inventory){
+
+    }
+        s.inventory = inventory;
+        this.needToSave = Boolean.TRUE;
+    }
+
+        /**
+         * Returns user's notification manager
+         *
+         * @return NotificationManager
+         */
+
+
 
     /**
      * Public constructor for user: initializes all attribute classes as empty classes with no
@@ -85,11 +242,16 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
 
     }
 
-    protected void queueUpdate() {
-
+    getTradeManager() {
+        return tradeManager;
     }
 
-    /**
+    setTradeManager(returned.getTradeManager()ueUpdate() {
+
+    }
+    )
+
+        /**
      * Adds the specified observer to the list of observers. If it is already
      * registered, it is not added a second time.
      *
@@ -98,7 +260,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     @Override
     public void addObserver(Observer observer) {
         observers.add(observer);
-    }
+    }public Notificationride
 
     /**
      * Removes the specified observer from the list of observers. Passing null
@@ -126,6 +288,14 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
+     * Returns user's trade manager
+     *
+     * @return TradeManager
+     */
+
+    Overri
+
+    /**
      * Returns whether User's data needs to be locally cached. This variable is set when a change is
      * made to the User's data.
      *
@@ -137,65 +307,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         return this.needToSave | this.profile.getNeedToSave() | this.inventory.getNeedToSave();
     }
 
-    /**
-     * Sets whether User data needs to be locally cached. This Boolean should on be set only when
-     * changes to the User's data is made.
-     *
-     * @param needToSave
-     */
-    protected void setNeedToSave(Boolean needToSave) {
-        this.needToSave = needToSave;
-    }
-
-    /**
-     * Returns User's friends
-     *
-     * @return FriendList
-     */
-
-    public FriendsList getFriendsList() {
-        return friendsList;
-    }
-
-    /**
-     * Sets user's list of friends
-     *
-     * @param friendsList
-     */
-
-    public void setFriendsList(FriendsList friendsList) {
-        this.friendsList = friendsList;
-        this.needToSave = Boolean.TRUE;
-    }
-
-    /**
-     * Returns user's inventory
-     *
-     * @return Inventory
-     */
-
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    /**
-     * Sets user's inventory
-     *
-     * @param inventory
-     */
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-        this.needToSave = Boolean.TRUE;
-    }
-
-    /**
-     * Returns user's notification manager
-     *
-     * @return NotificationManager
-     */
-
-    public NotificationManager getNotificationManager() {
+    r getNotificationManager() {
         return notificationManager;
     }
 
@@ -205,60 +317,13 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      * @param notificationManager
      */
 
-    public void setNotificationManager(NotificationManager notificationManager) {
-        this.notificationManager = notificationManager;
-    }
-
-    /**
-     * Returns user's UserProfle
-     *
-     * @return UserProfile
-     */
-
-    public UserProfile getProfile() {
-        return profile;
-    }
-
-    /**
-     * Sets user's UserProfile
-     *
-     * @param profile
-     */
-
-    public void setProfile(UserProfile profile) {
-        this.profile = profile;
-        this.needToSave = Boolean.TRUE;
-    }
-
-    /**
-     * Returns user's list of tracked friends
-     *
-     * @return TrackedFriendsList
-     */
-
-    public TrackedFriendsList getTrackedFriendsList() {
-        return trackedFriendsList;
-    }
-
-    /**
-     * Sets user's list of tracked friends
-     *
-     * @param trackedFriendsList
-     */
-
-    public void setTrackedFriends(TrackedFriendsList trackedFriendsList) {
+    public void setNotificationManager(NotificationManager notificatring.
+            ndsList) {
         this.trackedFriendsList = trackedFriendsList;
     }
 
-    /**
-     * Returns user's trade manager
-     *
-     * @return TradeManager
-     */
-
-    public TradeManager getTradeManager() {
-        return tradeManager;
-    }
+    );
+    this.
 
     /**
      * Sets user's trade manager
@@ -266,48 +331,11 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      * @param tradeManager
      */
 
-    public void setTradeManager(TradeManager tradeManager) {
-        this.tradeManager = tradeManager;
-    }
+    public void setTradeManager(nManage
+                                        r()
 
-    @Override
-    public String getTag() {
-        return TAG;
-    }
-
-    @Override
-    public String getResourceUrl() {
-        return RESOURCE_URL;
-    }
-
-    @Override
-    public String getId() {
-        //Dark Knight; http://stackoverflow.com/questions/19743851/base64-java-encode-and-decode-a-string; 2015-11-28
-        return Base64.encodeToString(this.profile.getEmail().getBytes(), 4);
-    }
-
-    @Override
-    public String getSearchUrl() {
-        return SEARCH_URL;
-    }
-
-    /**
-     * Method called after searchOnNetwork gets a response. This method should
-     * be overridden to do something with the result.
-     *
-     * @param result result of searchOnNetwork
-     */
-    @Override
-    public <T extends ElasticStorable> void onSearchResult(T result) {
-        User returned = (User) result;
-        this.setProfile(returned.getProfile());
-        this.setTrackedFriends(returned.getTrackedFriendsList());
-        this.setFriendsList(returned.getFriendsList());
-        this.setInventory(returned.getInventory());
-        this.setNotificationManager(returned.getNotificationManager());
-        this.setTradeManager(returned.getTradeManager());
-    }
-
+    );
+}
 
     public Location getDefaultLocation() {
         return this.profile.getDefaultLocation();

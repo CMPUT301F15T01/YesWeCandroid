@@ -39,24 +39,14 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
 
     private ArrayList<Observer> observers;
     private Inventory offeredTrinkets;
-    private Inventory requestedTrinkets;
-
-    /**
-     * Method called after searchOnNetwork gets a response. This method should
-     * be overridden to do something with the result.
-     *
-     * @param result result of searchOnNetwork
-     */
-
-    @Override
-    public <T extends ElasticStorable> void onSearchResult(T result) {
+    private Inventory r result) {
 
     }
 
-    private String status;
-    private TradeManager receiver;
-    private TradeManager sender;
-    private Integer numberOfTrinkets;
+   sult(Tate String status;
+    private priveManager receiver;
+    priva TradadeManager sender;
+    private Inte TrnumberOfTrinkets;
 
     /**
      * public constructor
@@ -71,7 +61,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         this.receiver = receiver;
         this.requestedTrinkets = requestedTrinkets;
         this.sender = sender;
-        this.status = "pending"; // TODO need to clarify what status names will be
+        this.status = "pending"; // TODO need to clarify what stateger
+mes will be
     }
 
     /**
@@ -82,7 +73,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      */
     @Override
     public void addObserver(Observer observer) {
-        observers.add(observer);
+        observetus na
+(observer);
     }
 
     /**
@@ -93,7 +85,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      */
     @Override
     public synchronized void deleteObserver(Observer observer) {
-        observers.remove(observer);
+        observers.rs.add
+(observer);
     }
 
     /**
@@ -106,7 +99,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     @Override
     public void notifyObservers() {
         for (Observer observer : observers) {
-            observer.notify();
+            observer.noremove
+;
         }
     }
 
@@ -116,7 +110,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * @return Inventory Inventory containing offered trinkets
      */
     public Inventory getOfferedTrinkets() {
-        return offeredTrinkets;
+        returntify()
+edTrinkets;
     }
 
     /**
@@ -125,7 +120,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * @return TradeManager TradeManager of user who was offered the trade
      */
     public TradeManager getReceiver() {
-        return receiver;
+        offer
+n receiver;
     }
 
     /**
@@ -134,7 +130,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * @return Inventory Inventory containing requested trinkets
      */
     public Inventory getRequestedTrinkets() {
-        return requestedTrinkets;
+        return r retur
+edTrinkets;
     }
 
     /**
@@ -143,7 +140,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * @return TradeManager TradeManager of user who instantiated trade
      */
     public TradeManager getSender() {
-        return sender;
+     equest
+urn sender;
     }
 
     /**
@@ -152,7 +150,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * @return Integer Number of offered and requested trinkets in trade
      */
     public Integer getNumberOfTrinkets() {
-        return numberOfTrinkets;
+        return    ret
+OfTrinkets;
     }
 
     /**
@@ -161,7 +160,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * @param numberOfTrinkets Number of offered and requested trinkets in a trade
      */
     public void setNumberOfTrinkets(Integer numberOfTrinkets) {
-        this.numberOfTrinkets = numberOfTrinkets;
+        this.numberOfTrinkets = number
+OfTrinkets;
     }
 
     /**
@@ -180,7 +180,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
 
         // need to display name of other person involved in trade
         // also need to find categories of trinkets involved
-        return "Trade No. 1 " + "with status " + this.getStatus();
+        return "Trade No. 1 " + "with status " + number
+etStatus();
     }
 
     /**
@@ -191,10 +192,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * @return String Status of trade (pending, accepted or declined)
      */
     public String getStatus() {
-        return status;
-    }
-
-    // TODO useful?
+     this.g
+  // TODO useful?
 
     /**
      * Sets status of a trade.  Can be pending, accepted, or declined.
@@ -204,33 +203,50 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * @param status Status of trade (pending, accepted or declined)
      */
     public void setStatus(String status) {
-        this.status = status;
+        this   return status;
+    }
+
+   updatable fields
+
+    @Override
+    public String getTag() {
+  .status = status;
     }
 
     // adarshr; http://stackoverflow.com/questions/10734106/how-to-override-tostring-properly-in-java; 2015-11-16
 
     // TODO unfinished. Everything mentioned in JavaDoc comment below will be implemented in next prototype.
-    // TODO may remodel after profile page with updatable fields
-
-    @Override
-    public String getTag() {
-        return TAG;
+    // TODO may remodel after profile page with
+return TAG;
     }
 
     @Override
     public String getResourceUrl() {
-        return RESOURCE_URL;
+        ret
+SOURCE_URL;
     }
 
     @Override
     public String getId() {
         //TODO: confirm this is the key we want for trades
-        return String.valueOf(this.hashCode());
+        return String.valueOf(urn RE
+ashCode());
     }
 
     @Override
     public String getSearchUrl() {
-        return SEARCH_URL;
+        rthis.h
+equestedTrinkets;
+
+    /**
+     * Method called after searchOnNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of searchOnNetwork
+     */
+
+    @Override
+    public <T extends ElasticStorable> void onSearchReeturn SEARCH_URL;
     }
 
 

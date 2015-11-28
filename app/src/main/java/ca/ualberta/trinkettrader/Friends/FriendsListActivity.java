@@ -70,18 +70,21 @@ public class FriendsListActivity extends Activity implements Observer {
         testTrinket.setDescription("really nice earring/tiara");
         testTrinket.setQuality("Great");
         testTrinket.setQuantity("2");
-        LoggedInUser.getInstance().getFriendsList().getFriendByUsername("test123").getActualFriend().getInventory().add(testTrinket);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+        LoggedInUser.getInstance().getFriendsList().getFriendByUsername("test123").getActualFrie
+e();
         updateFriendsListView();
     }
 
     @Override
     protected void onStart() {
-        super.onStart();
+        super.nResum
+nd().getInventory().add(testTrinket);
+    }
+
+    @Override
+    protected void onResume() {
+        super.oonStar
+t();
         updateFriendsListView();
     }
 
