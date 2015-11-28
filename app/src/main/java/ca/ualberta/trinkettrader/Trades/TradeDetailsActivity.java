@@ -16,10 +16,12 @@ package ca.ualberta.trinkettrader.Trades;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.R;
 
 
@@ -32,12 +34,45 @@ import ca.ualberta.trinkettrader.R;
  * or past trades list.
  */
 public class TradeDetailsActivity extends AppCompatActivity implements Observer {
+    private TextView friendInTradeTextView;
+    private TextView statusOfTradeTextView;
+    private TextView offeredItemInTradeTextView;
+    private TextView requestedItemInTradeTextView;
+    private Trade trade;
+    private TradeDetailsController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_details);
+       // friendInTradeTextView = (TextView) findViewById(R.id.tradeWithFriendName);
+       // statusOfTradeTextView = (TextView) findViewById(R.id.tradeStatus);
+       // offeredItemInTradeTextView = (TextView) findViewById(R.id.offeredItems);
+        //requestedItemInTradeTextView = (TextView) findViewById(R.id.requestedItemsy);
+
+        trade = ApplicationState.getInstance().getClickedTrade();
+        //controller.updateTextViews();
     }
+
+
+
+    public TextView getFriendInTradeTextView() {
+        return friendInTradeTextView;
+    }
+
+    public TextView getStatusOfTradeTextView() {
+        return statusOfTradeTextView;
+    }
+
+    public TextView getOfferedItemInTradeTextView() {
+        return offeredItemInTradeTextView;
+    }
+
+    public TextView getRequestedItemInTradeTextView() {
+        return requestedItemInTradeTextView;
+    }
+
+
 
     /**
      * This method is called if the specified {@code Observable} object's
