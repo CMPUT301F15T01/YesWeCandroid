@@ -96,17 +96,6 @@ public class LoggedInUser extends User {
         this.setNeedToSave(Boolean.FALSE);
     }
 
-    public void loadFromNetwork(String email) throws NoSuchFieldException, IOException {
-
-        Gson gson = new Gson();
-
-        ArrayList<NameValuePair> userData = new ArrayList<>();
-        NameValuePair n = new BasicNameValuePair("email", email);
-        userData.add(n);
-
-        LoggedInUser.getInstance().searchOnNetwork(userData, User.class);
-    }
-
     /**
      * Returns the current (and single) instance of logged in user.
      * To be called when any changes are made to user's profile, i.e. adding/deleting a friend or
