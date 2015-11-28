@@ -110,11 +110,12 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
     }
 
 
-    // TODO: When is this called?
     /**
      * Searches for a Friend in the FriendsList using the specified username (the friends email address).
      * Returns the Friend object if a friend with that email address is found in the FriendsList; otherwise,
-     * returns <code>null</code>
+     * returns <code>null</code>.  This method is called to retrieve the Friend when the current user
+     * requests details about them, for example it is used in {@link FriendsInventoryActivity FriendsInventoryActivity}
+     * to retrieve the inventory of the Friend the current user is viewing in the {@link FriendsProfileActivity FriendsProfileActivity}.
      *
      * @param username - the username of the friend to be searched
      * @return Friend - the Friend with the specified username if found; otherwise, null
