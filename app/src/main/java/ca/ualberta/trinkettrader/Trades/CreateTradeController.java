@@ -30,6 +30,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
 public class CreateTradeController {
     private CreateTradeActivity activity;
 
+
     public CreateTradeController(CreateTradeActivity activity) {
         this.activity = activity;
     }
