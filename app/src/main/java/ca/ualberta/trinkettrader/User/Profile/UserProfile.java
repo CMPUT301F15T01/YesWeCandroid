@@ -17,7 +17,7 @@ package ca.ualberta.trinkettrader.User.Profile;
 import java.util.ArrayList;
 import java.util.Observer;
 
-import ca.ualberta.trinkettrader.Inventory.Trinket.Maps.Location;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Geolocation.Location;
 
 /**
  * A profile class containing the User's personal information and whether photos will be

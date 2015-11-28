@@ -21,7 +21,7 @@ import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.Friends.FriendsList;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsList;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
-import ca.ualberta.trinkettrader.Inventory.Trinket.Maps.Location;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Geolocation.Location;
 import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.Trades.TradeManager;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;

@@ -17,7 +17,7 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 import java.util.ArrayList;
 import java.util.Observer;
 
-import ca.ualberta.trinkettrader.Inventory.Trinket.Maps.Location;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Geolocation.Location;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 
 /**

@@ -1,13 +1,13 @@
 <resources>
     <!--
-    TODO: Before you run your application, you need a Google Maps API key.
+    TODO: Before you run your application, you need a Google Geolocation API key.
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
     https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=A7:05:BE:32:1E:9C:37:39:91:59:50:05:D4:EA:1E:A9:D7:78:95:90%3Bca.ualberta.trinkettrader.Inventory.Trinket.Maps
 
     You can also add your credentials to an existing key, using this line:
-    A7:05:BE:32:1E:9C:37:39:91:59:50:05:D4:EA:1E:A9:D7:78:95:90;ca.ualberta.trinkettrader.Inventory.Trinket.Maps
+    A7:05:BE:32:1E:9C:37:39:91:59:50:05:D4:EA:1E:A9:D7:78:95:90;Geolocationocation
 
     Alternatively, follow the directions here:
     https://developers.google.com/maps/documentation/android/start#get-key

@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
-import ca.ualberta.trinkettrader.Inventory.Trinket.Maps.Location;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Geolocation.Location;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;

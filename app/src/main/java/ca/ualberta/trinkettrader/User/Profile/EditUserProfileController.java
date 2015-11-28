@@ -21,7 +21,7 @@ import android.widget.EditText;
 import java.io.IOException;
 
 import ca.ualberta.trinkettrader.InternetConnection;
-import ca.ualberta.trinkettrader.Inventory.Trinket.Maps.Location;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Geolocation.Location;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
