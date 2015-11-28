@@ -33,7 +33,9 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
     private ArrayList<Observer> observers;
 
     /**
-     * Default constructor. Uses the ArrayList default constructor; creates an empty list.
+     * Default constructor used when the current user logs in for the first time (thereby creating their
+     * account). A user begins with no friends, so an empty FriendsList is instantiated using the
+     * default {@link ArrayList ArrayList} constructor.
      */
     public FriendsList() {
         super();
@@ -41,9 +43,14 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
 
 
     /**
-     * Constructs a FriendsList using an arbitrary Collection of Users or Friends (subclasses of
-     * User). Runs the equivalent constructor in ArrayList.
-     * In other words, creates a FriendsList using the specified Collection argument.
+     * Constructor for instantiating the FriendsList of an existing user.  Constructs a FriendsList from
+     * an arbitrary {@link Collection Collection} of Friends using the equivalent {@link ArrayList ArrayList}
+     * constructor.  The given collection can be empty.
+     *
+     * This constructor should be called when a user with an existing account logs in.  The FriendsList is
+     * instantiated with the user's previous FriendsList data.  This data is retrieved from the Elastic Search
+     * server if the device is online, or from the user's local phone storage if it is offline.  If the
+     * user has no friends, this constructor will still be called with an empty collection.
      *
      * @param c a Collection of Friend objects; a list of the user's Friends
      */
@@ -52,6 +59,7 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
     }
 
 
+    // TODO: Can this be removed?
     /**
      * Initializes a FriendsList to the specified capacity.
      * Useful if the user knows the number of Friends in advance.
@@ -137,10 +145,18 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
 
 
     /**
-     * Add friend to friends list.  If that friend is already in the FriendsList it will not be added again.
+     * Add a new friend to FriendsList.  The method returns a Boolean to indicate if the friend was successfully
+     * added to the list or not.  If the friend was successfully added then <code>add</code> returns True.
+     * If not <code>add</code> returns False.  The most likely reason for <code>add</code> to fail is if
+     * the user tries to add a friend that is already in their FriendsList.  Duplicates friends are not permitted,
+     * so if the friend being added to the current user's FriendsList is already in their FriendsList then
+     * that Friend will not be added again and <code>add</code> will return False.
      *
-     * @param friend the Friend to be added to the FriendsList
-     * @return True if the Friend is successfully added; otherwise, False
+     * This method is invoked by the FriendsListController after a user tries to add a new Friend from the
+     * FriendsListActivity.
+     *
+     * @param friend - the Friend to be added to the current user's FriendsList
+     * @return Boolean - True if the Friend is successfully added; otherwise, False
      */
     @Override
     public boolean add(Friend friend) {
