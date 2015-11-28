@@ -27,6 +27,8 @@ import java.util.Observer;
  * to the current user's FriendsList multiple times.
  *
  * The current user's FriendsList can be viewed, and new friends can be added to it, in the FriendsListActivity.
+ * A friend can be removed from the current user's FriendsList by deleting the friend in the
+ * {@link FriendsProfileActivity FriendsProfileActivity}.
  */
 public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinkettrader.Observable {
 
