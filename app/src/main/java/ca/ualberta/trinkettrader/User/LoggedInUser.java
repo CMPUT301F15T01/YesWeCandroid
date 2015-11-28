@@ -104,7 +104,7 @@ public class LoggedInUser extends User {
         NameValuePair n = new BasicNameValuePair("email", email);
         userData.add(n);
 
-        LoggedInUser.getInstance().searchOnNetwork(userData, this);
+        LoggedInUser.getInstance().searchOnNetwork(userData, User.class);
     }
 
     /**

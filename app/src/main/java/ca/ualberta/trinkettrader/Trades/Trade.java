@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader.Trades;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
@@ -39,6 +40,19 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     private ArrayList<Observer> observers;
     private Inventory offeredTrinkets;
     private Inventory requestedTrinkets;
+
+    /**
+     * Method called after searchOnNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of searchOnNetwork
+     */
+
+    @Override
+    public <T extends ElasticStorable> void onSearchResult(T result) {
+
+    }
+
     private String status;
     private TradeManager receiver;
     private TradeManager sender;
@@ -219,13 +233,5 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         return SEARCH_URL;
     }
 
-    /**
-     * Method called after searchOnNetwork gets a response. This method should
-     * be overridden to do something with the result.
-     *
-     * @param result result of searchOnNetwork
-     */
-    @Override
-    public void onSearchResult(ArrayList<ElasticStorable> result) {
-    }
+
 }

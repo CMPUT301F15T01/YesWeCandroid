@@ -15,8 +15,10 @@
 package ca.ualberta.trinkettrader.User;
 
 import android.location.Location;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
@@ -294,10 +296,10 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      * @param result result of searchOnNetwork
      */
     @Override
-    public void onSearchResult(ArrayList<ElasticStorable> result) {
-        //if there is anything, save it.
-        //other wise, do nothing?
+    public <T extends ElasticStorable> void onSearchResult(T result) {
+        Log.i("RETURNED!", ((User)result).getProfile().getName().toString());
     }
+
 
     public Location getDefaultLocation() {
         return this.profile.getDefaultLocation();
