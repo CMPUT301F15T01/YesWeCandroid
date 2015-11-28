@@ -188,6 +188,14 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      * {@inheritDoc}
      */
     @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getResourceUrl() {
         return RESOURCE_URL;
     }
@@ -206,14 +214,6 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     @Override
     public String getSearchUrl() {
         return SEARCH_URL;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getTag() {
-        return TAG;
     }
 
     /**
