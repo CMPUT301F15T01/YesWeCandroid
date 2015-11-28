@@ -15,7 +15,6 @@
 package ca.ualberta.trinkettrader.User;
 
 import android.location.Location;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Observer;
@@ -298,7 +297,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     public void onSearchResult(ArrayList<ElasticStorable> result) {
         //if there is anything, save it.
         //other wise, do nothing?
-        Log.i("What I Got", result.get(0).toString());
     }
 
     public Location getDefaultLocation() {
