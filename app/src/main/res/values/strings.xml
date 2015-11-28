@@ -28,6 +28,8 @@
     <!-- activity_add_or_edit_trinket -->
     <string name="activity_add_or_edit_trinket_accessibility_checkbox">Public</string>
     <string name="activity_add_or_edit_trinket_description_hint">Description</string>
+    <string name="activity_add_or_edit_trinket_latitude">Latitude</string>
+    <string name="activity_add_or_edit_trinket_longitude">Longitude</string>
     <string name="activity_add_or_edit_trinket_name_hint">Name</string>
     <string name="activity_add_or_edit_trinket_picture_library_button_text">Picture Library</string>
     <string name="activity_add_or_edit_trinket_quantity_hint">Quantity</string>

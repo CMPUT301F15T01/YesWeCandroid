@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader.Inventory.Trinket;
 
 import android.content.Intent;
+import android.location.Location;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -114,6 +115,19 @@ public class AddOrEditTrinketController {
         this.trinket.setQuantity(this.activity.getTrinketQuantity().getText().toString());
         this.trinket.setQuality(new ArrayList<>(Arrays.asList(this.activity.getResources().getStringArray(R.array.spinner_qualities))).get(this.activity.getTrinketQuality().getSelectedItemPosition()));
         this.trinket.setPictures(pictures);
+
+        Location location = new Location("this");
+        if (this.activity.getTrinketLatitude().getText().toString().length() == 0) {
+            location.setLatitude(LoggedInUser.getInstance().getDefaultLocation().getLatitude());
+        } else {
+            location.setLatitude(Double.valueOf(this.activity.getTrinketLatitude().getText().toString()));
+        }
+        if (this.activity.getTrinketLongitude().getText().toString().length() == 0) {
+            location.setLongitude(LoggedInUser.getInstance().getDefaultLocation().getLongitude());
+        } else {
+            location.setLongitude(Double.valueOf(this.activity.getTrinketLongitude().getText().toString()));
+        }
+        this.trinket.setLocation(location);
     }
 
     /**

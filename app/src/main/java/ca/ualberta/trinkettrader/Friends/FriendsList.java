@@ -22,16 +22,20 @@ import java.util.Observer;
  * An ArrayList of all the {@link Friend Friends} the user has.  This list includes all tracked and
  * untracked friends.  Friends are ordered in the arraylist by the order in which the user added them
  * as friends (first-added appears first in the list).  In addition to the basic functionality of
- * {@link ArrayList ArrayLists}, FriendsLists can searched by the friend's email address.  Additionally,
+ * {@link ArrayList ArrayLists}, FriendsLists can be searched by the friend's email address.  Additionally,
  * the {@link ArrayList ArrayList's} add function is overridden so that the same Friend cannot be added
  * to the current user's FriendsList multiple times.
+ *
+ * The current user's FriendsList can be viewed, and new friends can be added to it, in the FriendsListActivity.
  */
 public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
 
     /**
-     * Default constructor. Uses the ArrayList default constructor; creates an empty list.
+     * Default constructor used when the current user logs in for the first time (thereby creating their
+     * account). A user begins with no friends, so an empty FriendsList is instantiated using the
+     * default {@link ArrayList ArrayList} constructor.
      */
     public FriendsList() {
         super();
@@ -39,9 +43,14 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
 
 
     /**
-     * Constructs a FriendsList using an arbitrary Collection of Users or Friends (subclasses of
-     * User). Runs the equivalent constructor in ArrayList.
-     * In other words, creates a FriendsList using the specified Collection argument.
+     * Constructor for instantiating the FriendsList of an existing user.  Constructs a FriendsList from
+     * an arbitrary {@link Collection Collection} of Friends using the equivalent {@link ArrayList ArrayList}
+     * constructor.  The given collection can be empty.
+     *
+     * This constructor should be called when a user with an existing account logs in.  The FriendsList is
+     * instantiated with the user's previous FriendsList data.  This data is retrieved from the Elastic Search
+     * server if the device is online, or from the user's local phone storage if it is offline.  If the
+     * user has no friends, this constructor will still be called with an empty collection.
      *
      * @param c a Collection of Friend objects; a list of the user's Friends
      */
@@ -50,6 +59,7 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
     }
 
 
+    // TODO: Can this be removed?
     /**
      * Initializes a FriendsList to the specified capacity.
      * Useful if the user knows the number of Friends in advance.
@@ -100,12 +110,14 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
     }
 
 
+    // TODO: When is this called?
     /**
-     * Searches for a Friend in the FriendsList using the specified username.
-     * Returns the Friend if the username is found; otherwise, returns <code>null</code>
+     * Searches for a Friend in the FriendsList using the specified username (the friends email address).
+     * Returns the Friend object if a friend with that email address is found in the FriendsList; otherwise,
+     * returns <code>null</code>
      *
-     * @param username the username of the friend to be searched
-     * @return the Friend with the specified username if found; otherwise, null
+     * @param username - the username of the friend to be searched
+     * @return Friend - the Friend with the specified username if found; otherwise, null
      */
     public Friend getFriendByUsername(String username) {
         for (Friend f : this) {
@@ -117,12 +129,16 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
     }
 
 
+    // TODO: When is this called?  Testing only?
     /**
-     * Searches for the index of the Friend in the FriendsList using the specified username.
-     * Returns the index if the username is found; otherwise, returns <code>null</code>
+     * Searches for the index of the Friend in the FriendsList using the specified username (the friend's
+     * email address).  Returns the index of the Friend with that email address in the FriendsList if
+     * a Friend with that email address is found in the FriendsList; otherwise, returns <code>null</code>.
+     * Friends are ordered int the FriendsList in the order they are added, with the Friend that is added
+     * first at index 0.
      *
-     * @param username the username of the friend to be searched
-     * @return the Friend with the specified username if found; otherwise, null
+     * @param username - the username of the friend to be searched
+     * @return Integer - the index in the FriendsList of the Friend with the specified email address if found; otherwise, null
      */
     public Integer getFriendIndexByUsername(String username) {
         for (int i = 0; i < this.size(); i++) {
@@ -135,10 +151,18 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
 
 
     /**
-     * Add friend to friends list.  If that friend is already in the FriendsList it will not be added again.
+     * Add a new friend to FriendsList.  The method returns a Boolean to indicate if the friend was successfully
+     * added to the list or not.  If the friend was successfully added then <code>add</code> returns True.
+     * If not <code>add</code> returns False.  The most likely reason for <code>add</code> to fail is if
+     * the user tries to add a friend that is already in their FriendsList.  Duplicates friends are not permitted,
+     * so if the friend being added to the current user's FriendsList is already in their FriendsList then
+     * that Friend will not be added again and <code>add</code> will return False.
      *
-     * @param friend the Friend to be added to the FriendsList
-     * @return True if the Friend is successfully added; otherwise, False
+     * This method is invoked by the FriendsListController after a user tries to add a new Friend from the
+     * FriendsListActivity.
+     *
+     * @param friend - the Friend to be added to the current user's FriendsList
+     * @return Boolean - True if the Friend is successfully added; otherwise, False
      */
     @Override
     public boolean add(Friend friend) {

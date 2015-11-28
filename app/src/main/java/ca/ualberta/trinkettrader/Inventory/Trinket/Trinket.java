@@ -14,6 +14,8 @@
 
 package ca.ualberta.trinkettrader.Inventory.Trinket;
 
+import android.location.Location;
+
 import java.util.ArrayList;
 import java.util.Observer;
 
@@ -30,6 +32,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
     private ArrayList<Observer> observers;
     private ArrayList<Picture> pictures;
+    private Location location;
     private String accessibility;
     private String category;
     private String description;
@@ -82,6 +85,14 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
         for (Observer observer : observers) {
             observer.notify();
         }
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     /**

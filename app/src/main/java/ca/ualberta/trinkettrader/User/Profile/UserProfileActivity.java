@@ -14,7 +14,11 @@
 
 package ca.ualberta.trinkettrader.User.Profile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -72,6 +76,36 @@ public class UserProfileActivity extends AppCompatActivity implements Observer {
         editUserProfileButton = (Button) findViewById(R.id.edit_button);
         editUserProfileButton.setOnClickListener(controller.getEditButtonListener());
         tradesButton = (Button) findViewById(R.id.trade_button_user_profile);
+
+        final TextView latitude = (TextView) findViewById(R.id.latitude);
+        final TextView longitude = (TextView) findViewById(R.id.longitude);
+
+        // Olegas; http://stackoverflow.com/questions/6100967/gps-android-getting-latitude-and-longitude; 2015-11-27
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        if (location != null) {
+            latitude.setText(Double.toString(location.getLatitude()));
+            longitude.setText(Double.toString(location.getLongitude()));
+        }
+
+        final LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                latitude.setText(Double.toString(location.getLatitude()));
+                longitude.setText(Double.toString(location.getLongitude()));
+            }
+
+            public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+            }
+
+            public void onProviderEnabled(String arg0) {
+            }
+
+            public void onProviderDisabled(String arg0) {
+            }
+        };
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
     }
 
     @Override
