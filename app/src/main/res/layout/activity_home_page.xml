@@ -1,44 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/activity_vertical_margin"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context="ca.ualberta.trinkettrader.HomePageActivity">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:weightSum="60"
+    tools:context="ca.ualberta.trinkettrader.HomePageActivity">
 
     <Button
         android:id="@+id/inventory_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="15"
+        android:background="@color/green_sea"
         android:onClick="inventoryClick"
         android:text="@string/activity_home_page_inventory_button"/>
 
     <Button
         android:id="@+id/trades_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/friends_button"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="15"
+        android:background="@color/turquoise"
         android:onClick="tradesClick"
         android:text="@string/activity_home_page_trades_button"/>
 
     <Button
         android:id="@+id/friends_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_button"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="15"
+        android:background="@color/emerald"
         android:onClick="friendsClick"
         android:text="@string/activity_home_page_friends_button"/>
 
     <Button
         android:id="@+id/profile_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_button"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="15"
+        android:background="@color/nephritis"
         android:onClick="profileClick"
         android:text="@string/activity_home_page_profile_button"/>
-
 </LinearLayout>
