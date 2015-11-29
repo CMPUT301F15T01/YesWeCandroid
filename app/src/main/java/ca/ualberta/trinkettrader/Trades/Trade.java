@@ -177,8 +177,10 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
             otherUser = receiver.getUsername();
         }
 
-        // bold if new trade
-        return "Trade No. 1 " + "with " + LoggedInUser.getInstance().getProfile().getEmail() + "\nStatus: " + status;
+        // bold if new trade (has not been clicked/viewed yet by user)
+        
+
+        return "Trade No. 1 " + "with " + otherUser + "\nStatus: " + status;
     }
 
     /**

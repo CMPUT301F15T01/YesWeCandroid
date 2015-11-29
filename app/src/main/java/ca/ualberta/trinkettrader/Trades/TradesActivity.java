@@ -64,10 +64,10 @@ public class TradesActivity extends Activity implements Observer {
 
         // TODO testing - will be deleted
         User user = new User();
-        user.setEmail("kiry@c.ca");
+        user.getTradeManager().setUsername("peeko@bird.ca"); // must call this to set username in tradeManager for display purposes
         Inventory inv1 = new Inventory();
         Inventory inv2 = new Inventory();
-        Trade trade = new Trade(inv1, LoggedInUser.getInstance().getTradeManager(),inv2, LoggedInUser.getInstance().getTradeManager() );
+        Trade trade = new Trade(inv1, LoggedInUser.getInstance().getTradeManager(),inv2, user.getTradeManager() );
         LoggedInUser.getInstance().getTradeManager().getTradeArchiver().addTrade(trade);
         //
         userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
