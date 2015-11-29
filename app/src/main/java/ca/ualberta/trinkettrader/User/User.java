@@ -29,9 +29,17 @@ import ca.ualberta.trinkettrader.Trades.TradeManager;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 
 /**
- * Abstract class representing a user of the app. This user may be either the
- * LoggedInUser or a Friend. This class mainly acts as a container for all of
- * the various classes that make up a user.
+ * Abstract class representing a user of the app. This class is implemented in the app by
+ * {@link LoggedInUser LoggedInUser}, who represents the current user of the app on a particular device.
+ * This class mainly acts as a container for all of the various classes that make up a user.
+ *
+ * In the system, a user has a list of {@link ca.ualberta.trinkettrader.Friends.Friend Friends} contained
+ * in a {@link FriendsList FriendsList}, a {@link TrackedFriendsList TrackedFriendsList} for their
+ * tracked friends, an {@link Inventory Inventory} which contains the
+ * {@link ca.ualberta.trinkettrader.Inventory.Trinket.Trinket Trinkets} they own and want to be available
+ * for trading, a {@link NotificationManager NotificationManager} to notify them if another user wishes to
+ * trade with them, a {@link TradeManager TradeManager} to handle their trades with their friends, and
+ * a user profile which stores and displays their information.
  */
 public class User extends ElasticStorable implements ca.ualberta.trinkettrader.Observable, Friendable {
 
@@ -50,10 +58,9 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
 
     /**
      * Public constructor for user: initializes all attribute classes as empty classes with no
-     * active data.
-     * <p/>
-     * This constructor is called when the application has no information about the user (i.e. a new
-     * User) or when not all information about the user is available yet.
+     * active data.  This constructor is mainly used for testing purposes as it implies that no information is
+     * available about the user, not even an email address.  By default a new user needs to be saved to
+     * the network, so the needToSave attribute is set to true.
      */
     public User() {
         this.friendsList = new FriendsList();
@@ -67,7 +74,15 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
 
     /**
      * A public constructor for User in the case where the user's details are known for all its
-     * attribute classes.
+     * attribute classes.  This constructor would be called for a user already on the system, whose
+     * data can be pulled from Elastic Search or the phone's local data.
+     *
+     * @param friendsList - a FriendsList of the user's friends
+     * @param inventory - the user's Inventory with their trinkets
+     * @param notificationManager - a notification manager to notify the user if a new trade has been offered to them
+     * @param profile - a profile storing their information
+     * @param trackedFriends - a FriendsList which stores the Friends the user wishes to track
+     * @param tradeManager - a TradeManager for handling the user's trades
      */
     public User(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager) {
         this.friendsList = friendsList;
@@ -80,6 +95,15 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         this.tradeManager.setUsername(this.profile.getUsername());
     }
 
+    /**
+     * Constructor that uses the email a user enters to register in the {@link ca.ualberta.trinkettrader.LoginActivity LoginActivity}.
+     * This email is then used to initialize their TradeManager.  All other user attributes are initialized
+     * as empty.  This constructor is used when a new user logs in for the first time, as there is no information
+     * in the system about the user except the email they entered to register.  By default a new user needs to be saved to
+     * the network, so the needToSave attribute is set to true.
+     *
+     * @param email - the user's email address.  Taken from the email they enter into the LoginActivity
+     */
     public User(String email) {
         super();
         this.tradeManager = new TradeManager();
@@ -126,7 +150,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
-     * Returns whether User's data needs to be locally cached. This variable is set when a change is
+     * Returns whether User's data needs to be locally cached. This variable is set to True when a change is
      * made to the User's data.
      *
      * @return Boolean

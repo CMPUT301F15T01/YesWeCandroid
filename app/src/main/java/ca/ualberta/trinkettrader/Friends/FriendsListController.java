@@ -43,12 +43,14 @@ public class FriendsListController {
      */
     public void findFriendsOnClick() {
         EditText textField = activity.getFindFriendTextField();
-        Friend newFriend = new Friend();
         String username = textField.getText().toString();
+        Friend newFriend = new Friend(username);
 
-        // TODO testing for offline purposes only - will redo once web service intact
-        newFriend.getActualFriend().getProfile().setUsername(username);
-        LoggedInUser.getInstance().getFriendsList().add(newFriend);
+        if (!username.isEmpty() && username.contains("@")) {
+
+            // TODO testing for offline purposes only - will redo once web service intact
+            LoggedInUser.getInstance().getFriendsList().add(newFriend);
+        }
     }
 
     /**
