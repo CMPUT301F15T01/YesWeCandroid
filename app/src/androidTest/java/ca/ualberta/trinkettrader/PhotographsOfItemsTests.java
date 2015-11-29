@@ -203,6 +203,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             throw new RuntimeException(e);
         }
 
+        /******** InventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor inventoryActivityMonitor =
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                        null, false);
+
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
@@ -212,17 +218,31 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        // Validate that ReceiverActivity is started
+        InventoryActivity inventoryActivity = (InventoryActivity)
+                inventoryActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", inventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, inventoryActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                InventoryActivity.class, inventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(inventoryActivityMonitor);
+
         // Make sure the item has an image
-        Inventory trinkets = displayInventoryActivity.getInventory();
+        Inventory trinkets = inventoryActivity.getInventory();
         assertFalse(trinkets.isEmpty());
         for (Trinket trinket : trinkets) {
             assertFalse(trinket.getPictures().isEmpty());
         }
 
         // Close the activities
+        inventoryActivity.finish();
         addOrEditItemActivity.finish();
         displayInventoryActivity.finish();
         homePageActivity.finish();
+        loginActivity.finish();
     }
 
     public void testViewPhotograph() {
@@ -448,6 +468,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         }
 
         // Close the activities
+        inventoryActivity.finish();
         trinketDetailsActivity.finish();
         addOrEditItemActivity.finish();
         displayInventoryActivity.finish();
@@ -604,6 +625,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             throw new RuntimeException(e);
         }
 
+        /******** InventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor inventoryActivityMonitor =
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                        null, false);
+
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
@@ -613,8 +640,20 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        // Validate that ReceiverActivity is started
+        InventoryActivity inventoryActivity = (InventoryActivity)
+                inventoryActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", inventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, inventoryActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                InventoryActivity.class, inventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(inventoryActivityMonitor);
+
         // Make sure the item's image is less than the limit
-        Inventory trinkets = displayInventoryActivity.getInventory();
+        Inventory trinkets = inventoryActivity.getInventory();
         for (Trinket trinket : trinkets) {
             for (Picture picture : trinket.getPictures()) {
                 assertTrue(picture.size() < 65536);
@@ -622,9 +661,11 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         }
 
         // Close the activities
+        inventoryActivity.finish();
         addOrEditItemActivity.finish();
         displayInventoryActivity.finish();
         homePageActivity.finish();
+        loginActivity.finish();
     }
 
     public void testDeletePhotoGraph() {
