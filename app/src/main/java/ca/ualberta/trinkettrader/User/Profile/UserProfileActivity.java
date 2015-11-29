@@ -30,6 +30,7 @@ import android.widget.TextView;
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.Trades.TradesActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
@@ -38,6 +39,8 @@ public class UserProfileActivity extends Activity implements Observer {
 
     private Button editUserProfileButton;
     private Button tradesButton;
+    private Button inventoryButton;
+
     private UserProfileController controller;
     private Handler handler;
     private Runnable populateTextFieldsWithExistingValuesRunnable = new Runnable() {
@@ -77,6 +80,7 @@ public class UserProfileActivity extends Activity implements Observer {
         editUserProfileButton = (Button) findViewById(R.id.edit_button);
         editUserProfileButton.setOnClickListener(controller.getEditButtonListener());
         tradesButton = (Button) findViewById(R.id.trade_button_user_profile);
+        inventoryButton = (Button) findViewById(R.id.view_inventory_button);
 
         final TextView latitude = (TextView) findViewById(R.id.latitude);
         final TextView longitude = (TextView) findViewById(R.id.longitude);
@@ -163,5 +167,10 @@ public class UserProfileActivity extends Activity implements Observer {
     @Override
     public void update(Observable observable, Object data) {
 
+    }
+
+    public void inventoryClick(View view) {
+        Intent intent = new Intent(this, InventoryActivity.class);
+        startActivity(intent);
     }
 }
