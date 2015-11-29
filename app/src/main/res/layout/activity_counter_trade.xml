@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+tools:context="ca.ualberta.trinkettrader.Trades.CounterTradeActivity">
+
+<TextView
+    android:id="@+id/createCounterTradeTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:text="Counter Trade"
+    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+<TextView
+    android:id="@+id/empty"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="65dp"
+    android:text="Click an item to remove it"
+    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+<TextView
+    android:id="@+id/friendNameTitleCounterTradeTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_alignTop="@+id/empty"
+    android:layout_marginTop="-20dp"
+    android:text="Friend Name:"
+    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="FriendName"
+    android:id="@+id/friendNameCounterTradeTextView"
+    android:layout_alignTop="@+id/friendNameTitleCounterTradeTextView"
+    android:layout_toEndOf="@+id/createCounterTradeTitle" />
+
+<Button
+    android:id="@+id/addFriendsItemsCounterTradeButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/empty"
+    android:onClick="addFriendsItemsButtonOnClick"
+    android:text="Add Friends Items"/>
+
+<ListView
+    android:id="@+id/friendsItemsCounterTradeListView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/addYourItemsCounterTradeButton"
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/addFriendsItemsCounterTradeButton" />
+
+<Button
+    android:id="@+id/addYourItemsCounterTradeButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentStart="true"
+    android:layout_marginBottom="113dp"
+    android:onClick="addYourItemsButtonOnClick"
+    android:text="Add Your Items"/>
+
+<ListView
+    android:id="@+id/yourItemsCounterTradeListView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/friendsItemsCounterTradeListView"
+    android:layout_marginTop="54dp"
+    android:layout_toStartOf="@+id/proposeCounterTradeButton"/>
+
+<Button
+    android:id="@+id/proposeCounterTradeButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:onClick="proposeTradeButtonOnClick"
+    android:text="Propose Counter Trade"
+    android:layout_alignTop="@+id/yourItemsCounterTradeListView"
+    android:layout_toEndOf="@+id/addYourItemsCounterTradeButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancelCounterTradeButton"
+        android:layout_below="@+id/proposeCounterTradeButton"
+        android:layout_alignEnd="@+id/proposeCounterTradeButton"
+        android:layout_toEndOf="@+id/yourItemsCounterTradeListView" />
+
+
+</RelativeLayout>

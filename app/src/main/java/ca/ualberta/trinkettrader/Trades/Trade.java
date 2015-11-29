@@ -42,25 +42,13 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     private Inventory offeredTrinkets;
     private Inventory requestedTrinkets;
 
-    /**
-     * Method called after searchOnNetwork gets a response. This method should
-     * be overridden to do something with the result.
-     *
-     * @param result result of searchOnNetwork
-     */
-
-    @Override
-    public <T extends ElasticStorable> void onSearchResult(T result) {
-
-    }
-
     private String status;
     private TradeManager receiver;
     private TradeManager sender;
     private Integer numberOfTrinkets;
 
     /**
-     * public constructor
+     * Constructor that initializes
      *
      * @param offeredTrinkets   inventory containing offered trinkets
      * @param receiver          TradeManager of user who was offered the trade
@@ -239,5 +227,24 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         return SEARCH_URL;
     }
 
+    /**
+     * Method called after searchOnNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param <T extends ElasticStorable> - result result of searchOnNetwork
+     */
+    @Override
+    public <T extends ElasticStorable> void onSearchResult(T result) {
 
+    }
+
+     /** Method called after getFromNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of getFromNetwork
+     */
+    @Override
+    public <T extends ElasticStorable> void onGetResult(T result) {
+
+    }
 }

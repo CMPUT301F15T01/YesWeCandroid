@@ -38,6 +38,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.User.LoggedInUser;
+import ca.ualberta.trinkettrader.User.User;
 
 /**
  * Activity that allows users to log in with email. Verifies that the email is of valid format
@@ -80,9 +81,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>, 
         } else {
             // TODO Get user info from internet
             LoggedInUser.getInstance().setEmail(email);
-            Log.i("Added email", LoggedInUser.getInstance().getUid());
             LoggedInUser.getInstance().getTradeManager().setUsername(email);
-
+            try {
+                LoggedInUser.getInstance().getFromNetwork();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             /*try {
                 LoggedInUser.getInstance().loadFromNetwork(LoggedInUser.getInstance().getClass());
             } catch (IOException e) {
