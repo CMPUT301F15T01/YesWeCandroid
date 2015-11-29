@@ -15,16 +15,24 @@
 package ca.ualberta.trinkettrader;
 
 import android.app.Instrumentation;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
 
+import com.meetme.android.horizontallistview.HorizontalListView;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -32,6 +40,7 @@ import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.PictureDirectoryManager;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
@@ -127,7 +136,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
+        final AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
                 addOrEditItemActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", addOrEditItemActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
@@ -173,7 +182,26 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // TODO Simulate selecting an image
+        // Simulate selecting an image
+        try {
+            final PictureDirectoryManager directoryManager = new PictureDirectoryManager(addOrEditItemActivity);
+            // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
+            Bitmap bitmap = BitmapFactory.decodeResource(addOrEditItemActivity.getResources(), R.drawable.bauble);
+            final File picture = directoryManager.compressPicture("bauble.jpeg", bitmap);
+            addOrEditItemActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        addOrEditItemActivity.addPicture(new Picture(picture, directoryManager));
+                    } catch (IOException | PackageManager.NameNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+        } catch (IOException | PackageManager.NameNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -185,7 +213,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Make sure the item has an image
-        addOrEditItemActivity.finish();
         Inventory trinkets = displayInventoryActivity.getInventory();
         assertFalse(trinkets.isEmpty());
         for (Trinket trinket : trinkets) {
@@ -280,7 +307,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
+        final AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
                 addOrEditItemActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", addOrEditItemActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
@@ -326,7 +353,26 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // TODO Simulate selecting an image
+        // Simulate selecting an image
+        try {
+            final PictureDirectoryManager directoryManager = new PictureDirectoryManager(addOrEditItemActivity);
+            // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
+            Bitmap bitmap = BitmapFactory.decodeResource(addOrEditItemActivity.getResources(), R.drawable.bauble);
+            final File picture = directoryManager.compressPicture("bauble.jpeg", bitmap);
+            addOrEditItemActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        addOrEditItemActivity.addPicture(new Picture(picture, directoryManager));
+                    } catch (IOException | PackageManager.NameNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+        } catch (IOException | PackageManager.NameNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -337,14 +383,41 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        /******** InventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor inventoryActivityMonitor =
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                        null, false);
+
+        // Start InventoryActivity
+        final Button secondInventoryButton = homePageActivity.getInventoryButton();
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                secondInventoryButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        InventoryActivity inventoryActivity = (InventoryActivity)
+                inventoryActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, inventoryActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                InventoryActivity.class, inventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(inventoryActivityMonitor);
+
         /******** TrinketDetailsActivity ********/
         // Set up an ActivityMonitor
-        Instrumentation.ActivityMonitor itemDetailsActivityMonitor =
+        Instrumentation.ActivityMonitor trinketDetailsActivityMonitor =
                 getInstrumentation().addMonitor(TrinketDetailsActivity.class.getName(),
                         null, false);
 
         // Start TrinketDetailsActivity
-        final ListView inventoryItemsList = displayInventoryActivity.getInventoryItemsList();
+        final ListView inventoryItemsList = inventoryActivity.getInventoryItemsList();
         displayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View view = inventoryItemsList.getChildAt(0);
@@ -354,27 +427,28 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        TrinketDetailsActivity itemDetailsActivity = (TrinketDetailsActivity)
-                itemDetailsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", itemDetailsActivity);
+        TrinketDetailsActivity trinketDetailsActivity = (TrinketDetailsActivity)
+                trinketDetailsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", trinketDetailsActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, itemDetailsActivityMonitor.getHits());
+                1, trinketDetailsActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                TrinketDetailsActivity.class, itemDetailsActivity.getClass());
+                TrinketDetailsActivity.class, trinketDetailsActivity.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(itemDetailsActivityMonitor);
+        getInstrumentation().removeMonitor(trinketDetailsActivityMonitor);
 
         // Check that the image is visible
-        // ArrayList<ImageView> imageViews = itemDetailsActivity.getImageViews();
-        // PC.; http://stackoverflow.com/questions/9113895/how-to-check-if-an-imageview-is-attached-with-image-in-android; 2015-11-01
-        // assertFalse(imageViews.isEmpty());
-        // for (ImageView imageView : imageViews) {
-        //     assertNotNull(imageView.getDrawable());
-        // }
+        HorizontalListView imageViews = trinketDetailsActivity.getGallery();
+        Integer childCount = imageViews.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            ImageView imageView = (ImageView) imageViews.getChildAt(i).findViewById(R.id.image_view);
+            // PC.; http://stackoverflow.com/questions/9113895/how-to-check-if-an-imageview-is-attached-with-image-in-android; 2015-11-01
+            assertNotNull(imageView.getDrawable());
+        }
 
         // Close the activities
-        itemDetailsActivity.finish();
+        trinketDetailsActivity.finish();
         addOrEditItemActivity.finish();
         displayInventoryActivity.finish();
         homePageActivity.finish();
@@ -463,7 +537,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
+        final AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
                 addOrEditItemActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", addOrEditItemActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
@@ -509,7 +583,26 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // TODO Simulate selecting an image
+        // Simulate selecting an image
+        try {
+            final PictureDirectoryManager directoryManager = new PictureDirectoryManager(addOrEditItemActivity);
+            // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
+            Bitmap bitmap = BitmapFactory.decodeResource(addOrEditItemActivity.getResources(), R.drawable.bauble);
+            final File picture = directoryManager.compressPicture("bauble.jpeg", bitmap);
+            addOrEditItemActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        addOrEditItemActivity.addPicture(new Picture(picture, directoryManager));
+                    } catch (IOException | PackageManager.NameNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+        } catch (IOException | PackageManager.NameNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -521,7 +614,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Make sure the item's image is less than the limit
-        addOrEditItemActivity.finish();
         Inventory trinkets = displayInventoryActivity.getInventory();
         for (Trinket trinket : trinkets) {
             for (Picture picture : trinket.getPictures()) {
@@ -617,7 +709,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
+        final AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
                 addOrEditItemActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", addOrEditItemActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
@@ -663,7 +755,26 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // TODO Simulate selecting an image
+        // Simulate selecting an image
+        try {
+            final PictureDirectoryManager directoryManager = new PictureDirectoryManager(addOrEditItemActivity);
+            // malclocke; http://stackoverflow.com/questions/8017374/how-to-pass-a-uri-to-an-intent; 2015-11-04
+            Bitmap bitmap = BitmapFactory.decodeResource(addOrEditItemActivity.getResources(), R.drawable.bauble);
+            final File picture = directoryManager.compressPicture("bauble.jpeg", bitmap);
+            addOrEditItemActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        addOrEditItemActivity.addPicture(new Picture(picture, directoryManager));
+                    } catch (IOException | PackageManager.NameNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+        } catch (IOException | PackageManager.NameNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
@@ -676,7 +787,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
         /******** TrinketDetailsActivity ********/
         // Set up an ActivityMonitor
-        Instrumentation.ActivityMonitor itemDetailsActivityMonitor =
+        Instrumentation.ActivityMonitor trinketDetailsActivityMonitor =
                 getInstrumentation().addMonitor(TrinketDetailsActivity.class.getName(),
                         null, false);
 
@@ -691,16 +802,16 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        TrinketDetailsActivity itemDetailsActivity = (TrinketDetailsActivity)
-                itemDetailsActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", itemDetailsActivity);
+        TrinketDetailsActivity trinketDetailsActivity = (TrinketDetailsActivity)
+                trinketDetailsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", trinketDetailsActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
-                1, itemDetailsActivityMonitor.getHits());
+                1, trinketDetailsActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                TrinketDetailsActivity.class, itemDetailsActivity.getClass());
+                TrinketDetailsActivity.class, trinketDetailsActivity.getClass());
 
         // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(itemDetailsActivityMonitor);
+        getInstrumentation().removeMonitor(trinketDetailsActivityMonitor);
 
         /******** AddOrEditTrinketActivity ********/
         // Set up an ActivityMonitor
@@ -709,7 +820,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                         null, false);
 
         // Start InventoryActivity
-        final Button editButton = itemDetailsActivity.getEditButton();
+        final Button editButton = trinketDetailsActivity.getEditButton();
         homePageActivity.runOnUiThread(new Runnable() {
             public void run() {
                 editButton.performClick();
@@ -746,7 +857,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
-        itemDetailsActivity.finish();
+        trinketDetailsActivity.finish();
 
         // Make sure the item does not have an image
         Inventory inventory = displayInventoryActivity.getInventory();
@@ -757,7 +868,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
 
         // Close the activities
         removeItemPictureActivity.finish();
-        itemDetailsActivity.finish();
+        trinketDetailsActivity.finish();
         addOrEditItemActivity.finish();
         displayInventoryActivity.finish();
         homePageActivity.finish();

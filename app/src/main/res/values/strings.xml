@@ -59,4 +59,5 @@
     <!-- activity_create_trade -->
     <string name="activity_create_trade_friend_prompt">Select a Friend</string>
     <string name="title_activity_inventory_trade">InventoryTradeActivity</string>
+    <string name="title_activity_trade_received">TradeReceivedActivity</string>
 </resources>

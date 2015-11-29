@@ -69,6 +69,8 @@ public class TradesActivity extends Activity implements Observer {
         userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();
+        User user = LoggedInUser.getInstance();
+        int i = 1;
     }
 
     @Override

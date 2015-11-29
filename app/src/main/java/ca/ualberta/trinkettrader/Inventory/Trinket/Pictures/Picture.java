@@ -32,7 +32,10 @@ import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.R;
 
 /**
- * Represents a compressed picture. This is most likely attached to a trinket.
+ * A class representing a compressed picture.  Pictures can optionally be attached to a Trinket to show
+ * what it looks like to other users.  Pictures can be added to a Trinket from either the phone's camera
+ * or gallery.  These sources will provide images as uncompressed JPEGs, but the Trinket Trader app requires
+ * the images be 65535 bytes in size or less.  Thus, the attached images need ot be compressed.
  */
 public class Picture extends ElasticStorable implements ca.ualberta.trinkettrader.Observable {
 
@@ -205,7 +208,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      * {@inheritDoc}
      */
     @Override
-    public String getId() {
+    public String getUid() {
         return file.getName();
     }
 

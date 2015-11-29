@@ -25,7 +25,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="115dp"
-        android:text="View Inventory"/>
+        android:text="View Inventory"
+        android:onClick="inventoryClick"/>
 
     <Button
         android:id="@+id/edit_button"

@@ -24,7 +24,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:onClick="openPastTrades"
-        android:text="Past Trades"/>
+        android:text="Completed Trades"/>
 
     <Button
         android:id="@+id/create_trades_button"

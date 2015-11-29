@@ -271,7 +271,7 @@ public class AddOrEditTrinketActivity extends Activity implements Observer {
         }
     }
 
-    private void addPicture(Picture newPicture) {
+    public void addPicture(Picture newPicture) {
         try {
             this.controller.addPicture(newPicture);
             this.updatePictures();
