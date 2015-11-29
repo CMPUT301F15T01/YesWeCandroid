@@ -76,10 +76,12 @@ public class TrinketDetailsController {
     }
 
     public void updateTextViews() {
-        activity.getNameTextView().setText(clickedTrinket.getName());
-        activity.getDescriptionTextView().setText(clickedTrinket.getDescription());
-        activity.getQuantityTextView().setText(clickedTrinket.getQuantity());
-        activity.getQualityTextView().setText(clickedTrinket.getQuality());
         activity.getCategoryTextView().setText(clickedTrinket.getCategory());
+        activity.getDescriptionTextView().setText(clickedTrinket.getDescription());
+        activity.getLatitude().setText(String.format("%.4f", clickedTrinket.getLocation().getLatitude()));
+        activity.getLongitude().setText(String.format("%.4f", clickedTrinket.getLocation().getLongitude()));
+        activity.getNameTextView().setText(clickedTrinket.getName());
+        activity.getQualityTextView().setText(clickedTrinket.getQuality());
+        activity.getQuantityTextView().setText(clickedTrinket.getQuantity());
     }
 }

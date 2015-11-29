@@ -86,14 +86,14 @@ public class UserProfileActivity extends Activity implements Observer {
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         if (location != null) {
-            latitude.setText(Double.toString(location.getLatitude()));
-            longitude.setText(Double.toString(location.getLongitude()));
+            latitude.setText(String.format("%.4f", location.getLatitude()));
+            longitude.setText(String.format("%.4f", location.getLongitude()));
         }
 
         final LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-                latitude.setText(Double.toString(location.getLatitude()));
-                longitude.setText(Double.toString(location.getLongitude()));
+                latitude.setText(String.format("%.4f", location.getLatitude()));
+                longitude.setText(String.format("%.4f", location.getLongitude()));
             }
 
             public void onStatusChanged(String arg0, int arg1, Bundle arg2) {

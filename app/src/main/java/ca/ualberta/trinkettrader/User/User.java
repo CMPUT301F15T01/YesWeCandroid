@@ -78,11 +78,12 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         this.profile = profile;
         this.trackedFriendsList = trackedFriends;
         this.tradeManager = tradeManager;
+        this.tradeManager.setUsername(this.profile.getUsername());
         this.needToSave = Boolean.TRUE;
     }
 
     public User(String email) {
-
+        this.tradeManager.setUsername(email);
     }
 
     protected void queueUpdate() {

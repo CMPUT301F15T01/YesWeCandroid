@@ -63,6 +63,7 @@ public class Friend implements Friendable {
     public Friend() {
         this.isTracked = Boolean.FALSE;
         this.actualFriend = new User();
+        this.getActualFriend().getProfile().setUsername(email);
     }
 
     /**
@@ -98,8 +99,9 @@ public class Friend implements Friendable {
     public Friend(String email) {
         actualFriend = new User();
         this.actualFriend.getProfile().setEmail(email);
+        this.actualFriend.getTradeManager().setUsername(email);
         this.isTracked = Boolean.FALSE;
-    }
+}
 
 
     /**
