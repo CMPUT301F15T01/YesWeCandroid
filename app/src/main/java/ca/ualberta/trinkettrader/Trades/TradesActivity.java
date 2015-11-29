@@ -61,16 +61,22 @@ public class TradesActivity extends Activity implements Observer {
         currentTradesListView = (ListView) findViewById(R.id.currentTradesList);
         pastTradesButton = (Button) findViewById(R.id.past_trades_button);
         createTradeButton = (Button) findViewById(R.id.create_trades_button);
-        User user = new User(); // TODO null pointer exception
+
+        // TODO testing - will be deleted
+        User user = new User();
+        user.setEmail("kiry@c.ca");
         Inventory inv1 = new Inventory();
         Inventory inv2 = new Inventory();
         Trade trade = new Trade(inv1, LoggedInUser.getInstance().getTradeManager(),inv2, LoggedInUser.getInstance().getTradeManager() );
         LoggedInUser.getInstance().getTradeManager().getTradeArchiver().addTrade(trade);
+        //
         userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();
-        User user = LoggedInUser.getInstance();
-        int i = 1;
+
+        // TODO what is this for?
+        //User user = LoggedInUser.getInstance();
+        //int i = 1;
     }
 
     @Override
