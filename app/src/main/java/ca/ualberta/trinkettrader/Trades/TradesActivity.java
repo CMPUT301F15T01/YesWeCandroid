@@ -27,8 +27,11 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
+import ca.ualberta.trinkettrader.User.User;
 
 
 /**
@@ -62,6 +65,22 @@ public class TradesActivity extends Activity implements Observer {
         userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();
+
+        Inventory fakeInventory = new Inventory();
+        Trinket fakeTrinket = new Trinket();
+        Inventory fakeInventory2 = new Inventory();
+        Trinket fakeTrinket2 = new Trinket();
+        fakeTrinket.setName("fake trinket - from proposer");
+        fakeInventory.add(fakeTrinket);
+        fakeTrinket2.setName("fake trinket2 - my items");
+        fakeInventory2.add(fakeTrinket2);
+
+        User fakeUser = new User("fakeUser@gmail.com");
+        fakeUser.setTradeManager(new TradeManager("fakeUser@gmail.com"));
+
+        Trade fakeTrade = new Trade(fakeInventory, LoggedInUser.getInstance().getTradeManager(), fakeInventory2, fakeUser.getTradeManager());
+        fakeTrade.setStatus("Pending Incoming");
+        userCurrentTradesList.add(fakeTrade);
     }
 
     @Override

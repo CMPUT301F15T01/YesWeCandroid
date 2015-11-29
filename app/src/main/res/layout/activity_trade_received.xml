@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+android:weightSum="60"
+tools:context="ca.ualberta.trinkettrader.Trades.TradeReceivedActivity">
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="4">
+
+    <TextView
+        android:id="@+id/tradeReceivedWithFriendTitle"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:gravity="end"
+        android:text="Trade with: "
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <TextView
+        android:id="@+id/tradeReceivedWithFriendName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="4">
+
+    <TextView
+        android:id="@+id/tradeReceivedStatusTitle"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:gravity="end"
+        android:text="Trade Status: "
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <TextView
+        android:id="@+id/tradeReceivedStatus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+</LinearLayout>
+
+<TextView
+    android:id="@+id/offeredReceivedItemsTitle"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="4"
+    android:gravity="center"
+    android:text="Offered Items"
+    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+<ListView
+    android:id="@+id/offeredReceivedItems"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="22"
+    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+<TextView
+    android:id="@+id/requestedReceivedItemsTitle"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="4"
+    android:gravity="center"
+    android:text="Requested Items"
+    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+<ListView
+    android:id="@+id/requestedReceivedItemsy"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="22"
+    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accept Trade"
+        android:id="@+id/acceptTradeButton"
+        android:onClick="acceptTradeButtonOnClick"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Decline Trade"
+        android:id="@+id/declineTradeButton"
+        android:onClick="declineTradeButtonOnClick"/>
+</LinearLayout>
+

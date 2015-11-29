@@ -56,8 +56,6 @@ public class TradeDetailsActivity extends Activity implements Observer {
         friendInTradeTextView = (TextView) findViewById(R.id.tradeWithFriendName);
         statusOfTradeTextView = (TextView) findViewById(R.id.tradeStatus);
         //TODO if stuff breaks comment this
-        //yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
-        //friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
 
         offeredItemInTradeListView = (ListView) findViewById(R.id.offeredItems);
         requestedItemInTradeListView = (ListView) findViewById(R.id.requestedItemsy);
@@ -65,6 +63,7 @@ public class TradeDetailsActivity extends Activity implements Observer {
         trade = ApplicationState.getInstance().getClickedTrade();
         controller = new TradeDetailsController(this);
         controller.updateTextViews();
+        updateTradeDetailsListView();
 
     }
 
