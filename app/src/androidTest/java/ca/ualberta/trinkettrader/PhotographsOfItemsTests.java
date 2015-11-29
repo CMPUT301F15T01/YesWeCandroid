@@ -39,7 +39,6 @@ import java.util.Arrays;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
-import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.BitmapCompressor;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.PictureDirectoryManager;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
@@ -199,6 +198,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                     }
                 }
             });
+            getInstrumentation().waitForIdleSync();
         } catch (IOException | PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -213,7 +213,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Make sure the item has an image
-        addOrEditItemActivity.finish();
         Inventory trinkets = displayInventoryActivity.getInventory();
         assertFalse(trinkets.isEmpty());
         for (Trinket trinket : trinkets) {
@@ -370,6 +369,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                     }
                 }
             });
+            getInstrumentation().waitForIdleSync();
         } catch (IOException | PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -383,6 +383,33 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        /******** InventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor inventoryActivityMonitor =
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                        null, false);
+
+        // Start InventoryActivity
+        final Button secondInventoryButton = homePageActivity.getInventoryButton();
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                secondInventoryButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        InventoryActivity inventoryActivity = (InventoryActivity)
+                inventoryActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, inventoryActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                InventoryActivity.class, inventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(inventoryActivityMonitor);
+
         /******** TrinketDetailsActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor trinketDetailsActivityMonitor =
@@ -390,7 +417,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                         null, false);
 
         // Start TrinketDetailsActivity
-        final ListView inventoryItemsList = displayInventoryActivity.getInventoryItemsList();
+        final ListView inventoryItemsList = inventoryActivity.getInventoryItemsList();
         displayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View view = inventoryItemsList.getChildAt(0);
@@ -572,6 +599,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                     }
                 }
             });
+            getInstrumentation().waitForIdleSync();
         } catch (IOException | PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -586,7 +614,6 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Make sure the item's image is less than the limit
-        addOrEditItemActivity.finish();
         Inventory trinkets = displayInventoryActivity.getInventory();
         for (Trinket trinket : trinkets) {
             for (Picture picture : trinket.getPictures()) {
@@ -744,6 +771,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                     }
                 }
             });
+            getInstrumentation().waitForIdleSync();
         } catch (IOException | PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);
         }
