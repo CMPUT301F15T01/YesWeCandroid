@@ -111,7 +111,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Sets users city
+     * Sets user's city
      *
      * @param city
      */

@@ -83,7 +83,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     public User(String email) {
-        this.tradeManager.setUsername(email);
+        this.tradeManager.setUsername(email); // TODO null pointer exception
     }
 
     protected void queueUpdate() {

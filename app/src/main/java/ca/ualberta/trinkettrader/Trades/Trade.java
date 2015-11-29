@@ -178,12 +178,12 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     @Override
     public String toString() {
 
-        String otherUser;
+        String otherUser = LoggedInUser.getInstance().getProfile().getEmail();
         // determine name of other user involved in trade
         if(LoggedInUser.getInstance().getProfile().getEmail().equals(receiver.getUsername())){
-            otherUser = sender.getUsername();
+            //otherUser = sender.getUsername();
         }else{
-            otherUser = receiver.getUsername();
+            //otherUser = receiver.getUsername();
         }
         // bold if new trade
         return "Trade No. 1 " + "with " + otherUser + "\nStatus: " + this.getStatus();
