@@ -233,5 +233,13 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
 
     }
 
+     /** Method called after getFromNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of getFromNetwork
+     */
+    @Override
+    public <T extends ElasticStorable> void onGetResult(T result) {
 
+    }
 }

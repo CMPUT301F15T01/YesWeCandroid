@@ -47,6 +47,14 @@ public class TradeManager extends ElasticStorable {
      * to and from the other user in the trade.  This TradeManager is initialized without a
      * {@link ca.ualberta.trinkettrader.Friends.Friend Friend}  to trade with.
      */
+    @Override
+    public <T extends ElasticStorable> void onGetResult(T result) {
+
+    }
+
+    /**
+     * Public Constructor
+     */
     public TradeManager() {
         notificationManager = new NotificationManager();
         tradeArchiver = new TradeArchiver();

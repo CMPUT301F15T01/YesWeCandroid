@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader.User.Profile;
 
 import android.location.Location;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -79,6 +80,7 @@ public class EditUserProfileController {
 
             LoggedInUser.getInstance().saveInFile(activity.getBaseContext());
             Boolean cnxn = InternetConnection.getInstance().internetConnectionAvailable(activity.getBaseContext());
+            Log.i("cnxn", cnxn.toString());
             if (cnxn) {
                 try {
                     User u = LoggedInUser.getInstance();

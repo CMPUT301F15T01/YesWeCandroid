@@ -28,7 +28,7 @@
         android:spinnerMode="dialog"/>
 
     <TextView
-        android:id="@+id/selectFriendTextView"
+        android:id="@+id/friendNameTitleTradeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -38,7 +38,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <Button
-        android:id="@+id/addFriendsItemsButton"
+        android:id="@+id/addFriendsItemsTradeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -47,15 +47,15 @@
         android:text="Add Friends Items"/>
 
     <ListView
-        android:id="@+id/friendsItemsListView"
+        android:id="@+id/friendsItemsTradeListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/addYourItemsButton"
+        android:layout_above="@+id/addYourItemsCounterTradeButton"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/addFriendsItemsButton"/>
+        android:layout_below="@+id/addFriendsItemsTradeButton"/>
 
     <Button
-        android:id="@+id/addYourItemsButton"
+        android:id="@+id/addYourItemsTradeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -65,19 +65,19 @@
         android:text="Add Your Items"/>
 
     <ListView
-        android:id="@+id/yourItemsListView"
+        android:id="@+id/yourItemsTradeListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/friendsItemsListView"
+        android:layout_below="@+id/friendsItemsTradeListView"
         android:layout_marginTop="54dp"
-        android:layout_toStartOf="@+id/proposeTradeButton"/>
+        android:layout_toStartOf="@+id/proposeCounterTradeButton"/>
 
     <Button
         android:id="@+id/proposeTradeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/yourItemsListView"
+        android:layout_alignBottom="@+id/yourItemsTradeListView"
         android:layout_alignParentEnd="true"
         android:onClick="proposeTradeButtonOnClick"
         android:text="Propose Trade"/>
