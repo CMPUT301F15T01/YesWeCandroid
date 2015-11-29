@@ -24,7 +24,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Utility class used to compress bitmaps and store them in a new file.
+ * Utility class used to compress bitmaps and store them in a new file.  Pictures can be attached to a Trinket to show
+ * what it looks like to other users.  All pictures must be less or equal to than 65535 bytes large.  To achieve this,
+ * the JPEG image that is attached from the phone's camera or gallery is converted to a bitmap image and
+ * put through this compressor, which will ensure that the image is of the maximum size or less.
  */
 public class BitmapCompressor {
 
@@ -32,19 +35,21 @@ public class BitmapCompressor {
     private Integer MAX_IMAGE_SIZE = 65535;
 
     /**
-     * Creates a new BitmapCompressor from an android activity.
+     * Creates a new BitmapCompressor with its activity attribute set to the activity that is calling this constructor.
      *
-     * @param activity android activity used to get the application's context
+     * @param activity - android activity used to get the application's context
      */
     public BitmapCompressor(Activity activity) {
         this.activity = activity;
     }
 
     /**
-     * Compresses a given bitmap to less than 65536 bytes and stores it in a new file.
+     * Compresses a given bitmap to less than 65536 bytes and stores it in a new file.  The resulting
+     * bitmap will be 65535 bytes or less in size.  By specification, a picture must be less than 65536 bytes for it to be
+     * attached to a trinket in the app.
      *
-     * @param bitmap  bitmap to compress and store
-     * @param outfile file to place resulting compressed bitmap in
+     * @param bitmap - bitmap to compress and store
+     * @param outfile -  file to place resulting compressed bitmap in
      * @throws IOException
      */
     public void compressBitmap(Bitmap bitmap, File outfile) throws IOException {

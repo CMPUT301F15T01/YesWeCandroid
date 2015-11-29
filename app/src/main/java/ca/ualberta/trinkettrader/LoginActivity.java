@@ -23,8 +23,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -79,7 +79,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>, 
             emailTextView.setError(getString(R.string.error_invalid_email));
         } else {
             // TODO Get user info from internet
-            LoggedInUser.getInstance().getProfile().setEmail(email);
+            LoggedInUser.getInstance().setEmail(email);
+            Log.i("Added email", LoggedInUser.getInstance().getUid());
             LoggedInUser.getInstance().getTradeManager().setUsername(email);
             //try {
                 //LoggedInUser.getInstance().loadFromNetwork(LoggedInUser.getInstance().getClass());

@@ -183,7 +183,7 @@ public class TradeManager extends ElasticStorable {
     }
 
     @Override
-    public String getId() {
+    public String getUid() {
         return LoggedInUser.getInstance().getProfile().getUsername();
     }
 

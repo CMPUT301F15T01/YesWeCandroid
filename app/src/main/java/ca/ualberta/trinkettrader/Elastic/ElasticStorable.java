@@ -17,7 +17,6 @@ package ca.ualberta.trinkettrader.Elastic;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -30,10 +29,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Methods using HTTPRequest in this class are taken from AndroidElasticSearch
@@ -50,7 +46,7 @@ public abstract class ElasticStorable {
      */
     public void saveToNetwork() throws IOException {
         final HttpClient httpClient = new DefaultHttpClient();
-        final HttpPost addRequest = new HttpPost(this.getResourceUrl() + this.getId());
+        final HttpPost addRequest = new HttpPost(this.getResourceUrl() + this.getUid());
         final StringEntity stringEntity = new StringEntity(new Gson().toJson(this));
         addRequest.setEntity(stringEntity);
         addRequest.setHeader("Accept", "application/json");
@@ -71,7 +67,7 @@ public abstract class ElasticStorable {
 
     public abstract String getResourceUrl();
 
-    public abstract String getId();
+    public abstract String getUid();
 
     /**
      * Searches for ElasticStorable objects on the network matching the attribute and attribute
@@ -83,7 +79,7 @@ public abstract class ElasticStorable {
     public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, final Class<T> type) throws IOException {
         // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
         // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
-        final HttpPost searchRequest = new HttpPost(this.getSearchUrl() + this.getId());
+        final HttpPost searchRequest = new HttpPost(this.getSearchUrl() + this.getUid());
         //searchRequest.setEntity(new UrlEncodedFormEntity(postParameters));
         searchRequest.setHeader("Accept", "application/json");
 
@@ -109,6 +105,7 @@ public abstract class ElasticStorable {
                    /* for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {
                         result.add(hit.getSource());
                     }*/
+
                     onSearchResult(returned);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -125,8 +122,8 @@ public abstract class ElasticStorable {
     public <T extends ElasticStorable> void loadFromNetwork(final Class<T> type) throws IOException {
         // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
         // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
-        final HttpPost searchRequest = new HttpPost(this.getResourceUrl() + this.getId());
-        Log.i("blah", this.getResourceUrl() + this.getId());
+        final HttpPost searchRequest = new HttpPost(composeSearchURL());
+        Log.i("blah", composeSearchURL());
         searchRequest.setHeader("Accept", "application/json");
         final HttpClient httpClient = new DefaultHttpClient();
         Thread thread = new Thread(new Runnable() {
@@ -134,9 +131,11 @@ public abstract class ElasticStorable {
             public void run() {
                 try {
                     HttpResponse response = httpClient.execute(searchRequest);
+
                     Log.i("HttpResponse", response.getStatusLine().toString());
                     InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
-                    onSearchResult(new Gson().fromJson(streamReader, type));
+                    T returned = new Gson().fromJson(streamReader, type);
+                    onSearchResult(returned);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -163,7 +162,7 @@ public abstract class ElasticStorable {
      */
     public void deleteFromNetwork() throws IOException {
         final HttpClient httpClient = new DefaultHttpClient();
-        final HttpDelete deleteRequest = new HttpDelete(this.getResourceUrl() + this.getId());
+        final HttpDelete deleteRequest = new HttpDelete(this.getResourceUrl() + this.getUid());
         deleteRequest.setHeader("Accept", "application/json");
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -178,5 +177,9 @@ public abstract class ElasticStorable {
             }
         });
         thread.start();
+    }
+
+    private String composeSearchURL(){
+        return this.getSearchUrl() + "?q=" + "id" + ":" + this.getUid();
     }
 }

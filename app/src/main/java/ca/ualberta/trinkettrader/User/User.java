@@ -15,11 +15,9 @@
 package ca.ualberta.trinkettrader.User;
 
 import android.location.Location;
-import android.util.Base64;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
@@ -49,7 +47,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     protected TradeManager tradeManager;
     protected UserProfile profile;
     private ArrayList<Observer> observers;
-
+    private String uid;
     /**
      * Public constructor for user: initializes all attribute classes as empty classes with no
      * active data.
@@ -65,6 +63,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         this.tradeManager = new TradeManager();
         this.profile = new UserProfile();
         this.needToSave = Boolean.TRUE;
+        this.uid = getUid();
     }
 
     /**
@@ -80,11 +79,13 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         this.tradeManager = tradeManager;
         this.tradeManager.setUsername(this.profile.getUsername());
         this.needToSave = Boolean.TRUE;
+        this.uid = getUid();
     }
 
     public User(String email) {
         this.tradeManager = new TradeManager();
         this.tradeManager.setUsername(email);
+        this.uid = getUid();
     }
 
     protected void queueUpdate() {
@@ -230,6 +231,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     public void setProfile(UserProfile profile) {
         this.profile = profile;
         this.needToSave = Boolean.TRUE;
+        this.uid = getUid();
     }
 
     /**
@@ -283,14 +285,14 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     @Override
-    public String getId() {
+    public String getUid() {
         // Vasyl Keretsman; http://stackoverflow.com/questions/15429257/how-to-convert-byte-array-to-hexstring-in-java; 2015-11-28
         final StringBuilder builder = new StringBuilder();
         for (byte b : this.profile.getEmail().getBytes()) {
             builder.append(String.format("%02x", b));
         }
+        this.uid = builder.toString();
         return builder.toString();
-
     }
 
     @Override
@@ -306,6 +308,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      */
     @Override
     public <T extends ElasticStorable> void onSearchResult(T result) {
+        Log.i("RESULT", result.toString());
         User returned = (User) result;
         this.setProfile(returned.getProfile());
         this.setTrackedFriends(returned.getTrackedFriendsList());
@@ -322,5 +325,11 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
 
     public void setDefaultLocation(Location defaultLocation) {
         this.profile.setDefaultLocation(defaultLocation);
+    }
+
+    public void setEmail(String email){
+        this.getProfile().setEmail(email);
+        this.uid = getUid();
+        Log.i("User ID changed to", this.uid);
     }
 }
