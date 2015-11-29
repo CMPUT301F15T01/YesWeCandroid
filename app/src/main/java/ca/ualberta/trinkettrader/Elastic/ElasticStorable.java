@@ -33,6 +33,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+<<<<<<< HEAD
+=======
+import java.util.List;
+
+>>>>>>> LoggedInUser loading
 
 /**
  * Methods using HTTPRequest in this class are taken from AndroidElasticSearch
@@ -122,7 +127,11 @@ public abstract class ElasticStorable {
         return url + "?q=" + pair.getName() + ":" + pair.getValue();
     }
 
+<<<<<<< HEAD
     public <T extends ElasticStorable> void getFromNetwork(final Class<T> type) throws IOException {
+=======
+/*    public <T extends ElasticStorable> void loadFromNetwork(final Class<T> type) throws IOException {
+>>>>>>> LoggedInUser loading
         // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
         // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
         final HttpGet getRequest = new HttpGet(this.getResourceUrl() + this.getUid());
@@ -132,17 +141,38 @@ public abstract class ElasticStorable {
             public void run() {
                 try {
                     HttpResponse response = httpClient.execute(getRequest);
+<<<<<<< HEAD
                     Log.i("HttpResponse", response.getStatusLine().toString());
                     Type searchHitType = new TypeToken<T>() {}.getType();
                     T returned = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchHitType);
                     onGetResult(returned);
+=======
+                    Log.d("HttpResponseTestLoad", response.getStatusLine().toString());
+                    Type searchResponseType = new TypeToken<SearchResponse<T>>() {}.getType();
+                    InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
+                    SearchResponse<T> esResponse = new Gson().fromJson(streamReader, searchResponseType);
+                    if(esResponse == null){
+                        Log.i("NULL", "esreponse");
+                    }
+                    Hits<T> hits = esResponse.getHits();
+                    List<SearchHit<T>> hits2 = hits.getHits();
+                    if(hits2.size() > 0){
+                        for(SearchHit<T> hit: hits2){
+                            T u = hit.getSource();
+                            users.add(u);
+                        }
+                    }else {
+                        Log.i("Nothing" , "Found");
+                    }
+
+>>>>>>> LoggedInUser loading
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
         thread.start();
-    }
+    }*/
 
     /**
      * Method called after getFromNetwork gets a response. This method should
