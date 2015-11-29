@@ -208,7 +208,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      * {@inheritDoc}
      */
     @Override
-    public String getId() {
+    public String getUid() {
         return file.getName();
     }
 

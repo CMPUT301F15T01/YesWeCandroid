@@ -24,6 +24,7 @@ import java.io.IOException;
 import ca.ualberta.trinkettrader.InternetConnection;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
+import ca.ualberta.trinkettrader.User.User;
 
 /**
  * Controller for EditUserProfileActivity.
@@ -80,7 +81,8 @@ public class EditUserProfileController {
             Boolean cnxn = InternetConnection.getInstance().internetConnectionAvailable(activity.getBaseContext());
             if (cnxn) {
                 try {
-                    LoggedInUser.getInstance().saveToNetwork();
+                    User u = LoggedInUser.getInstance();
+                    u.saveToNetwork();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

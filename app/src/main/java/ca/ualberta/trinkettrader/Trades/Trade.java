@@ -223,7 +223,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     }
 
     @Override
-    public String getId() {
+    public String getUid() {
         //TODO: confirm this is the key we want for trades
         return String.valueOf(this.hashCode());
     }
