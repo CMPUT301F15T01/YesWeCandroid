@@ -147,7 +147,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * @return String
      */
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     /**

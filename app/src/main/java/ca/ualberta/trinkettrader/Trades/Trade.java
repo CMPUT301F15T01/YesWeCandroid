@@ -20,6 +20,7 @@ import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 // TODO how are counter trades affected by 0 to many thing? are borrower and owner
 // TODO roles reversed?
@@ -180,7 +181,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
 
         // need to display name of other person involved in trade
         // also need to find categories of trinkets involved
-        return "Trade No. 1 " + "with status " + this.getStatus();
+        return "Trade No. 1 " + "with status " + LoggedInUser.getInstance().getProfile().getEmail() + " " + this.getStatus();
     }
 
     /**
