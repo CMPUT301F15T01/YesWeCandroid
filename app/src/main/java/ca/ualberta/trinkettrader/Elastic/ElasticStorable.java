@@ -33,6 +33,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
+
+import ca.ualberta.trinkettrader.User.User;
 
 /**
  * Methods using HTTPRequest in this class are taken from AndroidElasticSearch
@@ -59,8 +62,8 @@ public abstract class ElasticStorable {
                 try {
                     Log.i("Hi", "Hi");
                     HttpResponse response = httpClient.execute(addRequest);
-                    Log.i("HttpResponse", response.getStatusLine().toString());
-                    Log.i("HttpResponse Body", EntityUtils.toString(response.getEntity(), "UTF-8"));
+                    Log.i("HttpResponse for Save", response.getStatusLine().toString());
+                    Log.i("HttpResponseBodyforSave", EntityUtils.toString(response.getEntity(), "UTF-8"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -132,11 +135,23 @@ public abstract class ElasticStorable {
             @Override
             public void run() {
                 try {
-                    HttpResponse response = httpClient.execute(getRequest);
-                    Log.i("HttpResponse", response.getStatusLine().toString());
-                    Type searchHitType = new TypeToken<T>() {}.getType();
-                    T returned = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchHitType);
-                    onGetResult(returned);
+                    ArrayList<T> users = new ArrayList<>();
+                    HttpResponse response = httpClient.execute(searchRequest);
+                    Log.d("HttpResponseTestLoad", response.getStatusLine().toString());
+                    Type searchResponseType = new TypeToken<SearchResponse<T>>() {
+                    }.getType();
+                    InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
+                    SearchResponse<T> esResponse = new Gson().fromJson(streamReader, searchResponseType);
+                    List<SearchHit<T>> hits = esResponse.getHits().getHits();
+                    if(hits.size() > 0){
+                        for(SearchHit<T> hit: hits){
+                            T u = hit.getSource();
+                            users.add(u);
+                        }
+                    }else {
+                        Log.i("Nothing" , "Found");
+                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -190,6 +205,44 @@ public abstract class ElasticStorable {
     }
 
     private String composeSearchURL(){
-        return this.getSearchUrl() + "?q=" + "id" + ":" + this.getUid();
+        return this.getSearchUrl() + "?q=" + "uid" + ":" + this.getUid();
     }
+
+    /*      // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
+        // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
+        final HttpPost searchRequest = new HttpPost(this.getSearchUrl() + this.getUid());
+        //searchRequest.setEntity(new UrlEncodedFormEntity(postParameters));
+        searchRequest.setHeader("Accept", "application/json");
+
+        //Useless, really
+        //String query = new Gson().toJson(postParameters);
+        //Log.i(this.getTag(), "Json command: " + query);
+
+        final HttpClient httpClient = new DefaultHttpClient();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ArrayList<ElasticStorable> result = new ArrayList<>();
+                    HttpResponse response = httpClient.execute(searchRequest);
+                    Log.i("HttpResponse", response.getStatusLine().toString());
+                    Log.i("HttpResponse Body", EntityUtils.toString(response.getEntity(), "UTF-8"));
+
+                    /*Type searchResponseType = new TypeToken<T>() {
+                    }.getType();*/
+/*    InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
+    T returned = new Gson().fromJson(streamReader, type);
+
+                    for (SearchHit<ElasticStorable> hit : esResponse.getHits().getHits()) {
+                        result.add(hit.getSource());
+                    }*/
+
+/*    onSearchResult(returned);
+} catch (IOException e) {
+        e.printStackTrace();
+        }
+        }
+        });
+        thread.start();
+        */
 }

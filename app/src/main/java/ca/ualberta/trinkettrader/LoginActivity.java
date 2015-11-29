@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.Elastic.TestElasticStorable;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.User;
 
@@ -91,7 +92,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>, 
                 LoggedInUser.getInstance().loadFromNetwork(LoggedInUser.getInstance().getClass());
             } catch (IOException e) {
                 e.printStackTrace();
-            }*/
+            }
 
             Intent intent = new Intent(this, HomePageActivity.class);
             startActivity(intent);
