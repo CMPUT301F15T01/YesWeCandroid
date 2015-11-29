@@ -169,18 +169,27 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
 
         String otherUser;
         String status = this.getStatus();
+        int tNo;
         // determine name of other user involved in trade
-        // use status to determine which list the trade is in (past trades or current trades)
         if(LoggedInUser.getInstance().getProfile().getEmail().equals(receiver.getUsername())){
             otherUser = sender.getUsername();
         }else{
             otherUser = receiver.getUsername();
         }
 
-        // bold if new trade (has not been clicked/viewed yet by user)
-        
+        // use status to determine which list the trade is in (past trades or current trades)
+        // to determine it's number in the list
+        if(status.equals("pending")){
+            tNo = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades().indexOf(this) + 1;
+        }else{
+            tNo = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades().indexOf(this) + 1;
+        }
 
-        return "Trade No. 1 " + "with " + otherUser + "\nStatus: " + status;
+
+        // bold if new trade (has not been clicked/viewed yet by user)
+        //SudiptaforAndroid
+
+        return "Trade No. " + tNo + " with " + otherUser + "\nStatus: " + status;
     }
 
     /**

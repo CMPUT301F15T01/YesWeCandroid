@@ -63,6 +63,7 @@ public class TradesActivity extends Activity implements Observer {
         createTradeButton = (Button) findViewById(R.id.create_trades_button);
 
         // TODO testing - will be deleted
+        // TODO test past trades list as well
         User user = new User();
         user.getTradeManager().setUsername("peeko@bird.ca"); // must call this to set username in tradeManager for display purposes
         Inventory inv1 = new Inventory();
