@@ -27,8 +27,10 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
+import ca.ualberta.trinkettrader.User.User;
 
 
 /**
@@ -59,6 +61,11 @@ public class TradesActivity extends Activity implements Observer {
         currentTradesListView = (ListView) findViewById(R.id.currentTradesList);
         pastTradesButton = (Button) findViewById(R.id.past_trades_button);
         createTradeButton = (Button) findViewById(R.id.create_trades_button);
+        User user = new User("kiry");
+        Inventory inv1 = new Inventory();
+        Inventory inv2 = new Inventory();
+        Trade trade = new Trade(inv1, LoggedInUser.getInstance().getTradeManager(),inv2, user.getTradeManager() );
+        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().addTrade(trade);
         userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();

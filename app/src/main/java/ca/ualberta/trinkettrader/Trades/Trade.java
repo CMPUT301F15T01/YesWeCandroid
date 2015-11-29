@@ -20,6 +20,7 @@ import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 // TODO how are counter trades affected by 0 to many thing? are borrower and owner
 // TODO roles reversed?
@@ -167,10 +168,9 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     /**
      * This method override is responsible for determining how trades will be shown to the
      * user when they view their Current Trades list and Past Trades list.
-     * <p/>
+     *
      * For each trade in the list, it's number, the other person involved in the trade
-     * (not LoggedInUser), it's status and the categories of the trinkets involved will be
-     * displayed.
+     * (not LoggedInUser) and it's status will be displayed.
      *
      * @return String Text displayed for each trade in current trades list of
      * ActiveTradesActivity and in past trades list of PastTradesActivity
@@ -178,9 +178,15 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     @Override
     public String toString() {
 
-        // need to display name of other person involved in trade
-        // also need to find categories of trinkets involved
-        return "Trade No. 1 " + "with status " + this.getStatus();
+        String otherUser;
+        // determine name of other user involved in trade
+        if(LoggedInUser.getInstance().getProfile().getEmail().equals(receiver.getUsername())){
+            otherUser = sender.getUsername();
+        }else{
+            otherUser = receiver.getUsername();
+        }
+        // bold if new trade
+        return "Trade No. 1 " + "with " + otherUser + "\nStatus: " + this.getStatus();
     }
 
     /**
