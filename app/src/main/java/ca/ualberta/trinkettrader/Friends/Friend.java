@@ -98,7 +98,7 @@ public class Friend implements Friendable {
      */
     public Friend(String email) {
         actualFriend = new User();
-        this.actualFriend.getProfile().setEmail(email);
+        this.actualFriend.setEmail(email);
         this.actualFriend.getTradeManager().setUsername(email);
         this.isTracked = Boolean.FALSE;
 }

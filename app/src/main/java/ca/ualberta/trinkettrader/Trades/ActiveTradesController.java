@@ -42,8 +42,15 @@ public class ActiveTradesController {
                 ArrayList<Trade> userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
                 Trade clickedTrade = userCurrentTradesList.get(position);
                 ApplicationState.getInstance().setClickedTrade(clickedTrade);
-                Intent intent = new Intent(activity, TradeDetailsActivity.class);  // TODO set parent to be previous activity -DisplayTradesActivity
-                activity.startActivity(intent);
+
+                if (clickedTrade.getStatus().equals("Pending Incoming")) {
+                    Intent intent = new Intent(activity, TradeReceivedActivity.class);
+                    activity.startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(activity, TradeDetailsActivity.class);  // TODO set parent to be previous activity -DisplayTradesActivity
+                    activity.startActivity(intent);
+                }
             }
         });
     }

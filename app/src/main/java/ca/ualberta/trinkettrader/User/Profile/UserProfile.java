@@ -42,6 +42,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
         this.contactInfo = new ContactInfo();
         this.defaultLocation = new Location("this");
         this.email = "";
+        this.username = "";
         this.needToSave = Boolean.TRUE;
     }
 

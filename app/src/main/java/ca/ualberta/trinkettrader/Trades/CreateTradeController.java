@@ -46,12 +46,18 @@ public class CreateTradeController {
     }
 
     public void proposeTradeButtonOnClick() {
-        Trade proposedTrade = new Trade(ApplicationState.getInstance().getYourTradeTrinkets(), ApplicationState.getInstance().getClickedFriend().getActualFriend().getTradeManager(), ApplicationState.getInstance().getFriendsTradeTrinkets(), LoggedInUser.getInstance().getTradeManager());
+        Inventory yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
+        Inventory friendsTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
+        TradeManager receiverTradeManager = ApplicationState.getInstance().getClickedFriend().getActualFriend().getTradeManager();
+        TradeManager senderTradeManager = LoggedInUser.getInstance().getTradeManager();
+
+        Trade proposedTrade = new Trade(yourTradeTrinkets, receiverTradeManager, friendsTradeTrinkets, senderTradeManager);
         LoggedInUser.getInstance().getTradeManager().proposeTrade(proposedTrade);
 
-        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades().add(proposedTrade);
-        activity.clearFriendTradeTrinketListView();
-        activity.clearYourTradeTrinketListView();
+        senderTradeManager.getTradeArchiver().getCurrentTrades().add(proposedTrade);
+        receiverTradeManager.getTradeArchiver().getCurrentTrades().add(proposedTrade);
+       // activity.clearFriendTradeTrinketListView();
+        //activity.clearYourTradeTrinketListView();
 
         Intent intent = new Intent(activity, TradesActivity.class);
         activity.startActivity(intent);

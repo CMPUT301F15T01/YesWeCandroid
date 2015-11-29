@@ -167,6 +167,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.trinkettrader.Trades.CreateTradeActivity" />
         </activity>
+        <activity
+            android:name=".Trades.TradeReceivedActivity"
+            android:label="@string/title_activity_trade_received"
+            android:parentActivityName=".Trades.TradesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.trinkettrader.Trades.TradesActivity" />
+        </activity>
     </application>
 
 </manifest>
