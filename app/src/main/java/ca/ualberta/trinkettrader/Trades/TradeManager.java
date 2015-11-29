@@ -22,12 +22,13 @@ import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
- * Manages a user's trades.
+ * Class for managing a user's trades.
  * Each user will have a TradeManager. The TradeManager will be used when
  * a user creates a new trade, deletes a trade, proposes a counter trade,
  * or changes the status of a trade (accepts or declines the trade).
- * Trade manager works with the TradeArchiver class to store and access a user's trades
- * and with the NotificationManager class to notify
+ * Trade manager works with the TradeArchiver class to store and access a user's trades,
+ * and with the NotificationManager class to notify the user of a new trade that another user has proposed
+ * to them.
  */
 public class TradeManager extends ElasticStorable {
 
@@ -41,10 +42,10 @@ public class TradeManager extends ElasticStorable {
     private String username;
 
     /**
-     * Method called after getFromNetwork gets a response. This method should
-     * be overridden to do something with the result.
-     *
-     * @param result result of getFromNetwork
+     * Default constructor.  Creates an empty {@link TradeArchiver TradeArchiver} to archive this trade
+     * in the user's lists of current/past trades, and an empty NotificationManager to handle notifications
+     * to and from the other user in the trade.  This TradeManager is initialized without a
+     * {@link ca.ualberta.trinkettrader.Friends.Friend Friend}  to trade with.
      */
     @Override
     public <T extends ElasticStorable> void onGetResult(T result) {
@@ -60,7 +61,13 @@ public class TradeManager extends ElasticStorable {
     }
 
     /**
-     * Public Constructor that takes in the friend's username.
+     * Constructor that initializes the username (email address) of the {@link ca.ualberta.trinkettrader.Friends.Friend Friend}
+     * the user is trading with.  Creates an empty {@link TradeArchiver TradeArchiver} to archive this trade
+     * in the user's lists of current/past trades, and an empty NotificationManager to handle notifications
+     * to and from the other user in the trade.  This TradeManager is initialized without a
+     * {@link ca.ualberta.trinkettrader.Friends.Friend Friend}  to trade with.
+     *
+     * @param String - username (email address) of the Friend this TradeManager is handling a trade with
      */
     public TradeManager(String username) {
         this.username = username;

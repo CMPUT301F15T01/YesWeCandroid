@@ -32,6 +32,7 @@ public class TradeReceivedController {
     }
 
     public void declineTradeButtonOnClick() {
-        //TODO
+        Intent intent = new Intent(activity, CounterTradeActivity.class);
+        activity.startActivity(intent);
     }
 }

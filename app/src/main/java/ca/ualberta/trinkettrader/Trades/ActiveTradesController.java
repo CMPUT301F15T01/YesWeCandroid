@@ -43,6 +43,12 @@ public class ActiveTradesController {
                 Trade clickedTrade = userCurrentTradesList.get(position);
                 ApplicationState.getInstance().setClickedTrade(clickedTrade);
 
+                // For testing purposes: we are always going to Trade Received page
+                Intent intent = new Intent(activity, TradeReceivedActivity.class);
+                activity.startActivity(intent);
+
+
+                /**
                 if (clickedTrade.getStatus().equals("Pending Incoming")) {
                     Intent intent = new Intent(activity, TradeReceivedActivity.class);
                     activity.startActivity(intent);
@@ -51,6 +57,7 @@ public class ActiveTradesController {
                     Intent intent = new Intent(activity, TradeDetailsActivity.class);  // TODO set parent to be previous activity -DisplayTradesActivity
                     activity.startActivity(intent);
                 }
+                 **/
             }
         });
     }

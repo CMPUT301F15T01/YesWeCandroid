@@ -33,7 +33,9 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
     private ArrayList<Trade> pastTrades;
 
     /**
-     * Public Constructor
+     * Default constructor.  Creates empty {@link ArrayList ArrayLists} for storing the current (active)
+     * trades and past (inactive) trades.  A TradeArchiver is created with this constructor each time a
+     * new {@link TradeManager TradeManager} is created to manage a trade.
      */
     public TradeArchiver() {
         currentTrades = new ArrayList<>();
@@ -110,7 +112,8 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
 
 
     /**
-     * Returns trade at sepcified index in list of current trades.
+     * Returns trade at sepcified index in list of current trades.  Trades are stored in the order they
+     * are created, so the first trade to participate in is at index 0.
      *
      * @param index Index (position) of trade in list of current trades
      * @return Trade Trinket exchange between a borrower and an owner
@@ -120,7 +123,8 @@ public class TradeArchiver implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns trade at specifed index in list of past trades.
+     * Returns trade at specifed index in list of past trades.  Trades are stored in the order they
+     * are created, so the first trade to participate in is at index 0.
      *
      * @param index Index (position) of trade in list of past trades
      * @return Trade Trinket exchange between a borrower and an owner
