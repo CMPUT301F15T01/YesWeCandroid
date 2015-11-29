@@ -17,11 +17,25 @@ package ca.ualberta.trinkettrader.User;
 import android.location.Location;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
+import ca.ualberta.trinkettrader.Elastic.Hits;
+import ca.ualberta.trinkettrader.Elastic.SearchHit;
+import ca.ualberta.trinkettrader.Elastic.SearchResponse;
 import ca.ualberta.trinkettrader.Friends.FriendsList;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsList;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
@@ -341,5 +355,41 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
                 e.printStackTrace();
             }
         }
+    }
+
+    public void loadFromNetwork() throws IOException {
+        // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
+        // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
+        final HttpGet getRequest = new HttpGet(this.composeSearchURL());
+        final HttpClient httpClient = new DefaultHttpClient();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ArrayList<User> users = new ArrayList<>();
+                    HttpResponse response = httpClient.execute(getRequest);
+                    Log.d("HttpResponseTestLoad", response.getStatusLine().toString());
+                    Type searchResponseType = new TypeToken<SearchResponse<User>>() {}.getType();
+                    InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
+                    SearchResponse<User> esResponse = new Gson().fromJson(streamReader, searchResponseType);
+
+                    Hits<User> hits = esResponse.getHits();
+                    List<SearchHit<User>> hits2 = hits.getHits();
+                    if(hits2.size() > 0){
+                        for(SearchHit<User> hit: hits2){
+                            User u = hit.getSource();
+                            Log.i("Email FOUND", u.getProfile().getEmail());
+                            users.add(u);
+                        }
+                    }else {
+                        Log.i("Nothing" , "Found");
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 }
