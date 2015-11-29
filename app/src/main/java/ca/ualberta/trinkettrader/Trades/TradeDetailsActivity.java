@@ -53,7 +53,7 @@ public class TradeDetailsActivity extends Activity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_details);
-       // friendInTradeTextView = (TextView) findViewById(R.id.tradeWithFriendName);
+        friendInTradeTextView = (TextView) findViewById(R.id.tradeWithFriendName);
         statusOfTradeTextView = (TextView) findViewById(R.id.tradeStatus);
         //TODO if stuff breaks comment this
         //yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();

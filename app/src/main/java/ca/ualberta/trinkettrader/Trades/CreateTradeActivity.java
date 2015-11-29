@@ -104,6 +104,20 @@ public class CreateTradeActivity extends Activity {
         yourTradeTrinketListView.setAdapter(yourTrinketAdapter);
     }
 
+    public void clearFriendTradeTrinketListView() {
+        friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
+        friendTradeTrinkets.clear();
+        friendTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, friendTradeTrinkets);
+        friendTradeTrinketListView.setAdapter(friendTrinketAdapter);
+    }
+
+    public void clearYourTradeTrinketListView() {
+        yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
+        yourTradeTrinkets.clear();
+        yourTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, yourTradeTrinkets);
+        yourTradeTrinketListView.setAdapter(yourTrinketAdapter);
+    }
+
     public Button getAddFriendsItemsButton() {
         return addFriendsItemsButton;
     }

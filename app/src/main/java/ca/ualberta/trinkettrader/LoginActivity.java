@@ -80,6 +80,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>, 
         } else {
             // TODO Get user info from internet
             LoggedInUser.getInstance().getProfile().setEmail(email);
+            LoggedInUser.getInstance().getTradeManager().setUsername(email);
             try {
                 LoggedInUser.getInstance().loadFromNetwork(LoggedInUser.getInstance().getClass());
             } catch (IOException e) {

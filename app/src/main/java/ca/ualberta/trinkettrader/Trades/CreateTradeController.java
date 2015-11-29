@@ -41,7 +41,7 @@ public class CreateTradeController {
     }
 
     public void addYourItemsButtonOnClick() {
-        Intent intent = new Intent(activity, InventoryActivity.class);
+        Intent intent = new Intent(activity, InventoryTradeActivity.class);
         activity.startActivity(intent);
     }
 
@@ -50,6 +50,8 @@ public class CreateTradeController {
         LoggedInUser.getInstance().getTradeManager().proposeTrade(proposedTrade);
 
         LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades().add(proposedTrade);
+        activity.clearFriendTradeTrinketListView();
+        activity.clearYourTradeTrinketListView();
 
         Intent intent = new Intent(activity, TradesActivity.class);
         activity.startActivity(intent);

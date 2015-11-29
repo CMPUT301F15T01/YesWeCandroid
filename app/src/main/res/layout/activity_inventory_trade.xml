@@ -13,7 +13,7 @@ tools:context="ca.ualberta.trinkettrader.Trades.InventoryTradeActivity">
 
 
 <Spinner
-    android:id="@+id/friendsAccessibilitySpinner"
+    android:id="@+id/inventoryTradeAccessibilitySpinner"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="65dp"
@@ -21,13 +21,13 @@ tools:context="ca.ualberta.trinkettrader.Trades.InventoryTradeActivity">
     android:prompt="@string/activity_display_inventory_category_prompt"/>
 
 <Button
-    android:id="@+id/friendsFilterButtton"
+    android:id="@+id/inventoryTradeFilterButtton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="Filter"/>
 
 <ListView
-    android:id="@+id/friendsDisplayedTrinkets"
+    android:id="@+id/inventoryTradeDisplayedTrinkets"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"/>
 
