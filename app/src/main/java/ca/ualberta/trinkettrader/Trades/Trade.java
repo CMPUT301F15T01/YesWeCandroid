@@ -43,8 +43,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     private Inventory requestedTrinkets;
 
     private String status;
-    private TradeManager receiver;
-    private TradeManager sender;
+    private transient TradeManager receiver;
+    private transient TradeManager sender;
     private Integer numberOfTrinkets;
 
     /**

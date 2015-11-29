@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
+import java.io.IOException;
+
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.Friends.FriendsInventoryActivity;
@@ -58,6 +60,14 @@ public class CreateTradeController {
         receiverTradeManager.getTradeArchiver().getCurrentTrades().add(proposedTrade);
        // activity.clearFriendTradeTrinketListView();
         //activity.clearYourTradeTrinketListView();
+/**
+        try {
+            proposedTrade.saveToNetwork();
+        }
+        catch (IOException e) {
+
+        }
+**/
 
         Intent intent = new Intent(activity, TradesActivity.class);
         activity.startActivity(intent);

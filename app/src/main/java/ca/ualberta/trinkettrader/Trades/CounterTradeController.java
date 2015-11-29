@@ -45,7 +45,8 @@ public class CounterTradeController {
         activity.startActivity(intent);
     }
 
-    public void proposeTradeButtonOnClick() {
+    public void proposeCounterTradeButtonOnClick() {
+        ApplicationState.getInstance().setInCounterTrade(false);
         Inventory yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
         Inventory friendsTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
         TradeManager receiverTradeManager = ApplicationState.getInstance().getClickedFriend().getActualFriend().getTradeManager();
@@ -61,6 +62,16 @@ public class CounterTradeController {
 
         Intent intent = new Intent(activity, TradesActivity.class);
         activity.startActivity(intent);
+    }
+
+
+    public void cancelCounterTradeButtonOnClick() {
+        ApplicationState.getInstance().setInCounterTrade(false);
+        //TODO move to past trades
+        //TODO send declined notification
+        Intent intent = new Intent(activity, TradesActivity.class);
+        activity.startActivity(intent);
+
     }
 
     public void updateTextViews() {

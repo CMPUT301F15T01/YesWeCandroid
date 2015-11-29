@@ -52,6 +52,7 @@ public class CounterTradeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counter_trade);
 
+        ApplicationState.getInstance().setInCounterTrade(true);
         addFriendsItemsButton = (Button) findViewById(R.id.addFriendsItemsCounterTradeButton);
         addYourItemsButton = (Button) findViewById(R.id.addYourItemsCounterTradeButton);
         proposeTradeButton = (Button) findViewById(R.id.proposeCounterTradeButton);
@@ -82,13 +83,13 @@ public class CounterTradeActivity extends Activity {
 
 
     public void updateFriendTradeTrinketListView() {
-        friendTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
+        friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
         friendTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, friendTradeTrinkets);
         friendTradeTrinketListView.setAdapter(friendTrinketAdapter);
     }
 
     public void updateYourTradeTrinketListView() {
-        yourTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
+        yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
         yourTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, yourTradeTrinkets);
         yourTradeTrinketListView.setAdapter(yourTrinketAdapter);
     }
@@ -140,8 +141,12 @@ public class CounterTradeActivity extends Activity {
         controller.addYourItemsButtonOnClick();
     }
 
-    public void proposeTradeButtonOnClick(View v) {
-        controller.proposeTradeButtonOnClick();
+    public void proposeCounterTradeButtonOnClick(View v) {
+        controller.proposeCounterTradeButtonOnClick();
+    }
+
+    public void cancelCounterTradeButtonOnClick(View v) {
+        controller.cancelCounterTradeButtonOnClick();
     }
 
 }

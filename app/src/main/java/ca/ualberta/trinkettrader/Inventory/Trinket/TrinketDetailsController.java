@@ -17,6 +17,7 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 import android.content.Intent;
 
 import ca.ualberta.trinkettrader.ApplicationState;
+import ca.ualberta.trinkettrader.Trades.CounterTradeActivity;
 import ca.ualberta.trinkettrader.Trades.CreateTradeActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
@@ -68,8 +69,14 @@ public class TrinketDetailsController {
         Trinket clickedTrinket = ApplicationState.getInstance().getClickedTrinket();
         ApplicationState.getInstance().getYourTradeTrinkets().add(clickedTrinket);
 
-        Intent intent = new Intent(activity, CreateTradeActivity.class);
-        activity.startActivity(intent);
+        if (ApplicationState.getInstance().getInCounterTrade()) {
+            Intent intent = new Intent(activity, CounterTradeActivity.class);
+            activity.startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(activity, CreateTradeActivity.class);
+            activity.startActivity(intent);
+        }
     }
 
     public void openMapsOnTrinketOnClick() {

@@ -3,6 +3,7 @@ package ca.ualberta.trinkettrader.Trades;
 import android.content.Intent;
 
 import ca.ualberta.trinkettrader.ApplicationState;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Created by Me on 2015-11-28.
@@ -32,7 +33,20 @@ public class TradeReceivedController {
     }
 
     public void declineTradeButtonOnClick() {
+        Trade clickedTrade = ApplicationState.getInstance().getClickedTrade();
+        clickedTrade.setStatus("Declined");
+        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades().add(clickedTrade);
+        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades().remove(clickedTrade);
         Intent intent = new Intent(activity, CounterTradeActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public void tradeCompletedRadioButtonOnClick() {
+        Trade clickedTrade = ApplicationState.getInstance().getClickedTrade();
+        clickedTrade.setStatus("Completed");
+        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades().add(clickedTrade);
+        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades().remove(clickedTrade);
+        Intent intent = new Intent(activity, TradesActivity.class);
         activity.startActivity(intent);
     }
 }
