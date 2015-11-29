@@ -17,11 +17,13 @@ package ca.ualberta.trinkettrader.Elastic;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -29,6 +31,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
@@ -54,6 +57,7 @@ public abstract class ElasticStorable {
             @Override
             public void run() {
                 try {
+                    Log.i("Hi", "Hi");
                     HttpResponse response = httpClient.execute(addRequest);
                     Log.i("HttpResponse", response.getStatusLine().toString());
                     Log.i("HttpResponse Body", EntityUtils.toString(response.getEntity(), "UTF-8"));
@@ -79,7 +83,7 @@ public abstract class ElasticStorable {
     public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, final Class<T> type) throws IOException {
         // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
         // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
-        final HttpPost searchRequest = new HttpPost(this.getSearchUrl() + this.getUid());
+        final HttpGet searchRequest = new HttpGet(this.getSearchUrl() + this.getUid());
         //searchRequest.setEntity(new UrlEncodedFormEntity(postParameters));
         searchRequest.setHeader("Accept", "application/json");
 
@@ -119,23 +123,20 @@ public abstract class ElasticStorable {
         return url + "?q=" + pair.getName() + ":" + pair.getValue();
     }
 
-    public <T extends ElasticStorable> void loadFromNetwork(final Class<T> type) throws IOException {
+    public <T extends ElasticStorable> void getFromNetwork(final Class<T> type) throws IOException {
         // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
         // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
-        final HttpPost searchRequest = new HttpPost(composeSearchURL());
-        Log.i("blah", composeSearchURL());
-        searchRequest.setHeader("Accept", "application/json");
+        final HttpGet getRequest = new HttpGet(this.getResourceUrl() + this.getUid());
         final HttpClient httpClient = new DefaultHttpClient();
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    HttpResponse response = httpClient.execute(searchRequest);
-
+                    HttpResponse response = httpClient.execute(getRequest);
                     Log.i("HttpResponse", response.getStatusLine().toString());
-                    InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
-                    T returned = new Gson().fromJson(streamReader, type);
-                    onSearchResult(returned);
+                    Type searchHitType = new TypeToken<T>() {}.getType();
+                    T returned = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchHitType);
+                    onGetResult(returned);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -144,7 +145,14 @@ public abstract class ElasticStorable {
         thread.start();
     }
 
-    public abstract String getSearchUrl();
+    /**
+     * Method called after getFromNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of getFromNetwork
+     * @param <T>    type passed to getFromNetwork
+     */
+    public abstract <T extends ElasticStorable> void onGetResult(T result);
 
     /**
      * Method called after searchOnNetwork gets a response. This method should
@@ -153,6 +161,8 @@ public abstract class ElasticStorable {
      * @param result result of searchOnNetwork
      */
     public abstract <T extends ElasticStorable> void onSearchResult(T result);
+
+    public abstract String getSearchUrl();
 
     /**
      * This method deletes this object from the elasticsearch server. This

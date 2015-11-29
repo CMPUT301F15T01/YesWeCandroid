@@ -33,12 +33,13 @@ import ca.ualberta.trinkettrader.User.Profile.UserProfile;
  * LoggedInUser or a Friend. This class mainly acts as a container for all of
  * the various classes that make up a user.
  */
-
 public class User extends ElasticStorable implements ca.ualberta.trinkettrader.Observable, Friendable {
 
     private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/";
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/_search";
     private static final String TAG = "User";
+
+    private ArrayList<Observer> observers;
     protected Boolean needToSave;
     protected FriendsList friendsList;
     protected Inventory inventory;
@@ -46,8 +47,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     protected TrackedFriendsList trackedFriendsList;
     protected TradeManager tradeManager;
     protected UserProfile profile;
-    private ArrayList<Observer> observers;
-    private String uid;
+
     /**
      * Public constructor for user: initializes all attribute classes as empty classes with no
      * active data.
@@ -58,12 +58,11 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     public User() {
         this.friendsList = new FriendsList();
         this.inventory = new Inventory();
+        this.needToSave = Boolean.TRUE;
         this.notificationManager = new NotificationManager();
+        this.profile = new UserProfile();
         this.trackedFriendsList = new TrackedFriendsList();
         this.tradeManager = new TradeManager();
-        this.profile = new UserProfile();
-        this.needToSave = Boolean.TRUE;
-        this.uid = getUid();
     }
 
     /**
@@ -73,24 +72,21 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     public User(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager) {
         this.friendsList = friendsList;
         this.inventory = inventory;
+        this.needToSave = Boolean.TRUE;
         this.notificationManager = notificationManager;
         this.profile = profile;
         this.trackedFriendsList = trackedFriends;
         this.tradeManager = tradeManager;
         this.tradeManager.setUsername(this.profile.getUsername());
-        this.needToSave = Boolean.TRUE;
-        this.uid = getUid();
     }
 
     public User(String email) {
         super();
         this.tradeManager = new TradeManager();
         this.tradeManager.setUsername(email);
-        this.uid = getUid();
     }
 
     protected void queueUpdate() {
-
     }
 
     /**
@@ -166,7 +162,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @param friendsList
      */
-
     public void setFriendsList(FriendsList friendsList) {
         this.friendsList = friendsList;
         this.needToSave = Boolean.TRUE;
@@ -177,7 +172,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return Inventory
      */
-
     public Inventory getInventory() {
         return inventory;
     }
@@ -187,7 +181,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @param inventory
      */
-
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
         this.needToSave = Boolean.TRUE;
@@ -198,7 +191,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return NotificationManager
      */
-
     public NotificationManager getNotificationManager() {
         return notificationManager;
     }
@@ -208,7 +200,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @param notificationManager
      */
-
     public void setNotificationManager(NotificationManager notificationManager) {
         this.notificationManager = notificationManager;
     }
@@ -218,7 +209,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return UserProfile
      */
-
     public UserProfile getProfile() {
         return profile;
     }
@@ -228,11 +218,9 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @param profile
      */
-
     public void setProfile(UserProfile profile) {
         this.profile = profile;
         this.needToSave = Boolean.TRUE;
-        this.uid = getUid();
     }
 
     /**
@@ -240,7 +228,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return TrackedFriendsList
      */
-
     public TrackedFriendsList getTrackedFriendsList() {
         return trackedFriendsList;
     }
@@ -250,7 +237,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @param trackedFriendsList
      */
-
     public void setTrackedFriends(TrackedFriendsList trackedFriendsList) {
         this.trackedFriendsList = trackedFriendsList;
     }
@@ -260,7 +246,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return TradeManager
      */
-
     public TradeManager getTradeManager() {
         return tradeManager;
     }
@@ -270,7 +255,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @param tradeManager
      */
-
     public void setTradeManager(TradeManager tradeManager) {
         this.tradeManager = tradeManager;
     }
@@ -292,8 +276,9 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         for (byte b : this.profile.getEmail().getBytes()) {
             builder.append(String.format("%02x", b));
         }
-        this.uid = builder.toString();
-        return builder.toString();
+        String uid = builder.toString();
+        Log.i("Uid", uid);
+        return uid;
     }
 
     @Override
@@ -330,7 +315,22 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
 
     public void setEmail(String email){
         this.getProfile().setEmail(email);
-        this.uid = getUid();
-        Log.i("User ID changed to", this.uid);
+    }
+
+    /**
+     * Method called after getFromNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of getFromNetwork
+     */
+    @Override
+    public <T extends ElasticStorable> void onGetResult(T result) {
+        User user = (User) result;
+        this.setFriendsList(user.getFriendsList());
+        this.setInventory(user.getInventory());
+        this.setNotificationManager(user.getNotificationManager());
+        this.setProfile(user.getProfile());
+        this.setTrackedFriends(user.getTrackedFriendsList());
+        this.setTradeManager(user.getTradeManager());
     }
 }

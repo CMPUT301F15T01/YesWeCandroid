@@ -247,4 +247,22 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     public byte[] getPictureByteArray() {
         return this.pictureByteArray;
     }
+
+    /**
+     * Method called after getFromNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of getFromNetwork
+     */
+    @Override
+    public <T extends ElasticStorable> void onGetResult(T result) {
+        Picture picture = (Picture) result;
+        this.file.delete();
+        try {
+            this.file = directoryManager.compressPicture(this.filename, picture.getPictureByteArray());
+            this.notifyObservers();
+        } catch (IOException | PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }

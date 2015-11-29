@@ -41,6 +41,17 @@ public class TradeManager extends ElasticStorable {
     private String username;
 
     /**
+     * Method called after getFromNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of getFromNetwork
+     */
+    @Override
+    public <T extends ElasticStorable> void onGetResult(T result) {
+
+    }
+
+    /**
      * Public Constructor
      */
     public TradeManager() {
