@@ -83,11 +83,8 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     public User(String email) {
-<<<<<<< HEAD
         super();
-=======
         this.tradeManager = new TradeManager();
->>>>>>> 5398644957a8ed96785bd6f7e6a71a6cd0a82252
         this.tradeManager.setUsername(email);
         this.uid = getUid();
     }
