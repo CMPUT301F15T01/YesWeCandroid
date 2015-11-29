@@ -71,6 +71,7 @@ public class FriendsListActivity extends Activity implements Observer {
         testTrinket.setQuality("Great");
         testTrinket.setQuantity("2");
         LoggedInUser.getInstance().getFriendsList().getFriendByUsername("test123").getActualFriend().getInventory().add(testTrinket);
+
     }
 
     @Override

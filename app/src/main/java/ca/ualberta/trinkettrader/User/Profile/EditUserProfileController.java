@@ -74,7 +74,7 @@ public class EditUserProfileController {
             Location location = new Location("this");
             location.setLatitude(_latitude);
             location.setLongitude(_longitude);
-            userProfile.setDefaultLocation(new Location("this"));
+            userProfile.setDefaultLocation(location);
 
             LoggedInUser.getInstance().saveInFile(activity.getBaseContext());
             Boolean cnxn = InternetConnection.getInstance().internetConnectionAvailable(activity.getBaseContext());

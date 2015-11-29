@@ -15,7 +15,7 @@ public class TradeDetailsController {
 
     public void updateTextViews() {
         //TODO add friend that you will be trading with
-       // activity.getFriendInTradeTextView().setText(clickedTrade.);
+          activity.getFriendInTradeTextView().setText(clickedTrade.getReceiver().getUsername());
        // activity.getOfferedItemInTradeListView().setText(clickedTrade.getOfferedTrinkets());
        // activity.getRequestedItemInTradeListView().setText(clickedTrade.getRequestedTrinkets());
 
