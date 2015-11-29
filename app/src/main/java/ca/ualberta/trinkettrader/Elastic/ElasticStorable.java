@@ -126,17 +126,17 @@ public abstract class ElasticStorable {
         return url + "?q=" + pair.getName() + ":" + pair.getValue();
     }
 
-    public <T extends ElasticStorable> void getFromNetwork(final Class<T> type) throws IOException {
+    public <T extends ElasticStorable> void loadFromNetwork(final Class<T> type) throws IOException {
         // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
         // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
-        final HttpGet getRequest = new HttpGet(this.getResourceUrl() + this.getUid());
+        final HttpGet getRequest = new HttpGet(composeSearchURL());
         final HttpClient httpClient = new DefaultHttpClient();
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     ArrayList<T> users = new ArrayList<>();
-                    HttpResponse response = httpClient.execute(searchRequest);
+                    HttpResponse response = httpClient.execute(getRequest);
                     Log.d("HttpResponseTestLoad", response.getStatusLine().toString());
                     Type searchResponseType = new TypeToken<SearchResponse<T>>() {
                     }.getType();

@@ -84,12 +84,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>, 
             LoggedInUser.getInstance().setEmail(email);
             LoggedInUser.getInstance().getTradeManager().setUsername(email);
             try {
-                LoggedInUser.getInstance().getFromNetwork();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            /*try {
-                LoggedInUser.getInstance().loadFromNetwork(LoggedInUser.getInstance().getClass());
+                LoggedInUser.getInstance().loadFromNetwork(User.class);
             } catch (IOException e) {
                 e.printStackTrace();
             }
