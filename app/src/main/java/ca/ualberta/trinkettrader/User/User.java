@@ -17,7 +17,6 @@ package ca.ualberta.trinkettrader.User;
 import android.location.Location;
 import android.util.Log;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observer;
 
@@ -295,15 +294,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      */
     @Override
     public <T extends ElasticStorable> void onSearchResult(T result) {
-        Log.i("RETURNED" , ((User) result).getProfile().getEmail());
-        if(result.getUid() != getUid()){
-            try {
-                saveToNetwork();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return;
-        }
         Log.i("RESULT", result.toString());
         User returned = (User) result;
         this.setProfile(returned.getProfile());
@@ -312,7 +302,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         this.setInventory(returned.getInventory());
         this.setNotificationManager(returned.getNotificationManager());
         this.setTradeManager(returned.getTradeManager());
-        Log.i("Retrived from network", this.getProfile().getEmail());
     }
 
 

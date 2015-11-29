@@ -14,10 +14,8 @@
 
 package ca.ualberta.trinkettrader.User;
 
-import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
-
 /**
  * Interface to overcome issue of casting User to be a Friend.
  */
-public interface Friendable{
+public interface Friendable {
 }
