@@ -57,7 +57,6 @@ public abstract class ElasticStorable {
             @Override
             public void run() {
                 try {
-                    Log.i("Hi", "Hi");
                     HttpResponse response = httpClient.execute(addRequest);
                     Log.i("HttpResponse", response.getStatusLine().toString());
                     Log.i("HttpResponse Body", EntityUtils.toString(response.getEntity(), "UTF-8"));
