@@ -9,7 +9,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:weightSum="1"
     tools:context="ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity">
 
     <!-- Bill Donahue; https://github.com/MeetMe/Android-HorizontalListView; 2015-11-20 -->
@@ -18,14 +17,12 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:widget="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        android:layout_weight="0.73"
+        android:layout_height="200dp"
         widget:dividerWidth="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/trinketNameTitle"
@@ -52,7 +49,7 @@
             android:id="@+id/trinketDescriptionTitle"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:gravity="right"
+            android:gravity="end"
             android:text="Description: "
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
@@ -72,7 +69,7 @@
             android:id="@+id/trinketQuantityTitle"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:gravity="right"
+            android:gravity="end"
             android:text="Quantity: "
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
@@ -93,7 +90,7 @@
             android:id="@+id/trinketQualityTitle"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:gravity="right"
+            android:gravity="end"
             android:text="Quality: "
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
@@ -113,7 +110,7 @@
             android:id="@+id/trinketCategoryTitle"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:gravity="right"
+            android:gravity="end"
             android:text="Category: "
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
@@ -133,7 +130,7 @@
             android:id="@+id/trinketAccessibilityTitle"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:gravity="right"
+            android:gravity="end"
             android:text="Accessibility: "
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
@@ -149,38 +146,68 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/openMapsOnTrinketButton"
-            android:layout_width="175dp"
+        <TextView
+            android:id="@+id/trinketLatitudeTitle"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:onClick="openMapsOnTrinketOnClick"
-            android:text="Maps"/>
+            android:gravity="end"
+            android:text="Latitude: "
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-        <Button
-            android:id="@+id/addYourTrinketToTradeButton"
-            android:layout_width="175dp"
+        <TextView
+            android:id="@+id/trinketLatitude"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="0.50"
-            android:onClick="addYourTrinketToTradeButtonOnClick"
-            android:text="Add To Trade"/>
+            android:layout_marginStart="20dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/trinketLongitudeTitle"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:gravity="end"
+            android:text="Longitude: "
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+        <TextView
+            android:id="@+id/trinketLongitude"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1">
+        android:weightSum="60">
 
         <Button
             android:id="@+id/edit_button"
-            android:layout_width="175dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="20"
             android:onClick="editClick"
             android:text="Edit"/>
 
         <Button
-            android:id="@+id/deleteItemButton"
-            android:layout_width="175dp"
+            android:id="@+id/addYourTrinketToTradeButton"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:onClick="addYourTrinketToTradeButtonOnClick"
+            android:text="Add To Trade"/>
+
+        <Button
+            android:id="@+id/deleteItemButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
             android:onClick="deleteClick"
             android:text="Delete"/>
     </LinearLayout>

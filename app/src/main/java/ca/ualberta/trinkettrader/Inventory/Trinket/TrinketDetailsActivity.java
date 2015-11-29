@@ -48,11 +48,13 @@ import ca.ualberta.trinkettrader.R;
 public class TrinketDetailsActivity extends Activity implements Observer {
 
 
-    private TextView name;
-    private TextView description;
-    private TextView quantity;
-    private TextView quality;
     private TextView category;
+    private TextView description;
+    private TextView latitude;
+    private TextView longitude;
+    private TextView name;
+    private TextView quality;
+    private TextView quantity;
 
     private AlertDialog dialog;
     private Button deleteButton;
@@ -72,16 +74,18 @@ public class TrinketDetailsActivity extends Activity implements Observer {
 
         this.item = ApplicationState.getInstance().getClickedTrinket();
 
-        name = (TextView) findViewById(R.id.trinketName);
-        description = (TextView) findViewById(R.id.trinketDescription);
-        quantity = (TextView) findViewById(R.id.trinketQuantity);
-        quality = (TextView) findViewById(R.id.trinketQuality);
-        category = (TextView) findViewById(R.id.trinketCategory);
+        this.category = (TextView) findViewById(R.id.trinketCategory);
+        this.description = (TextView) findViewById(R.id.trinketDescription);
+        this.latitude = (TextView) findViewById(R.id.trinketLatitude);
+        this.longitude = (TextView) findViewById(R.id.trinketLongitude);
+        this.name = (TextView) findViewById(R.id.trinketName);
+        this.quality = (TextView) findViewById(R.id.trinketQuality);
+        this.quantity = (TextView) findViewById(R.id.trinketQuantity);
 
-        this.deleteButton = (Button) findViewById(R.id.deleteItemButton);
-        this.editButton = (Button) findViewById(R.id.edit_button);
         this.addToTradeButton = (Button) findViewById(R.id.addYourTrinketToTradeButton);
         this.controller = new TrinketDetailsController(this);
+        this.deleteButton = (Button) findViewById(R.id.deleteItemButton);
+        this.editButton = (Button) findViewById(R.id.edit_button);
         this.gallery = (HorizontalListView) findViewById(R.id.gallery);
 
         this.pictures = item.getPictures();
@@ -223,6 +227,14 @@ public class TrinketDetailsActivity extends Activity implements Observer {
 
     public void openMapsOnTrinketOnClick(View view) {
         controller.openMapsOnTrinketOnClick();
+    }
+
+    public TextView getLatitude() {
+        return latitude;
+    }
+
+    public TextView getLongitude() {
+        return longitude;
     }
 
     /**
