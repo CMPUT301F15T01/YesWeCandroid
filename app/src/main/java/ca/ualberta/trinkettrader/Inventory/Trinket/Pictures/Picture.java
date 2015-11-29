@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
@@ -42,11 +41,12 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     private transient static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/picture/";
     private transient static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/picture/_search";
     private transient static final String TAG = "picture";
+
     private byte[] pictureByteArray;
     private File file;
+    private String filename;
     private transient ArrayList<Observer> observers;
     private transient PictureDirectoryManager directoryManager;
-    private transient String filename;
 
     /**
      * Creates a new picture from a file containing a compressed jpeg image.
@@ -209,15 +209,30 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      */
     @Override
     public String getUid() {
-        return file.getName();
+        // Vasyl Keretsman; http://stackoverflow.com/questions/15429257/how-to-convert-byte-array-to-hexstring-in-java; 2015-11-28
+        final StringBuilder builder = new StringBuilder();
+        for (byte b : this.filename.getBytes()) {
+            builder.append(String.format("%02x", b));
+        }
+        return builder.toString();
     }
 
     /**
-     * {@inheritDoc}
+     * Method called after getFromNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of getFromNetwork
      */
     @Override
-    public String getSearchUrl() {
-        return SEARCH_URL;
+    public <T extends ElasticStorable> void onGetResult(T result) {
+        Picture picture = (Picture) result;
+        this.file.delete();
+        try {
+            this.file = directoryManager.compressPicture(this.filename, picture.getPictureByteArray());
+            this.notifyObservers();
+        } catch (IOException | PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -238,6 +253,13 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getSearchUrl() {
+        return SEARCH_URL;
+    }
 
     /**
      * Returns the byte array containing the compressed picture.
@@ -246,23 +268,5 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      */
     public byte[] getPictureByteArray() {
         return this.pictureByteArray;
-    }
-
-    /**
-     * Method called after getFromNetwork gets a response. This method should
-     * be overridden to do something with the result.
-     *
-     * @param result result of getFromNetwork
-     */
-    @Override
-    public <T extends ElasticStorable> void onGetResult(T result) {
-        Picture picture = (Picture) result;
-        this.file.delete();
-        try {
-            this.file = directoryManager.compressPicture(this.filename, picture.getPictureByteArray());
-            this.notifyObservers();
-        } catch (IOException | PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }
