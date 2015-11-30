@@ -55,7 +55,7 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns the instance of the singleton
+     * Returns the instance of the ApplicationState singleton
      *
      * @return ApplicationState
      */
@@ -64,32 +64,40 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns the friend most recently clicked on from the Friends List ListView.
+     * Returns the friend most recently clicked on from the {@link ca.ualberta.trinkettrader.Friends.FriendsList FriendsList}
+     * ListView in {@link ca.ualberta.trinkettrader.Friends.FriendsListActivity FriendsListActivity}.
      *
-     * @return Friend
+     * @return Friend - the Friend the current User has most recently clicked on
      */
     public Friend getClickedFriend() {
         return this.clickedFriend;
     }
 
     /**
-     * Sets the friend most recently clicked on from the Friends List ListView.
+     * Sets the friend most recently clicked on from the {@link ca.ualberta.trinkettrader.Friends.FriendsList FriendsList}
+     * ListView in {@link ca.ualberta.trinkettrader.Friends.FriendsListActivity FriendsListActivity}.
+     *
+     * @param clickedFriend - the Friend the current User has most recently clicked on
      */
     public void setClickedFriend(Friend clickedFriend) {
         this.clickedFriend = clickedFriend;
     }
 
     /**
-     * Returns the trinket most recently clicked on from the Inventory ListView.
+     * Returns the trinket most recently clicked on from the {@link Inventory Inventory} in the
+     * {@link ca.ualberta.trinkettrader.Inventory.InventoryActivity InventoryActivity}.
      *
-     * @return Trinket
+     * @return Trinket - trinket the current User most recently clicked on
      */
     public Trinket getClickedTrinket() {
         return this.clickedTrinket;
     }
 
     /**
-     * Sets the trinket most recently clicked on from the Inventory ListView.
+     * Sets the trinket most recently clicked on from the {@link Inventory Inventory}
+     * ListView in {@link ca.ualberta.trinkettrader.Inventory.InventoryActivity InventoryActivity}.
+     *
+     * @param clickedTrinket - trinket the current User most recently clicked on
      */
     public void setClickedTrinket(Trinket clickedTrinket) {
         this.clickedTrinket = clickedTrinket;
@@ -97,9 +105,10 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
 
 
     /**
-     * Gets the Inventory (list of Trinkets) that the user wants from the friend.
+     * Gets the {@link Inventory Inventory} (list of Trinkets) that the user wants from the friend in a
+     * {@link Trade Trade}, as set in the {@link ca.ualberta.trinkettrader.Trades.CreateTradeActivity CreateTradeActivity}.
      *
-     * @return the Inventory (list of Trinkets) representing what the user wants from the friend
+     * @return Inventory - the Inventory (list of Trinkets) representing what the user wants from the friend
      */
     public Inventory getFriendsTradeTrinkets() {
         return friendsTradeTrinkets;
@@ -107,7 +116,10 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
 
 
     /**
-     * Sets the Inventory (list of Trinkets) that the user wants from the friend.
+     * Sets the {@link Inventory Inventory} (list of Trinkets) that the user wants from the friend in a
+     * {@link Trade Trade}, as set in the {@link ca.ualberta.trinkettrader.Trades.CreateTradeActivity CreateTradeActivity}.
+     *
+     * @param friendsTradeTrinkets - the Inventory (list of Trinkets) representing what the user wants from the friend
      */
     public void setFriendsTradeTrinkets(Inventory friendsTradeTrinkets) {
         this.friendsTradeTrinkets = friendsTradeTrinkets;
@@ -115,7 +127,8 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
 
 
     /**
-     * Gets the Inventory (list of Trinkets) that the user wants to give to the friend.
+     * Gets the {@link Inventory Inventory} (list of Trinkets) that the user wants to give to the friend in a
+     * {@link Trade Trade}, as set in the {@link ca.ualberta.trinkettrader.Trades.CreateTradeActivity CreateTradeActivity}.
      *
      * @return the Inventory (list of Trinkets) representing what the user wants to give to the friend
      */
@@ -124,7 +137,8 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Sets the Inventory (list of Trinkets) that the user wants to give to the friend.
+     * Sets the {@link Inventory Inventory} (list of Trinkets) that the user wants to give to the friend in a
+     * {@link Trade Trade}, as set in the {@link ca.ualberta.trinkettrader.Trades.CreateTradeActivity CreateTradeActivity}.
      */
     public void setYourTradeTrinkets(Inventory yourTradeTrinkets) {
         this.yourTradeTrinkets = yourTradeTrinkets;
@@ -155,18 +169,26 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
+     * Returns Boolean indicating if the user is involved in a counter trade.  If inCounterTrade
+     * is true then the user is currently creating a counter trade, if it returns false then the user is not.
+     * A user can start a counter trade if a they reject a trade proposed to them in
+     * the {@link ca.ualberta.trinkettrader.Trades.TradeReceivedActivity TradeReceivedActivity}, as they
+     * are then directed by the app to the {@link ca.ualberta.trinkettrader.Trades.CounterTradeActivity CounterTradeActivity}.
      *
-     *
-     * @return Boolean
+     * @return Boolean - true if the user is currently in the CounterTradeActivity, false otherwise
      */
     public Boolean getInCounterTrade() {
         return inCounterTrade;
     }
 
     /**
+     * Sets Boolean indicating if the user is involved in a counter trade.  If inCounterTrade
+     * is true then the user is currently creating a counter trade, if it returns false then the user is not.
+     * A user can start a counter trade if a they reject a trade proposed to them in
+     * the {@link ca.ualberta.trinkettrader.Trades.TradeReceivedActivity TradeReceivedActivity}, as they
+     * are then directed by the app to the {@link ca.ualberta.trinkettrader.Trades.CounterTradeActivity CounterTradeActivity}.
      *
-     *
-     * @param inCounterTrade
+     * @param inCounterTrade - true if the user is currently in the CounterTradeActivity, false otherwise
      */
     public void setInCounterTrade(Boolean inCounterTrade) {
         this.inCounterTrade = inCounterTrade;
