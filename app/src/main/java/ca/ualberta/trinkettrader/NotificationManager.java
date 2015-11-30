@@ -14,6 +14,9 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.content.Intent;
+import android.net.Uri;
+
 import java.util.ArrayList;
 
 import ca.ualberta.trinkettrader.User.User;
@@ -53,6 +56,5 @@ public class NotificationManager {
      * and an owner after a trade has been accepted.
      */
     public void sendEmail() {
-
     }
 }
