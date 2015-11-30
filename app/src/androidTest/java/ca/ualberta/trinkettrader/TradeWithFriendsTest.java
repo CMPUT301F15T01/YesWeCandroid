@@ -21,6 +21,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.io.IOException;
+
 import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
@@ -598,6 +600,12 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         userProfileActivity.finish();
         currentTradesActivity.finish();
         tradeDetailsActivity.finish();
+
+        try{
+            currentUser.deleteFromNetwork(); // delete logged in user
+        }catch(IOException e){
+
+        }
     }
 
 
