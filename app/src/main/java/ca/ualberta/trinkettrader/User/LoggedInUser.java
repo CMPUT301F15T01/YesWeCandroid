@@ -114,26 +114,4 @@ public class LoggedInUser extends User {
     public static LoggedInUser getInstance() {
         return ourInstance;
     }
-
-    public void getFromNetwork() throws IOException {
-        // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
-        // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
-        final HttpGet getRequest = new HttpGet(this.getResourceUrl() + this.getUid());
-        final HttpClient httpClient = new DefaultHttpClient();
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    HttpResponse response = httpClient.execute(getRequest);
-                    Log.i("HttpResponse", response.getStatusLine().toString());
-                    Type searchHitType = new TypeToken<SearchHit<LoggedInUser>>() {}.getType();
-                    SearchHit<LoggedInUser> returned = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchHitType);
-                    onGetResult(returned.getSource());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
-    }
 }

@@ -18,16 +18,30 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Observer;
+import java.util.Set;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
+import ca.ualberta.trinkettrader.Elastic.SearchHit;
 import ca.ualberta.trinkettrader.R;
 
 /**
@@ -45,8 +59,8 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     private byte[] pictureByteArray;
     private File file;
     private String filename;
-    private transient ArrayList<Observer> observers;
     private transient PictureDirectoryManager directoryManager;
+    private transient Set<Observer> observers;
 
     /**
      * Creates a new picture from a file containing a compressed jpeg image.
@@ -67,7 +81,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
         while (result == 0) {
             result = new FileInputStream(this.file).read(pictureByteArray);
         }
-        this.observers = new ArrayList<>();
+        this.observers = new HashSet<>();
         this.saveToNetwork();
     }
 
@@ -84,7 +98,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
         // poitroae; http://stackoverflow.com/questions/8717333/converting-drawable-resource-image-into-bitmap; 2015-11-25
         Bitmap placeholder = BitmapFactory.decodeResource(activity.getResources(), R.drawable.placeholder);
         this.file = directoryManager.compressPicture(this.filename, placeholder);
-        this.observers = new ArrayList<>();
+        this.observers = new HashSet<>();
     }
 
     /**
@@ -93,19 +107,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      * the picture has previously been loaded.
      */
     public void loadPicture() throws IOException, PackageManager.NameNotFoundException {
-        ArrayList<NameValuePair> postParameters = new ArrayList<>();
-        postParameters.add(new NameValuePair() {
-            @Override
-            public String getName() {
-                return "picture";
-            }
-
-            @Override
-            public String getValue() {
-                return filename;
-            }
-        });
-        this.searchOnNetwork(postParameters, Picture.class);
+        this.getFromNetwork(Picture.class);
     }
 
     /**
@@ -218,6 +220,37 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     }
 
     /**
+     * Attempts to find this object on the elasticsearch server. If the object
+     * cannot be found then pushes the current version to the server.
+     *
+     * @param type class of this object
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void getFromNetwork(Class<T> type) throws IOException {
+        // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
+        // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
+        final HttpGet getRequest = new HttpGet(this.getResourceUrl() + this.getUid());
+        final HttpClient httpClient = new DefaultHttpClient();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpResponse response = httpClient.execute(getRequest);
+                    Log.i("HttpResponse", response.getStatusLine().toString());
+                    Type searchHitType = new TypeToken<SearchHit<Picture>>() {
+                    }.getType();
+                    SearchHit<Picture> returned = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchHitType);
+                    onGetResult(returned.getSource());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    /**
      * Method called after getFromNetwork gets a response. This method should
      * be overridden to do something with the result.
      *
@@ -228,7 +261,8 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
         Picture picture = (Picture) result;
         this.file.delete();
         try {
-            this.file = directoryManager.compressPicture(this.filename, picture.getPictureByteArray());
+            this.pictureByteArray = picture.getPictureByteArray();
+            this.file = directoryManager.compressPicture(this.filename, this.pictureByteArray);
             this.notifyObservers();
         } catch (IOException | PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -242,15 +276,7 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      * @param result result of searchOnNetwork
      */
     @Override
-    public <T extends ElasticStorable> void onSearchResult(T result) {
-        Picture picture = (Picture) result;
-        this.file.delete();
-        try {
-            this.file = directoryManager.compressPicture(this.filename, picture.getPictureByteArray());
-            this.notifyObservers();
-        } catch (IOException | PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+    public <T extends ElasticStorable> void onSearchResult(Collection<T> result) {
     }
 
     /**
@@ -268,5 +294,17 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
      */
     public byte[] getPictureByteArray() {
         return this.pictureByteArray;
+    }
+
+    /**
+     * Searches for ElasticStorable objects on the network matching the attribute and attribute
+     * value pairs. Calls onSearchResult with the results when the search completes.
+     *
+     * @param postParameters pairs of attributes to use when searching
+     * @param type
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
     }
 }

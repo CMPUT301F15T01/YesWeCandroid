@@ -14,6 +14,8 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.app.Activity;
+
 import java.util.ArrayList;
 import java.util.Observer;
 
@@ -45,6 +47,7 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     private Integer friendSpinnerPosition = 0;
     private Inventory friendsTradeTrinkets = new Inventory();
     private Inventory yourTradeTrinkets = new Inventory();
+    private Activity activity;
 
 
 
@@ -206,4 +209,11 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
         }
     }
 
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
 }

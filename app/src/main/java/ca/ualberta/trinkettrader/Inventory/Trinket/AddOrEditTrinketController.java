@@ -99,6 +99,14 @@ public class AddOrEditTrinketController {
         }
         prepareTrinketForSave();
         this.user.getInventory().add(this.trinket);
+        try {
+            this.user.saveToNetwork();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (Picture picture: pictures) {
+            picture.deleteObserver(activity);
+        }
         Intent intent = new Intent(activity, InventoryActivity.class);
         activity.startActivity(intent);
     }
@@ -115,6 +123,11 @@ public class AddOrEditTrinketController {
         this.trinket.setQuantity(this.activity.getTrinketQuantity().getText().toString());
         this.trinket.setQuality(new ArrayList<>(Arrays.asList(this.activity.getResources().getStringArray(R.array.spinner_qualities))).get(this.activity.getTrinketQuality().getSelectedItemPosition()));
         this.trinket.setPictures(pictures);
+        ArrayList<String> pictureFileNames = new ArrayList<>();
+        for (Picture picture: pictures) {
+            pictureFileNames.add(picture.getFilename());
+        }
+        this.trinket.setPictureFileNames(pictureFileNames);
 
         Location location = new Location("this");
         if (this.activity.getTrinketLatitude().getText().toString().length() == 0) {
@@ -146,6 +159,14 @@ public class AddOrEditTrinketController {
         }
         prepareTrinketForSave();
         this.user.getInventory().set(this.user.getInventory().indexOf(ApplicationState.getInstance().getClickedTrinket()), this.trinket);
+        for (Picture picture: pictures) {
+            picture.deleteObserver(activity);
+        }
+        try {
+            this.user.saveToNetwork();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Intent intent = new Intent(activity, InventoryActivity.class);
         activity.startActivity(intent);
     }
