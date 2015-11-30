@@ -1,15 +1,21 @@
 package ca.ualberta.trinkettrader;
 
 import android.app.Instrumentation;
+import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
+import ca.ualberta.trinkettrader.Friends.FriendsInventoryActivity;
+import ca.ualberta.trinkettrader.Friends.FriendsListActivity;
 import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
@@ -367,5 +373,131 @@ public class GeolocationTests extends ActivityInstrumentationTestCase2 {
         displayUserProfileActivity.finish();
         homePageActivity.finish();
         loginActivity.finish();
+    }
+
+    public void testSearchByGeolocation() {
+        /**
+         * Prior to running this test you must run the emulator and provide it
+         * provide it a gps location.
+         *
+         * telnet localhost 5554
+         * geo fix 25.2525 55.5555
+         */
+
+        // Get the current activity
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** HomePageActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor homePageActivityMonitor =
+                getInstrumentation().addMonitor(HomePageActivity.class.getName(),
+                        null, false);
+
+        // Start InventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emailTextView.setText(test_email);
+            }
+        });
+        final Button homePageButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                homePageButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        HomePageActivity homePageActivity = (HomePageActivity)
+                homePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", homePageActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, homePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                HomePageActivity.class, homePageActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        // Delete user from network
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /******** UserProfileActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor displayFriendsMonitor =
+                getInstrumentation().addMonitor(FriendsListActivity.class.getName(),
+                        null, false);
+
+        // Start InventoryActivity
+        final Button friendsButton = homePageActivity.getFriendsButton();
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                friendsButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        FriendsListActivity friendsListActivity = (FriendsListActivity)
+                displayFriendsMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", friendsListActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayFriendsMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                UserProfileActivity.class, friendsListActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayFriendsMonitor);
+
+        Instrumentation.ActivityMonitor friendsInventoryActivityMonitor =
+                getInstrumentation().addMonitor(FriendsInventoryActivity.class.getName(),
+                        null, false);
+
+        final Button fInvButton = friendsListActivity.getAllInventoriesButton();
+        friendsListActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                fInvButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        FriendsInventoryActivity friendsInventoryActivity = (FriendsInventoryActivity)
+                friendsInventoryActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", friendsInventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, friendsInventoryActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                UserProfileActivity.class, friendsInventoryActivity.getClass());
+
+        getInstrumentation().removeMonitor(friendsInventoryActivityMonitor);
+
+        final Spinner radiusSpinner = friendsInventoryActivity.getLocationSpinner();
+        Resources resources = friendsInventoryActivity.getResources();
+        ArrayList<String> spinner_categories = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.spinner_location)));
+        final int dist5 = spinner_categories.indexOf("5 km");
+        friendsInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                radiusSpinner.setSelection(dist5);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        final Button filterButton = friendsInventoryActivity.getFilterButton();
+        friendsListActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                filterButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        final ListView friendsInvList = friendsListActivity.getFriendsListView();
     }
 }
