@@ -138,21 +138,32 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
 
     /**
      * Sets the trinket most recently clicked on from the Active Trades ListView (currentTradesListView)
-     * or the Past Trades ListView (pastTradesListView).
+     * or the Past Trades ListView (pastTradesListView). Once clicked, a trade will have been viewed
+     * by the user and will not be new anymore.  This method calls 'setNotNewOfferedTrade' which removes
+     * the <b>NEW!</b> status of of the trade, which changes how the trade will be displayed in the
+     * current trades list.
      *
      * @param clickedTrade trade that was clicked
      */
     public void setClickedTrade(Trade clickedTrade) {
-        // trade was clicked at least once, so not new anymore
-        clickedTrade.setNotNewOfferedTrade();  //TODO add to JavaDocs
+        clickedTrade.setNotNewOfferedTrade();
         this.clickedTrade = clickedTrade;
     }
 
-
+    /**
+     *
+     *
+     * @return Boolean
+     */
     public Boolean getInCounterTrade() {
         return inCounterTrade;
     }
 
+    /**
+     *
+     *
+     * @param inCounterTrade
+     */
     public void setInCounterTrade(Boolean inCounterTrade) {
         this.inCounterTrade = inCounterTrade;
     }

@@ -200,10 +200,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
             tNo = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades().indexOf(this) + 1;
         }
 
-        // bold if new trade (has not been clicked/viewed yet by user)
-        //SudiptaforAndroid; http://stackoverflow.com/questions/4792260/how-do-you-change-text-to-bold-in-android; 2015-11-29
-        //TextView newTrade = (TextView) findViewById(R.layout.activity_trades_trade_box);
-        //newTrade.setTypeface(null, Typeface.BOLD);
+        // if trade hasn't been clicked (viewed) by user, display NEW! beside it
         if(isNewOfferedTrade) {
             return "NEW! Trade No. " + tNo + " with " + otherUser + "\nStatus: " + status;
         }else{
@@ -211,15 +208,6 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         }
     }
 
-    /**
-     * Creates a formatted string describing the trade.  It includes which users were involved in the
-     * trade and the items they were trading.  This string is sent as an email to both users involved in
-     * the trade when the user who the trade was proposed to clicks the "Accept" button in the
-     * {@link TradeReceivedActivity TradeReceivedActivity}.
-     *
-     * @return String - a formatted string describing a trade that was just accepted.  This string is intended
-     * to be sent as a confirmation to both parties involved in an accepted trade.
-     */
     public String toEmailString() {
         String message = "New Trade!\n";
         message = message + this.getSender().getUsername() + " offers: \n";
