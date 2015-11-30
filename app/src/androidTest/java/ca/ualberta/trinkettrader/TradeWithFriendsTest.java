@@ -444,7 +444,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     *
     *  Use Case - Owner/Borrower can browse all current trades involving them
     *
-    *  Use Case -
+    *  Use Case: Owner/Borrower can browse all current trades involving them as either the borrower or owner
     *
     *  Use Case - Be notified of a proposed trade
     /* Tests that user is notified when offered a new trade.
@@ -604,6 +604,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     * TradeDetailsActivity just included for completeness.
     *
     *  Use Case: Owner/Borrower can browse all past trades involving them
+    *
+    *  Use Case: Owner/Borrower can browse all past trades involving them as the borrower or owner
     * */
     public void testViewPastTrades() {
         /****Hardcode in trades to click****/
