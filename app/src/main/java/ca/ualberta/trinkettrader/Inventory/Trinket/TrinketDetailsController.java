@@ -18,6 +18,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import java.io.IOException;
+
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Trades.CounterTradeActivity;
 import ca.ualberta.trinkettrader.Trades.CreateTradeActivity;
@@ -53,6 +55,11 @@ public class TrinketDetailsController {
      */
     public void onDeleteClick(Trinket trinket) {
         LoggedInUser.getInstance().getInventory().remove(trinket);
+        try {
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

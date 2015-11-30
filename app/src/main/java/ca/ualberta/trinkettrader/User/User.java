@@ -301,7 +301,11 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
                 ArrayList<Picture> pictures = new ArrayList<>();
                 for (String filename : trinket.getPictureFileNames()) {
                     try {
-                        pictures.add(new Picture(filename, new PictureDirectoryManager(ApplicationState.getInstance().getActivity()), ApplicationState.getInstance().getActivity()));
+                        Picture picture = new Picture(filename, new PictureDirectoryManager(ApplicationState.getInstance().getActivity()), ApplicationState.getInstance().getActivity());
+                        if (this.getProfile().getArePhotosDownloadable()) {
+                            picture.loadPicture();
+                        }
+                        pictures.add(picture);
                     } catch (IOException | PackageManager.NameNotFoundException e) {
                         e.printStackTrace();
                     }

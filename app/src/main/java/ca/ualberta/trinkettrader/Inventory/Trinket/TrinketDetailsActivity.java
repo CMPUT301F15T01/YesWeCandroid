@@ -90,7 +90,7 @@ public class TrinketDetailsActivity extends Activity implements Observer {
 
         this.pictures = item.getPictures();
         if (LoggedInUser.getInstance().getProfile().getArePhotosDownloadable()) {
-            for (Picture picture : pictures) {
+            for (Picture picture: pictures) {
                 try {
                     picture.loadPicture();
                 } catch (IOException | PackageManager.NameNotFoundException e) {
