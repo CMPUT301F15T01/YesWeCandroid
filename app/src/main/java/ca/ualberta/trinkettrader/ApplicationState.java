@@ -152,7 +152,7 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
         clickedTrade.setNotNewOfferedTrade();
         this.clickedTrade = clickedTrade;
     }
-   
+
     /**
      *
      *
