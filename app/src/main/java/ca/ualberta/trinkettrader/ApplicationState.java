@@ -143,6 +143,8 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
      * @param clickedTrade trade that was clicked
      */
     public void setClickedTrade(Trade clickedTrade) {
+        // trade was clicked at least once, so not new anymore
+        clickedTrade.setNotNewOfferedTrade();  //TODO add to JavaDocs
         this.clickedTrade = clickedTrade;
     }
 
