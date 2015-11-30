@@ -50,6 +50,10 @@ public class FriendsListActivity extends Activity implements Observer {
     private FriendsListController controller;
     private Button viewTrackedFriendsButton;
 
+
+
+    private Button allInventoriesButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +65,15 @@ public class FriendsListActivity extends Activity implements Observer {
         userFriendList = LoggedInUser.getInstance().getFriendsList();
         controller = new FriendsListController(this);
         controller.setFriendsListViewItemOnClick();
+        allInventoriesButton = (Button)findViewById(R.id.search_all_inventories);
+        allInventoriesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.allInventoriesOnClick();
+            }
+        });
 
+        /*
         Friend f = new Friend("test123");
         LoggedInUser.getInstance().getFriendsList().add(f);
         Trinket testTrinket = new Trinket();
@@ -71,7 +83,7 @@ public class FriendsListActivity extends Activity implements Observer {
         testTrinket.setQuality("Great");
         testTrinket.setQuantity("2");
         LoggedInUser.getInstance().getFriendsList().getFriendByUsername("test123").getActualFriend().getInventory().add(testTrinket);
-
+*/
     }
 
     @Override
@@ -149,5 +161,8 @@ public class FriendsListActivity extends Activity implements Observer {
     @Override
     public void update(Observable observable, Object data) {
 
+    }
+    public Button getAllInventoriesButton() {
+        return allInventoriesButton;
     }
 }

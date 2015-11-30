@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Friends.TrackedFriends;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -37,7 +38,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  * friend, or to remove them.
  */
 
-public class TrackedFriendsListActivity extends AppCompatActivity implements Observer {
+public class TrackedFriendsListActivity extends Activity implements Observer {
 
     private TrackedFriendsList trackedFriendsList;
     private ArrayAdapter<Friend> trackedFriendsAdapter;

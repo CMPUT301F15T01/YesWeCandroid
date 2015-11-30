@@ -23,6 +23,7 @@ import java.util.Set;
 
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.PictureDirectoryManager;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Class for describing one kind of trinket that a user has.  A trinket is either public or private

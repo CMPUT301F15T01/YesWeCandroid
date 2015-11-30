@@ -82,18 +82,19 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>, 
             // TODO Get user info from internet
             LoggedInUser.getInstance().setEmail(email);
             LoggedInUser.getInstance().getTradeManager().setUsername(email);
+            /*
             try {
                 ApplicationState.getInstance().setActivity(this);
                 LoggedInUser.getInstance().getFromNetwork(User.class);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            */
             /*try {
                 LoggedInUser.getInstance().loadFromNetwork(LoggedInUser.getInstance().getClass());
             } catch (IOException e) {
                 e.printStackTrace();
             }*/
-
             Intent intent = new Intent(this, HomePageActivity.class);
             startActivity(intent);
         }

@@ -17,36 +17,28 @@ package ca.ualberta.trinkettrader.Trades;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.Elastic.SearchHit;
 import ca.ualberta.trinkettrader.Elastic.SearchResponse;
-import ca.ualberta.trinkettrader.Elastic.SimpleSearchCommand;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
-import ca.ualberta.trinkettrader.User.User;
 
 // TODO how are counter trades affected by 0 to many thing? are borrower and owner
 // TODO roles reversed?
@@ -63,7 +55,6 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/trade/_search";
     private static final String TAG = "Trade";
 
-
     private ArrayList<Observer> observers;
     private Inventory offeredTrinkets;
     private Inventory requestedTrinkets;
@@ -72,62 +63,9 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     private String status;
     private transient TradeManager receiver;
     private transient TradeManager sender;
-    private String recieverUsername;
+    private String receiverUsername;
     private String senderUsername;
-
-    /**
-     * Searches for ElasticStorable objects on the network matching the attribute and attribute
-     * value pairs. Calls onSearchResult with the results when the search completes.
-     *
-     * @param postParameters pairs of attributes to use when searching
-     * @param type
-     * @throws IOException
-     */
-    @Override
-    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
-        // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
-        // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
-        String username = LoggedInUser.getInstance().getProfile().getEmail();
-        final HttpGet searchRequest = new HttpGet(this.getSearchUrl() + "?q=\"recieverUsername:" + username + " OR senderUsername:" + username + "\"");
-        searchRequest.setHeader("Accept", "application/json");
-
-        final HttpClient httpClient = new DefaultHttpClient();
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ArrayList<Trade> result = new ArrayList<>();
-                    HttpResponse response = httpClient.execute(searchRequest);
-                    Log.i("HttpResponse", response.getStatusLine().toString());
-                    Log.i("HttpResponse Body", EntityUtils.toString(response.getEntity(), "UTF-8"));
-
-                    Type searchResponseType = new TypeToken<SearchHit<Trade>>() {}.getType();
-                    InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
-                    SearchResponse<Trade> esResponse = new Gson().fromJson(streamReader, searchResponseType);
-
-                    for (SearchHit<Trade> hit: esResponse.getHits().getHits()) {
-                        result.add(hit.getSource());
-                    }
-
-                    onSearchResult(result);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
-    }
-
-    /**
-     * Attempts to find this object on the elasticsearch server. If the object
-     * cannot be found then pushes the current version to the server.
-     *
-     * @param type class of this object
-     * @throws IOException
-     */
-    @Override
-    public <T extends ElasticStorable> void getFromNetwork(Class<T> type) throws IOException {
-    }
+    private Boolean isNewOfferedTrade;
 
     /**
      * Constructor that initializes the sender and receiver sides of the trade.  Both parties are initialized
@@ -147,9 +85,10 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         this.receiver = receiver;
         this.requestedTrinkets = requestedTrinkets;
         this.sender = sender;
-        this.status = "pending"; // TODO need to clarify what status names will be
-        this.recieverUsername = receiver.getUsername();
+        this.receiverUsername = receiver.getUsername();
         this.senderUsername = sender.getUsername();
+        this.status = "pending"; // TODO need to clarify what status names will be
+        this.isNewOfferedTrade = Boolean.TRUE;  // TODO add comments to JavaDocs
     }
 
     /**
@@ -189,6 +128,123 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     }
 
     /**
+     * Returns number of trinkets involved in a particular trade.  Depending on who this method is called on
+     * it will return the number of trinkets that either the sender or receiver has involved in the trade.
+     *
+     * @return Integer Number of offered or requested trinkets in trade
+     */
+    public Integer getNumberOfTrinkets() {
+        return numberOfTrinkets;
+    }
+
+    /**
+     * Sets number of trinkets in a particular trade.  Depending on who this method is called on
+     * it will set the number of trinkets that either the sender or receiver has involved in the trade.
+     *
+     * @param numberOfTrinkets Number of offered or requested trinkets in a trade
+     */
+    public void setNumberOfTrinkets(Integer numberOfTrinkets) {
+        this.numberOfTrinkets = numberOfTrinkets;
+    }
+
+    /**
+     * This method override is responsible for determining how trades will be shown to the
+     * user when they view their Current Trades list and Past Trades list.
+     * <p/>
+     * For each trade in the list, it's number, the other person involved in the trade
+     * (not LoggedInUser) and it's status will be displayed.
+     *
+     * @return String Text displayed for each trade in current trades list of
+     * ActiveTradesActivity and in past trades list of PastTradesActivity
+     */
+    @Override
+    public String toString() {
+
+        String otherUser;
+        String status = this.getStatus();
+        int tNo;
+        // determine name of other user involved in trade
+        if (LoggedInUser.getInstance().getProfile().getEmail().equals(receiver.getUsername())) {
+            otherUser = sender.getUsername();
+        } else {
+            otherUser = receiver.getUsername();
+        }
+
+        // use status to determine which list the trade is in (past trades or current trades)
+        // to determine it's number in the list
+        if (status.equals("pending")) {
+            tNo = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades().indexOf(this) + 1;
+        } else {
+            tNo = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades().indexOf(this) + 1;
+        }
+
+        // bold if new trade (has not been clicked/viewed yet by user)
+        //SudiptaforAndroid; http://stackoverflow.com/questions/4792260/how-do-you-change-text-to-bold-in-android; 2015-11-29
+        //TextView newTrade = (TextView) findViewById(R.layout.activity_trades_trade_box);
+        //newTrade.setTypeface(null, Typeface.BOLD);
+        if (isNewOfferedTrade) {
+            return "NEW! Trade No. " + tNo + " with " + otherUser + "\nStatus: " + status;
+        } else {
+            return "Trade No. " + tNo + " with " + otherUser + "\nStatus: " + status;
+        }
+    }
+
+    /**
+     * Returns status of the trade. Can be pending, accepted, or declined.
+     * Current(active) trades have a status of pending.  Past (inactive)
+     * trades have a status of accepted or declined.
+     *
+     * @return String - Status of trade (pending, accepted or declined)
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets status of a trade.  Can be pending, accepted, or declined.
+     * Current(active) trades have a status of pending.  Past (inactive)
+     * trades have a status of accepted or declined.
+     *
+     * @param status - String representing status of trade (pending, accepted or declined)
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /**
+     * Creates a formatted string describing the trade.  It includes which users were involved in the
+     * trade and the items they were trading.  This string is sent as an email to both users involved in
+     * the trade when the user who the trade was proposed to clicks the "Accept" button in the
+     * {@link TradeReceivedActivity TradeReceivedActivity}.
+     *
+     * @return String - a formatted string describing a trade that was just accepted.  This string is intended
+     * to be sent as a confirmation to both parties involved in an accepted trade.
+     */
+    public String toEmailString() {
+        String message = "New Trade!\n";
+        message = message + this.getSender().getUsername() + " offers: \n";
+        for (Trinket t : this.getOfferedTrinkets()) {
+            message = message + t.getName() + "\n";
+        }
+
+        message = message + this.getReceiver().getUsername() + " offers: \n";
+        for (Trinket t : this.getRequestedTrinkets()) {
+            message = message + t.getName() + "\n";
+        }
+
+        return message;
+    }
+
+    /**
+     * Returns {@link TradeManager TradeManager} of sender of trade (user who proposes trade offer).
+     *
+     * @return TradeManager - TradeManager of user who instantiated trade
+     */
+    public TradeManager getSender() {
+        return sender;
+    }
+
+    /**
      * Returns the trinket offered by trade sender.  The current user who is proposing the trade is the
      * sender.  They will offer 1 trinket in the trade, which will be returned in an inventory.
      *
@@ -198,8 +254,10 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         return offeredTrinkets;
     }
 
+    // adarshr; http://stackoverflow.com/questions/10734106/how-to-override-tostring-properly-in-java; 2015-11-16
+
     /**
-     * Returns TradeManager of receiver of trade (user who receives trade offer).
+     * Returns {@link TradeManager TradeManager} of receiver of trade (user who receives trade offer).
      *
      * @return TradeManager - TradeManager of user who was offered the trade
      */
@@ -220,84 +278,19 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     }
 
     /**
-     * Returns TradeManager of sender of trade (user who proposes trade offer).
      *
-     * @return TradeManager - TradeManager of user who instantiated trade
-     */
-    public TradeManager getSender() {
-        return sender;
-    }
-
-    /**
-     * Returns number of trinkets involved in a particular trade.
      *
-     * @return Integer Number of offered and requested trinkets in trade
      */
-    public Integer getNumberOfTrinkets() {
-        return numberOfTrinkets;
+    public void setNotNewOfferedTrade() {
+        this.isNewOfferedTrade = Boolean.FALSE;
     }
-
-    /**
-     * Sets number of trinkets in a particular trade.
-     *
-     * @param numberOfTrinkets Number of offered and requested trinkets in a trade
-     */
-    public void setNumberOfTrinkets(Integer numberOfTrinkets) {
-        this.numberOfTrinkets = numberOfTrinkets;
-    }
-
-    /**
-     * This method override is responsible for determining how trades will be shown to the
-     * user when they view their Current Trades list and Past Trades list.
-     * <p/>
-     * For each trade in the list, it's number, the other person involved in the trade
-     * (not LoggedInUser), it's status and the categories of the trinkets involved will be
-     * displayed.
-     *
-     * @return String Text displayed for each trade in current trades list of
-     * ActiveTradesActivity and in past trades list of PastTradesActivity
-     */
-    @Override
-    public String toString() {
-
-        // need to display name of other person involved in trade
-        // also need to find categories of trinkets involved
-        return "Trade No. 1 " + "with status " + LoggedInUser.getInstance().getProfile().getEmail() + " " + this.getStatus();
-    }
-
-    /**
-     * Returns status of the trade. Can be pending, accepted, or declined.
-     * Current(active) trades have a status of pending.  Past (inactive)
-     * trades have a status of accepted or declined.
-     *
-     * @return String - Status of trade (pending, accepted or declined)
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    // TODO useful?
-
-    /**
-     * Sets status of a trade.  Can be pending, accepted, or declined.
-     * Current(active) trades have a status of pending.  Past (inactive)
-     * trades have a status of accepted or declined.
-     *
-     * @param status - String representing status of trade (pending, accepted or declined)
-     */
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    // adarshr; http://stackoverflow.com/questions/10734106/how-to-override-tostring-properly-in-java; 2015-11-16
-
-    // TODO unfinished. Everything mentioned in JavaDoc comment below will be implemented in next prototype.
-    // TODO may remodel after profile page with updatable fields
 
     @Override
     public String getTag() {
         return TAG;
     }
+
+    // TODO add JavaDocs after this works
 
     @Override
     public String getResourceUrl() {
@@ -310,9 +303,70 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         return String.valueOf(this.hashCode());
     }
 
+    /**
+     * Searches for ElasticStorable objects on the network matching the attribute and attribute
+     * value pairs. Calls onSearchResult with the results when the search completes.
+     *
+     * @param postParameters pairs of attributes to use when searching
+     * @param type
+     * @throws IOException
+     */
     @Override
-    public String getSearchUrl() {
-        return SEARCH_URL;
+    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
+        // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
+        // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
+        String username = LoggedInUser.getInstance().getProfile().getEmail();
+        final HttpGet searchRequest = new HttpGet(this.getSearchUrl() + "?q=\"recieverUsername:" + username + " OR senderUsername:" + username + "\"");
+        searchRequest.setHeader("Accept", "application/json");
+
+        final HttpClient httpClient = new DefaultHttpClient();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ArrayList<Trade> result = new ArrayList<>();
+                    HttpResponse response = httpClient.execute(searchRequest);
+                    Log.i("HttpResponse", response.getStatusLine().toString());
+                    Log.i("HttpResponse Body", EntityUtils.toString(response.getEntity(), "UTF-8"));
+
+                    Type searchResponseType = new TypeToken<SearchHit<Trade>>() {
+                    }.getType();
+                    InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
+                    SearchResponse<Trade> esResponse = new Gson().fromJson(streamReader, searchResponseType);
+
+                    for (SearchHit<Trade> hit : esResponse.getHits().getHits()) {
+                        result.add(hit.getSource());
+                    }
+
+                    onSearchResult(result);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    /**
+     * Attempts to find this object on the elasticsearch server. If the object
+     * cannot be found then pushes the current version to the server.
+     *
+     * @param type class of this object
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void getFromNetwork(Class<T> type) throws IOException {
+    }
+
+    /**
+     * Method called after getFromNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result - result of getFromNetwork
+     */
+    @Override
+    public <T extends ElasticStorable> void onGetResult(T result) {
+
     }
 
     /**
@@ -326,13 +380,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
 
     }
 
-     /** Method called after getFromNetwork gets a response. This method should
-     * be overridden to do something with the result.
-     *
-     * @param result - result of getFromNetwork
-     */
     @Override
-    public <T extends ElasticStorable> void onGetResult(T result) {
-
+    public String getSearchUrl() {
+        return SEARCH_URL;
     }
 }

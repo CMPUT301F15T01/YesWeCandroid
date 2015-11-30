@@ -15,18 +15,23 @@
 package ca.ualberta.trinkettrader.Trades;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.User;
@@ -63,8 +68,10 @@ public class TradesActivity extends Activity implements Observer {
         userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();
-        User user = LoggedInUser.getInstance();
-        int i = 1;
+
+        // TODO what is this for?
+        //User user = LoggedInUser.getInstance();
+        //int i = 1;
     }
 
     @Override
@@ -86,8 +93,22 @@ public class TradesActivity extends Activity implements Observer {
     }
 
     public void createTradeButtonOnClick(View v) {
-        Intent intent = new Intent(this, CreateTradeActivity.class);
-        startActivity(intent);
+        if (LoggedInUser.getInstance().getFriendsList().size() > 0) {
+            Intent intent = new Intent(this, CreateTradeActivity.class);
+            startActivity(intent);
+        }
+        else {
+            // David Hedlund; http://stackoverflow.com/questions/2115758/how-to-display-alert-dialog-in-android; 2015-11-29
+            new AlertDialog.Builder(this)
+                    .setTitle("No Friends :(")
+                    .setMessage("You do not have any friends to create a trade with!")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
     /**
@@ -109,9 +130,7 @@ public class TradesActivity extends Activity implements Observer {
      *
      * @return ListView ListView of user's current trades
      */
-    public ListView getCurrentTradesListView() {
-        return currentTradesListView;
-    }
+    public ListView getCurrentTradesListView() { return currentTradesListView; }
 
     /**
      * This method is called if the specified {@code Observable} object's
