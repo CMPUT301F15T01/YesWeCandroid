@@ -19,7 +19,6 @@ import org.apache.http.NameValuePair;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.NotificationManager;
@@ -44,29 +43,6 @@ public class TradeManager extends ElasticStorable {
     private TradeArchiver tradeArchiver;
 
     private String username;
-
-    /**
-     * Attempts to find this object on the elasticsearch server. If the object
-     * cannot be found then pushes the current version to the server.
-     *
-     * @param type class of this object
-     * @throws IOException
-     */
-    @Override
-    public <T extends ElasticStorable> void getFromNetwork(Class<T> type) throws IOException {
-
-    }
-
-    /**
-     * Default constructor.  Creates an empty {@link TradeArchiver TradeArchiver} to archive this trade
-     * in the user's lists of current/past trades, and an empty NotificationManager to handle notifications
-     * to and from the other user in the trade.  This TradeManager is initialized without a
-     * {@link ca.ualberta.trinkettrader.Friends.Friend Friend}  to trade with.
-     */
-    @Override
-    public <T extends ElasticStorable> void onGetResult(T result) {
-
-    }
 
     /**
      * Public Constructor
@@ -195,7 +171,6 @@ public class TradeManager extends ElasticStorable {
     public NotificationManager getNotificationManager() {
         return notificationManager;
     }
-    // TODO think that one is already instantiated in User class.  need to check.
 
     @Override
     public String getTag() {
@@ -206,10 +181,56 @@ public class TradeManager extends ElasticStorable {
     public String getResourceUrl() {
         return RESOURCE_URL;
     }
+    // TODO think that one is already instantiated in User class.  need to check.
 
     @Override
     public String getUid() {
         return LoggedInUser.getInstance().getProfile().getUsername();
+    }
+
+    /**
+     * Searches for ElasticStorable objects on the network matching the attribute and attribute
+     * value pairs. Calls onSearchResult with the results when the search completes.
+     *
+     * @param postParameters pairs of attributes to use when searching
+     * @param type
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
+    }
+
+    /**
+     * Attempts to find this object on the elasticsearch server. If the object
+     * cannot be found then pushes the current version to the server.
+     *
+     * @param type class of this object
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void getFromNetwork(Class<T> type) throws IOException {
+
+    }
+
+    /**
+     * Default constructor.  Creates an empty {@link TradeArchiver TradeArchiver} to archive this trade
+     * in the user's lists of current/past trades, and an empty NotificationManager to handle notifications
+     * to and from the other user in the trade.  This TradeManager is initialized without a
+     * {@link ca.ualberta.trinkettrader.Friends.Friend Friend}  to trade with.
+     */
+    @Override
+    public <T extends ElasticStorable> void onGetResult(T result) {
+
+    }
+
+    /**
+     * Method called after searchOnNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of searchOnNetwork
+     */
+    @Override
+    public <T extends ElasticStorable> void onSearchResult(Collection<T> result) {
     }
 
     @Override
@@ -222,7 +243,7 @@ public class TradeManager extends ElasticStorable {
      * This method is used by the Trade class to display to display the opposite
      * user involved in a trade when a trade is viewed in the current or past trades
      * list.
-     *
+     * <p/>
      * Upon trade acceptance, this method will be used to send a user
      * the trade transaction completion email.
      *
@@ -247,28 +268,5 @@ public class TradeManager extends ElasticStorable {
      */
     public void setUsername(String username) {
         this.username = username;
-    }
-
-
-    /**
-     * Method called after searchOnNetwork gets a response. This method should
-     * be overridden to do something with the result.
-     *
-     * @param result result of searchOnNetwork
-     */
-    @Override
-    public <T extends ElasticStorable> void onSearchResult(Collection<T> result) {
-    }
-
-    /**
-     * Searches for ElasticStorable objects on the network matching the attribute and attribute
-     * value pairs. Calls onSearchResult with the results when the search completes.
-     *
-     * @param postParameters pairs of attributes to use when searching
-     * @param type
-     * @throws IOException
-     */
-    @Override
-    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
     }
 }

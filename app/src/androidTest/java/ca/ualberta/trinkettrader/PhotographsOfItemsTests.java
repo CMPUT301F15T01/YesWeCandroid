@@ -972,7 +972,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         // Make sure the item does not have an image
         Inventory inventory = postDeleteInventoryActivity.getInventory();
         assertFalse(inventory.isEmpty());
-        for (Trinket trinket: inventory) {
+        for (Trinket trinket : inventory) {
             assertTrue(trinket.getPictures().isEmpty());
         }
 

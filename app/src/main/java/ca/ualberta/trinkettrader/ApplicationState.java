@@ -50,7 +50,6 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     private Activity activity;
 
 
-
     private ApplicationState() {
     }
 
@@ -195,7 +194,6 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     *
      * @return Integer
      */
     public Integer getFriendSpinnerPosition() {
@@ -203,7 +201,6 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     *
      * @param friendSpinnerPosition
      */
     public void setFriendSpinnerPosition(Integer friendSpinnerPosition) {

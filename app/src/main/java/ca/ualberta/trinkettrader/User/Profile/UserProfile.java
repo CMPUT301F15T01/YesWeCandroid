@@ -15,7 +15,6 @@
 package ca.ualberta.trinkettrader.User.Profile;
 
 import android.location.Location;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Observer;
@@ -25,7 +24,7 @@ import java.util.Observer;
  * add information about themselves such as contact information for other users to view.  They can also set
  * the default settings for their account, such as the default location for their trinkets and whether
  * they want photo downloads enabled.  A user's UserProfile is instantiated along with the user object.
- *
+ * <p/>
  * The UserProfile has a Boolean needToSave attribute to determine if there have been changes to the
  * user's profile that need to be saved to the network.  Whenever an attribute or setting in the user's
  * profile is changed then needToSave is set to true and the user will be re-saved to the network.
@@ -119,7 +118,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * Returns the user's city.  This is a String the user sets if they wish to provide a city so that
      * users can know their location for trading.  This field is optional.  If the user does not set this field then it will
      * return an empty string.
-     *
+     * <p/>
      * This method is used to populate fields in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @return String - the user's city.  Optional, so may be an empty string
@@ -133,7 +132,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * that users can know their location for trading.  This field is optional.  If the user wishes to remove a city
      * they previously set then they can input an empty string to clear it.  After setting this field then needToSave is
      * set to true so that the change will be saved to the network.
-     *
+     * <p/>
      * This method is used when a user enters information in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @param city - the user's city.  Optional, so may be an empty string
@@ -173,7 +172,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * app and how other users will be able to search for and interact with them.  It is also used to email
      * confirmation of completed trades to the users involved in the trade.  At minimum, all users must
      * have an email address attached to them.
-     *
+     * <p/>
      * This method is used to populate the users email address in fields that require it, such as when displaying
      * information about users involved in a trade.  It is also used to determine who to send an email to
      * in the {@link ca.ualberta.trinkettrader.Trades.TradeReceivedController TradeReceivedController}.
@@ -206,7 +205,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * Returns the user's name.  This is a String the user sets if they wish to provide a name other than
      * their email address.  This field is optional.  If the user does not set this field then it will
      * return an empty string.
-     *
+     * <p/>
      * This method is used to populate fields in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @return String - the user's name.  Optional, so may be an empty string
@@ -220,7 +219,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * their email address.  This field is optional.  If the user wishes to remove a name they previously
      * set then they can input an empty string to clear it.  After setting this field then needToSave is
      * set to true so that the change will be saved to the network.
-     *
+     * <p/>
      * This method is used when a user enters information in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @param name - the user's name.  Optional, so may be an empty string
@@ -234,7 +233,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * Returns the user's postal code  This is a String the user sets if they wish to provide some contact
      * information in addition to their email. This field is optional.  If the user does not set this field then it will
      * return an empty string.
-     *
+     * <p/>
      * This method is used to populate fields in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @return String - the user's postal code.  Optional, so may be an empty string
@@ -249,7 +248,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * information in addition to their email.  This field is optional.  If the user wishes to remove a potal code
      * they previously set then they can input an empty string to clear it.  After setting this field then needToSave is
      * set to true so that the change will be saved to the network.
-     *
+     * <p/>
      * This method is used when a user enters information in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @param postalCode - the user's postal code.  Optional, so may be an empty string
@@ -316,7 +315,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * the phone's location as returned by the phone's GPS, but the user may set it to another value.
      *
      * @param defaultLocation - the location that a {@link ca.ualberta.trinkettrader.Inventory.Trinket.Trinket Trinket's}
-     * location will be set to by default.
+     *                        location will be set to by default.
      */
     public void setDefaultLocation(Location defaultLocation) {
         this.defaultLocation = defaultLocation;

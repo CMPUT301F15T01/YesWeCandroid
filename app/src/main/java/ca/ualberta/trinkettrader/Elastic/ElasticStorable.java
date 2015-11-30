@@ -17,25 +17,17 @@ package ca.ualberta.trinkettrader.Elastic;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -120,10 +112,10 @@ public abstract class ElasticStorable {
      * unique to the user associated with the object ({@link ElasticStorable#getUid()}).
      *
      * @param type - class of the object being saved
-     * @param <T> - type may be of any class extending ElasticStorable
+     * @param <T>  - type may be of any class extending ElasticStorable
      * @throws IOException
      */
-    public abstract  <T extends ElasticStorable> void getFromNetwork(final Class<T> type) throws IOException;
+    public abstract <T extends ElasticStorable> void getFromNetwork(final Class<T> type) throws IOException;
 
     /**
      * Method called after getFromNetwork gets a response. This method should

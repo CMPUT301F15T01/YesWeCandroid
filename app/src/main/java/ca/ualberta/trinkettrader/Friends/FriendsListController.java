@@ -79,7 +79,7 @@ public class FriendsListController {
     /**
      * OnClick Method to view and browse the inventories of all Friendsa
      */
-    public void allInventoriesOnClick(){
+    public void allInventoriesOnClick() {
         Intent intent = new Intent(activity, AllFriendsInventoriesActivity.class);
         activity.startActivity(intent);
     }

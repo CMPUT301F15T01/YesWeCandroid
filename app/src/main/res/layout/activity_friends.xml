@@ -47,10 +47,10 @@
         android:text="View Tracked Friends"/>
 
     <Button
+        android:id="@+id/search_all_inventories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Everyone&apos;s Inventories"
-        android:id="@+id/search_all_inventories"
+        android:layout_alignEnd="@+id/friendsView"
         android:layout_below="@+id/findFriendTextField"
-        android:layout_alignEnd="@+id/friendsView" />
+        android:text="Everyone&apos;s Inventories"/>
 </RelativeLayout>

@@ -26,7 +26,7 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
  * functionality and attributes, an inventory also has an attribute specifying if it needs to be saved to
  * the device for offline viewing.  Trinkets are ordered in the Inventory in the order in which they were
  * added, so the first Trinket added to the inventory is at position 0.
- *
+ * <p/>
  * Trinkets can be added to or deleted from the current user's inventory in the
  * {@link ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity AddOrEditTrinketActivity}.
  * The trinkets in the current user's inventory can be viewed in the {@link InventoryActivity InventoryActivity},
@@ -43,7 +43,7 @@ public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinket
      * they are returned by the collection's iterator.  Constructs an Inventory from
      * an arbitrary {@link Collection Collection} of Trinkets using the equivalent {@link ArrayList ArrayList}
      * constructor.  The given collection can be empty.  By default the inventory needs to be saved.
-     *
+     * <p/>
      * This constructor should be called when a user with an existing account logs in.  The Inventory is
      * instantiated with the user's previous Inventory data.  This data is retrieved from the Elastic Search
      * server if the device is online, or from the user's local phone storage if it is offline.  If the
@@ -57,7 +57,7 @@ public class Inventory extends ArrayList<Trinket> implements ca.ualberta.trinket
     }
 
     /**
-     Default constructor used when the current user logs in for the first time (thereby creating their
+     * Default constructor used when the current user logs in for the first time (thereby creating their
      * account).  A user begins with no friends, so an empty FriendsList is instantiated using the
      * default {@link ArrayList ArrayList} constructor.  By default the inventory needs to be saved.
      */

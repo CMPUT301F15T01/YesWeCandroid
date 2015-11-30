@@ -227,7 +227,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      * {@link ElasticStorable ElasticStorable} method.
      *
      * @return - an id unique to each user of the system for saving objects to elastic search
-
      */
     @Override
     public String getUid() {
@@ -238,6 +237,18 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         }
         String uid = builder.toString();
         return uid;
+    }
+
+    /**
+     * Searches for ElasticStorable objects on the network matching the attribute and attribute
+     * value pairs. Calls onSearchResult with the results when the search completes.
+     *
+     * @param postParameters pairs of attributes to use when searching
+     * @param type
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
     }
 
     /**
@@ -291,11 +302,15 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
             User user = (User) result;
             this.setFriendsList(user.getFriendsList());
             this.setInventory(user.getInventory());
-            for (Trinket trinket: user.getInventory()) {
+            for (Trinket trinket : user.getInventory()) {
                 ArrayList<Picture> pictures = new ArrayList<>();
-                for (String filename: trinket.getPictureFileNames()) {
+                for (String filename : trinket.getPictureFileNames()) {
                     try {
-                        pictures.add(new Picture(filename, new PictureDirectoryManager(ApplicationState.getInstance().getActivity()), ApplicationState.getInstance().getActivity()));
+                        Picture picture = new Picture(filename, new PictureDirectoryManager(ApplicationState.getInstance().getActivity()), ApplicationState.getInstance().getActivity());
+                        if (this.getProfile().getArePhotosDownloadable()) {
+                            picture.loadPicture();
+                        }
+                        pictures.add(picture);
                     } catch (IOException | PackageManager.NameNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -332,6 +347,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      *
      * @return UserProfile - the user's UserProfile object
      */
+
     public UserProfile getProfile() {
         return profile;
     }
@@ -518,18 +534,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         this.getProfile().setEmail(email);
     }
 
-    /**
-     * Searches for ElasticStorable objects on the network matching the attribute and attribute
-     * value pairs. Calls onSearchResult with the results when the search completes.
-     *
-     * @param postParameters pairs of attributes to use when searching
-     * @param type
-     * @throws IOException
-     */
-    @Override
-    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
-    }
-
     public void getFromNetwork() throws IOException {
         // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
         // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
@@ -541,7 +545,8 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
                 try {
                     HttpResponse response = httpClient.execute(getRequest);
                     Log.i("HttpResponse", response.getStatusLine().toString());
-                    Type searchHitType = new TypeToken<SearchHit<User>>() {}.getType();
+                    Type searchHitType = new TypeToken<SearchHit<User>>() {
+                    }.getType();
                     SearchHit<User> returned = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchHitType);
                     onGetResult(returned.getSource());
                 } catch (IOException e) {

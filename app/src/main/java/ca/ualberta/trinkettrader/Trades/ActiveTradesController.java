@@ -47,17 +47,16 @@ public class ActiveTradesController {
                 ApplicationState.getInstance().setClickedTrade(clickedTrade);
 
                 /**
-                // For testing purposes: we are always going to Trade Received page
-                Intent intent = new Intent(activity, TradeReceivedActivity.class);
-                activity.startActivity(intent);
-                **/
+                 // For testing purposes: we are always going to Trade Received page
+                 Intent intent = new Intent(activity, TradeReceivedActivity.class);
+                 activity.startActivity(intent);
+                 **/
 
 
                 if (clickedTrade.getStatus().equals("Pending Incoming")) {
                     Intent intent = new Intent(activity, TradeReceivedActivity.class);
                     activity.startActivity(intent);
-                }
-                else {
+                } else {
                     Intent intent = new Intent(activity, TradeDetailsActivity.class);
                     activity.startActivity(intent);
                 }
@@ -72,8 +71,7 @@ public class ActiveTradesController {
             ApplicationState.getInstance().setFriendsTradeTrinkets(new Inventory());
             Intent intent = new Intent(activity, CreateTradeActivity.class);
             activity.startActivity(intent);
-        }
-        else {
+        } else {
             // David Hedlund; http://stackoverflow.com/questions/2115758/how-to-display-alert-dialog-in-android; 2015-11-29
             new AlertDialog.Builder(activity)
                     .setTitle("No Friends :(")

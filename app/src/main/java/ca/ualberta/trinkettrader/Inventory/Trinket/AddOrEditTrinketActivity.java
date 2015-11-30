@@ -24,7 +24,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -49,7 +48,6 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.ImageViewArrayAdapte
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.PictureDirectoryManager;
 import ca.ualberta.trinkettrader.R;
-import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Android activity class for adding a new trinket to the user's activity, or viewing and editing the
@@ -204,48 +202,6 @@ public class AddOrEditTrinketActivity extends Activity implements Observer {
     }
 
     /**
-     * Click method for the "Take Photo" button that handles taking a picture to attach to a trinket.
-     * Creates a unique filename for the photo and sets the directory it will be saved to, then
-     * starts the phone's camera app to take the photo.
-     *
-     * @param view - button that was clicked
-     */
-    public void takePictureClick(View view) {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File image = null;
-        try {
-            image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-
-        uri = Uri.fromFile(image);
-
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-
-    /**
-     * Click method for the "Photo Library" button that selects a picture from the android gallery.
-     * Open's phone's picture gallery so that a photo can be selected.
-     *
-     * @param view current view
-     */
-    public void pictureLibraryClick(View view) {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,
-                "Select Picture"), SELECT_PICTURE);
-    }
-
-    /**
      * Method to be called after user has taken or selected a picture.
      *
      * @param requestCode type of request that was issued
@@ -296,6 +252,48 @@ public class AddOrEditTrinketActivity extends Activity implements Observer {
             cursor.moveToFirst();
             return cursor.getString(column_index);
         } else return null;
+    }
+
+    /**
+     * Click method for the "Take Photo" button that handles taking a picture to attach to a trinket.
+     * Creates a unique filename for the photo and sets the directory it will be saved to, then
+     * starts the phone's camera app to take the photo.
+     *
+     * @param view - button that was clicked
+     */
+    public void takePictureClick(View view) {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+        uri = Uri.fromFile(image);
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    /**
+     * Click method for the "Photo Library" button that selects a picture from the android gallery.
+     * Open's phone's picture gallery so that a photo can be selected.
+     *
+     * @param view current view
+     */
+    public void pictureLibraryClick(View view) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,
+                "Select Picture"), SELECT_PICTURE);
     }
 
     /**

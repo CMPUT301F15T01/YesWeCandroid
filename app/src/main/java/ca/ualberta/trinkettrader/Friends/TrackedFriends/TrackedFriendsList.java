@@ -26,7 +26,7 @@ import ca.ualberta.trinkettrader.Friends.FriendsList;
  * to "untracked" in the friend's FriendsProfileActivity, in the event of which that friend will be removed
  * from the TrackedFriendsList but will remain in the FriendsList.  Deleting the friend altogether (also done
  * in he FriendsProfileActivity) will remove the friend from both the FriendsList and TrackedFriendsList.
- *
+ * <p/>
  * This class has exactly the same attributes and method implementations as FriendsList, and exists in
  * order to better organise a user's friends as tracked and untracked.
  */

@@ -15,7 +15,6 @@
 package ca.ualberta.trinkettrader.User.Profile;
 
 import android.location.Location;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -41,11 +40,6 @@ public class EditUserProfileController {
     private View.OnClickListener saveButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //TODO: save the changed data remotely - Part 5
-
-            //NOW: Controller takes data from activity, updates UserProfile in LoggedInUser
-            //UserProfile (observable) updates its observer (DisplayProfileActivity)
-
             CheckBox photoDownload = (CheckBox) activity.findViewById(R.id.photo_download_checkbox);
             EditText address = (EditText) activity.findViewById(R.id.edit_address);
             EditText city = (EditText) activity.findViewById(R.id.edit_city);
@@ -55,17 +49,26 @@ public class EditUserProfileController {
             EditText phoneNum = (EditText) activity.findViewById(R.id.edit_phone_number);
             EditText postalCode = (EditText) activity.findViewById(R.id.edit_postal_code);
 
+            Double _latitude;
+            if (latitude.getText().toString().length() > 0) {
+                _latitude = Double.valueOf(latitude.getText().toString());
+            } else {
+                _latitude = 0.0;
+            }
+            Double _longitude;
+            if (latitude.getText().toString().length() > 0) {
+                _longitude = Double.valueOf(latitude.getText().toString());
+            } else {
+                _longitude = 0.0;
+            }
+
             Boolean photoDownloadEnabled = photoDownload.isChecked();
-            Log.i("photoDownloadEnabled", photoDownloadEnabled.toString());
-            Double _latitude = Double.valueOf(latitude.getText().toString());
-            Double _longitude = Double.valueOf(longitude.getText().toString());
             String _address = address.getText().toString();
             String _city = city.getText().toString();
             String _name = name.getText().toString();
             String _phoneNum = phoneNum.getText().toString();
             String _postalCode = postalCode.getText().toString();
 
-            // set the LoggedInUser with new data
             UserProfile userProfile = LoggedInUser.getInstance().getProfile();
             userProfile.getContactInfo().setAddress(_address);
             userProfile.getContactInfo().setPhoneNumber(_phoneNum);
@@ -83,14 +86,13 @@ public class EditUserProfileController {
             Boolean cnxn = InternetConnection.getInstance().internetConnectionAvailable(activity.getBaseContext());
             if (cnxn) {
                 try {
-                    User u = LoggedInUser.getInstance();
-                    u.saveToNetwork();
+                    User user = LoggedInUser.getInstance();
+                    user.saveToNetwork();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
 
-            // exit the activity
             activity.finish();
         }
     };

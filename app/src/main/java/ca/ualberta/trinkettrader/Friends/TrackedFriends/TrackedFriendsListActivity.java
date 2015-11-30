@@ -16,7 +16,6 @@ package ca.ualberta.trinkettrader.Friends.TrackedFriends;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -59,14 +58,14 @@ public class TrackedFriendsListActivity extends Activity implements Observer {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         updateTrackedFriendsListView();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         updateTrackedFriendsListView();
     }
 

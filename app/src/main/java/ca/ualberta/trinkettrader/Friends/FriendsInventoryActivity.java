@@ -17,7 +17,6 @@ package ca.ualberta.trinkettrader.Friends;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -49,8 +48,62 @@ public class FriendsInventoryActivity extends Activity {
     private Button filterButton;
     private EditText searchBox;
     private Spinner categorySpinner;
+    private Spinner locationSpinner;
     private FriendsInventoryController controller;
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        trinketArrayAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Returns the current user's inventory, which is being displayed in this activity.
+     *
+     * @return Inventory - the current user's inventory, which is being displayed by this activity
+     */
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
+    /**
+     * Returns the ListView element displaying the current user's inventory.
+     *
+     * @return Android ListView - the layout element responsible for displaying the user's inventory
+     * in this activity
+     */
+    public ListView getInventoryItemsList() {
+        return inventoryItemsList;
+    }
+
+    public Inventory getCompleteInventory() {
+        return completeInventory;
+    }
+
+    public Spinner getLocationSpinner() {
+        return locationSpinner;
+    }
+
+    public EditText getSearchBox() {
+        return searchBox;
+    }
+
+    public Spinner getCategorySpinner() {
+        return categorySpinner;
+    }
+
+    public Button getFilterButton() {
+        return filterButton;
+    }
+
+    public ArrayAdapter<Trinket> getTrinketArrayAdapter() {
+        return trinketArrayAdapter;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +113,8 @@ public class FriendsInventoryActivity extends Activity {
         this.inventory = ApplicationState.getInstance().getClickedFriend().getActualFriend().getInventory();
         this.completeInventory = ApplicationState.getInstance().getClickedFriend().getActualFriend().getInventory();
         this.inventoryItemsList = (ListView) findViewById(R.id.friendsDisplayedTrinkets);
-
+        this.searchBox = (EditText) findViewById(R.id.search_box_friends);
+        this.locationSpinner = (Spinner)findViewById(R.id.friendsLocationSpinner);
         trinketArrayAdapter = new ArrayAdapter<>(this, R.layout.activity_inventory_trinket, inventory);
         inventoryItemsList.setAdapter(trinketArrayAdapter);
 
@@ -89,54 +143,6 @@ public class FriendsInventoryActivity extends Activity {
         });
         categorySpinner = (Spinner)findViewById(R.id.friendsCategorySpinner);
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        trinketArrayAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * Returns the current user's inventory, which is being displayed in this activity.
-     *
-     * @return Inventory - the current user's inventory, which is being displayed by this activity
-     */
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    /**
-     * Returns the ListView element displaying the current user's inventory.
-     *
-     * @return Android ListView - the layout element responsible for displaying the user's inventory
-     * in this activity
-     */
-    public ListView getInventoryItemsList() {
-        return inventoryItemsList;
-    }
-
-    public Inventory getCompleteInventory() {
-        return completeInventory;
-    }
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
-
-    public EditText getSearchBox() {
-        return searchBox;
-    }
-
-    public Spinner getCategorySpinner() {
-        return categorySpinner;
-    }
-
-    public Button getFilterButton() {
-        return filterButton;
-    }
-    public ArrayAdapter<Trinket> getTrinketArrayAdapter() {
-        return trinketArrayAdapter;
     }
 
 }
