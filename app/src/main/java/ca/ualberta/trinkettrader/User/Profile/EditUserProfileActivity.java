@@ -35,9 +35,12 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
 public class EditUserProfileActivity extends Activity implements Observer {
 
 
+    private Button saveButton;
+    private EditText latitude;
+    private EditText longitude;
     private EditUserProfileController controller;
-    private ToggleButton arePhotosDownloadableButton;
     private Handler handler;
+    private ToggleButton arePhotosDownloadableButton;
 
     /**
      * This runnable serves to populate the edit profile interface with the
@@ -49,11 +52,12 @@ public class EditUserProfileActivity extends Activity implements Observer {
             CheckBox photoDownloadCheckbox = (CheckBox) findViewById(R.id.photo_download_checkbox);
             EditText address = (EditText) findViewById(R.id.edit_address);
             EditText city = (EditText) findViewById(R.id.edit_city);
-            EditText latitude = (EditText) findViewById(R.id.edit_latitude);
-            EditText longitude = (EditText) findViewById(R.id.edit_longitude);
             EditText name = (EditText) findViewById(R.id.edit_name);
             EditText phoneNum = (EditText) findViewById(R.id.edit_phone_number);
             EditText postalCode = (EditText) findViewById(R.id.edit_postal_code);
+            latitude = (EditText) findViewById(R.id.edit_latitude);
+            longitude = (EditText) findViewById(R.id.edit_longitude);
+            saveButton = (Button) findViewById(R.id.save_button);
 
             address.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getAddress());
             city.setText(LoggedInUser.getInstance().getProfile().getCity());
@@ -105,5 +109,17 @@ public class EditUserProfileActivity extends Activity implements Observer {
      */
     @Override
     public void update(Observable observable, Object data) {
+    }
+
+    public EditText getLatitude() {
+        return latitude;
+    }
+
+    public EditText getLongitude() {
+        return longitude;
+    }
+
+    public Button getSaveButton() {
+        return saveButton;
     }
 }
