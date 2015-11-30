@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 
@@ -46,21 +47,23 @@ public class EditUserProfileActivity extends Activity implements Observer {
     private Runnable populateEditFieldsWithExistingValuesRunnable = new Runnable() {
         @Override
         public void run() {
-            EditText name = (EditText) findViewById(R.id.edit_name);
+            CheckBox photoDownloadCheckbox = (CheckBox) findViewById(R.id.photo_download_checkbox);
             EditText address = (EditText) findViewById(R.id.edit_address);
             EditText city = (EditText) findViewById(R.id.edit_city);
-            EditText postalCode = (EditText) findViewById(R.id.edit_postal_code);
-            EditText phoneNum = (EditText) findViewById(R.id.edit_phone_number);
             EditText latitude = (EditText) findViewById(R.id.edit_latitude);
             EditText longitude = (EditText) findViewById(R.id.edit_longitude);
+            EditText name = (EditText) findViewById(R.id.edit_name);
+            EditText phoneNum = (EditText) findViewById(R.id.edit_phone_number);
+            EditText postalCode = (EditText) findViewById(R.id.edit_postal_code);
 
-            name.setText(LoggedInUser.getInstance().getProfile().getName());
             address.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getAddress());
             city.setText(LoggedInUser.getInstance().getProfile().getCity());
-            postalCode.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getPostalCode());
-            phoneNum.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getPhoneNumber());
             latitude.setText(Double.toString(LoggedInUser.getInstance().getProfile().getDefaultLocation().getLatitude()));
             longitude.setText(Double.toString(LoggedInUser.getInstance().getProfile().getDefaultLocation().getLongitude()));
+            name.setText(LoggedInUser.getInstance().getProfile().getName());
+            phoneNum.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getPhoneNumber());
+            photoDownloadCheckbox.setChecked(LoggedInUser.getInstance().getProfile().getArePhotosDownloadable());
+            postalCode.setText(LoggedInUser.getInstance().getProfile().getContactInfo().getPostalCode());
         }
     };
 
