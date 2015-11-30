@@ -18,7 +18,6 @@ import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsList;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.Trades.TradeManager;
-import ca.ualberta.trinkettrader.User.Friendable;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 import ca.ualberta.trinkettrader.User.User;
 
@@ -43,11 +42,11 @@ import ca.ualberta.trinkettrader.User.User;
  * searched for and listed by their emails, so the current user must know their friend's email address
  * in order to find them.
  * <p/>
- * Friending is a one-way opperation, so one user adding a second as a friend does not cause the first
+ * Friending is a one-way operation, so one user adding a second as a friend does not cause the first
  * user to become the second user's friend as well.  The second user would have to manually add the first
  * user as their friend to make the friending mutual.
  */
-public class Friend implements Friendable {
+public class Friend {
 
     private Boolean isTracked;
     private String email;
