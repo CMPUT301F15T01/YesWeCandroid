@@ -22,7 +22,6 @@ import android.widget.ListView;
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
-import ca.ualberta.trinkettrader.R;
 
 /**
  * Controller for handling interactions from the FriendsInventoryActivity.  The controller manages clicks
@@ -57,14 +56,14 @@ public class FriendsInventoryController {
         });
     }
 
-    public void friendsFilterButtonOnClick(){
+    public void friendsFilterButtonOnClick() {
         String category = activity.getCategorySpinner().getSelectedItem().toString();
         String textQuery = activity.getSearchBox().getText().toString();
         Inventory empty = new Inventory();
         activity.setInventory(empty);
 
-        for(Trinket t: activity.getCompleteInventory()){
-            if((t.getCategory() == category) && (t.getDescription().contains(textQuery) | t.getName().contains(textQuery))){
+        for (Trinket t : activity.getCompleteInventory()) {
+            if ((t.getCategory() == category) && (t.getDescription().contains(textQuery) | t.getName().contains(textQuery))) {
                 empty.add(t);
             }
         }

@@ -81,15 +81,6 @@ public class CreateTradeActivity extends Activity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        updateFriendsSpinner();
-        updateFriendTradeTrinketListView();
-        updateYourTradeTrinketListView();
-        controller.updateClickedFriend();
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
         updateFriendsSpinner();
@@ -98,17 +89,13 @@ public class CreateTradeActivity extends Activity {
         controller.updateClickedFriend();
     }
 
-    /**
-     *
-     */
-    public void updateFriendsSpinner() {
-        userFriendList = LoggedInUser.getInstance().getFriendsList();
-        friendAdapter = new ArrayAdapter<Friend>(this, android.R.layout.simple_list_item_1, userFriendList);
-        friendAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        friendSpinner.setAdapter(friendAdapter);
-        if (userFriendList.size() > 0) {
-            friendSpinner.setSelection(ApplicationState.getInstance().getFriendSpinnerPosition());
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateFriendsSpinner();
+        updateFriendTradeTrinketListView();
+        updateYourTradeTrinketListView();
+        controller.updateClickedFriend();
     }
 
     /**
@@ -127,6 +114,19 @@ public class CreateTradeActivity extends Activity {
         yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
         yourTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, yourTradeTrinkets);
         yourTradeTrinketListView.setAdapter(yourTrinketAdapter);
+    }
+
+    /**
+     *
+     */
+    public void updateFriendsSpinner() {
+        userFriendList = LoggedInUser.getInstance().getFriendsList();
+        friendAdapter = new ArrayAdapter<Friend>(this, android.R.layout.simple_list_item_1, userFriendList);
+        friendAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        friendSpinner.setAdapter(friendAdapter);
+        if (userFriendList.size() > 0) {
+            friendSpinner.setSelection(ApplicationState.getInstance().getFriendSpinnerPosition());
+        }
     }
 
     /**
@@ -154,7 +154,6 @@ public class CreateTradeActivity extends Activity {
     }
 
     /**
-     *
      * @return
      */
     public Button getAddYourItemsButton() {
@@ -162,7 +161,6 @@ public class CreateTradeActivity extends Activity {
     }
 
     /**
-     *
      * @return
      */
     public Button getProposeTradeButton() {
@@ -170,7 +168,6 @@ public class CreateTradeActivity extends Activity {
     }
 
     /**
-     *
      * @return
      */
     public Spinner getFriendSpinner() {
@@ -178,7 +175,6 @@ public class CreateTradeActivity extends Activity {
     }
 
     /**
-     *
      * @return
      */
     public ListView getFriendTradeTrinketListView() {
@@ -190,7 +186,6 @@ public class CreateTradeActivity extends Activity {
     }
 
     /**
-     *
      * @param v
      */
     public void addFriendsItemsButtonOnClick(View v) {
@@ -198,7 +193,6 @@ public class CreateTradeActivity extends Activity {
     }
 
     /**
-     *
      * @param v
      */
     public void addYourItemsButtonOnClick(View v) {
@@ -206,7 +200,6 @@ public class CreateTradeActivity extends Activity {
     }
 
     /**
-     *
      * @param v
      */
     public void proposeTradeButtonOnClick(View v) {

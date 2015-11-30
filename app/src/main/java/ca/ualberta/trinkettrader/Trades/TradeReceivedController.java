@@ -2,7 +2,6 @@ package ca.ualberta.trinkettrader.Trades;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
@@ -23,7 +22,7 @@ public class TradeReceivedController {
      * accepted.  The trade's status is changed from "Pending" to "Accepted", and both parties in the
      * trade are emailed about the trade being accepted.
      */
-    public void acceptTradeButtonOnClick(){
+    public void acceptTradeButtonOnClick() {
         Trade clickedTrade = ApplicationState.getInstance().getClickedTrade();
         clickedTrade.setStatus("Accepted");
         // TODO push trade back to server ... maybe re-propose the trade

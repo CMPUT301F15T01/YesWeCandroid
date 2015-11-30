@@ -117,6 +117,15 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     }
 
     /**
+     * Returns the byte array containing the compressed picture.
+     *
+     * @return compressed picture in byte array
+     */
+    public byte[] getPictureByteArray() {
+        return this.pictureByteArray;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -155,7 +164,6 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
             result = this.file.delete();
         }
         this.deleteFromNetwork();
-        this.notifyObservers();
     }
 
     /**
@@ -223,6 +231,18 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
             builder.append(String.format("%02x", b));
         }
         return builder.toString();
+    }
+
+    /**
+     * Searches for ElasticStorable objects on the network matching the attribute and attribute
+     * value pairs. Calls onSearchResult with the results when the search completes.
+     *
+     * @param postParameters pairs of attributes to use when searching
+     * @param type
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
     }
 
     /**
@@ -297,26 +317,5 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     @Override
     public String getSearchUrl() {
         return SEARCH_URL;
-    }
-
-    /**
-     * Returns the byte array containing the compressed picture.
-     *
-     * @return compressed picture in byte array
-     */
-    public byte[] getPictureByteArray() {
-        return this.pictureByteArray;
-    }
-
-    /**
-     * Searches for ElasticStorable objects on the network matching the attribute and attribute
-     * value pairs. Calls onSearchResult with the results when the search completes.
-     *
-     * @param postParameters pairs of attributes to use when searching
-     * @param type
-     * @throws IOException
-     */
-    @Override
-    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
     }
 }

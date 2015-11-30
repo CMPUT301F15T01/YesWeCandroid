@@ -50,7 +50,6 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     private Activity activity;
 
 
-
     private ApplicationState() {
     }
 
@@ -155,8 +154,6 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     *
-     *
      * @return Boolean
      */
     public Boolean getInCounterTrade() {
@@ -164,8 +161,6 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     *
-     *
      * @param inCounterTrade
      */
     public void setInCounterTrade(Boolean inCounterTrade) {
@@ -173,7 +168,6 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     *
      * @return Integer
      */
     public Integer getFriendSpinnerPosition() {
@@ -181,7 +175,6 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     *
      * @param friendSpinnerPosition
      */
     public void setFriendSpinnerPosition(Integer friendSpinnerPosition) {

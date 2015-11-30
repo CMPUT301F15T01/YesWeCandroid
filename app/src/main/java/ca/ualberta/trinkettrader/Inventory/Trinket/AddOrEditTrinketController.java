@@ -105,7 +105,7 @@ public class AddOrEditTrinketController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (Picture picture: pictures) {
+        for (Picture picture : pictures) {
             picture.deleteObserver(activity);
         }
         Intent intent = new Intent(activity, InventoryActivity.class);
@@ -125,7 +125,7 @@ public class AddOrEditTrinketController {
         this.trinket.setQuality(new ArrayList<>(Arrays.asList(this.activity.getResources().getStringArray(R.array.spinner_qualities))).get(this.activity.getTrinketQuality().getSelectedItemPosition()));
         this.trinket.setPictures(pictures);
         ArrayList<String> pictureFileNames = new ArrayList<>();
-        for (Picture picture: pictures) {
+        for (Picture picture : pictures) {
             Log.i("picture", picture.getFilename());
             pictureFileNames.add(picture.getFilename());
         }
@@ -161,7 +161,7 @@ public class AddOrEditTrinketController {
         }
         prepareTrinketForSave();
         this.user.getInventory().set(this.user.getInventory().indexOf(ApplicationState.getInstance().getClickedTrinket()), this.trinket);
-        for (Picture picture: pictures) {
+        for (Picture picture : pictures) {
             picture.deleteObserver(activity);
         }
         try {

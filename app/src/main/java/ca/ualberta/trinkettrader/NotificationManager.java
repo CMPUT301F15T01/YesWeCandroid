@@ -14,9 +14,6 @@
 
 package ca.ualberta.trinkettrader;
 
-import android.content.Intent;
-import android.net.Uri;
-
 import java.util.ArrayList;
 
 import ca.ualberta.trinkettrader.User.User;

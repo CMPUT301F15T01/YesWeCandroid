@@ -17,7 +17,6 @@ package ca.ualberta.trinkettrader.Friends;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -80,14 +79,14 @@ public class FriendsInventoryActivity extends Activity {
         //Dhawal Sodha Parmar; http://stackoverflow.com/questions/15804805/android-action-bar-searchview-as-autocomplete; 2015-29-11
         autocompleteAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_dropdown_item_1line, completeInventory);
 
-        filterButton = (Button)findViewById(R.id.friendsFilterButtton);
+        filterButton = (Button) findViewById(R.id.friendsFilterButtton);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 controller.friendsFilterButtonOnClick();
             }
         });
-        categorySpinner = (Spinner)findViewById(R.id.friendsCategorySpinner);
+        categorySpinner = (Spinner) findViewById(R.id.friendsCategorySpinner);
 
     }
 
@@ -106,6 +105,10 @@ public class FriendsInventoryActivity extends Activity {
         return inventory;
     }
 
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
     /**
      * Returns the ListView element displaying the current user's inventory.
      *
@@ -120,10 +123,6 @@ public class FriendsInventoryActivity extends Activity {
         return completeInventory;
     }
 
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
-
     public EditText getSearchBox() {
         return searchBox;
     }
@@ -135,6 +134,7 @@ public class FriendsInventoryActivity extends Activity {
     public Button getFilterButton() {
         return filterButton;
     }
+
     public ArrayAdapter<Trinket> getTrinketArrayAdapter() {
         return trinketArrayAdapter;
     }

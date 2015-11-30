@@ -21,7 +21,7 @@ import java.util.Observer;
  * Class that serves as a container for contact information. This should
  * appear as an attribute of a user. Whenever this class is used it should
  * have been obtained by the getter contained in the user.
- *
+ * <p/>
  * All fields of contact information are optional attributes of a user, but can be set to help facilitate
  * trades by giving information about the location of the user and how they can be contacted outside of the
  * app.
@@ -104,7 +104,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
      * Returns the user's name.  This is a String the user sets if they wish to provide a name other than
      * their email address.  This field is optional.  If the user does not set this field then it will
      * return an empty string.
-     *
+     * <p/>
      * This method is used to populate fields in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @return String - the user's name.  Optional, so may be an empty string
@@ -118,7 +118,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
      * their email address.  This field is optional.  If the user wishes to remove a name they previously
      * set then they can input an empty string to clear it.  After setting this field then needToSave is
      * set to true so that the change will be saved to the network.
-     *
+     * <p/>
      * This method is used when a user enters information in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @param name - the user's name.  Optional, so may be an empty string
@@ -132,7 +132,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
      * Returns the user's address.  This is a String the user sets if they wish to provide an address so
      * that users can know their location for trading.  This field is optional.  If the user does not set this field then it will
      * return an empty string.
-     *
+     * <p/>
      * This method is used to populate fields in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @return String - the user's address.  Optional, so may be an empty string
@@ -146,7 +146,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
      * that users can know their location for trading.  This field is optional.  If the user wishes to remove an address
      * they previously set then they can input an empty string to clear it.  After setting this field then needToSave is
      * set to true so that the change will be saved to the network.
-     *
+     * <p/>
      * This method is used when a user enters information in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @param address - the user's address.  Optional, so may be an empty string
@@ -160,7 +160,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
      * Returns the user's city.  This is a String the user sets if they wish to provide a city so that
      * users can know their location for trading.  This field is optional.  If the user does not set this field then it will
      * return an empty string.
-     *
+     * <p/>
      * This method is used to populate fields in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @return String - the user's city.  Optional, so may be an empty string
@@ -174,7 +174,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
      * that users can know their location for trading.  This field is optional.  If the user wishes to remove a city
      * they previously set then they can input an empty string to clear it.  After setting this field then needToSave is
      * set to true so that the change will be saved to the network.
-     *
+     * <p/>
      * This method is used when a user enters information in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @param city - the user's city.  Optional, so may be an empty string
@@ -188,7 +188,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
      * Returns the user's phone number.  This is a String the user sets if they wish to provide some contact
      * information in addition to their email. This field is optional.  If the user does not set this field then it will
      * return an empty string.
-     *
+     * <p/>
      * This method is used to populate fields in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @return String - the user's phone number.  Optional, so may be an empty string
@@ -202,7 +202,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
      * information in addition to their email.  This field is optional.  If the user wishes to remove a phone number
      * they previously set then they can input an empty string to clear it.  After setting this field then needToSave is
      * set to true so that the change will be saved to the network.
-     *
+     * <p/>
      * This method is used when a user enters information in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @param phoneNumber - the user's phone number.  Optional, so may be an empty string
@@ -216,7 +216,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
      * Returns the user's postal code  This is a String the user sets if they wish to provide some contact
      * information in addition to their email. This field is optional.  If the user does not set this field then it will
      * return an empty string.
-     *
+     * <p/>
      * This method is used to populate fields in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @return String - the user's postal code.  Optional, so may be an empty string
@@ -230,7 +230,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
      * information in addition to their email.  This field is optional.  If the user wishes to remove a potal code
      * they previously set then they can input an empty string to clear it.  After setting this field then needToSave is
      * set to true so that the change will be saved to the network.
-     *
+     * <p/>
      * This method is used when a user enters information in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
      * @param postalCode - the user's postal code.  Optional, so may be an empty string

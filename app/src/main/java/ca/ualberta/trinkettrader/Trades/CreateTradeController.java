@@ -28,9 +28,7 @@ import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.Friends.FriendsInventoryActivity;
 import ca.ualberta.trinkettrader.Friends.FriendsList;
-import ca.ualberta.trinkettrader.Friends.FriendsProfileActivity;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
-import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 
@@ -50,8 +48,7 @@ public class CreateTradeController {
         if (!userFriendsList.isEmpty()) {
             Intent intent = new Intent(activity, FriendsInventoryActivity.class);
             activity.startActivity(intent);
-        }
-        else {
+        } else {
             // David Hedlund; http://stackoverflow.com/questions/2115758/how-to-display-alert-dialog-in-android; 2015-11-29
             new AlertDialog.Builder(activity)
                     .setTitle("No Friends :(")
@@ -83,10 +80,10 @@ public class CreateTradeController {
         receiverTradeManager.getTradeArchiver().getCurrentTrades().add(proposedTrade);
         try {
             proposedTrade.saveToNetwork();
-        }catch (IOException e){
+        } catch (IOException e) {
 
         }
-       // activity.clearFriendTradeTrinketListView();
+        // activity.clearFriendTradeTrinketListView();
         //activity.clearYourTradeTrinketListView();
 
         Intent intent = new Intent(activity, TradesActivity.class);
