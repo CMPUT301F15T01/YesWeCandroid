@@ -18,7 +18,6 @@ import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
-import ca.ualberta.trinkettrader.User.User;
 
 public class AllFriendsInventoriesActivity extends Activity {
 
@@ -81,7 +80,7 @@ public class AllFriendsInventoriesActivity extends Activity {
                 controller.friendsFilterButtonOnClick();
             }
         });
-        categorySpinner = (Spinner)findViewById(R.id.allFriendsAccessibilitySpinner);
+        categorySpinner = (Spinner)findViewById(R.id.allFriendsCategorySpinner);
     }
 
     @Override
