@@ -98,7 +98,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * whether the photos of foreign trinkets are automatically downloaded to the device.
      * If false, the user must manually select which photos to download.
      *
-     * @return Boolean
+     * @return Boolean - true if photos are automatically downloaded, false if they must be manually downloaded
      */
     public Boolean getArePhotosDownloadable() {
         return arePhotosDownloadable;
@@ -109,7 +109,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * whether the photos of foreign trinkets are automatically downloaded to the device.
      * If false, the user must manually select which photos to download.
      *
-     * @param arePhotosDownloadable
+     * @param arePhotosDownloadable - true if photos are automatically downloaded, false if they must be manually downloaded
      */
     public void setArePhotosDownloadable(Boolean arePhotosDownloadable) {
         this.arePhotosDownloadable = arePhotosDownloadable;
@@ -145,18 +145,22 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns User's ContactInfo instance.
+     * Returns User's {@link ContactInfo ContactInfo} instance.  This is a container for all the user's
+     * contact information, including their name, address, city, postal code, and phone number.  All these
+     * fields are optional so any field in ContactInfo may be an empty string.
      *
-     * @return ContactInfo
+     * @return ContactInfo - a class containing the optional contact information of the user
      */
     public ContactInfo getContactInfo() {
         return contactInfo;
     }
 
     /**
-     * Sets user's ContactInfo instance
+     * Sets user's ContactInfo instance.  This is a container for all the user's
+     * contact information, including their name, address, city, postal code, and phone number.  All these
+     * fields are optional so any field in ContactInfo may be an empty string.
      *
-     * @param contactInfo
+     * @param contactInfo - a class containing the optional contact information of the user
      */
     public void setContactInfo(ContactInfo contactInfo) {
 
@@ -165,7 +169,14 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns the user's email
+     * Returns the user's email address.  The user's email address is how they are identified in the
+     * app and how other users will be able to search for and interact with them.  It is also used to email
+     * confirmation of completed trades to the users involved in the trade.  At minimum, all users must
+     * have an email address attached to them.
+     *
+     * This method is used to populate the users email address in fields that require it, such as when displaying
+     * information about users involved in a trade.  It is also used to determine who to send an email to
+     * in the {@link ca.ualberta.trinkettrader.Trades.TradeReceivedController TradeReceivedController}.
      *
      * @return String
      */
@@ -174,7 +185,13 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Sets the user's email
+     * Sets the user's email address.  The user's email address is how they are identified in the
+     * app and how other users will be able to search for and interact with them.  It is also used to email
+     * confirmation of completed trades to the users involved in the trade.  At minimum, all users must
+     * have an email address attached to them.
+     *
+     * This method will be used when the user enters their email in the {@link ca.ualberta.trinkettrader.LoginActivity LoginActivity}
+     * and logs in for the first time.
      *
      * @param email
      */
@@ -242,18 +259,22 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns user's username
+     * Returns user's username.  The username is exactly the same as the user's email address, but
+     * in the future this could be changed to allow users to select unique usernames for themselves to
+     * use in the app.
      *
-     * @return
+     * @return String - the user's username, which is their email address
      */
     public String getUsername() {
         return this.username;
     }
 
     /**
-     * Sets user's username
+     * Sets user's username.  The username is exactly the same as the user's email address, but
+     * in the future this could be changed to allow users to select unique usernames for themselves to
+     * use in the app.
      *
-     * @param username
+     * @param username - the user's username, which is their email address
      */
     public void setUsername(String username) {
         this.username = username;
@@ -262,19 +283,40 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Returns whether the user's profile data needs to be saved. This variable is set when there
-     * are changes to any of the User's personal information.
+     * Returns a boolean indicating if the {@link ca.ualberta.trinkettrader.User.User User} with this
+     * contact information needs to be saved to the network.  If the contact information of the user has
+     * been changed then needToSave is set to true and the user needs to be saved.  Otherwise, this should
+     * return false indicating that the user does not need to be saved.
      *
-     * @return
+     * @return Boolean - if true then the User with this contact information needs to be re-saved to
+     * the network, if false then there is nothing new that needs to be saved
      */
     public Boolean getNeedToSave() {
         return needToSave | this.contactInfo.getNeedToSave();
     }
 
+    /**
+     * Returns the default location specifying where a trinket is located.  The location is expressed as
+     * a latitude/longitude pair.  This attribute will allow other users to see if it will be convenient for
+     * them to collect a trinket if they choose to trade for it.  By default the default location is
+     * the phone's location as returned by the phone's GPS, but the user may set it to another value.
+     *
+     * @return Location - the location that a {@link ca.ualberta.trinkettrader.Inventory.Trinket.Trinket Trinket's}
+     * location will be set to by default.
+     */
     public Location getDefaultLocation() {
         return defaultLocation;
     }
 
+    /**
+     * Sets the default location specifying where a trinket is located.  The location is expressed as
+     * a latitude/longitude pair.  This attribute will allow other users to see if it will be convenient for
+     * them to collect a trinket if they choose to trade for it.  By default the default location is
+     * the phone's location as returned by the phone's GPS, but the user may set it to another value.
+     *
+     * @param defaultLocation - the location that a {@link ca.ualberta.trinkettrader.Inventory.Trinket.Trinket Trinket's}
+     * location will be set to by default.
+     */
     public void setDefaultLocation(Location defaultLocation) {
         this.defaultLocation = defaultLocation;
     }

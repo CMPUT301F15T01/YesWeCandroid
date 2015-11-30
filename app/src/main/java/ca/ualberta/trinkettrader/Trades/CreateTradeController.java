@@ -19,6 +19,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.Friends.FriendsInventoryActivity;
 import ca.ualberta.trinkettrader.Friends.FriendsList;
+import ca.ualberta.trinkettrader.Friends.FriendsProfileActivity;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
@@ -86,14 +88,6 @@ public class CreateTradeController {
         }
        // activity.clearFriendTradeTrinketListView();
         //activity.clearYourTradeTrinketListView();
-/**
-        try {
-            proposedTrade.saveToNetwork();
-        }
-        catch (IOException e) {
-
-        }
-**/
 
         Intent intent = new Intent(activity, TradesActivity.class);
         activity.startActivity(intent);
@@ -124,7 +118,7 @@ public class CreateTradeController {
                 Friend selectedFriend = (Friend) spinner.getItemAtPosition(pos);
                 if (!selectedFriend.getActualFriend().getProfile().getEmail().equals(ApplicationState.getInstance().getClickedFriend().getActualFriend().getProfile().getEmail())) {
                     ApplicationState.getInstance().setFriendsTradeTrinkets(new Inventory());
-                    ApplicationState.getInstance().setYourTradeTrinkets(new Inventory());
+                    //ApplicationState.getInstance().setYourTradeTrinkets(new Inventory());
                 }
                 ApplicationState.getInstance().setFriendSpinnerPosition(pos);
                 ApplicationState.getInstance().setClickedFriend(selectedFriend);
@@ -137,5 +131,24 @@ public class CreateTradeController {
         });
     }
 
+    public void setYourTradeTrinketListViewItemOnClick() {
+        ListView trinketListView = activity.getYourTradeTrinketListView();
+        trinketListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> v, View view, int position, long id) {
+                ApplicationState.getInstance().getYourTradeTrinkets().remove(position);
+                activity.updateYourTradeTrinketListView();
+            }
+        });
+    }
+
+    public void setFriendTradeTrinketListViewItemOnClick() {
+        ListView trinketListView = activity.getFriendTradeTrinketListView();
+        trinketListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> v, View view, int position, long id) {
+                ApplicationState.getInstance().getFriendsTradeTrinkets().remove(position);
+                activity.updateFriendTradeTrinketListView();
+            }
+        });
+    }
 
 }

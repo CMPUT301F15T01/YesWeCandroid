@@ -94,22 +94,7 @@ public class TradesActivity extends Activity implements Observer {
     }
 
     public void createTradeButtonOnClick(View v) {
-        if (LoggedInUser.getInstance().getFriendsList().size() > 0) {
-            Intent intent = new Intent(this, CreateTradeActivity.class);
-            startActivity(intent);
-        }
-        else {
-            // David Hedlund; http://stackoverflow.com/questions/2115758/how-to-display-alert-dialog-in-android; 2015-11-29
-            new AlertDialog.Builder(this)
-                    .setTitle("No Friends :(")
-                    .setMessage("You do not have any friends to create a trade with!")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        }
+        controller.createTradeButtonOnClick();
     }
 
     /**
