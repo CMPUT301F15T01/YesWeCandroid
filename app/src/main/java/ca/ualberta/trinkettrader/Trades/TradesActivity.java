@@ -112,7 +112,7 @@ public class TradesActivity extends Activity implements Observer {
     }
 
     /**
-     * Returns Past Trades button.
+     * Returns Past Trades button
      *
      * @return Button Links to page which displays list of user's past(inactive) trades
      */
