@@ -29,6 +29,7 @@ public class AllFriendsInventoriesActivity extends Activity {
     private Button filterButton;
     private EditText searchBox;
     private Spinner categorySpinner;
+    private Spinner locationSpinner;
     private ArrayAdapter<Trinket> autocompleteAdapter;
 
     @Override
@@ -81,6 +82,7 @@ public class AllFriendsInventoriesActivity extends Activity {
             }
         });
         categorySpinner = (Spinner)findViewById(R.id.allFriendsCategorySpinner);
+        locationSpinner = (Spinner)findViewById(R.id.allFriendsLocationSpinner);
     }
 
     @Override
@@ -138,5 +140,9 @@ public class AllFriendsInventoriesActivity extends Activity {
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+    }
+
+    public Spinner getLocationSpinner() {
+        return locationSpinner;
     }
 }
