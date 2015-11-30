@@ -65,16 +65,6 @@ public class TradesActivity extends Activity implements Observer {
         currentTradesListView = (ListView) findViewById(R.id.currentTradesList);
         pastTradesButton = (Button) findViewById(R.id.past_trades_button);
         createTradeButton = (Button) findViewById(R.id.create_trades_button);
-
-        // TODO testing - will be deleted
-        // TODO test past trades list as well
-        User user = new User();
-        user.getTradeManager().setUsername("peeko@bird.ca"); // must call this to set username in tradeManager for display purposes
-        Inventory inv1 = new Inventory();
-        Inventory inv2 = new Inventory();
-        Trade trade = new Trade(inv1, LoggedInUser.getInstance().getTradeManager(),inv2, user.getTradeManager() );
-        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().addTrade(trade);
-        //
         userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();
@@ -93,8 +83,9 @@ public class TradesActivity extends Activity implements Observer {
 
 
     /**
-     * Directs user to past trades screen when clicked.
-     *
+     * Directs user to PastTradesActivity when Past Trades button
+     * is clicked.
+     * <p/>
      * @param view View object used to change activities
      */
     public void openPastTrades(View view) {
@@ -107,14 +98,23 @@ public class TradesActivity extends Activity implements Observer {
     }
 
     /**
-     * Returns Past Trades button.
-     *
+     * Returns Past Trades button.  Clicking the Past Trades button
+     * allows a user to navigate to the PastTradesActivity where
+     * they can view their past (inactive) trades.
+     * <p/>
      * @return Button Links to page which displays list of user's past(inactive) trades
      */
     public Button getPastTradesButton() {
         return pastTradesButton;
     }
 
+    /**
+     * Returns the Create Trade button.  Clicking the Create Trade
+     * button allows a user to navigate to the CreateTradeActivity
+     * where they can create a trade offer to send to another user.
+     * <p/>
+     * @return Button Create Trade button
+     */
     public Button getCreateTradeButton() {
         return createTradeButton;
     }
@@ -122,7 +122,7 @@ public class TradesActivity extends Activity implements Observer {
     /**
      * Returns currentTradesListView.  This method is used by the ActiveTradesController
      * to get the clicked trade on the screen.
-     *
+     * <p/>
      * @return ListView ListView of user's current trades
      */
     public ListView getCurrentTradesListView() { return currentTradesListView; }
@@ -131,7 +131,7 @@ public class TradesActivity extends Activity implements Observer {
      * This method is called if the specified {@code Observable} object's
      * {@code notifyObservers} method is called (because the {@code Observable}
      * object has been updated.
-     *
+     * <p/>
      * @param observable the {@link Observable} object.
      * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
      */

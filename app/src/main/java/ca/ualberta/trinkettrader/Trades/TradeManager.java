@@ -83,7 +83,7 @@ public class TradeManager extends ElasticStorable {
      * to and from the other user in the trade.  This TradeManager is initialized without a
      * {@link ca.ualberta.trinkettrader.Friends.Friend Friend}  to trade with.
      *
-     * @param String - username (email address) of the Friend this TradeManager is handling a trade with
+     * @param username (email address) of the Friend this TradeManager is handling a trade with
      */
     public TradeManager(String username) {
         this.username = username;
@@ -100,12 +100,8 @@ public class TradeManager extends ElasticStorable {
      * @param trade Trinket exchange between a borrower and an owner
      */
     public void proposeTrade(Trade trade) {
-        //TODO add trade to currentTrades lists of borrower and owner
-        // TODO notify trade receiver (person who did not instantiate trade)
+        // TODO delete? but move JavaDoc
     }
-
-    // TODO think that receiver of trade proposal should be added to input. will
-    // TODO make it easier to send notifications.
 
     /**
      * Pulls offered trades when user is online.
@@ -116,10 +112,9 @@ public class TradeManager extends ElasticStorable {
      * @return ArrayList&lt;Trade&gt; ArrayList of trades that were offered to the user when they were offline
      */
     public ArrayList<Trade> pullTrades() {
+        // TODO delete?
         return new ArrayList<Trade>();
     }
-
-    // TODO pulling trades once the phone has connectivity.
 
     /**
      * Propose counter trade.
@@ -132,7 +127,7 @@ public class TradeManager extends ElasticStorable {
      * @param counterTrade updated counter trade to add
      */
     public void proposeCounterTrade(Trade trade, Trade counterTrade) {
-        //TODO replace trade in currentTrades list (find old trade and delete it, add new trade)
+        //TODO delete? but move JavaDoc
     }
 
     /**
@@ -149,8 +144,7 @@ public class TradeManager extends ElasticStorable {
      * @param comments Important trade related comments determined by owner
      */
     public void acceptTrade(Trade trade, String comments) {
-        // TODO delete trade from currentTrades list, and use archive method to add it to pastTrades and change status
-        // TODO send notification emails to both parties
+        // TODO delete? but move JavaDoc
     }
 
     /**
@@ -163,7 +157,7 @@ public class TradeManager extends ElasticStorable {
      * @param trade Trinket exchange between a borrower and an owner
      */
     public void declineTrade(Trade trade) {
-        // TODO delete trade from current trades list, change trade status and add to past trades list (archive it)
+        // TODO delete? but move JavaDoc?
     }
 
     /**
@@ -174,11 +168,8 @@ public class TradeManager extends ElasticStorable {
      * @param trade Trinket exchange between a borrower and an owner
      */
     public void deleteTrade(Trade trade) {
-
+        // TODO delete? but move JavaDoc
     }
-
-    // TODO this could be deleted, because there is already a TradeArchiver deleteTrade method.
-    // TODO we would be calling deleteTrade.deleteTrade
 
     /**
      * Returns user's trade archiver. Trade archiver is needed to access
@@ -227,16 +218,32 @@ public class TradeManager extends ElasticStorable {
     }
 
     /**
+     * Returns the username (email) of the user the TradeManager belongs to.
+     * This method is used by the Trade class to display to display the opposite
+     * user involved in a trade when a trade is viewed in the current or past trades
+     * list.
      *
-     * @return String
+     * Upon trade acceptance, this method will be used to send a user
+     * the trade transaction completion email.
+     *
+     * @return String email of user who TradeManager belongs to
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     * 
-     * @param username
+     * Sets the username (email) of the user the TradeManager belongs to,
+     * so the email of the user can be accessed from within a trade object.
+     * It is very important that this method be called when a user logs in to
+     * the application for the first time (when their account is created).
+     * If this method is not called, a user's email will not be accessible within
+     * a trade, so trades listed in the current and past trades lists will not
+     * display correctly.  Upon trade acceptance, a user will not be able to receive
+     * the trade transaction completion email if their email has not been set in their
+     * TradeManager.
+     *
+     * @param username email of user who TradeManager belongs to
      */
     public void setUsername(String username) {
         this.username = username;

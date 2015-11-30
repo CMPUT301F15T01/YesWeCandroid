@@ -16,6 +16,7 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 
 import android.content.Intent;
 import android.location.Location;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -125,6 +126,7 @@ public class AddOrEditTrinketController {
         this.trinket.setPictures(pictures);
         ArrayList<String> pictureFileNames = new ArrayList<>();
         for (Picture picture: pictures) {
+            Log.i("picture", picture.getFilename());
             pictureFileNames.add(picture.getFilename());
         }
         this.trinket.setPictureFileNames(pictureFileNames);

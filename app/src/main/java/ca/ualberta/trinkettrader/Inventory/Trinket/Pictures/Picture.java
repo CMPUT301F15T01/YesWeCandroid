@@ -98,6 +98,12 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
         // poitroae; http://stackoverflow.com/questions/8717333/converting-drawable-resource-image-into-bitmap; 2015-11-25
         Bitmap placeholder = BitmapFactory.decodeResource(activity.getResources(), R.drawable.placeholder);
         this.file = directoryManager.compressPicture(this.filename, placeholder);
+        // \u00d3scar L\u00f3pez; http://stackoverflow.com/questions/8721262/how-to-get-file-size-in-java; 2015-11-04
+        pictureByteArray = new byte[(int) this.file.length()];
+        int result = 0;
+        while (result == 0) {
+            result = new FileInputStream(this.file).read(pictureByteArray);
+        }
         this.observers = new HashSet<>();
     }
 
@@ -263,6 +269,12 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
         try {
             this.pictureByteArray = picture.getPictureByteArray();
             this.file = directoryManager.compressPicture(this.filename, this.pictureByteArray);
+            // \u00d3scar L\u00f3pez; http://stackoverflow.com/questions/8721262/how-to-get-file-size-in-java; 2015-11-04
+            pictureByteArray = new byte[(int) this.file.length()];
+            int loadResult = 0;
+            while (loadResult == 0) {
+                loadResult = new FileInputStream(this.file).read(pictureByteArray);
+            }
             this.notifyObservers();
         } catch (IOException | PackageManager.NameNotFoundException e) {
             e.printStackTrace();

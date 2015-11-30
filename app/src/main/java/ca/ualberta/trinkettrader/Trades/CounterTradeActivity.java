@@ -31,6 +31,10 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
+
+/**
+ *
+ */
 public class CounterTradeActivity extends Activity {
 
     private Button addFriendsItemsButton;
@@ -112,7 +116,10 @@ public class CounterTradeActivity extends Activity {
         return addFriendsItemsButton;
     }
 
-
+    /**
+     *
+     * @return Button Cancel button
+     */
     public Button getCancelButton() {
         return cancelButton;
     }
@@ -121,14 +128,28 @@ public class CounterTradeActivity extends Activity {
         return addYourItemsButton;
     }
 
+    /**
+     * Returns
+     *
+     * @return Button Propose Trade button
+     */
     public Button getProposeTradeButton() {
         return proposeTradeButton;
     }
 
+    /**
+     *
+     * @return TextView
+     */
     public TextView getFriendNameTextView() {
         return friendNameTextView;
     }
 
+    /**
+     * Returns
+     *
+     * @return ListView
+     */
     public ListView getFriendTradeTrinketListView() {
         return friendTradeTrinketListView;
     }

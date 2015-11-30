@@ -172,11 +172,18 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
         this.inCounterTrade = inCounterTrade;
     }
 
+    /**
+     *
+     * @return Integer
+     */
     public Integer getFriendSpinnerPosition() {
         return friendSpinnerPosition;
     }
 
-
+    /**
+     *
+     * @param friendSpinnerPosition
+     */
     public void setFriendSpinnerPosition(Integer friendSpinnerPosition) {
         this.friendSpinnerPosition = friendSpinnerPosition;
     }
