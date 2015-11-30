@@ -14,6 +14,8 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+;
+
 import java.util.ArrayList;
 import java.util.Observer;
 
@@ -46,10 +48,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     private transient TradeManager sender;
     private Integer numberOfTrinkets;
 
-    private String receiverUsername;
-    private String senderUsername;
     private Boolean isNewOfferedTrade;
-
 
     /**
      * Constructor that initializes the sender and receiver sides of the trade.  Both parties are initialized
@@ -69,8 +68,6 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         this.receiver = receiver;
         this.requestedTrinkets = requestedTrinkets;
         this.sender = sender;
-        this.receiverUsername = receiver.getUsername();
-        this.senderUsername = sender.getUsername();
         this.status = "pending"; // TODO need to clarify what status names will be
         this.isNewOfferedTrade = Boolean.TRUE;  // TODO add comments to JavaDocs
     }
@@ -177,7 +174,11 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * user when they view their Current Trades list and Past Trades list.
      *
      * For each trade in the list, it's number, the other person involved in the trade
-     * (not LoggedInUser) and it's status will be displayed.
+     * (not LoggedInUser) and it's status will be displayed. The number for a trade is
+     * it's index + 1 in the list it belongs to in the TradeArchiver (currentTrades or pastTrades).
+     * </p>
+     * If a trade has not yet been clicked (viewed) by a user, <b>NEW!</b> will also
+     * be displayed.
      *
      * @return String Text displayed for each trade in current trades list of
      * ActiveTradesActivity and in past trades list of PastTradesActivity

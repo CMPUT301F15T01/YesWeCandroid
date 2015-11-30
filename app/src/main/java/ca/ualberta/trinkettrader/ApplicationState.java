@@ -42,10 +42,8 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     private Friend clickedFriend;
     private Trade clickedTrade;
     private Boolean inCounterTrade = false;
-    private Integer friendSpinnerPosition = 0;
     private Inventory friendsTradeTrinkets = new Inventory();
     private Inventory yourTradeTrinkets = new Inventory();
-
 
 
 
@@ -143,7 +141,7 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
      * or the Past Trades ListView (pastTradesListView). Once clicked, a trade will have been viewed
      * by the user and will not be new anymore.  This method calls 'setNotNewOfferedTrade' which removes
      * the <b>NEW!</b> status of of the trade, which changes how the trade will be displayed in the
-     * current trades list.
+     * Current Trades list.
      *
      * @param clickedTrade trade that was clicked
      */
@@ -169,17 +167,6 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     public void setInCounterTrade(Boolean inCounterTrade) {
         this.inCounterTrade = inCounterTrade;
     }
-
-
-    public Integer getFriendSpinnerPosition() {
-        return friendSpinnerPosition;
-    }
-
-    public void setFriendSpinnerPosition(Integer friendSpinnerPosition) {
-        this.friendSpinnerPosition = friendSpinnerPosition;
-    }
-
-
 
     /**
      * Adds the specified observer to the list of observers. If it is already

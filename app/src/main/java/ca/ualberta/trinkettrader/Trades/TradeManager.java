@@ -210,11 +210,18 @@ public class TradeManager extends ElasticStorable {
         return SEARCH_URL;
     }
 
-
+    /**
+     *
+     * @return String
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * 
+     * @param username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
