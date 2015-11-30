@@ -100,12 +100,8 @@ public class TradeManager extends ElasticStorable {
      * @param trade Trinket exchange between a borrower and an owner
      */
     public void proposeTrade(Trade trade) {
-        //TODO add trade to currentTrades lists of borrower and owner
-        // TODO notify trade receiver (person who did not instantiate trade)
+        // TODO delete? but move JavaDoc
     }
-
-    // TODO think that receiver of trade proposal should be added to input. will
-    // TODO make it easier to send notifications.
 
     /**
      * Pulls offered trades when user is online.
@@ -116,10 +112,9 @@ public class TradeManager extends ElasticStorable {
      * @return ArrayList&lt;Trade&gt; ArrayList of trades that were offered to the user when they were offline
      */
     public ArrayList<Trade> pullTrades() {
+        // TODO delete?
         return new ArrayList<Trade>();
     }
-
-    // TODO pulling trades once the phone has connectivity.
 
     /**
      * Propose counter trade.
@@ -132,7 +127,7 @@ public class TradeManager extends ElasticStorable {
      * @param counterTrade updated counter trade to add
      */
     public void proposeCounterTrade(Trade trade, Trade counterTrade) {
-        //TODO replace trade in currentTrades list (find old trade and delete it, add new trade)
+        //TODO delete? but move JavaDoc
     }
 
     /**
@@ -149,8 +144,7 @@ public class TradeManager extends ElasticStorable {
      * @param comments Important trade related comments determined by owner
      */
     public void acceptTrade(Trade trade, String comments) {
-        // TODO delete trade from currentTrades list, and use archive method to add it to pastTrades and change status
-        // TODO send notification emails to both parties
+        // TODO delete? but move JavaDoc
     }
 
     /**
@@ -163,7 +157,7 @@ public class TradeManager extends ElasticStorable {
      * @param trade Trinket exchange between a borrower and an owner
      */
     public void declineTrade(Trade trade) {
-        // TODO delete trade from current trades list, change trade status and add to past trades list (archive it)
+        // TODO delete? but move JavaDoc?
     }
 
     /**
@@ -174,11 +168,8 @@ public class TradeManager extends ElasticStorable {
      * @param trade Trinket exchange between a borrower and an owner
      */
     public void deleteTrade(Trade trade) {
-
+        // TODO delete? but move JavaDoc
     }
-
-    // TODO this could be deleted, because there is already a TradeArchiver deleteTrade method.
-    // TODO we would be calling deleteTrade.deleteTrade
 
     /**
      * Returns user's trade archiver. Trade archiver is needed to access

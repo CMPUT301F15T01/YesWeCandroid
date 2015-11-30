@@ -120,6 +120,14 @@ public class TradesActivity extends Activity implements Observer {
         return pastTradesButton;
     }
 
+    /**
+     * Returns the Create Trade button.  Clicking this allows a user
+     * to navigate to the CreateTradeACtivity where they can create a trade
+     * offer to send to another user.
+     * a user's profile page.
+     *
+     * @return Button Create Trade button
+     */
     public Button getCreateTradeButton() {
         return createTradeButton;
     }
