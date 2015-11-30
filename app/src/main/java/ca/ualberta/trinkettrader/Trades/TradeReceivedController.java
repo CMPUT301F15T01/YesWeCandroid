@@ -32,9 +32,8 @@ public class TradeReceivedController {
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New Trade!!");
         emailIntent.putExtra(Intent.EXTRA_TEXT, clickedTrade.toEmailString());
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, emailList);
-        emailIntent.putExtra(Intent.EXTRA_CC, emailList);
-        emailIntent.setData(Uri.parse("mailto:" + senderUsername));
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{senderUsername, receiverUsername});
+        emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(emailIntent);
 
