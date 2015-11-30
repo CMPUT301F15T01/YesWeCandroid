@@ -42,8 +42,10 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     private Friend clickedFriend;
     private Trade clickedTrade;
     private Boolean inCounterTrade = false;
+    private Integer friendSpinnerPosition = 0;
     private Inventory friendsTradeTrinkets = new Inventory();
     private Inventory yourTradeTrinkets = new Inventory();
+
 
 
 
@@ -167,6 +169,17 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     public void setInCounterTrade(Boolean inCounterTrade) {
         this.inCounterTrade = inCounterTrade;
     }
+
+
+    public Integer getFriendSpinnerPosition() {
+        return friendSpinnerPosition;
+    }
+
+    public void setFriendSpinnerPosition(Integer friendSpinnerPosition) {
+        this.friendSpinnerPosition = friendSpinnerPosition;
+    }
+
+
 
     /**
      * Adds the specified observer to the list of observers. If it is already
