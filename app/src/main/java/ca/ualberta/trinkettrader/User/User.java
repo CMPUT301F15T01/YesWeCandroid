@@ -44,7 +44,6 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.PictureDirectoryManager;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.NotificationManager;
-import ca.ualberta.trinkettrader.Trades.Trade;
 import ca.ualberta.trinkettrader.Trades.TradeManager;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 
@@ -61,7 +60,7 @@ import ca.ualberta.trinkettrader.User.Profile.UserProfile;
  * trade with them, a {@link TradeManager TradeManager} to handle their trades with their friends, and
  * a user profile which stores and displays their information.
  */
-public class User extends ElasticStorable implements ca.ualberta.trinkettrader.Observable, Friendable {
+public class User extends ElasticStorable implements ca.ualberta.trinkettrader.Observable {
 
     private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/";
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/_search";
