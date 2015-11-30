@@ -73,6 +73,7 @@ public class FriendsListActivity extends Activity implements Observer {
             }
         });
 
+        /*
         Friend f = new Friend("test123");
         LoggedInUser.getInstance().getFriendsList().add(f);
         Trinket testTrinket = new Trinket();
@@ -82,7 +83,7 @@ public class FriendsListActivity extends Activity implements Observer {
         testTrinket.setQuality("Great");
         testTrinket.setQuantity("2");
         LoggedInUser.getInstance().getFriendsList().getFriendByUsername("test123").getActualFriend().getInventory().add(testTrinket);
-
+*/
     }
 
     @Override

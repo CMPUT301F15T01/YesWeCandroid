@@ -21,6 +21,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,6 +39,7 @@ import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.ImageViewArrayAdapter;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.R;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Android activity for displaying the details of a trinket.  Some of the trinkets details are
@@ -89,6 +91,15 @@ public class TrinketDetailsActivity extends Activity implements Observer {
         this.gallery = (HorizontalListView) findViewById(R.id.gallery);
 
         this.pictures = item.getPictures();
+        if (LoggedInUser.getInstance().getProfile().getArePhotosDownloadable()) {
+            for (Picture picture: pictures) {
+                try {
+                    picture.loadPicture();
+                } catch (IOException | PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         this.adapter = new ImageViewArrayAdapter(this, R.layout.activity_trinket_details_picture, this.pictures, Boolean.FALSE);
         this.gallery.setAdapter(this.adapter);
@@ -247,5 +258,6 @@ public class TrinketDetailsActivity extends Activity implements Observer {
      */
     @Override
     public void update(Observable observable, Object data) {
+        adapter.notifyDataSetChanged();
     }
 }

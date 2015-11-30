@@ -14,6 +14,8 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.app.Activity;
+
 import java.util.ArrayList;
 import java.util.Observer;
 
@@ -42,8 +44,11 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     private Friend clickedFriend;
     private Trade clickedTrade;
     private Boolean inCounterTrade = false;
+    private Integer friendSpinnerPosition = 0;
     private Inventory friendsTradeTrinkets = new Inventory();
     private Inventory yourTradeTrinkets = new Inventory();
+    private Activity activity;
+
 
 
 
@@ -157,6 +162,17 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
         this.inCounterTrade = inCounterTrade;
     }
 
+
+    public Integer getFriendSpinnerPosition() {
+        return friendSpinnerPosition;
+    }
+
+    public void setFriendSpinnerPosition(Integer friendSpinnerPosition) {
+        this.friendSpinnerPosition = friendSpinnerPosition;
+    }
+
+
+
     /**
      * Adds the specified observer to the list of observers. If it is already
      * registered, it is not added a second time.
@@ -193,4 +209,11 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
         }
     }
 
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
 }

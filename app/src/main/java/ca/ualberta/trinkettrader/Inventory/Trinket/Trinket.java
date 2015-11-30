@@ -17,9 +17,12 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 import android.location.Location;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Observer;
+import java.util.Set;
 
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.PictureDirectoryManager;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
@@ -35,8 +38,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  */
 public class Trinket implements ca.ualberta.trinkettrader.Observable {
 
-    private ArrayList<Observer> observers;
-    private ArrayList<Picture> pictures;
+    private ArrayList<String> pictureFileNames;
     private Location location;
     private String accessibility;
     private String category;
@@ -44,6 +46,9 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
     private String name;
     private String quality;
     private String quantity;
+
+    private transient ArrayList<Observer> observers;
+    private transient ArrayList<Picture> pictures;
 
     /**
      * Creates a new trinket object.  By default the trinket's accessibility is public, meaning it can
@@ -340,6 +345,14 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      */
     public void setQuantity(String quantity) {
         this.quantity = quantity;
+    }
+
+    public ArrayList<String> getPictureFileNames() {
+        return pictureFileNames;
+    }
+
+    public void setPictureFileNames(ArrayList<String> pictureFileNames) {
+        this.pictureFileNames = pictureFileNames;
     }
 
     @Override

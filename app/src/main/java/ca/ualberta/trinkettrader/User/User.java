@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.User;
 
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.util.Log;
 
@@ -21,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -29,14 +31,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
 import ca.ualberta.trinkettrader.Elastic.SearchHit;
 import ca.ualberta.trinkettrader.Friends.FriendsList;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsList;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.PictureDirectoryManager;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.NotificationManager;
+import ca.ualberta.trinkettrader.Trades.Trade;
 import ca.ualberta.trinkettrader.Trades.TradeManager;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 
@@ -44,7 +52,7 @@ import ca.ualberta.trinkettrader.User.Profile.UserProfile;
  * Abstract class representing a user of the app. This class is implemented in the app by
  * {@link LoggedInUser LoggedInUser}, who represents the current user of the app on a particular device.
  * This class mainly acts as a container for all of the various classes that make up a user.
- *
+ * <p/>
  * In the system, a user has a list of {@link ca.ualberta.trinkettrader.Friends.Friend Friends} contained
  * in a {@link FriendsList FriendsList}, a {@link TrackedFriendsList TrackedFriendsList} for their
  * tracked friends, an {@link Inventory Inventory} which contains the
@@ -58,8 +66,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/";
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/user/_search";
     private static final String TAG = "User";
-
-    private ArrayList<Observer> observers;
     protected Boolean needToSave;
     protected FriendsList friendsList;
     protected Inventory inventory;
@@ -67,6 +73,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     protected TrackedFriendsList trackedFriendsList;
     protected TradeManager tradeManager;
     protected UserProfile profile;
+    private ArrayList<Observer> observers;
 
     /**
      * Public constructor for user: initializes all attribute classes as empty classes with no
@@ -89,12 +96,12 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      * attribute classes.  This constructor would be called for a user already on the system, whose
      * data can be pulled from Elastic Search or the phone's local data.
      *
-     * @param friendsList - a FriendsList of the user's friends
-     * @param inventory - the user's Inventory with their trinkets
+     * @param friendsList         - a FriendsList of the user's friends
+     * @param inventory           - the user's Inventory with their trinkets
      * @param notificationManager - a notification manager to notify the user if a new trade has been offered to them
-     * @param profile - a profile storing their information
-     * @param trackedFriends - a FriendsList which stores the Friends the user wishes to track
-     * @param tradeManager - a TradeManager for handling the user's trades
+     * @param profile             - a profile storing their information
+     * @param trackedFriends      - a FriendsList which stores the Friends the user wishes to track
+     * @param tradeManager        - a TradeManager for handling the user's trades
      */
     public User(FriendsList friendsList, Inventory inventory, NotificationManager notificationManager, UserProfile profile, TrackedFriendsList trackedFriends, TradeManager tradeManager) {
         this.friendsList = friendsList;
@@ -183,6 +190,141 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         this.needToSave = needToSave;
     }
 
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getResourceUrl() {
+        return RESOURCE_URL;
+    }
+
+    @Override
+    public String getUid() {
+        // Vasyl Keretsman; http://stackoverflow.com/questions/15429257/how-to-convert-byte-array-to-hexstring-in-java; 2015-11-28
+        final StringBuilder builder = new StringBuilder();
+        for (byte b : this.profile.getEmail().getBytes()) {
+            builder.append(String.format("%02x", b));
+        }
+        String uid = builder.toString();
+        return uid;
+    }
+
+    /**
+     * Attempts to find this object on the elasticsearch server. If the object
+     * cannot be found then pushes the current version to the server.
+     *
+     * @param type class of this object
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void getFromNetwork(Class<T> type) throws IOException {
+        // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
+        // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
+        final HttpGet getRequest = new HttpGet(this.getResourceUrl() + this.getUid());
+        final HttpClient httpClient = new DefaultHttpClient();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpResponse response = httpClient.execute(getRequest);
+                    Log.i("HttpResponse", response.getStatusLine().toString());
+                    Type searchHitType = new TypeToken<SearchHit<LoggedInUser>>() {
+                    }.getType();
+                    SearchHit<LoggedInUser> returned = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchHitType);
+                    onGetResult(returned.getSource());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    /**
+     * Method called after getFromNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of getFromNetwork
+     */
+    @Override
+    public <T extends ElasticStorable> void onGetResult(T result) {
+        if (result != null) {
+            User user = (User) result;
+            this.setFriendsList(user.getFriendsList());
+            this.setInventory(user.getInventory());
+            for (Trinket trinket: user.getInventory()) {
+                ArrayList<Picture> pictures = new ArrayList<>();
+                for (String filename: trinket.getPictureFileNames()) {
+                    try {
+                        pictures.add(new Picture(filename, new PictureDirectoryManager(ApplicationState.getInstance().getActivity()), ApplicationState.getInstance().getActivity()));
+                    } catch (IOException | PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+                trinket.setPictures(pictures);
+            }
+            this.setNotificationManager(user.getNotificationManager());
+            this.setProfile(user.getProfile());
+            this.setTrackedFriends(user.getTrackedFriendsList());
+            this.setTradeManager(user.getTradeManager());
+        } else {
+            try {
+                this.saveToNetwork();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Method called after searchOnNetwork gets a response. This method should
+     * be overridden to do something with the result.
+     *
+     * @param result result of searchOnNetwork
+     */
+    @Override
+    public <T extends ElasticStorable> void onSearchResult(Collection<T> result) {
+    }
+
+    /**
+     * Returns user's UserProfle
+     *
+     * @return UserProfile
+     */
+    public UserProfile getProfile() {
+        return profile;
+    }
+
+    /**
+     * Sets user's UserProfile
+     *
+     * @param profile
+     */
+    public void setProfile(UserProfile profile) {
+        this.profile = profile;
+        this.needToSave = Boolean.TRUE;
+    }
+
+    /**
+     * Sets user's list of tracked friends
+     *
+     * @param trackedFriendsList
+     */
+    public void setTrackedFriends(TrackedFriendsList trackedFriendsList) {
+        this.trackedFriendsList = trackedFriendsList;
+    }
+
+    /**
+     * Returns user's list of tracked friends
+     *
+     * @return TrackedFriendsList
+     */
+    public TrackedFriendsList getTrackedFriendsList() {
+        return trackedFriendsList;
+    }
+
     /**
      * Returns User's friends
      *
@@ -241,43 +383,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
-     * Returns user's UserProfle
-     *
-     * @return UserProfile
-     */
-    public UserProfile getProfile() {
-        return profile;
-    }
-
-    /**
-     * Sets user's UserProfile
-     *
-     * @param profile
-     */
-    public void setProfile(UserProfile profile) {
-        this.profile = profile;
-        this.needToSave = Boolean.TRUE;
-    }
-
-    /**
-     * Returns user's list of tracked friends
-     *
-     * @return TrackedFriendsList
-     */
-    public TrackedFriendsList getTrackedFriendsList() {
-        return trackedFriendsList;
-    }
-
-    /**
-     * Sets user's list of tracked friends
-     *
-     * @param trackedFriendsList
-     */
-    public void setTrackedFriends(TrackedFriendsList trackedFriendsList) {
-        this.trackedFriendsList = trackedFriendsList;
-    }
-
-    /**
      * Returns user's trade manager
      *
      * @return TradeManager
@@ -296,50 +401,9 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     @Override
-    public String getTag() {
-        return TAG;
-    }
-
-    @Override
-    public String getResourceUrl() {
-        return RESOURCE_URL;
-    }
-
-    @Override
-    public String getUid() {
-        // Vasyl Keretsman; http://stackoverflow.com/questions/15429257/how-to-convert-byte-array-to-hexstring-in-java; 2015-11-28
-        final StringBuilder builder = new StringBuilder();
-        for (byte b : this.profile.getEmail().getBytes()) {
-            builder.append(String.format("%02x", b));
-        }
-        String uid = builder.toString();
-        Log.i("Uid", uid);
-        return uid;
-    }
-
-    @Override
     public String getSearchUrl() {
         return SEARCH_URL;
     }
-
-    /**
-     * Method called after searchOnNetwork gets a response. This method should
-     * be overridden to do something with the result.
-     *
-     * @param result result of searchOnNetwork
-     */
-    @Override
-    public <T extends ElasticStorable> void onSearchResult(T result) {
-        Log.i("RESULT", result.toString());
-        User returned = (User) result;
-        this.setProfile(returned.getProfile());
-        this.setTrackedFriends(returned.getTrackedFriendsList());
-        this.setFriendsList(returned.getFriendsList());
-        this.setInventory(returned.getInventory());
-        this.setNotificationManager(returned.getNotificationManager());
-        this.setTradeManager(returned.getTradeManager());
-    }
-
 
     public Location getDefaultLocation() {
         return this.profile.getDefaultLocation();
@@ -349,33 +413,20 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         this.profile.setDefaultLocation(defaultLocation);
     }
 
-    public void setEmail(String email){
+    public void setEmail(String email) {
         this.getProfile().setEmail(email);
     }
 
     /**
-     * Method called after getFromNetwork gets a response. This method should
-     * be overridden to do something with the result.
+     * Searches for ElasticStorable objects on the network matching the attribute and attribute
+     * value pairs. Calls onSearchResult with the results when the search completes.
      *
-     * @param result result of getFromNetwork
+     * @param postParameters pairs of attributes to use when searching
+     * @param type
+     * @throws IOException
      */
     @Override
-    public <T extends ElasticStorable> void onGetResult(T result) {
-        if (result != null) {
-            User user = (User) result;
-            this.setFriendsList(user.getFriendsList());
-            this.setInventory(user.getInventory());
-            this.setNotificationManager(user.getNotificationManager());
-            this.setProfile(user.getProfile());
-            this.setTrackedFriends(user.getTrackedFriendsList());
-            this.setTradeManager(user.getTradeManager());
-        } else {
-            try {
-                this.saveToNetwork();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
     }
 
     public void getFromNetwork() throws IOException {
