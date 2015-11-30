@@ -31,6 +31,10 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
+
+/**
+ *
+ */
 public class CounterTradeActivity extends Activity {
 
     private Button addFriendsItemsButton;

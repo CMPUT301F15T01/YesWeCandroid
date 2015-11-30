@@ -27,6 +27,10 @@ import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
+
+/**
+ *
+ */
 public class CounterTradeController {
     private CounterTradeActivity activity;
 
