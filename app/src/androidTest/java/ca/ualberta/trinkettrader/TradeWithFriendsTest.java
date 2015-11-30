@@ -46,9 +46,9 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     // TODO ask about how to incorporate FriendsListController
 
 
-
-    // TODO User Case: Accept a proposed trade
-    // Test accepting trade
+    /*
+    * Use Case: Accept a Proposed Trade
+    * */
     public void testAcceptTrade() {
         User user = LoggedInUser.getInstance();
         Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
@@ -101,10 +101,18 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
-    }
 
-    // TODO User Case: Decline a proposed trade
-    // Test rejecting a trade without sending a counter offer
+        try{
+            // delete currentUser (LoggedInUser)
+            LoggedInUser.getInstance().deleteFromNetwork();
+        }catch(IOException e){
+
+        }
+    }
+    /*
+    * Case: Decline a Proposed Trade
+    * Test rejecting a trade without sending a counter offer
+    * */
     public void testDeclineTradeNoCounter() {
         User user = LoggedInUser.getInstance();
         Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
@@ -162,64 +170,6 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         homePageActivity.finish();
     }
 
-    // TODO User Case: Propose a counter-trade
-    // Test rejecting a trade with sending a counter offer
-    public void testDeclineTradeWithCounter() {
-        User user = LoggedInUser.getInstance();
-        // Send a trade to yourself as a test
-        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
-        user.getTradeManager().proposeTrade(trade);
-        // Test if this trade has triggered a notification
-        assertTrue(user.getNotificationManager().hasNotification());
-        user.getTradeManager().declineTrade(trade);
-        // Send a counter trade
-        Trade counterTrade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
-        assertFalse(trade.getStatus().equals("closed"));
-
-        /*
-        *
-        * */
-
-        // Start the UI test from the login page (beginning of the app).
-        LoginActivity loginActivity = (LoginActivity) getActivity();
-
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-
-        // On the login page: click the email input box and write an arbitrary email.
-        // Test that the text was successfully written.
-        loginEmailTextView = loginActivity.getEmailTextView();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginEmailTextView.performClick();
-                loginEmailTextView.setText("user@gmail.com");
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
-
-        // Click the login button to proceed to the home page.
-        loginButton = loginActivity.getLoginButton();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginButton.performClick();
-            }
-        });
-
-        // Test that the HomePageActivity started correctly after the clicking the login button.
-        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("HomePageActivity is null", homePageActivity);
-        assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
-        getInstrumentation().removeMonitor(homePageActivityMonitor);
-
-
-        // finish activities
-        loginActivity.finish();
-        homePageActivity.finish();
-        assertNotNull(null);
-    }
 
     // Test that friend has the item that user is proposing in their offered trade
     // TODO this seems out of place?
@@ -277,59 +227,28 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         homePageActivity.finish();
     }
 
-    // TODO User Case: owner/borrower can browse all current trades involving them
-    // TODO Make one for someone who is not owner proposing a trade?
-    //check that the proposed trade shows up in the users current trades
-    public void testProposedTradeAppearsInCurrentTrades() {
-        User user = LoggedInUser.getInstance();
-        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
-        assertFalse(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
-        user.getTradeManager().proposeTrade(trade);
-        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
-
-        /*
-        *
-        * */
-
-        // Start the UI test from the login page (beginning of the app).
-        LoginActivity loginActivity = (LoginActivity) getActivity();
-
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-
-        // On the login page: click the email input box and write an arbitrary email.
-        // Test that the text was successfully written.
-        loginEmailTextView = loginActivity.getEmailTextView();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginEmailTextView.performClick();
-                loginEmailTextView.setText("user@gmail.com");
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
-
-        // Click the login button to proceed to the home page.
-        loginButton = loginActivity.getLoginButton();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginButton.performClick();
-            }
-        });
-
-        // Test that the HomePageActivity started correctly after the clicking the login button.
-        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("HomePageActivity is null", homePageActivity);
-        assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
-        getInstrumentation().removeMonitor(homePageActivityMonitor);
-
-        // finish activities
-        loginActivity.finish();
-        homePageActivity.finish();
+   /*
+   * Use Case: Offer a trade
+   * */
+    public void testProposeTrade(){
+        assertNotNull(null);
     }
 
+    /*
+    * Use Case: Edit a proposed trade
+    * User edits a trade they proposed.
+    * */
+    public void testEditProposedTrade(){
+        assertNotNull(null);
+    }
+
+    /*
+    * Use Case: Delete a proposed trade
+    * User deletes a trade they proposed.
+    * */
+    public void deleteProposedTrade(){
+        assertNotNull(null);
+    }
     // TODO USer Case: Edit a proposed trade
     //check that user can edit a current trade
     public void testEditTrade() {

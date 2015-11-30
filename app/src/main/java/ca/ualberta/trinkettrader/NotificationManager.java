@@ -25,6 +25,9 @@ import ca.ualberta.trinkettrader.User.User;
  * new trade offer,
  * 2. completion of trade notification - user will be emailed relevant trade information
  * for a completed trade.
+ *
+ * Notifications about trades are displayed to the user in the
+ * {@link ca.ualberta.trinkettrader.Trades.TradesActivity TradesActivity}.
  */
 public class NotificationManager {
 
@@ -33,25 +36,14 @@ public class NotificationManager {
     private User user;
 
     /**
-     * Returns if this user has a notification waiting to be read.
+     * Returns if this user has a notification waiting to be read.  New notifications are displayed
+     * to the user in the {@link ca.ualberta.trinkettrader.Trades.TradesActivity TradesActivity}.  If the method
+     * returns true then the user has a new notification, if false then there are no notifications.
      *
-     * @return Boolean
+     * @return Boolean - true if the user has notifications, false otherwise
      */
     public Boolean hasNotification() {
         return Boolean.TRUE;
     }
 
-    /**
-     * Displays notifications to the user and removes them from pending notifications.
-     */
-    public void notifyUser() {
-
-    }
-
-    /**
-     * Sends email containing relevant trade information to borrower
-     * and an owner after a trade has been accepted.
-     */
-    public void sendEmail() {
-    }
 }
