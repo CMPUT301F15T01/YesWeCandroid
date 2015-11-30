@@ -14,7 +14,9 @@
 
 package ca.ualberta.trinkettrader;
 
+import android.app.AlertDialog;
 import android.app.Instrumentation;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -203,6 +205,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             throw new RuntimeException(e);
         }
 
+        /******** InventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor inventoryActivityMonitor =
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                        null, false);
+
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
@@ -212,8 +220,20 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        // Validate that ReceiverActivity is started
+        InventoryActivity inventoryActivity = (InventoryActivity)
+                inventoryActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", inventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, inventoryActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                InventoryActivity.class, inventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(inventoryActivityMonitor);
+
         // Make sure the item has an image
-        Inventory trinkets = displayInventoryActivity.getInventory();
+        Inventory trinkets = inventoryActivity.getInventory();
         assertFalse(trinkets.isEmpty());
         for (Trinket trinket : trinkets) {
             assertFalse(trinket.getPictures().isEmpty());
@@ -223,6 +243,8 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         addOrEditItemActivity.finish();
         displayInventoryActivity.finish();
         homePageActivity.finish();
+        inventoryActivity.finish();
+        loginActivity.finish();
     }
 
     public void testViewPhotograph() {
@@ -448,11 +470,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         }
 
         // Close the activities
-        trinketDetailsActivity.finish();
         addOrEditItemActivity.finish();
         displayInventoryActivity.finish();
         homePageActivity.finish();
+        inventoryActivity.finish();
         loginActivity.finish();
+        trinketDetailsActivity.finish();
     }
 
     public void testConstrainPhotographSize() {
@@ -604,6 +627,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             throw new RuntimeException(e);
         }
 
+        /******** InventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor inventoryActivityMonitor =
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                        null, false);
+
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
@@ -613,8 +642,20 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        // Validate that ReceiverActivity is started
+        InventoryActivity inventoryActivity = (InventoryActivity)
+                inventoryActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", inventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, inventoryActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                InventoryActivity.class, inventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(inventoryActivityMonitor);
+
         // Make sure the item's image is less than the limit
-        Inventory trinkets = displayInventoryActivity.getInventory();
+        Inventory trinkets = inventoryActivity.getInventory();
         for (Trinket trinket : trinkets) {
             for (Picture picture : trinket.getPictures()) {
                 assertTrue(picture.size() < 65536);
@@ -625,6 +666,8 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         addOrEditItemActivity.finish();
         displayInventoryActivity.finish();
         homePageActivity.finish();
+        inventoryActivity.finish();
+        loginActivity.finish();
     }
 
     public void testDeletePhotoGraph() {
@@ -776,6 +819,12 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             throw new RuntimeException(e);
         }
 
+        /******** InventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor inventoryActivityMonitor =
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                        null, false);
+
         // Save the item
         final Button saveItemButton = addOrEditItemActivity.getSaveButton();
         addOrEditItemActivity.runOnUiThread(new Runnable() {
@@ -785,6 +834,18 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+        // Validate that ReceiverActivity is started
+        InventoryActivity inventoryActivity = (InventoryActivity)
+                inventoryActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", inventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, inventoryActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                InventoryActivity.class, inventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(inventoryActivityMonitor);
+
         /******** TrinketDetailsActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor trinketDetailsActivityMonitor =
@@ -792,7 +853,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
                         null, false);
 
         // Start TrinketDetailsActivity
-        final ListView inventoryItemsList = displayInventoryActivity.getInventoryItemsList();
+        final ListView inventoryItemsList = inventoryActivity.getInventoryItemsList();
         displayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View view = inventoryItemsList.getChildAt(0);
@@ -829,7 +890,7 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        AddOrEditTrinketActivity removeItemPictureActivity = (AddOrEditTrinketActivity)
+        final AddOrEditTrinketActivity removeItemPictureActivity = (AddOrEditTrinketActivity)
                 removeItemPictureActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", removeItemPictureActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
@@ -841,13 +902,23 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(removeItemPictureActivityMonitor);
 
         // Delete the image
-        final Button removeImageButton = removeItemPictureActivity.getRemovePictureButton();
-        removeItemPictureActivity.runOnUiThread(new Runnable() {
+        final HorizontalListView listView = removeItemPictureActivity.getGallery();
+        displayInventoryActivity.runOnUiThread(new Runnable() {
             public void run() {
-                removeImageButton.performClick();
+                View view = listView.getChildAt(0);
+                listView.performItemClick(view, 0, view.getId());
+                // Matt Giles; http://stackoverflow.com/questions/16410506/how-to-click-ok-on-an-alertdialog-via-code; 2015-11-29
+                AlertDialog dialog = removeItemPictureActivity.getDeletePictureDialog();
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).performClick();
             }
         });
         getInstrumentation().waitForIdleSync();
+
+        /******** InventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor postDeleteInventoryActivityMonitor =
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                        null, false);
 
         // Save the item
         final Button removeItemPictureSaveItemButton = removeItemPictureActivity.getSaveButton();
@@ -857,22 +928,64 @@ public class PhotographsOfItemsTests extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
-        trinketDetailsActivity.finish();
+
+        // Validate that ReceiverActivity is started
+        InventoryActivity postDeleteInventoryActivity = (InventoryActivity)
+                postDeleteInventoryActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", postDeleteInventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, postDeleteInventoryActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                InventoryActivity.class, postDeleteInventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(postDeleteInventoryActivityMonitor);
+
+        /******** TrinketDetailsActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor postDeleteTrinketDetailsActivityMonitor =
+                getInstrumentation().addMonitor(TrinketDetailsActivity.class.getName(),
+                        null, false);
+
+        // Start TrinketDetailsActivity
+        final ListView postDeleteInventoryItemsList = postDeleteInventoryActivity.getInventoryItemsList();
+        displayInventoryActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                View view = postDeleteInventoryItemsList.getChildAt(0);
+                postDeleteInventoryItemsList.performItemClick(view, 0, view.getId());
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        TrinketDetailsActivity postDeleteTrinketDetailsActivity = (TrinketDetailsActivity)
+                postDeleteTrinketDetailsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", postDeleteTrinketDetailsActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, postDeleteTrinketDetailsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                TrinketDetailsActivity.class, postDeleteTrinketDetailsActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(postDeleteInventoryActivityMonitor);
 
         // Make sure the item does not have an image
-        Inventory inventory = displayInventoryActivity.getInventory();
+        Inventory inventory = postDeleteInventoryActivity.getInventory();
         assertFalse(inventory.isEmpty());
-        for (Trinket trinket : inventory) {
+        for (Trinket trinket: inventory) {
             assertTrue(trinket.getPictures().isEmpty());
         }
 
         // Close the activities
-        removeItemPictureActivity.finish();
-        trinketDetailsActivity.finish();
         addOrEditItemActivity.finish();
         displayInventoryActivity.finish();
         homePageActivity.finish();
+        inventoryActivity.finish();
         loginActivity.finish();
+        postDeleteInventoryActivity.finish();
+        postDeleteTrinketDetailsActivity.finish();
+        removeItemPictureActivity.finish();
+        trinketDetailsActivity.finish();
     }
 
     public void testManuallyChoosePhotosToDownloadIfPhotoDownloadDisabled() {

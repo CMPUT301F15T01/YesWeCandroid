@@ -82,6 +82,7 @@ public class AddOrEditTrinketActivity extends Activity implements Observer {
     private Spinner trinketCategory;
     private Spinner trinketQuality;
     private Uri uri;
+    private AlertDialog deletePictureDialog;
 
     /**
      * Gets REQUEST_IMAGE_CAPTURE value. This should only be used for testing purposes.
@@ -170,7 +171,8 @@ public class AddOrEditTrinketActivity extends Activity implements Observer {
         this.gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                deletePictureDialog(position);
+                deletePictureDialog = deletePictureDialog(position);
+                deletePictureDialog.show();
             }
         });
     }
@@ -181,7 +183,7 @@ public class AddOrEditTrinketActivity extends Activity implements Observer {
         adapter.notifyDataSetChanged();
     }
 
-    private void deletePictureDialog(final Integer position) {
+    private AlertDialog deletePictureDialog(final Integer position) {
         final Activity activity = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Delete picture?")
@@ -196,7 +198,7 @@ public class AddOrEditTrinketActivity extends Activity implements Observer {
                         dialog.dismiss();
                     }
                 });
-        builder.create().show();
+        return builder.create();
     }
 
     /**
@@ -425,5 +427,13 @@ public class AddOrEditTrinketActivity extends Activity implements Observer {
 
     public EditText getTrinketLongitude() {
         return trinketLongitude;
+    }
+
+    public HorizontalListView getGallery() {
+        return gallery;
+    }
+
+    public AlertDialog getDeletePictureDialog() {
+        return deletePictureDialog;
     }
 }

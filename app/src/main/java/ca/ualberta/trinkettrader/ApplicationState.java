@@ -41,8 +41,10 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     private Trinket clickedTrinket;
     private Friend clickedFriend;
     private Trade clickedTrade;
+    private Boolean inCounterTrade = false;
     private Inventory friendsTradeTrinkets = new Inventory();
     private Inventory yourTradeTrinkets = new Inventory();
+
 
 
     private ApplicationState() {
@@ -142,6 +144,15 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
      */
     public void setClickedTrade(Trade clickedTrade) {
         this.clickedTrade = clickedTrade;
+    }
+
+
+    public Boolean getInCounterTrade() {
+        return inCounterTrade;
+    }
+
+    public void setInCounterTrade(Boolean inCounterTrade) {
+        this.inCounterTrade = inCounterTrade;
     }
 
     /**

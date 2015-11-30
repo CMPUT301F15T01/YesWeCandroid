@@ -18,6 +18,7 @@
         xmlns:widget="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
+        android:paddingBottom="10dp"
         widget:dividerWidth="10dp"/>
 
     <LinearLayout
@@ -28,16 +29,17 @@
             android:id="@+id/trinketNameTitle"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:gravity="center|right"
+            android:gravity="end"
             android:text="Trinket: "
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
             android:id="@+id/trinketName"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="84dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:gravity="start"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
 
@@ -51,14 +53,15 @@
             android:layout_height="match_parent"
             android:gravity="end"
             android:text="Description: "
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
             android:id="@+id/trinketDescription"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="48dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:gravity="start"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
     <LinearLayout
@@ -71,14 +74,15 @@
             android:layout_height="match_parent"
             android:gravity="end"
             android:text="Quantity: "
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
             android:id="@+id/trinketQuantity"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:gravity="start"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
 
@@ -92,14 +96,15 @@
             android:layout_height="match_parent"
             android:gravity="end"
             android:text="Quality: "
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
             android:id="@+id/trinketQuality"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:gravity="start"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
     <LinearLayout
@@ -112,14 +117,15 @@
             android:layout_height="match_parent"
             android:gravity="end"
             android:text="Category: "
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
             android:id="@+id/trinketCategory"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:gravity="start"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
     <LinearLayout
@@ -132,14 +138,15 @@
             android:layout_height="match_parent"
             android:gravity="end"
             android:text="Accessibility: "
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
             android:id="@+id/trinketAccessability"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:gravity="start"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
     <LinearLayout
@@ -152,14 +159,15 @@
             android:layout_height="match_parent"
             android:gravity="end"
             android:text="Latitude: "
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
             android:id="@+id/trinketLatitude"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:gravity="start"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
     <LinearLayout
@@ -172,19 +180,21 @@
             android:layout_height="match_parent"
             android:gravity="end"
             android:text="Longitude: "
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
             android:id="@+id/trinketLongitude"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:gravity="start"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
         android:weightSum="60">
 
         <Button

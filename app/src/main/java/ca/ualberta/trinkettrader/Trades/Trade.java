@@ -44,12 +44,17 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     private Inventory requestedTrinkets;
 
     private String status;
-    private TradeManager receiver;
-    private TradeManager sender;
+    private transient TradeManager receiver;
+    private transient TradeManager sender;
     private Integer numberOfTrinkets;
 
     /**
-     * Constructor that initializes
+     * Constructor that initializes the sender and receiver sides of the trade.  Both parties are initialized
+     * with their own {@link Inventory Inventories} (holding the trinkets they are bartering in this trade) and their own
+     * {@link TradeManager TradeManagers}.  When a new trade is initialized, the current user who is
+     * requesting the trade is the "sender" and the friend who the request is being sent to is the "receiver".
+     * By default the trade's status is set to "pending", meaning that the negotiation is still in progress and
+     * the trade has neither been accepted nor rejected yet.
      *
      * @param offeredTrinkets   inventory containing offered trinkets
      * @param receiver          TradeManager of user who was offered the trade
@@ -101,9 +106,10 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     }
 
     /**
-     * Returns trinket offered by trade sender.
+     * Returns the trinket offered by trade sender.  The current user who is proposing the trade is the
+     * sender.  They will offer 1 trinket in the trade, which will be returned in an inventory.
      *
-     * @return Inventory Inventory containing offered trinkets
+     * @return Inventory - Inventory containing offered trinkets
      */
     public Inventory getOfferedTrinkets() {
         return offeredTrinkets;
@@ -112,16 +118,19 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     /**
      * Returns TradeManager of receiver of trade (user who receives trade offer).
      *
-     * @return TradeManager TradeManager of user who was offered the trade
+     * @return TradeManager - TradeManager of user who was offered the trade
      */
     public TradeManager getReceiver() {
         return receiver;
     }
 
     /**
-     * Return trinket(s) requested by trade sender.
+     * Return trinket(s) requested by trade sender.  The current user who is proposing the trade is the
+     * sender.  They may request 0 or more trinkets in the trade they are proposing.  All items they are
+     * requesting will be returned.  If they are requesting no items then an empty {@link Inventory Inventory}
+     * is returned.
      *
-     * @return Inventory Inventory containing requested trinkets
+     * @return Inventory - Inventory containing requested trinkets
      */
     public Inventory getRequestedTrinkets() {
         return requestedTrinkets;
@@ -130,7 +139,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     /**
      * Returns TradeManager of sender of trade (user who proposes trade offer).
      *
-     * @return TradeManager TradeManager of user who instantiated trade
+     * @return TradeManager - TradeManager of user who instantiated trade
      */
     public TradeManager getSender() {
         return sender;
@@ -198,7 +207,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * Current(active) trades have a status of pending.  Past (inactive)
      * trades have a status of accepted or declined.
      *
-     * @return String Status of trade (pending, accepted or declined)
+     * @return String - Status of trade (pending, accepted or declined)
      */
     public String getStatus() {
         return status;
@@ -209,7 +218,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * Current(active) trades have a status of pending.  Past (inactive)
      * trades have a status of accepted or declined.
      *
-     * @param status Status of trade (pending, accepted or declined)
+     * @param status - String representing status of trade (pending, accepted or declined)
      */
     public void setStatus(String status) {
         this.status = status;
@@ -250,7 +259,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      /** Method called after getFromNetwork gets a response. This method should
      * be overridden to do something with the result.
      *
-     * @param result result of getFromNetwork
+     * @param result - result of getFromNetwork
      */
     @Override
     public <T extends ElasticStorable> void onGetResult(T result) {

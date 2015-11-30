@@ -86,7 +86,7 @@ tools:context="ca.ualberta.trinkettrader.Trades.CounterTradeActivity">
     android:id="@+id/proposeCounterTradeButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:onClick="proposeTradeButtonOnClick"
+    android:onClick="proposeCounterTradeButtonOnClick"
     android:text="Propose Counter Trade"
     android:layout_alignTop="@+id/yourItemsCounterTradeListView"
     android:layout_toEndOf="@+id/addYourItemsCounterTradeButton" />
@@ -98,7 +98,8 @@ tools:context="ca.ualberta.trinkettrader.Trades.CounterTradeActivity">
         android:id="@+id/cancelCounterTradeButton"
         android:layout_below="@+id/proposeCounterTradeButton"
         android:layout_alignEnd="@+id/proposeCounterTradeButton"
-        android:layout_toEndOf="@+id/yourItemsCounterTradeListView" />
+        android:layout_toEndOf="@+id/yourItemsCounterTradeListView"
+        android:onClick="cancelCounterTradeButtonOnClick"/>
 
 
 </RelativeLayout>

@@ -18,6 +18,7 @@ import android.content.Intent;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
+import ca.ualberta.trinkettrader.Trades.CounterTradeActivity;
 import ca.ualberta.trinkettrader.Trades.CreateTradeActivity;
 
 public class FriendsTrinketDetailsController {
@@ -35,8 +36,14 @@ public class FriendsTrinketDetailsController {
         Trinket clickedTrinket = ApplicationState.getInstance().getClickedTrinket();
         ApplicationState.getInstance().getFriendsTradeTrinkets().add(clickedTrinket);
 
-        Intent intent = new Intent(activity, CreateTradeActivity.class);
-        activity.startActivity(intent);
+        if (ApplicationState.getInstance().getInCounterTrade()) {
+            Intent intent = new Intent(activity, CounterTradeActivity.class);
+            activity.startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(activity, CreateTradeActivity.class);
+            activity.startActivity(intent);
+        }
 
     }
 

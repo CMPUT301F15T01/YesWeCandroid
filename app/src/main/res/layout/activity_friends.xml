@@ -25,7 +25,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/findFriendTextField"
         android:onClick="findFriendsOnClick"
-        android:text="Find Friend"/>
+        android:text="Add Friend"/>
 
     <EditText
         android:id="@+id/findFriendTextField"

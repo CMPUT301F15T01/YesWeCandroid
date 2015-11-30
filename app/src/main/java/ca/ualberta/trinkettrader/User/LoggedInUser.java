@@ -39,6 +39,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
+import ca.ualberta.trinkettrader.Elastic.SearchHit;
 
 public class LoggedInUser extends User {
     /**
@@ -125,9 +126,9 @@ public class LoggedInUser extends User {
                 try {
                     HttpResponse response = httpClient.execute(getRequest);
                     Log.i("HttpResponse", response.getStatusLine().toString());
-                    Type searchHitType = new TypeToken<LoggedInUser>() {}.getType();
-                    LoggedInUser returned = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchHitType);
-                    onGetResult(returned);
+                    Type searchHitType = new TypeToken<SearchHit<LoggedInUser>>() {}.getType();
+                    SearchHit<LoggedInUser> returned = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchHitType);
+                    onGetResult(returned.getSource());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

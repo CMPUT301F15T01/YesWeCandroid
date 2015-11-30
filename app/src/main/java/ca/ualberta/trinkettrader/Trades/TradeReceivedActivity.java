@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import ca.ualberta.trinkettrader.ApplicationState;
@@ -18,12 +19,13 @@ public class TradeReceivedActivity extends Activity {
     private TextView statusOfTradeTextView;
     private ListView offeredItemInTradeListView;
     private ListView requestedItemInTradeListView;
-    private Trade trade;
+    private Trade clickedTrade;
     private ArrayAdapter<Trinket> friendTrinketAdapter;
     private ArrayAdapter<Trinket> yourTrinketAdapter;
 
     private Button acceptTradeButton;
     private Button declineTradeButton;
+    private RadioButton completedRadioButton;
     private TradeReceivedController controller;
 
     @Override
@@ -32,6 +34,7 @@ public class TradeReceivedActivity extends Activity {
         setContentView(R.layout.activity_trade_received);
         acceptTradeButton = (Button) findViewById(R.id.acceptTradeButton);
         declineTradeButton = (Button) findViewById(R.id.declineTradeButton);
+        completedRadioButton = (RadioButton) findViewById(R.id.tradeCompletedRadioButton);
         friendInTradeTextView = (TextView) findViewById(R.id.tradeReceivedWithFriendName);
         statusOfTradeTextView = (TextView) findViewById(R.id.tradeReceivedStatus);
         //TODO if stuff breaks comment this
@@ -39,11 +42,20 @@ public class TradeReceivedActivity extends Activity {
         offeredItemInTradeListView = (ListView) findViewById(R.id.offeredReceivedItems);
         requestedItemInTradeListView = (ListView) findViewById(R.id.requestedReceivedItemsy);
 
-        trade = ApplicationState.getInstance().getClickedTrade();
+        clickedTrade = ApplicationState.getInstance().getClickedTrade();
         controller = new TradeReceivedController(this);
         controller.updateTextViews();
         updateTradeDetailsListView();
 
+        if (clickedTrade.getStatus().equals("Accepted")) {
+            completedRadioButton.setVisibility(View.VISIBLE);
+        }
+        else if (clickedTrade.getStatus().equals("Declined")) {
+            completedRadioButton.setVisibility(View.VISIBLE);
+        }
+        else {
+            completedRadioButton.setVisibility(View.INVISIBLE);
+        }
 
     }
 
@@ -61,9 +73,9 @@ public class TradeReceivedActivity extends Activity {
 
 
     public void updateTradeDetailsListView() {
-        yourTrinketAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_list_item_1, trade.getOfferedTrinkets());
+        yourTrinketAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_list_item_1, clickedTrade.getOfferedTrinkets());
         offeredItemInTradeListView.setAdapter(yourTrinketAdapter);
-        friendTrinketAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_list_item_1, trade.getRequestedTrinkets());
+        friendTrinketAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_list_item_1, clickedTrade.getRequestedTrinkets());
         requestedItemInTradeListView.setAdapter(friendTrinketAdapter);
     }
 
@@ -78,7 +90,13 @@ public class TradeReceivedActivity extends Activity {
         return statusOfTradeTextView;
     }
 
+    public RadioButton getCompletedRadioButton() {
+        return completedRadioButton;
+    }
 
+    public void tradeCompletedRadioButtonOnClick(View v) {
+        controller.tradeCompletedRadioButtonOnClick();
+    }
 
     public void acceptTradeButtonOnClick(View v) {
         controller.acceptTradeButtonOnClick();
