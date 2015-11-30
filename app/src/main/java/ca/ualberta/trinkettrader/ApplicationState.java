@@ -215,3 +215,4 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
         this.activity = activity;
     }
 }
+//CAN YOU SEE THIS KIRSTEN???? :)
