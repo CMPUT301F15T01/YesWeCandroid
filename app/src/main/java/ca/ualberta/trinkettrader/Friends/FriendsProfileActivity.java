@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -42,10 +41,6 @@ public class FriendsProfileActivity extends Activity implements Observer {
     private RadioButton trackedRadioButton;
     private TextView usernameTextView;
     private TextView nameTextView;
-    private TextView emailTextView;
-    private TextView cityInfoTextView;
-    private TextView phoneTextView;
-    private TextView postalCodeInfoTextView;
     private FriendsProfileController controller;
 
     @Override
@@ -53,11 +48,6 @@ public class FriendsProfileActivity extends Activity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_profile);
         friend = ApplicationState.getInstance().getClickedFriend().getActualFriend();
-        try {
-            friend.getFromNetwork();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         removeFriendButton = (Button) findViewById(R.id.removeFriendButton);
         backButton = (Button) findViewById(R.id.backToFriendsListFromProfile);
         trackedRadioButton = (RadioButton) findViewById(R.id.trackedRadioButton);
@@ -65,14 +55,14 @@ public class FriendsProfileActivity extends Activity implements Observer {
 
         usernameTextView = (TextView) findViewById(R.id.usernameText);
         nameTextView = (TextView) findViewById(R.id.nameText);
-        emailTextView = (TextView)findViewById(R.id.emailText);
-        cityInfoTextView = (TextView)findViewById(R.id.cityInfoText);
-        phoneTextView = (TextView)findViewById(R.id.phoneText);
-        postalCodeInfoTextView = (TextView)findViewById(R.id.postalCodeText);
-        controller.updateFields();
+
+        updateFields();
     }
 
-
+    private void updateFields() {
+        this.getUsernameTextView().setText(friend.getProfile().getUsername());
+        trackedRadioButton.setChecked(ApplicationState.getInstance().getClickedFriend().isTracked());
+    }
 
     /**
      * Gets textView for displaying friend's username.
@@ -167,25 +157,5 @@ public class FriendsProfileActivity extends Activity implements Observer {
     @Override
     public void update(Observable observable, Object data) {
 
-    }
-
-    public TextView getEmailTextView() {
-        return emailTextView;
-    }
-
-    public TextView getCityInfoTextView() {
-        return cityInfoTextView;
-    }
-
-    public TextView getPhoneTextView() {
-        return phoneTextView;
-    }
-
-    public TextView getPostalCodeInfoTextView() {
-        return postalCodeInfoTextView;
-    }
-
-    public User getFriend() {
-        return friend;
     }
 }

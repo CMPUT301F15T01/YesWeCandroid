@@ -51,6 +51,45 @@ public class FriendsInventoryActivity extends Activity {
     private Spinner locationSpinner;
     private FriendsInventoryController controller;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_friends_inventory);
+
+        this.controller = new FriendsInventoryController(this);
+        this.inventory = ApplicationState.getInstance().getClickedFriend().getActualFriend().getInventory();
+        this.completeInventory = ApplicationState.getInstance().getClickedFriend().getActualFriend().getInventory();
+        this.inventoryItemsList = (ListView) findViewById(R.id.friendsDisplayedTrinkets);
+        this.searchBox = (EditText) findViewById(R.id.search_box_friends);
+        trinketArrayAdapter = new ArrayAdapter<>(this, R.layout.activity_inventory_trinket, inventory);
+        inventoryItemsList.setAdapter(trinketArrayAdapter);
+
+        final FriendsInventoryActivity activity = this;
+        // When a trinket in the ListView is clicked, user is directed to its TrinketDetailsActivity
+        inventoryItemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> v, View view, int position, long id) {
+                Friend clickedFriend = ApplicationState.getInstance().getClickedFriend();
+                String friendsUsername = clickedFriend.getActualFriend().getProfile().getUsername();
+                Trinket clickedTrinket = LoggedInUser.getInstance().getFriendsList().getFriendByUsername(friendsUsername).getActualFriend().getInventory().get(position);
+                ApplicationState.getInstance().setClickedTrinket(clickedTrinket);
+                Intent intent = new Intent(FriendsInventoryActivity.this, FriendsTrinketDetailsActivity.class);
+                activity.startActivity(intent);
+            }
+        });
+
+        //Dhawal Sodha Parmar; http://stackoverflow.com/questions/15804805/android-action-bar-searchview-as-autocomplete; 2015-29-11
+        autocompleteAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_dropdown_item_1line, completeInventory);
+
+        filterButton = (Button) findViewById(R.id.friendsFilterButtton);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.friendsFilterButtonOnClick();
+            }
+        });
+        categorySpinner = (Spinner) findViewById(R.id.friendsCategorySpinner);
+
+    }
 
     @Override
     public void onResume() {
@@ -65,6 +104,10 @@ public class FriendsInventoryActivity extends Activity {
      */
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     /**

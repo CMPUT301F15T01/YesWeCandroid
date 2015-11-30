@@ -23,7 +23,6 @@ import android.widget.ListView;
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsListActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
-import ca.ualberta.trinkettrader.User.User;
 
 /**
  * Controller for handling interactions from the FriendsListActivity.  The controller manages clicks to
@@ -44,7 +43,7 @@ public class FriendsListController {
      */
     public void findFriendsOnClick() {
         EditText textField = activity.getFindFriendTextField();
-        String username = textField.getText().toString(); //assuming this is email
+        String username = textField.getText().toString();
         Friend newFriend = new Friend(username);
 
         if (!username.isEmpty() && username.contains("@")) {
