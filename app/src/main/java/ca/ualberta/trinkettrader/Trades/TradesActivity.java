@@ -16,12 +16,14 @@ package ca.ualberta.trinkettrader.Trades;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -61,16 +63,6 @@ public class TradesActivity extends Activity implements Observer {
         currentTradesListView = (ListView) findViewById(R.id.currentTradesList);
         pastTradesButton = (Button) findViewById(R.id.past_trades_button);
         createTradeButton = (Button) findViewById(R.id.create_trades_button);
-
-        // TODO testing - will be deleted
-        // TODO test past trades list as well
-        User user = new User();
-        user.getTradeManager().setUsername("peeko@bird.ca"); // must call this to set username in tradeManager for display purposes
-        Inventory inv1 = new Inventory();
-        Inventory inv2 = new Inventory();
-        Trade trade = new Trade(inv1, LoggedInUser.getInstance().getTradeManager(),inv2, user.getTradeManager() );
-        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().addTrade(trade);
-        //
         userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();
@@ -122,9 +114,7 @@ public class TradesActivity extends Activity implements Observer {
      *
      * @return ListView ListView of user's current trades
      */
-    public ListView getCurrentTradesListView() {
-        return currentTradesListView;
-    }
+    public ListView getCurrentTradesListView() { return currentTradesListView; }
 
     /**
      * This method is called if the specified {@code Observable} object's

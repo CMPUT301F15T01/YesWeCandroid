@@ -202,7 +202,11 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         //SudiptaforAndroid; http://stackoverflow.com/questions/4792260/how-do-you-change-text-to-bold-in-android; 2015-11-29
         //TextView newTrade = (TextView) findViewById(R.layout.activity_trades_trade_box);
         //newTrade.setTypeface(null, Typeface.BOLD);
-        return "Trade No. " + tNo + " with " + otherUser + "\nStatus: " + status;
+        if(isNewOfferedTrade) {
+            return "NEW! Trade No. " + tNo + " with " + otherUser + "\nStatus: " + status;
+        }else{
+            return "Trade No. " + tNo + " with " + otherUser + "\nStatus: " + status;
+        }
     }
 
     /**
