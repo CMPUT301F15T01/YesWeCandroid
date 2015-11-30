@@ -48,6 +48,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     private transient TradeManager sender;
     private Integer numberOfTrinkets;
 
+    private Boolean isNewOfferedTrade;
+
     /**
      * Constructor that initializes the sender and receiver sides of the trade.  Both parties are initialized
      * with their own {@link Inventory Inventories} (holding the trinkets they are bartering in this trade) and their own
@@ -67,6 +69,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         this.requestedTrinkets = requestedTrinkets;
         this.sender = sender;
         this.status = "pending"; // TODO need to clarify what status names will be
+        this.isNewOfferedTrade = Boolean.TRUE;  // TODO add comments to JavaDocs
     }
 
     /**
@@ -222,6 +225,15 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      */
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    // TODO add JavaDocs after this works
+    /**
+     *
+     *
+     */
+    public void setNotNewOfferedTrade(){
+        this.isNewOfferedTrade = Boolean.FALSE;
     }
 
     @Override
