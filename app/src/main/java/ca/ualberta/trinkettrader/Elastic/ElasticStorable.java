@@ -47,6 +47,15 @@ public abstract class ElasticStorable {
     // emmby; http://stackoverflow.com/questions/1626667/how-to-use-parcel-in-android; 2015-11-26
     // joshua2ua; https://github.com/joshua2ua/AndroidElasticSearch; 2015-11-26
 
+    /**
+     * Returns the tag section of the elastic search entry's URL.  Trades, photos, and users are all
+     * saved separately in elastic search within their own tags.  This method will return "User" as the
+     * tag for {@link ca.ualberta.trinkettrader.User.User User} objects, "Trade" for
+     * {@link ca.ualberta.trinkettrader.Trades.Trade Trade} objects, and "picture" for
+     * {@link ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture Picture} objects.
+     *
+     * @return String - the tag used to generate the url for each type of item stored in elastic search
+     */
     public abstract String getTag();
 
     /**
@@ -73,8 +82,26 @@ public abstract class ElasticStorable {
         thread.start();
     }
 
+    /**
+     * Returns the base URL each class of ElasticStorable object will be saved to.  Trades, photos, and users are all
+     * saved separately in elastic search within their own tags.  Each individual object is then stored with
+     * their own unique ids.  The resource URL specifies the base URL which is composed of the server
+     * URL ("http://cmput301.softwareprocess.es:8080/cmput301f15t01/") followed by the tag of the particular class,
+     * "User" as the tag for {@link ca.ualberta.trinkettrader.User.User User} objects, "Trade" for
+     * {@link ca.ualberta.trinkettrader.Trades.Trade Trade} objects, and "picture" for
+     * {@link ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture Picture} objects.
+     *
+     * @return String - base URL (no unique ID) for an object being stored to elastic search
+     */
     public abstract String getResourceUrl();
 
+    /**
+     * Returns a unique ID for each user's objects being stored to Elastic Search.  This is appended to the
+     * resource url to save each object to the elastic search server.  For a particular user of the
+     * system associated with a unique email address, this method will always return the same UID.
+     *
+     * @return - an id unique to each user of the system for saving objects to elastic search
+     */
     public abstract String getUid();
 
     /**
@@ -88,10 +115,12 @@ public abstract class ElasticStorable {
 
     /**
      * Attempts to find this object on the elasticsearch server. If the object
-     * cannot be found then pushes the current version to the server.
+     * cannot be found then pushes the current version to the server.  Each object is searched for using
+     * its know URL, which is composed of its resource url ({@link ElasticStorable#getResourceUrl()}) and an ID
+     * unique to the user associated with the object ({@link ElasticStorable#getUid()}).
      *
-     * @param type class of this object
-     * @param <T>  class of this object
+     * @param type - class of the object being saved
+     * @param <T> - type may be of any class extending ElasticStorable
      * @throws IOException
      */
     public abstract  <T extends ElasticStorable> void getFromNetwork(final Class<T> type) throws IOException;
