@@ -15,13 +15,11 @@
 package ca.ualberta.trinkettrader.User.Profile;
 
 import android.location.Location;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import java.io.IOException;
-import java.nio.DoubleBuffer;
 
 import ca.ualberta.trinkettrader.InternetConnection;
 import ca.ualberta.trinkettrader.R;

@@ -227,7 +227,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      * {@link ElasticStorable ElasticStorable} method.
      *
      * @return - an id unique to each user of the system for saving objects to elastic search
-
      */
     @Override
     public String getUid() {

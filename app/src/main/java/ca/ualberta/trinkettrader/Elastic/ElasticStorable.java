@@ -112,7 +112,7 @@ public abstract class ElasticStorable {
      * unique to the user associated with the object ({@link ElasticStorable#getUid()}).
      *
      * @param type - class of the object being saved
-     * @param <T> - type may be of any class extending ElasticStorable
+     * @param <T>  - type may be of any class extending ElasticStorable
      * @throws IOException
      */
     public abstract <T extends ElasticStorable> void getFromNetwork(final Class<T> type) throws IOException;
