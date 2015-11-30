@@ -71,18 +71,4 @@ public class TradeReceivedController {
         activity.startActivity(intent);
     }
 
-    /**
-     * onClick method for when the "Completed" radio button is clicked on a trade.  This causes the proposed trade to be
-     * marked as completed.  The trade's status is changed from "Accepted" or "Declined" to "Completed".  This
-     * denotes that the trade is closed.  In the case that the trade had been accepted, then this indicates
-     * that the trade occurred, and both party's items have been returned.
-     */
-    public void tradeCompletedRadioButtonOnClick() {
-        Trade clickedTrade = ApplicationState.getInstance().getClickedTrade();
-        clickedTrade.setStatus("Completed");
-        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades().add(clickedTrade);
-        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades().remove(clickedTrade);
-        Intent intent = new Intent(activity, TradesActivity.class);
-        activity.startActivity(intent);
-    }
 }
