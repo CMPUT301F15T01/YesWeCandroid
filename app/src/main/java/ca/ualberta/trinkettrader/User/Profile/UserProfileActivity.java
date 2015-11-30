@@ -61,9 +61,9 @@ public class UserProfileActivity extends Activity implements Observer {
             phoneNum.setText(getUserProfile().getContactInfo().getPhoneNumber());
             Boolean isPhotoDownloadEnabled = getUserProfile().getArePhotosDownloadable();
             if (isPhotoDownloadEnabled) {
-                photoDownloadEnabled.setText("Photo Download: Enabled");
+                photoDownloadEnabled.setText("Enabled");
             } else {
-                photoDownloadEnabled.setText("Photo Download: Disabled");
+                photoDownloadEnabled.setText("Disabled");
             }
         }
     };
