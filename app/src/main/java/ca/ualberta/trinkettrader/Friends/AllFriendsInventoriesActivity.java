@@ -8,11 +8,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.HashMap;
+
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
+import ca.ualberta.trinkettrader.User.User;
 
 public class AllFriendsInventoriesActivity extends Activity {
 
@@ -29,7 +32,12 @@ public class AllFriendsInventoriesActivity extends Activity {
         this.controller = new AllFriendsInventoriesController(this);
         this.inventory = new Inventory();
         FriendsList friends = LoggedInUser.getInstance().getFriendsList();
+        final HashMap<Trinket, Friend> trinketToUserMap = new HashMap<>();
         for(Friend f: friends){
+            for(Trinket t: f.getActualFriend().getInventory()){
+                this.inventory.add(t);
+                trinketToUserMap.put(t, f);
+            }
             this.inventory.addAll(f.getActualFriend().getInventory());
         }
         this.inventoryItemsListView = (ListView) findViewById(R.id.allFriendsDisplayedTrinkets);
@@ -41,10 +49,12 @@ public class AllFriendsInventoriesActivity extends Activity {
         // When a trinket in the ListView is clicked, user is directed to its TrinketDetailsActivity
         inventoryItemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> v, View view, int position, long id) {
-                Friend clickedFriend = ApplicationState.getInstance().getClickedFriend();
-                String friendsUsername = clickedFriend.getActualFriend().getProfile().getUsername();
-                Trinket clickedTrinket = LoggedInUser.getInstance().getFriendsList().getFriendByUsername(friendsUsername).getActualFriend().getInventory().get(position);
-                ApplicationState.getInstance().setClickedTrinket(clickedTrinket);
+                Trinket selectedTrinket = inventory.get(position);
+                Friend owner = trinketToUserMap.get(selectedTrinket);
+
+                ApplicationState.getInstance().setClickedTrinket(selectedTrinket);
+                ApplicationState.getInstance().setClickedFriend(owner);
+
                 Intent intent = new Intent(AllFriendsInventoriesActivity.this, FriendsTrinketDetailsActivity.class);
                 activity.startActivity(intent);
             }
