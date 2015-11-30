@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="spinner_categories">
+        <item>None</item>
         <item>Anklet</item>
         <item>Barrett</item>
         <item>Belt</item>
@@ -20,6 +21,7 @@
     </string-array>
 
     <string-array name="spinner_location">
+        <item>None</item>
         <item>5 km</item>
         <item>10 km</item>
         <item>20 km</item>
