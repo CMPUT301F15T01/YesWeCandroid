@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader.Elastic;
 
 /**
+ * Class representing results of searches to Elastic Search
  * Taken from AndroidElasticSearch //TODO: add github link
  */
 
@@ -52,6 +53,11 @@ public class SearchResponse<T> {
         this._shards = _shards;
     }
 
+    /**
+     * Returns the hits (results) returned from a search query.
+     *
+     * @return Hits<T> - results of a search
+     */
     public Hits<T> getHits() {
         return hits;
     }

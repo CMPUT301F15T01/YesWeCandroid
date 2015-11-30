@@ -28,7 +28,7 @@ public class Hits<T> {
 
     public Hits() {
     }
-
+/*
     public int getTotal() {
         return total;
     }
@@ -44,15 +44,21 @@ public class Hits<T> {
     public void setMax_score(float max_score) {
         this.max_score = max_score;
     }
-
+*/
     public List<SearchHit<T>> getHits() {
         return hits;
     }
-
+/*
     public void setHits(List<SearchHit<T>> hits) {
         this.hits = hits;
     }
+*/
 
+    /**
+     * Returns the number of hits (results) that a search query returns from elastic search
+     *
+     * @return Integer - number of Hits (results) returned
+     */
     public Integer numHits() {
         return hits.size();
     }

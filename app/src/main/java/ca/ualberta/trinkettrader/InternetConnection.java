@@ -25,9 +25,6 @@ import android.net.NetworkInfo;
 public class InternetConnection {
     private static InternetConnection ourInstance = new InternetConnection();
 
-    /**
-     * Public Constructor
-     */
     private InternetConnection() {
     }
 

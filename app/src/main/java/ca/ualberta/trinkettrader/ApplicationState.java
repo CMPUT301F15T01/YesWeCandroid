@@ -194,14 +194,22 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * @return Integer
+     * Returns the index of a Friend in the spinner listing all a user's Friends.  This spinner is used
+     * in {@link ca.ualberta.trinkettrader.Trades.CreateTradeActivity CreateTradeActivity} to select which
+     * Friend to trade with.
+     *
+     * @return Integer - index describing the position of a Friend in a spinner of friends
      */
     public Integer getFriendSpinnerPosition() {
         return friendSpinnerPosition;
     }
 
     /**
-     * @param friendSpinnerPosition
+     * Setsthe index of a Friend in the spinner listing all a user's Friends.  This spinner is used
+     * in {@link ca.ualberta.trinkettrader.Trades.CreateTradeActivity CreateTradeActivity} to select which
+     * Friend to trade with.
+     *
+     * @param friendSpinnerPosition - index describing the position of a Friend in a spinner of friends
      */
     public void setFriendSpinnerPosition(Integer friendSpinnerPosition) {
         this.friendSpinnerPosition = friendSpinnerPosition;
@@ -243,10 +251,20 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
         }
     }
 
+    /**
+     * Gets the activity this ApplicationState object was called in.
+     *
+     * @return Activity - Activity using this instance of ApplicationState
+     */
     public Activity getActivity() {
         return activity;
     }
 
+    /**
+     * Sets the activity this ApplicationState object was called in.
+     *
+     * @param activity - Activity using this instance of ApplicationState
+     */
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
