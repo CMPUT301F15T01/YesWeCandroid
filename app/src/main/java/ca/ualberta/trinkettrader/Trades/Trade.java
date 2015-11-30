@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -61,10 +62,12 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
 
     private Integer numberOfTrinkets;
     private String status;
+
     private transient TradeManager receiver;
     private transient TradeManager sender;
     private String receiverUsername;
     private String senderUsername;
+
     private Boolean isNewOfferedTrade;
 
     /**
@@ -85,8 +88,6 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         this.receiver = receiver;
         this.requestedTrinkets = requestedTrinkets;
         this.sender = sender;
-        this.receiverUsername = receiver.getUsername();
-        this.senderUsername = sender.getUsername();
         this.status = "pending"; // TODO need to clarify what status names will be
         this.isNewOfferedTrade = Boolean.TRUE;  // TODO add comments to JavaDocs
     }
@@ -152,17 +153,21 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * user when they view their Current Trades list and Past Trades list.
      * <p/>
      * For each trade in the list, it's number, the other person involved in the trade
-     * (not LoggedInUser) and it's status will be displayed.
+     * (not LoggedInUser) and it's status will be displayed. The number for a trade is
+     * it's index + 1 in the list it belongs to in the TradeArchiver (currentTrades or pastTrades).
+     *
+     * If a trade has not yet been clicked (viewed) by a user, <b>NEW!</b> will also
+     * be displayed.
      *
      * @return String Text displayed for each trade in current trades list of
      * ActiveTradesActivity and in past trades list of PastTradesActivity
      */
     @Override
     public String toString() {
-
         String otherUser;
         String status = this.getStatus();
         int tNo;
+
         // determine name of other user involved in trade
         if (LoggedInUser.getInstance().getProfile().getEmail().equals(receiver.getUsername())) {
             otherUser = sender.getUsername();
@@ -178,10 +183,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
             tNo = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades().indexOf(this) + 1;
         }
 
-        // bold if new trade (has not been clicked/viewed yet by user)
-        //SudiptaforAndroid; http://stackoverflow.com/questions/4792260/how-do-you-change-text-to-bold-in-android; 2015-11-29
-        //TextView newTrade = (TextView) findViewById(R.layout.activity_trades_trade_box);
-        //newTrade.setTypeface(null, Typeface.BOLD);
+        // if trade hasn't been clicked (viewed) by user, display NEW! beside it
         if (isNewOfferedTrade) {
             return "NEW! Trade No. " + tNo + " with " + otherUser + "\nStatus: " + status;
         } else {
@@ -196,9 +198,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      *
      * @return String - Status of trade (pending, accepted or declined)
      */
-    public String getStatus() {
-        return status;
-    }
+    public String getStatus() { return status;  }
 
     /**
      * Sets status of a trade.  Can be pending, accepted, or declined.
@@ -207,9 +207,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      *
      * @param status - String representing status of trade (pending, accepted or declined)
      */
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public void setStatus(String status) { this.status = status; }
 
     /**
      * Creates a formatted string describing the trade.  It includes which users were involved in the
@@ -250,20 +248,14 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      *
      * @return Inventory - Inventory containing offered trinkets
      */
-    public Inventory getOfferedTrinkets() {
-        return offeredTrinkets;
-    }
-
-    // adarshr; http://stackoverflow.com/questions/10734106/how-to-override-tostring-properly-in-java; 2015-11-16
+    public Inventory getOfferedTrinkets() { return offeredTrinkets;  }
 
     /**
      * Returns {@link TradeManager TradeManager} of receiver of trade (user who receives trade offer).
      *
      * @return TradeManager - TradeManager of user who was offered the trade
      */
-    public TradeManager getReceiver() {
-        return receiver;
-    }
+    public TradeManager getReceiver() { return receiver;  }
 
     /**
      * Return trinket(s) requested by trade sender.  The current user who is proposing the trade is the
@@ -273,10 +265,9 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      *
      * @return Inventory - Inventory containing requested trinkets
      */
-    public Inventory getRequestedTrinkets() {
-        return requestedTrinkets;
-    }
+    public Inventory getRequestedTrinkets() { return requestedTrinkets;  }
 
+    // TODO add JavaDocs after this works
     /**
      *
      *
@@ -289,8 +280,6 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     public String getTag() {
         return TAG;
     }
-
-    // TODO add JavaDocs after this works
 
     @Override
     public String getResourceUrl() {
