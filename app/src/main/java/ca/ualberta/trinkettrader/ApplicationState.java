@@ -152,7 +152,7 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
         clickedTrade.setNotNewOfferedTrade();
         this.clickedTrade = clickedTrade;
     }
-    // TODO update -__-
+   
     /**
      *
      *
@@ -215,4 +215,3 @@ public class ApplicationState implements ca.ualberta.trinkettrader.Observable {
         this.activity = activity;
     }
 }
-//CAN YOU SEE THIS KIRSTEN???? :)
