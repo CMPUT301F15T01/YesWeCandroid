@@ -232,6 +232,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
             message = message + t.getName() + "\n";
         }
 
+        message = message + "Owner Comments:\n";
+
         return message;
     }
 

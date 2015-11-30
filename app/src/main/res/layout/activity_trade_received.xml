@@ -31,13 +31,13 @@ tools:context="ca.ualberta.trinkettrader.Trades.TradeReceivedActivity">
         android:layout_height="match_parent"
         android:gravity="end"
         android:text="Trade with: "
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <TextView
         android:id="@+id/tradeReceivedWithFriendName"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 </LinearLayout>
 
 <LinearLayout
@@ -51,13 +51,13 @@ tools:context="ca.ualberta.trinkettrader.Trades.TradeReceivedActivity">
         android:layout_height="match_parent"
         android:gravity="end"
         android:text="Trade Status: "
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <TextView
         android:id="@+id/tradeReceivedStatus"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 </LinearLayout>
 
 <TextView
@@ -67,14 +67,14 @@ tools:context="ca.ualberta.trinkettrader.Trades.TradeReceivedActivity">
     android:layout_weight="4"
     android:gravity="center"
     android:text="Offered Items"
-    android:textAppearance="?android:attr/textAppearanceLarge"/>
+    android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 <ListView
     android:id="@+id/offeredReceivedItems"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="22"
-    android:textAppearance="?android:attr/textAppearanceLarge"/>
+    android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 <TextView
     android:id="@+id/requestedReceivedItemsTitle"
@@ -83,14 +83,14 @@ tools:context="ca.ualberta.trinkettrader.Trades.TradeReceivedActivity">
     android:layout_weight="4"
     android:gravity="center"
     android:text="Requested Items"
-    android:textAppearance="?android:attr/textAppearanceLarge"/>
+    android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 <ListView
     android:id="@+id/requestedReceivedItemsy"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="22"
-    android:textAppearance="?android:attr/textAppearanceLarge"/>
+    android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <Button
         android:layout_width="wrap_content"
