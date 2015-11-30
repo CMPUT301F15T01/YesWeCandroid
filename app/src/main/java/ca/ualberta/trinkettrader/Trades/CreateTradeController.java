@@ -75,6 +75,11 @@ public class CreateTradeController {
 
         senderTradeManager.getTradeArchiver().getCurrentTrades().add(proposedTrade);
         receiverTradeManager.getTradeArchiver().getCurrentTrades().add(proposedTrade);
+        try {
+            proposedTrade.saveToNetwork();
+        }catch (IOException e){
+
+        }
        // activity.clearFriendTradeTrinketListView();
         //activity.clearYourTradeTrinketListView();
 /**
