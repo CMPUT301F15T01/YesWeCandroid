@@ -30,6 +30,15 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
+/**
+ * To create a trade
+ * Select a friend to offer the trade to.
+ * Add items from the friend's inventory.
+ * Add items from your own inventory
+ * Once satisfied, a user can click <i>Propose Trade</i> to send the trade
+ * offer.
+ * Clicking the <i>Create Trade</i> button in the
+ */
 public class CreateTradeActivity extends Activity {
 
     private Button addFriendsItemsButton;
@@ -85,6 +94,9 @@ public class CreateTradeActivity extends Activity {
         controller.updateClickedFriend();
     }
 
+    /**
+     *
+     */
     public void updateFriendsSpinner() {
         userFriendList = LoggedInUser.getInstance().getFriendsList();
         friendAdapter = new ArrayAdapter<Friend>(this, android.R.layout.simple_list_item_1, userFriendList);
@@ -95,18 +107,27 @@ public class CreateTradeActivity extends Activity {
         }
     }
 
+    /**
+     *
+     */
     public void updateFriendTradeTrinketListView() {
         friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
         friendTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, friendTradeTrinkets);
         friendTradeTrinketListView.setAdapter(friendTrinketAdapter);
     }
 
+    /**
+     *
+     */
     public void updateYourTradeTrinketListView() {
         yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
         yourTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, yourTradeTrinkets);
         yourTradeTrinketListView.setAdapter(yourTrinketAdapter);
     }
 
+    /**
+     *
+     */
     public void clearFriendTradeTrinketListView() {
         friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
         friendTradeTrinkets.clear();
@@ -114,6 +135,9 @@ public class CreateTradeActivity extends Activity {
         friendTradeTrinketListView.setAdapter(friendTrinketAdapter);
     }
 
+    /**
+     *
+     */
     public void clearYourTradeTrinketListView() {
         yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
         yourTradeTrinkets.clear();
@@ -125,30 +149,58 @@ public class CreateTradeActivity extends Activity {
         return addFriendsItemsButton;
     }
 
+    /**
+     *
+     * @return
+     */
     public Button getAddYourItemsButton() {
         return addYourItemsButton;
     }
 
+    /**
+     *
+     * @return
+     */
     public Button getProposeTradeButton() {
         return proposeTradeButton;
     }
 
+    /**
+     *
+     * @return
+     */
     public Spinner getFriendSpinner() {
         return friendSpinner;
     }
 
+    /**
+     *
+     * @return
+     */
     public ListView getFriendTradeTrinketListView() {
         return friendTradeTrinketListView;
     }
 
+    /**
+     *
+     * @param v
+     */
     public void addFriendsItemsButtonOnClick(View v) {
         controller.addFriendsItemsButtonOnClick();
     }
 
+    /**
+     *
+     * @param v
+     */
     public void addYourItemsButtonOnClick(View v) {
         controller.addYourItemsButtonOnClick();
     }
 
+    /**
+     *
+     * @param v
+     */
     public void proposeTradeButtonOnClick(View v) {
         controller.proposeTradeButtonOnClick();
     }

@@ -77,7 +77,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * requesting the trade is the "sender" and the friend who the request is being sent to is the "receiver".
      * By default the trade's status is set to "pending", meaning that the negotiation is still in progress and
      * the trade has neither been accepted nor rejected yet.
-     *
+     * <p/>
      * @param offeredTrinkets   inventory containing offered trinkets
      * @param receiver          TradeManager of user who was offered the trade
      * @param requestedTrinkets inventory containing requested trinkets
@@ -95,7 +95,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     /**
      * Adds the specified observer to the list of observers. If it is already
      * registered, it is not added a second time.
-     *
+     * <p/>
      * @param observer the Observer to add.
      */
     @Override
@@ -106,7 +106,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     /**
      * Removes the specified observer from the list of observers. Passing null
      * won't do anything.
-     *
+     * <p/>
      * @param observer the observer to remove.
      */
     @Override
@@ -131,7 +131,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     /**
      * Returns number of trinkets involved in a particular trade.  Depending on who this method is called on
      * it will return the number of trinkets that either the sender or receiver has involved in the trade.
-     *
+     * <p/>
      * @return Integer Number of offered or requested trinkets in trade
      */
     public Integer getNumberOfTrinkets() {
@@ -141,7 +141,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     /**
      * Sets number of trinkets in a particular trade.  Depending on who this method is called on
      * it will set the number of trinkets that either the sender or receiver has involved in the trade.
-     *
+     * <p/>
      * @param numberOfTrinkets Number of offered or requested trinkets in a trade
      */
     public void setNumberOfTrinkets(Integer numberOfTrinkets) {
@@ -155,10 +155,10 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * For each trade in the list, it's number, the other person involved in the trade
      * (not LoggedInUser) and it's status will be displayed. The number for a trade is
      * it's index + 1 in the list it belongs to in the TradeArchiver (currentTrades or pastTrades).
-     *
+     * <p/>
      * If a trade has not yet been clicked (viewed) by a user, <b>NEW!</b> will also
      * be displayed.
-     *
+     * <p/>
      * @return String Text displayed for each trade in current trades list of
      * ActiveTradesActivity and in past trades list of PastTradesActivity
      */
@@ -195,7 +195,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * Returns status of the trade. Can be pending, accepted, or declined.
      * Current(active) trades have a status of pending.  Past (inactive)
      * trades have a status of accepted or declined.
-     *
+     * <p/>
      * @return String - Status of trade (pending, accepted or declined)
      */
     public String getStatus() { return status;  }
@@ -204,7 +204,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * Sets status of a trade.  Can be pending, accepted, or declined.
      * Current(active) trades have a status of pending.  Past (inactive)
      * trades have a status of accepted or declined.
-     *
+     * <p/>
      * @param status - String representing status of trade (pending, accepted or declined)
      */
     public void setStatus(String status) { this.status = status; }
@@ -214,7 +214,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * trade and the items they were trading.  This string is sent as an email to both users involved in
      * the trade when the user who the trade was proposed to clicks the "Accept" button in the
      * {@link TradeReceivedActivity TradeReceivedActivity}.
-     *
+     * <p/>
      * @return String - a formatted string describing a trade that was just accepted.  This string is intended
      * to be sent as a confirmation to both parties involved in an accepted trade.
      */
@@ -230,12 +230,14 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
             message = message + t.getName() + "\n";
         }
 
+        message = message + "Owner Comments:\n";
+
         return message;
     }
 
     /**
      * Returns {@link TradeManager TradeManager} of sender of trade (user who proposes trade offer).
-     *
+     * <p/>
      * @return TradeManager - TradeManager of user who instantiated trade
      */
     public TradeManager getSender() {
@@ -245,14 +247,14 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     /**
      * Returns the trinket offered by trade sender.  The current user who is proposing the trade is the
      * sender.  They will offer 1 trinket in the trade, which will be returned in an inventory.
-     *
+     * <p/>
      * @return Inventory - Inventory containing offered trinkets
      */
     public Inventory getOfferedTrinkets() { return offeredTrinkets;  }
 
     /**
      * Returns {@link TradeManager TradeManager} of receiver of trade (user who receives trade offer).
-     *
+     * <p/>
      * @return TradeManager - TradeManager of user who was offered the trade
      */
     public TradeManager getReceiver() { return receiver;  }
@@ -262,7 +264,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * sender.  They may request 0 or more trinkets in the trade they are proposing.  All items they are
      * requesting will be returned.  If they are requesting no items then an empty {@link Inventory Inventory}
      * is returned.
-     *
+     * <p/>
      * @return Inventory - Inventory containing requested trinkets
      */
     public Inventory getRequestedTrinkets() { return requestedTrinkets;  }
@@ -295,7 +297,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     /**
      * Searches for ElasticStorable objects on the network matching the attribute and attribute
      * value pairs. Calls onSearchResult with the results when the search completes.
-     *
+     * <p/>
      * @param postParameters pairs of attributes to use when searching
      * @param type
      * @throws IOException
@@ -339,7 +341,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     /**
      * Attempts to find this object on the elasticsearch server. If the object
      * cannot be found then pushes the current version to the server.
-     *
+     * <p/>
      * @param type class of this object
      * @throws IOException
      */
@@ -350,7 +352,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     /**
      * Method called after getFromNetwork gets a response. This method should
      * be overridden to do something with the result.
-     *
+     * <p/>
      * @param result - result of getFromNetwork
      */
     @Override
@@ -360,7 +362,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     /**
      * Method called after searchOnNetwork gets a response. This method should
      * be overridden to do something with the result.
-     *
+     * <p/>
      * @param <T extends ElasticStorable> - result result of searchOnNetwork
      */
     @Override

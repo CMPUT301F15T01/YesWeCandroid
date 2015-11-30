@@ -21,8 +21,14 @@ import java.util.ArrayList;
 import java.util.Observer;
 
 /**
- * A profile class containing the User's personal information and whether photos will be
- * automatically downloaded to their device.
+ * A profile class containing the information about a user and settings for their account.  The user can
+ * add information about themselves such as contact information for other users to view.  They can also set
+ * the default settings for their account, such as the default location for their trinkets and whether
+ * they want photo downloads enabled.  A user's UserProfile is instantiated along with the user object.
+ *
+ * The UserProfile has a Boolean needToSave attribute to determine if there have been changes to the
+ * user's profile that need to be saved to the network.  Whenever an attribute or setting in the user's
+ * profile is changed then needToSave is set to true and the user will be re-saved to the network.
  */
 public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
@@ -36,7 +42,11 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
 
 
     /**
-     * UserProfile Constructor for generating new attribute classes
+     * Default constructor.  Initializes all attributes to be blank.  By default photo downloads are
+     * disabled and the default location for {@link ca.ualberta.trinkettrader.Inventory.Trinket.Trinket Trinkets}
+     * is the phone's GPS location.  This constructor is called when a user logs in to the app.  As this
+     * user should be saved so that their profile can be accessed from the network later, by default
+     * needToSave is set to true, indicating that the user should be saved to the network.
      */
     public UserProfile() {
         this.arePhotosDownloadable = Boolean.TRUE;
@@ -95,7 +105,9 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
     }
 
     /**
-     * Set whether photos are downloadable
+     * Set whether photos are downloadable.  This setting determines
+     * whether the photos of foreign trinkets are automatically downloaded to the device.
+     * If false, the user must manually select which photos to download.
      *
      * @param arePhotosDownloadable
      */

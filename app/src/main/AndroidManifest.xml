@@ -121,14 +121,16 @@
         </activity>
         <activity
             android:name=".Inventory.InventoryDetailsActivity"
-            android:label="@string/title_activity_inventory_details" >
+            android:label="@string/title_activity_inventory_details"
+            android:parentActivityName=".Inventory.InventoryActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Inventory.InventoryActivity" />
         </activity>
         <activity
             android:name=".Trades.TradeDetailsActivity"
-            android:label="@string/title_activity_trade_details" >
+            android:label="@string/title_activity_trade_details"
+            android:parentActivityName=".Trades.TradesActivity" >
         </activity>
         <activity
             android:name=".Friends.FriendsInventoryActivity"
