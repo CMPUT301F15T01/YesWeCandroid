@@ -82,24 +82,6 @@ public class Friend {
         this.getActualFriend().getProfile().setUsername(email);
     }
 
-    /**
-     * Returns the  User object that Friend class delegate user-like operations to.  Friends represent
-     * other users of the system and so are like users, but they do not require all properties of User as
-     * Friends do not need to keep track of their own friends lists.  To represent these user-like qualities
-     * each Friend stores a user object.  This User object is delegated to to manage the friend's
-     * inventory and profile data.
-     *
-     * @return User - the User object that stores the Friend's profile and inventory, and performs operations
-     * on them.
-     */
-    public User getActualFriend() {
-        return actualFriend;
-    }
-
-    public void setActualFriend(User actualFriend) {
-        this.actualFriend = actualFriend;
-    }
-
 
     /**
      * Constructor that sets all attributes of Friend from the inputs.  It sets the friend's inventory,
@@ -136,7 +118,7 @@ public class Friend {
         this.actualFriend.setEmail(email);
         this.actualFriend.getTradeManager().setUsername(email);
         this.isTracked = Boolean.FALSE;
-}
+    }
 
 
     /**
@@ -151,9 +133,8 @@ public class Friend {
      */
     public User getActualFriend() {
         try {
-            if(isTracked){
-                actualFriend.getFromNetwork();
-            }
+            actualFriend.getFromNetwork();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
