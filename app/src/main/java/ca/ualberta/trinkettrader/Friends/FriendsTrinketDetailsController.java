@@ -39,8 +39,7 @@ public class FriendsTrinketDetailsController {
         if (ApplicationState.getInstance().getInCounterTrade()) {
             Intent intent = new Intent(activity, CounterTradeActivity.class);
             activity.startActivity(intent);
-        }
-        else {
+        } else {
             Intent intent = new Intent(activity, CreateTradeActivity.class);
             activity.startActivity(intent);
         }

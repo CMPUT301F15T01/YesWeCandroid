@@ -15,16 +15,10 @@
 package ca.ualberta.trinkettrader.Trades;
 
 import android.content.Intent;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Spinner;
 
 import ca.ualberta.trinkettrader.ApplicationState;
-import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.Friends.FriendsInventoryActivity;
-import ca.ualberta.trinkettrader.Friends.FriendsList;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
-import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 

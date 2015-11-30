@@ -2,7 +2,6 @@ package ca.ualberta.trinkettrader.Trades;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -49,20 +48,12 @@ public class TradeReceivedActivity extends Activity {
 
         if (clickedTrade.getStatus().equals("Accepted")) {
             completedRadioButton.setVisibility(View.VISIBLE);
-        }
-        else if (clickedTrade.getStatus().equals("Declined")) {
+        } else if (clickedTrade.getStatus().equals("Declined")) {
             completedRadioButton.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             completedRadioButton.setVisibility(View.INVISIBLE);
         }
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateTradeDetailsListView();
     }
 
     @Override
@@ -71,6 +62,11 @@ public class TradeReceivedActivity extends Activity {
         updateTradeDetailsListView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateTradeDetailsListView();
+    }
 
     public void updateTradeDetailsListView() {
         yourTrinketAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_list_item_1, clickedTrade.getOfferedTrinkets());
@@ -78,8 +74,6 @@ public class TradeReceivedActivity extends Activity {
         friendTrinketAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_list_item_1, clickedTrade.getRequestedTrinkets());
         requestedItemInTradeListView.setAdapter(friendTrinketAdapter);
     }
-
-
 
 
     public TextView getFriendInTradeTextView() {

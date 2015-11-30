@@ -15,17 +15,9 @@
 package ca.ualberta.trinkettrader.User;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -36,10 +28,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-
-import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
-import ca.ualberta.trinkettrader.Elastic.SearchHit;
 
 public class LoggedInUser extends User {
     /**
@@ -51,6 +39,17 @@ public class LoggedInUser extends User {
     private static LoggedInUser ourInstance = new LoggedInUser();
 
     private LoggedInUser() {
+    }
+
+    /**
+     * Returns the current (and single) instance of logged in user.
+     * To be called when any changes are made to user's profile, i.e. adding/deleting a friend or
+     * making a trade.
+     *
+     * @return LoggedInUser
+     */
+    public static LoggedInUser getInstance() {
+        return ourInstance;
     }
 
     /**
@@ -102,16 +101,5 @@ public class LoggedInUser extends User {
             //TODO: Therefore do nothing
         }
         this.setNeedToSave(Boolean.FALSE);
-    }
-
-    /**
-     * Returns the current (and single) instance of logged in user.
-     * To be called when any changes are made to user's profile, i.e. adding/deleting a friend or
-     * making a trade.
-     *
-     * @return LoggedInUser
-     */
-    public static LoggedInUser getInstance() {
-        return ourInstance;
     }
 }

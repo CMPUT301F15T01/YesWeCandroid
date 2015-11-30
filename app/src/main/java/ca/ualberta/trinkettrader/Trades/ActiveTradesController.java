@@ -14,6 +14,8 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +24,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import ca.ualberta.trinkettrader.ApplicationState;
+import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
@@ -43,23 +46,43 @@ public class ActiveTradesController {
                 Trade clickedTrade = userCurrentTradesList.get(position);
                 ApplicationState.getInstance().setClickedTrade(clickedTrade);
 
-                // For testing purposes: we are always going to Trade Received page
-                Intent intent = new Intent(activity, TradeReceivedActivity.class);
-                activity.startActivity(intent);
-
-
                 /**
+                 // For testing purposes: we are always going to Trade Received page
+                 Intent intent = new Intent(activity, TradeReceivedActivity.class);
+                 activity.startActivity(intent);
+                 **/
+
+
                 if (clickedTrade.getStatus().equals("Pending Incoming")) {
                     Intent intent = new Intent(activity, TradeReceivedActivity.class);
                     activity.startActivity(intent);
-                }
-                else {
-                    Intent intent = new Intent(activity, TradeDetailsActivity.class);  // TODO set parent to be previous activity -DisplayTradesActivity
+                } else {
+                    Intent intent = new Intent(activity, TradeDetailsActivity.class);
                     activity.startActivity(intent);
                 }
-                 **/
+
             }
         });
+    }
+
+    public void createTradeButtonOnClick() {
+        if (LoggedInUser.getInstance().getFriendsList().size() > 0) {
+            ApplicationState.getInstance().setYourTradeTrinkets(new Inventory());
+            ApplicationState.getInstance().setFriendsTradeTrinkets(new Inventory());
+            Intent intent = new Intent(activity, CreateTradeActivity.class);
+            activity.startActivity(intent);
+        } else {
+            // David Hedlund; http://stackoverflow.com/questions/2115758/how-to-display-alert-dialog-in-android; 2015-11-29
+            new AlertDialog.Builder(activity)
+                    .setTitle("No Friends :(")
+                    .setMessage("You do not have any friends to create a trade with!")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
 }
