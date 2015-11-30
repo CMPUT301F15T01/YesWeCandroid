@@ -30,7 +30,8 @@ import ca.ualberta.trinkettrader.R;
 
 
 /**
- *
+ * Activity for proposing a counter trade. This activity is triggered when a user declines a trade that
+ * was proposed to them.
  */
 public class CounterTradeActivity extends Activity {
 
@@ -82,12 +83,20 @@ public class CounterTradeActivity extends Activity {
         updateYourTradeTrinketListView();
     }
 
+    /**
+     * Update the list of trinkets that the other user is offering in the trade.  The user may
+     * request these be changed in the counter-trade offer.
+     */
     public void updateFriendTradeTrinketListView() {
         friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
         friendTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, friendTradeTrinkets);
         friendTradeTrinketListView.setAdapter(friendTrinketAdapter);
     }
 
+    /**
+     * Update the list of trinkets that the user is offering in the trade.  The user may
+     * request these be changed in the counter-trade offer.
+     */
     public void updateYourTradeTrinketListView() {
         yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
         yourTrinketAdapter = new ArrayAdapter<Trinket>(this, R.layout.activity_friends_friend, yourTradeTrinkets);
@@ -133,7 +142,9 @@ public class CounterTradeActivity extends Activity {
     }
 
     /**
-     * @return TextView
+     * Get the text view that displays the email address of the user you are trading with
+     *
+     * @return TextView - text view displaying the friend you are trading with's email
      */
     public TextView getFriendNameTextView() {
         return friendNameTextView;
@@ -148,18 +159,39 @@ public class CounterTradeActivity extends Activity {
         return friendTradeTrinketListView;
     }
 
+    /**
+     * onClick method for button that allows you to add your friend's items to the trade
+     *
+     * @param v - the button that was clicked
+     */
     public void addFriendsItemsButtonOnClick(View v) {
         controller.addFriendsItemsButtonOnClick();
     }
 
+    /**
+     * onClick method for button that allows you to add your own items to the trade
+     *
+     * @param v - the button that was clicked
+     */
     public void addYourItemsButtonOnClick(View v) {
         controller.addYourItemsButtonOnClick();
     }
 
+    /**
+     * onClick method for button that allows you to propose the counter trade you have created
+     *
+     * @param v - the button that was clicked
+     */
     public void proposeCounterTradeButtonOnClick(View v) {
         controller.proposeCounterTradeButtonOnClick();
     }
 
+    /**
+     * onClick method for button that allows you to cancel the counter trade, if the user just wants
+     * to decline the counter trade
+     *
+     * @param v - the button that was clicked
+     */
     public void cancelCounterTradeButtonOnClick(View v) {
         controller.cancelCounterTradeButtonOnClick();
     }
