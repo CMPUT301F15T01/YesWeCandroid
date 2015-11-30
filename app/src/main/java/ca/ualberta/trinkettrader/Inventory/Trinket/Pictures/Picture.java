@@ -155,7 +155,6 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
             result = this.file.delete();
         }
         this.deleteFromNetwork();
-        this.notifyObservers();
     }
 
     /**
