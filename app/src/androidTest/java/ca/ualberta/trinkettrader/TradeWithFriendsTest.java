@@ -793,6 +793,11 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         pastTradesActivity.finish();
         tradeDetailsActivity.finish();
 
+        try{
+            currentUser.deleteFromNetwork(); // delete LoggedInUser from network
+        }catch(IOException e){
+
+        }
     }
 
     // TODO: User Case : Notify parties of accepted trade - email; could possibly be bundled with acceptTrade test
