@@ -22,14 +22,28 @@
 
         <requestFocus />
     </AutoCompleteTextView>
-
-    <Spinner
-        android:id="@+id/allFriendsAccessibilitySpinner"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:entries="@array/spinner_categories"
-        android:prompt="@string/activity_display_inventory_category_prompt"/>
+        android:orientation="horizontal" >
+        <Spinner
+            android:id="@+id/allFriendsLocationSpinner"
+            android:layout_width="177dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:entries="@array/spinner_location"
+            android:layout_gravity="left"/>
+
+        <Spinner
+            android:id="@+id/allFriendsCategorySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:entries="@array/spinner_categories"
+            android:prompt="@string/activity_display_inventory_category_prompt"
+            android:layout_gravity="right"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/allFriendsFilterButtton"

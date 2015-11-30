@@ -80,7 +80,7 @@ public class AllFriendsInventoriesActivity extends Activity {
                 controller.friendsFilterButtonOnClick();
             }
         });
-        categorySpinner = (Spinner)findViewById(R.id.allFriendsAccessibilitySpinner);
+        categorySpinner = (Spinner)findViewById(R.id.allFriendsCategorySpinner);
     }
 
     @Override
