@@ -37,11 +37,13 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
 public class UserProfileActivity extends Activity implements Observer {
 
     private Button editUserProfileButton;
-    private Button tradesButton;
     private Button inventoryButton;
-
-    private UserProfileController controller;
+    private Button tradesButton;
     private Handler handler;
+    private TextView latitude;
+    private TextView longitude;
+    private UserProfileController controller;
+
     private Runnable populateTextFieldsWithExistingValuesRunnable = new Runnable() {
         @Override
         public void run() {
@@ -78,11 +80,10 @@ public class UserProfileActivity extends Activity implements Observer {
 
         editUserProfileButton = (Button) findViewById(R.id.edit_button);
         editUserProfileButton.setOnClickListener(controller.getEditButtonListener());
-        tradesButton = (Button) findViewById(R.id.trade_button_user_profile);
         inventoryButton = (Button) findViewById(R.id.view_inventory_button);
-
-        final TextView latitude = (TextView) findViewById(R.id.latitude);
-        final TextView longitude = (TextView) findViewById(R.id.longitude);
+        latitude = (TextView) findViewById(R.id.latitude);
+        longitude = (TextView) findViewById(R.id.longitude);
+        tradesButton = (Button) findViewById(R.id.trade_button_user_profile);
 
         // Olegas; http://stackoverflow.com/questions/6100967/gps-android-getting-latitude-and-longitude; 2015-11-27
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -171,5 +172,13 @@ public class UserProfileActivity extends Activity implements Observer {
     public void inventoryClick(View view) {
         Intent intent = new Intent(this, InventoryActivity.class);
         startActivity(intent);
+    }
+
+    public TextView getLatitude() {
+        return latitude;
+    }
+
+    public TextView getLongitude() {
+        return longitude;
     }
 }

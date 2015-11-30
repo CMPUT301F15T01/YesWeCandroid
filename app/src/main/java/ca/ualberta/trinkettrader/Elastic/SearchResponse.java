@@ -15,9 +15,10 @@
 package ca.ualberta.trinkettrader.Elastic;
 
 /**
- * Taken from AndroidElasticSearch //TODO: add github link
+ * Class representing results of searches to Elastic Search
+ * Taken from AndroidElasticSearch on github
  */
-
+//joshua2ua; https://github.com/joshua2ua/AndroidElasticSearch; 2015-11-30
 public class SearchResponse<T> {
 
     private int took;
@@ -28,43 +29,14 @@ public class SearchResponse<T> {
     public SearchResponse() {
     }
 
-    public int getTook() {
-        return took;
-    }
-
-    public void setTook(int took) {
-        this.took = took;
-    }
-
-    public boolean isTimed_out() {
-        return timed_out;
-    }
-
-    public void setTimed_out(boolean timed_out) {
-        this.timed_out = timed_out;
-    }
-
-    public Shard get_shards() {
-        return _shards;
-    }
-
-    public void set_shards(Shard _shards) {
-        this._shards = _shards;
-    }
-
+    /**
+     * Returns the {@link ca.ualberta.trinkettrader.Elastic.Hits Hits} returned from a search query
+     * to the Elastic Search Server. Hits are parsed to get the data objects that were queried for.
+     *
+     * @return Hits<T> - results of a search
+     */
     public Hits<T> getHits() {
         return hits;
-    }
-
-    public void setHits(Hits<T> hits) {
-        this.hits = hits;
-    }
-
-    public Integer numHits() {
-        if (hits != null) {
-            return hits.numHits();
-        } else
-            return 0;
     }
 
 
@@ -74,30 +46,6 @@ public class SearchResponse<T> {
         private int failed;
 
         public Shard() {
-        }
-
-        public int getTotal() {
-            return total;
-        }
-
-        public void setTotal(int total) {
-            this.total = total;
-        }
-
-        public int getSuccessful() {
-            return successful;
-        }
-
-        public void setSuccessful(int successful) {
-            this.successful = successful;
-        }
-
-        public int getFailed() {
-            return failed;
-        }
-
-        public void setFailed(int failed) {
-            this.failed = failed;
         }
     }
 }

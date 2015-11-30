@@ -21,12 +21,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.io.IOException;
+
 import ca.ualberta.trinkettrader.Friends.Friend;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.Trades.PastTradesActivity;
 import ca.ualberta.trinkettrader.Trades.Trade;
 import ca.ualberta.trinkettrader.Trades.TradeDetailsActivity;
+import ca.ualberta.trinkettrader.Trades.TradeReceivedActivity;
 import ca.ualberta.trinkettrader.Trades.TradesActivity;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.Profile.UserProfileActivity;
@@ -43,117 +46,192 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     // TODO I think that all of the Users invloved in trades have to be made friends.
     // TODO ask about how to incorporate FriendsListController
 
-    // TODO : User Case - Be notified of a proposed trade
-    // Test method to see if user has a notification
-    public void testHasNotification() {
-        User user = LoggedInUser.getInstance();
-        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
-        // Send a trade to yourself as a test
-        user.getTradeManager().proposeTrade(trade);
-        // Test if this trade has triggered a notification
-        assertTrue(user.getNotificationManager().hasNotification());
-        /*
-        *
-        *
-        * */
 
-        // Start the UI test from the login page (beginning of the app).
-        LoginActivity loginActivity = (LoginActivity) getActivity();
-
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-        // On the login page: click the email input box and write an arbitrary email.
-        // Test that the text was successfully written.
-        loginEmailTextView = loginActivity.getEmailTextView();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginEmailTextView.performClick();
-                loginEmailTextView.setText("user@gmail.com");
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
-
-        // Click the login button to proceed to the home page.
-        loginButton = loginActivity.getLoginButton();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginButton.performClick();
-            }
-        });
-
-        // Test that the HomePageActivity started correctly after the clicking the login button.
-        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("HomePageActivity is null", homePageActivity);
-        assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
-        getInstrumentation().removeMonitor(homePageActivityMonitor);
-
-        // finish activities
-        loginActivity.finish();
-        homePageActivity.finish();
-        assertNotNull(null);
-    }
-
-    // TODO User Case: Accept a proposed trade
-    // Test accepting trade
+    /*
+    * Use Case: Accept a Proposed Trade
+    *
+    * MUST BE LOGGED INTO EMAIL FOR TEST TO PASS
+    * */
     public void testAcceptTrade() {
-        User user = LoggedInUser.getInstance();
-        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
-        // Send a trade to yourself as a test
-        user.getTradeManager().proposeTrade(trade);
-        // Test if this trade has triggered a notification
-        assertTrue(user.getNotificationManager().hasNotification());
-        user.getTradeManager().acceptTrade(trade, "Test accept message");
-        //assertTrue(trade.getStatus().equals("accepted"));  // TODO need to clarify what status names will be
-        //assertTrue(user.getTradeManager().getTradeArchiver().getPastTrade(trade).getStatus().equals("Accepted"));
 
-        /*
-        *
-        * */
-        // Start the UI test from the login page (beginning of the app).
+        // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
+        /******** HomePageActivity ********/
+        // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
 
-        // On the login page: click the email input box and write an arbitrary email.
-        // Test that the text was successfully written.
-        loginEmailTextView = loginActivity.getEmailTextView();
+        // actions which lead to next activity
+        //final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final String test_email = "trex@iceage.ca";
+        final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emailTextView.setText(test_email);
+            }
+        });
+        final Button homePageButton = loginActivity.getLoginButton();
         loginActivity.runOnUiThread(new Runnable() {
             public void run() {
-                loginEmailTextView.performClick();
-                loginEmailTextView.setText("user@gmail.com");
+                homePageButton.performClick();
             }
         });
         getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
 
-        // Click the login button to proceed to the home page.
-        loginButton = loginActivity.getLoginButton();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginButton.performClick();
-            }
-        });
+        /****Hardcode in trades to click****/
+        LoggedInUser currentUser = LoggedInUser.getInstance();
+        currentUser.getTradeManager().setUsername("trex@iceage.ca");
 
-        // Test that the HomePageActivity started correctly after the clicking the login button.
-        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
+        Friend friend = new Friend("burger@ihop.ca");
+        friend.getActualFriend().getTradeManager().setUsername("burger@ihop.ca");
+        // create inventories of trinkets to trade
+        Inventory borrowerInventory = new Inventory();
+        Inventory ownerInventory = new Inventory();
+        Inventory secondInventory = new Inventory();
+
+        Trinket necklace = new Trinket();
+        necklace.setName("Amulet of Fire");
+        Trinket ring = new Trinket();
+        ring.setName("Ring of Swirling Mist");
+        borrowerInventory.add(necklace);
+        ownerInventory.add(ring);
+
+        // hardcoded trades - with alternating borrowers and owners
+        final Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, friend.getActualFriend().getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        // trade offered to user from friend
+        currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
+        trade.setStatus("Pending Incoming");
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+
+        // make one more trade
+        Trinket bracelet = new Trinket();
+        bracelet.setName("Bronze bracer");
+        secondInventory.add(bracelet);
+
+        // swapped borrower and receiver
+        // trade offered to friend from user
+        final Trade trade1 = new Trade(borrowerInventory, friend.getActualFriend().getTradeManager(), secondInventory, currentUser.getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        currentUser.getTradeManager().getTradeArchiver().addTrade(trade1);
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
+
+
+        // Validate that ReceiverActivity is started
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("HomePageActivity is null", homePageActivity);
-        assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
+        assertNotNull("ReceiverActivity is null", homePageActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called", 1, homePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type", HomePageActivity.class, homePageActivity.getClass());
+
+        // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
+        /****UserProfileActivity****/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor profilePageActivityMonitor = getInstrumentation().addMonitor(UserProfileActivity.class.getName(), null, false);
+
+        // actions which lead to next activity
+        final Button homePageProfileButton = homePageActivity.getProfileButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                homePageProfileButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        UserProfileActivity userProfileActivity = (UserProfileActivity) profilePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", userProfileActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called", 1, profilePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type", UserProfileActivity.class, userProfileActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(profilePageActivityMonitor);
+
+        /****ActiveTradesActivity****/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor currentTradesActivityMonitor = getInstrumentation().addMonitor(TradesActivity.class.getName(), null, false);
+
+        // actions which lead to next activity
+        final Button tradesProfilePageButton = userProfileActivity.getTradesButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                tradesProfilePageButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        TradesActivity currentTradesActivity = (TradesActivity) currentTradesActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", currentTradesActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called", 1, currentTradesActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type", TradesActivity.class, currentTradesActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(currentTradesActivityMonitor);
+
+        /****TradeDetailsActivity****/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor tradeReceivedActivityMonitor = getInstrumentation().addMonitor(TradeReceivedActivity.class.getName(), null, false);
+
+        // trade at 1st index should be the first trade that was added. let's click it
+        // actions which lead to next activity
+        final ListView currentTradesList = currentTradesActivity.getCurrentTradesListView();
+        currentTradesActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                View tradeBox1 = currentTradesList.getChildAt(1);
+                currentTradesList.performItemClick(tradeBox1, 1, tradeBox1.getId()); // test failing here. null pointer exception. trades not in list
+                // check that we clicked the correct trade
+                assertTrue((trade.toString()).equals(ApplicationState.getInstance().getClickedTrade().toString()));
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // regular activity check stuff
+        // Validate that ReceiverActivity is started
+        TradeReceivedActivity tradeReceivedActivity = (TradeReceivedActivity) tradeReceivedActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", tradeReceivedActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called", 1, tradeReceivedActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type", TradeReceivedActivity.class, tradeReceivedActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(tradeReceivedActivityMonitor);
+
+        // Click Accept Trade
+        // actions which lead to next activity
+        final Button acceptTradeButton = tradeReceivedActivity.getAcceptTradeButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                acceptTradeButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // trade should not be in current trades list. trade should be in past trades list
+        //assertFalse(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+        //assertTrue(currentUser.getTradeManager().getTradeArchiver().hasPastTrade(trade));
+
+        assertTrue(trade.getStatus().equals("Accepted"));
 
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
-    }
+        userProfileActivity.finish();
+        currentTradesActivity.finish();
+        tradeReceivedActivity.finish();
 
-    // TODO User Case: Decline a proposed trade
-    // Test rejecting a trade without sending a counter offer
+        try{
+            currentUser.deleteFromNetwork(); // delete logged in user
+        }catch(IOException e){
+
+        }
+
+    }
+    /*
+    * Case: Decline a Proposed Trade
+    * Test rejecting a trade without sending a counter offer
+    * */
     public void testDeclineTradeNoCounter() {
         User user = LoggedInUser.getInstance();
         Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
@@ -211,64 +289,6 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         homePageActivity.finish();
     }
 
-    // TODO User Case: Propose a counter-trade
-    // Test rejecting a trade with sending a counter offer
-    public void testDeclineTradeWithCounter() {
-        User user = LoggedInUser.getInstance();
-        // Send a trade to yourself as a test
-        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
-        user.getTradeManager().proposeTrade(trade);
-        // Test if this trade has triggered a notification
-        assertTrue(user.getNotificationManager().hasNotification());
-        user.getTradeManager().declineTrade(trade);
-        // Send a counter trade
-        Trade counterTrade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
-        assertFalse(trade.getStatus().equals("closed"));
-
-        /*
-        *
-        * */
-
-        // Start the UI test from the login page (beginning of the app).
-        LoginActivity loginActivity = (LoginActivity) getActivity();
-
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-
-        // On the login page: click the email input box and write an arbitrary email.
-        // Test that the text was successfully written.
-        loginEmailTextView = loginActivity.getEmailTextView();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginEmailTextView.performClick();
-                loginEmailTextView.setText("user@gmail.com");
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
-
-        // Click the login button to proceed to the home page.
-        loginButton = loginActivity.getLoginButton();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginButton.performClick();
-            }
-        });
-
-        // Test that the HomePageActivity started correctly after the clicking the login button.
-        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("HomePageActivity is null", homePageActivity);
-        assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
-        getInstrumentation().removeMonitor(homePageActivityMonitor);
-
-
-        // finish activities
-        loginActivity.finish();
-        homePageActivity.finish();
-        assertNotNull(null);
-    }
 
     // Test that friend has the item that user is proposing in their offered trade
     // TODO this seems out of place?
@@ -326,59 +346,28 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         homePageActivity.finish();
     }
 
-    // TODO User Case: owner/borrower can browse all current trades involving them
-    // TODO Make one for someone who is not owner proposing a trade?
-    //check that the proposed trade shows up in the users current trades
-    public void testProposedTradeAppearsInCurrentTrades() {
-        User user = LoggedInUser.getInstance();
-        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
-        assertFalse(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
-        user.getTradeManager().proposeTrade(trade);
-        assertTrue(user.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
-
-        /*
-        *
-        * */
-
-        // Start the UI test from the login page (beginning of the app).
-        LoginActivity loginActivity = (LoginActivity) getActivity();
-
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-
-        // On the login page: click the email input box and write an arbitrary email.
-        // Test that the text was successfully written.
-        loginEmailTextView = loginActivity.getEmailTextView();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginEmailTextView.performClick();
-                loginEmailTextView.setText("user@gmail.com");
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
-
-        // Click the login button to proceed to the home page.
-        loginButton = loginActivity.getLoginButton();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginButton.performClick();
-            }
-        });
-
-        // Test that the HomePageActivity started correctly after the clicking the login button.
-        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("HomePageActivity is null", homePageActivity);
-        assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
-        getInstrumentation().removeMonitor(homePageActivityMonitor);
-
-        // finish activities
-        loginActivity.finish();
-        homePageActivity.finish();
+   /*
+   * Use Case: Offer a trade
+   * */
+    public void testProposeTrade(){
+        assertNotNull(null);
     }
 
+    /*
+    * Use Case: Edit a proposed trade
+    * User edits a trade they proposed.
+    * */
+    public void testEditProposedTrade(){
+        assertNotNull(null);
+    }
+
+    /*
+    * Use Case: Delete a proposed trade
+    * User deletes a trade they proposed.
+    * */
+    public void deleteProposedTrade(){
+        assertNotNull(null);
+    }
     // TODO USer Case: Edit a proposed trade
     //check that user can edit a current trade
     public void testEditTrade() {
@@ -487,46 +476,20 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     }
 
 
-    // User can view a list of trades they are currently involved in
     // TODO is there a way to view the current trades lists of the other person involved in the trade. not currently
     /*
     * Please note: This test only is concerned with a trade being in the currentTrades list, NOT
     * viewing the TradeDetailsActivity.  TradeDetailsActivity will not be implemented for this prototype.
     * TradeDetailsActivity just included for completeness.
-    * */
+    *
+    *  Use Case - Owner/Borrower can browse all current trades involving them
+    *
+    *  Use Case: Owner/Borrower can browse all current trades involving them as either the borrower or owner
+    *
+    *  Use Case - Be notified of a proposed trade
+    /* Tests that user is notified when offered a new trade.
+     * Notification will be in the form of the trade being displayed with NEW! in the current trades list */
     public void testViewCurrentTrades() {
-
-        /****Hardcode in trades to click****/
-        LoggedInUser currentUser = LoggedInUser.getInstance();
-
-        // create inventories of trinkets to trade
-        Inventory borrowerInventory = new Inventory();
-        Inventory ownerInventory = new Inventory();
-        Inventory secondInventory = new Inventory();
-
-        Trinket necklace = new Trinket();
-        necklace.setName("Amulet of Fire");
-        Trinket ring = new Trinket();
-        ring.setName("Ring of Swirling Mist");
-        borrowerInventory.add(necklace);
-        ownerInventory.add(ring);
-
-        // trade with self
-        final Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, currentUser.getTradeManager());
-        //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
-        currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
-        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
-
-        // make one more trade
-        Trinket bracelet = new Trinket();
-        bracelet.setName("Bronze bracer");
-        secondInventory.add(bracelet);
-
-        final Trade trade1 = new Trade(borrowerInventory, currentUser.getTradeManager(), secondInventory, currentUser.getTradeManager());
-        //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
-        currentUser.getTradeManager().getTradeArchiver().addTrade(trade1);
-        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
-
 
         // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
@@ -536,7 +499,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
 
         // actions which lead to next activity
-        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        //final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final String test_email = "trex@iceage.ca";
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
             @Override
@@ -551,6 +515,42 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
+
+        /****Hardcode in trades to click****/
+        LoggedInUser currentUser = LoggedInUser.getInstance();
+        currentUser.getTradeManager().setUsername("trex@iceage.ca");
+
+        Friend friend = new Friend("burger@ihop.ca");
+        friend.getActualFriend().getTradeManager().setUsername("burger@ihop.ca");
+        // create inventories of trinkets to trade
+        Inventory borrowerInventory = new Inventory();
+        Inventory ownerInventory = new Inventory();
+        Inventory secondInventory = new Inventory();
+
+        Trinket necklace = new Trinket();
+        necklace.setName("Amulet of Fire");
+        Trinket ring = new Trinket();
+        ring.setName("Ring of Swirling Mist");
+        borrowerInventory.add(necklace);
+        ownerInventory.add(ring);
+
+        // hardcoded trades - with alternating borrowers and owners
+        final Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, friend.getActualFriend().getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+
+        // make one more trade
+        Trinket bracelet = new Trinket();
+        bracelet.setName("Bronze bracer");
+        secondInventory.add(bracelet);
+
+        // swapped borrower and receiver
+        final Trade trade1 = new Trade(borrowerInventory, friend.getActualFriend().getTradeManager(), secondInventory, currentUser.getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        currentUser.getTradeManager().getTradeArchiver().addTrade(trade1);
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
+
 
         // Validate that ReceiverActivity is started
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
@@ -597,7 +597,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        TradesActivity currentTradesActivity = (TradesActivity) currentTradesActivityMonitor.waitForActivityWithTimeout(1000);
+        TradesActivity currentTradesActivity = (TradesActivity) currentTradesActivityMonitor.waitForActivityWithTimeout(10000);
         assertNotNull("ReceiverActivity is null", currentTradesActivity);
         assertEquals("Monitor for ReceiverActivity has not been called", 1, currentTradesActivityMonitor.getHits());
         assertEquals("Activity is of wrong type", TradesActivity.class, currentTradesActivity.getClass());
@@ -610,12 +610,13 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         Instrumentation.ActivityMonitor tradeDetailsActivityMonitor = getInstrumentation().addMonitor(TradeDetailsActivity.class.getName(), null, false);
 
         // trade at 1st index should be the first trade that was added. let's click it
+        // trade that user proposed
         // actions which lead to next activity
         final ListView currentTradesList = currentTradesActivity.getCurrentTradesListView();
         currentTradesActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View tradeBox1 = currentTradesList.getChildAt(1);
-                currentTradesList.performItemClick(tradeBox1, 1, tradeBox1.getId());
+                currentTradesList.performItemClick(tradeBox1, 1, tradeBox1.getId()); // test failing here. null pointer exception. trades not in list
                 // check that we clicked the correct trade
                 assertTrue((trade.toString()).equals(ApplicationState.getInstance().getClickedTrade().toString()));
             }
@@ -638,6 +639,12 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         userProfileActivity.finish();
         currentTradesActivity.finish();
         tradeDetailsActivity.finish();
+
+        try{
+            currentUser.deleteFromNetwork(); // delete logged in user
+        }catch(IOException e){
+
+        }
     }
 
 
@@ -647,39 +654,12 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     * Please note: This test only is concerned with a trade being in the pastTrades list, NOT
     * viewing the TradeDetailsActivity.  TradeDetailsActivity will not be implemented for this prototype.
     * TradeDetailsActivity just included for completeness.
+    *
+    *  Use Case: Owner/Borrower can browse all past trades involving them
+    *
+    *  Use Case: Owner/Borrower can browse all past trades involving them as the borrower or owner
     * */
     public void testViewPastTrades() {
-        /****Hardcode in trades to click****/
-        LoggedInUser currentUser = LoggedInUser.getInstance();
-
-        // create inventories of trinkets to trade
-        Inventory borrowerInventory = new Inventory();
-        Inventory ownerInventory = new Inventory();
-        Inventory secondInventory = new Inventory();
-
-        Trinket necklace = new Trinket();
-        necklace.setName("Amulet of Fire");
-        Trinket ring = new Trinket();
-        ring.setName("Ring of Swirling Mist");
-        borrowerInventory.add(necklace);
-        ownerInventory.add(ring);
-
-        // trade with self
-        final Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, currentUser.getTradeManager());
-        //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
-        currentUser.getTradeManager().getTradeArchiver().archiveTrade(trade, "declined");
-        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasPastTrade(trade));
-
-        // make one more trade
-        Trinket bracelet = new Trinket();
-        bracelet.setName("Bronze bracer");
-        secondInventory.add(bracelet);
-
-        final Trade trade1 = new Trade(borrowerInventory, currentUser.getTradeManager(), secondInventory, currentUser.getTradeManager());
-        //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
-        currentUser.getTradeManager().getTradeArchiver().archiveTrade(trade1, "accepted");
-        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasPastTrade(trade1));
-
 
         // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
@@ -689,7 +669,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
 
         // actions which lead to next activity
-        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final String test_email = "trex@iceage.ca";
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
             @Override
@@ -704,6 +684,43 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
+
+        /****Hardcode in trades to click****/
+        LoggedInUser currentUser = LoggedInUser.getInstance();
+        currentUser.getTradeManager().setUsername("trex@iceage.ca");
+
+        Friend friend = new Friend("burger@ihop.ca");
+        friend.getActualFriend().getTradeManager().setUsername("burger@ihop.ca");
+        // create inventories of trinkets to trade
+        Inventory borrowerInventory = new Inventory();
+        Inventory ownerInventory = new Inventory();
+        Inventory secondInventory = new Inventory();
+
+        Trinket necklace = new Trinket();
+        necklace.setName("Amulet of Fire");
+        Trinket ring = new Trinket();
+        ring.setName("Ring of Swirling Mist");
+        borrowerInventory.add(necklace);
+        ownerInventory.add(ring);
+
+        // hardcoded trades - with alternating borrowers and owners
+        final Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, friend.getActualFriend().getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        currentUser.getTradeManager().getTradeArchiver().archiveTrade(trade, "declined");
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasPastTrade(trade));
+
+        // make one more trade
+        Trinket bracelet = new Trinket();
+        bracelet.setName("Bronze bracer");
+        secondInventory.add(bracelet);
+
+        // swapped borrower and receiver
+        final Trade trade1 = new Trade(borrowerInventory, friend.getActualFriend().getTradeManager(), secondInventory, currentUser.getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        currentUser.getTradeManager().getTradeArchiver().archiveTrade(trade1, "declined");
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasPastTrade(trade1));
+
+
 
         // Validate that ReceiverActivity is started
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
@@ -815,9 +832,15 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         pastTradesActivity.finish();
         tradeDetailsActivity.finish();
 
+        try{
+            currentUser.deleteFromNetwork(); // delete LoggedInUser from network
+        }catch(IOException e){
+
+        }
     }
 
     // TODO: User Case : Notify parties of accepted trade - email; could possibly be bundled with acceptTrade test
+    /**/
     public void testNotifyPartiesOfAcceptedTrade() {
         assertNotNull(null);
     }

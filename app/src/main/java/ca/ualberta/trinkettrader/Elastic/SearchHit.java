@@ -26,54 +26,47 @@ public class SearchHit<T> {
 
     }
 
-    public String get_index() {
-        return _index;
-    }
-
-    public void set_index(String _index) {
-        this._index = _index;
-    }
-
-    public String get_type() {
-        return _type;
-    }
-
-    public void set_type(String _type) {
-        this._type = _type;
-    }
-
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
-    public String get_version() {
-        return _version;
-    }
-
-    public void set_version(String _version) {
-        this._version = _version;
-    }
-
+    /**
+     * Returns whether the SearchHit was found. This method can be used to determine if a particular
+     * data type was found on the server.
+     * @return boolean
+     */
     public boolean isFound() {
         return found;
     }
 
+    /**
+     * Sets whether the SearchHit object was found.
+     * @param found
+     */
     public void setFound(boolean found) {
         this.found = found;
     }
 
+    /**
+     * Gets the query intended object of type T that was stored on the server. This is an object that
+     * was instantiated by the system, stored and now retrieved. This object can be edited and restored
+     * to the server for future queries.
+     * @return T
+     */
     public T getSource() {
         return _source;
     }
-
+    /**
+     * Sets the query intended object of type T that was stored on the server. This is an object that
+     * was instantiated by the system, stored and now set. This object can be edited and restored
+     * to the server for future queries. The JSON string that is parsed into this object must match
+     * the object's attributes.
+     * @return T
+     */
     public void setSource(T source) {
         this._source = source;
     }
 
+    /**
+     * Return the Elastic Search response with each attribute of the SearchHit in a readable format.
+     * @return String
+     */
     @Override
     public String toString() {
         return "SimpleElasticSearchResponse [_index=" + _index + ", _type="

@@ -128,7 +128,7 @@
         android:layout_below="@+id/edit_phone_number"
         android:ems="10"
         android:hint="Longitude"
-        android:inputType="numberSigned"/>
+        android:inputType="numberDecimal"/>
 
     <EditText
         android:id="@+id/edit_longitude"
@@ -138,7 +138,7 @@
         android:layout_below="@+id/edit_latitude"
         android:ems="10"
         android:hint="Latitude"
-        android:inputType="numberSigned"/>
+        android:inputType="numberDecimal"/>
 
     <TextView
         android:id="@+id/textView6"

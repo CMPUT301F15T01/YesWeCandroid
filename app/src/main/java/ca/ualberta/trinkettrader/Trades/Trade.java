@@ -415,6 +415,16 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     public <T extends ElasticStorable> void onSearchResult(Collection<T> result) {
     }
 
+    /**
+     * Returns the base URL each class of ElasticStorable object can be searched on the server with.  Trades, photos,
+     * and users are all saved separately in elastic search within their own tags.  Each individual object is then stored with
+     * their own unique ids.  The search URL specifies the base URL which is composed of the server
+     * URL ("http://cmput301.softwareprocess.es:8080/cmput301f15t01/") followed by the tag of the particular class,
+     * "Trade" as the tag for {@link Trade Trade} objects, and then followed
+     * by "/_search/".
+     *
+     * @return - url for searching Trades on elastic search
+     */
     @Override
     public String getSearchUrl() {
         return SEARCH_URL;
