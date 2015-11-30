@@ -95,7 +95,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
-
+        assertNotNull(null);
         // finish activities
         loginActivity.finish();
         homePageActivity.finish();
@@ -451,38 +451,6 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
      * Notification will be in the form of the trade being displayed with NEW! in the current trades list */
     public void testViewCurrentTrades() {
 
-        /****Hardcode in trades to click****/
-        LoggedInUser currentUser = LoggedInUser.getInstance();
-
-        // create inventories of trinkets to trade
-        Inventory borrowerInventory = new Inventory();
-        Inventory ownerInventory = new Inventory();
-        Inventory secondInventory = new Inventory();
-
-        Trinket necklace = new Trinket();
-        necklace.setName("Amulet of Fire");
-        Trinket ring = new Trinket();
-        ring.setName("Ring of Swirling Mist");
-        borrowerInventory.add(necklace);
-        ownerInventory.add(ring);
-
-        // trade with self
-        final Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, currentUser.getTradeManager());
-        //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
-        currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
-        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
-
-        // make one more trade
-        Trinket bracelet = new Trinket();
-        bracelet.setName("Bronze bracer");
-        secondInventory.add(bracelet);
-
-        final Trade trade1 = new Trade(borrowerInventory, currentUser.getTradeManager(), secondInventory, currentUser.getTradeManager());
-        //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
-        currentUser.getTradeManager().getTradeArchiver().addTrade(trade1);
-        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
-
-
         // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
 
@@ -491,7 +459,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
 
         // actions which lead to next activity
-        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        //final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final String test_email = "trex@iceage.ca";
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
             @Override
@@ -506,6 +475,42 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
+
+        /****Hardcode in trades to click****/
+        LoggedInUser currentUser = LoggedInUser.getInstance();
+        currentUser.getTradeManager().setUsername("trex@iceage.ca");
+
+        Friend friend = new Friend("burger@ihop.ca");
+        friend.getActualFriend().getTradeManager().setUsername("burger@ihop.ca");
+        // create inventories of trinkets to trade
+        Inventory borrowerInventory = new Inventory();
+        Inventory ownerInventory = new Inventory();
+        Inventory secondInventory = new Inventory();
+
+        Trinket necklace = new Trinket();
+        necklace.setName("Amulet of Fire");
+        Trinket ring = new Trinket();
+        ring.setName("Ring of Swirling Mist");
+        borrowerInventory.add(necklace);
+        ownerInventory.add(ring);
+
+        // trade with self
+        final Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, friend.getActualFriend().getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade));
+
+        // make one more trade
+        Trinket bracelet = new Trinket();
+        bracelet.setName("Bronze bracer");
+        secondInventory.add(bracelet);
+
+        // swapped borrower and receiver
+        final Trade trade1 = new Trade(borrowerInventory, friend.getActualFriend().getTradeManager(), secondInventory, currentUser.getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        currentUser.getTradeManager().getTradeArchiver().addTrade(trade1);
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasCurrentTrade(trade1));
+
 
         // Validate that ReceiverActivity is started
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
@@ -552,7 +557,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity is started
-        TradesActivity currentTradesActivity = (TradesActivity) currentTradesActivityMonitor.waitForActivityWithTimeout(1000);
+        TradesActivity currentTradesActivity = (TradesActivity) currentTradesActivityMonitor.waitForActivityWithTimeout(10000);
         assertNotNull("ReceiverActivity is null", currentTradesActivity);
         assertEquals("Monitor for ReceiverActivity has not been called", 1, currentTradesActivityMonitor.getHits());
         assertEquals("Activity is of wrong type", TradesActivity.class, currentTradesActivity.getClass());
@@ -570,7 +575,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         currentTradesActivity.runOnUiThread(new Runnable() {
             public void run() {
                 View tradeBox1 = currentTradesList.getChildAt(1);
-                currentTradesList.performItemClick(tradeBox1, 1, tradeBox1.getId());
+                currentTradesList.performItemClick(tradeBox1, 1, tradeBox1.getId()); // test failing here. null pointer exception. trades not in list
                 // check that we clicked the correct trade
                 assertTrue((trade.toString()).equals(ApplicationState.getInstance().getClickedTrade().toString()));
             }
