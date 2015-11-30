@@ -56,7 +56,7 @@ public class FriendsListActivity extends Activity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
         friendsListView = (ListView) findViewById(R.id.friendsView);
-        findFriendsButton = (Button) findViewById(R.id.addFriendsButton);
+        findFriendsButton = (Button) findViewById(R.id.findFriendsButton);
         viewTrackedFriendsButton = (Button) findViewById(R.id.viewTrackedFriendsButton);
         findFriendTextField = (EditText) findViewById(R.id.findFriendTextField);
         userFriendList = LoggedInUser.getInstance().getFriendsList();

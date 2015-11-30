@@ -99,18 +99,4 @@ public class FriendsProfileController {
     public void backToFriendsListButtonFromProfileOnClick() {
         activity.onBackPressed();
     }
-
-    /**
-     * Sets the information text views for the Friend's profile data. Activity, on create, will
-     * get the Friend's data from the network, if the friend made any changes to their profile.
-     */
-    public void updateFields() {
-        activity.getUsernameTextView().setText(activity.getFriend().getProfile().getUsername());
-        activity.getNameTextView().setText(activity.getFriend().getProfile().getName());
-        activity.getEmailTextView().setText(activity.getFriend().getProfile().getEmail());
-        activity.getCityInfoTextView().setText(activity.getFriend().getProfile().getCity());
-        activity.getPhoneTextView().setText(activity.getFriend().getProfile().getContactInfo().getPhoneNumber());
-        activity.getPostalCodeInfoTextView().setText(activity.getFriend().getProfile().getPostalCode());
-        activity.getTrackedRadioButton().setChecked(ApplicationState.getInstance().getClickedFriend().isTracked());
-    }
 }
