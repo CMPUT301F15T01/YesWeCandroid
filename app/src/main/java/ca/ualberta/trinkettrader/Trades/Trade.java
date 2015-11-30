@@ -14,8 +14,9 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
@@ -185,10 +186,10 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
             tNo = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades().indexOf(this) + 1;
         }
 
-
         // bold if new trade (has not been clicked/viewed yet by user)
-        //SudiptaforAndroid
-
+        //SudiptaforAndroid; http://stackoverflow.com/questions/4792260/how-do-you-change-text-to-bold-in-android; 2015-11-29
+        //TextView newTrade = (TextView) findViewById(R.layout.activity_trades_trade_box);
+        //newTrade.setTypeface(null, Typeface.BOLD);
         return "Trade No. " + tNo + " with " + otherUser + "\nStatus: " + status;
     }
 
