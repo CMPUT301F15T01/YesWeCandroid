@@ -83,8 +83,9 @@ public class TradesActivity extends Activity implements Observer {
 
 
     /**
-     * Directs user to past trades screen when clicked.
-     *
+     * Directs user to PastTradesActivity when Past Trades button
+     * is clicked.
+     * <p/>
      * @param view View object used to change activities
      */
     public void openPastTrades(View view) {
@@ -112,8 +113,10 @@ public class TradesActivity extends Activity implements Observer {
     }
 
     /**
-     * Returns Past Trades button
-     *
+     * Returns Past Trades button.  Clicking the Past Trades button
+     * allows a user to navigate to the PastTradesActivity where
+     * they can view their past (inactive) trades.
+     * <p/>
      * @return Button Links to page which displays list of user's past(inactive) trades
      */
     public Button getPastTradesButton() {
@@ -121,11 +124,10 @@ public class TradesActivity extends Activity implements Observer {
     }
 
     /**
-     * Returns the Create Trade button.  Clicking this allows a user
-     * to navigate to the CreateTradeACtivity where they can create a trade
-     * offer to send to another user.
-     * a user's profile page.
-     *
+     * Returns the Create Trade button.  Clicking the Create Trade
+     * button allows a user to navigate to the CreateTradeActivity
+     * where they can create a trade offer to send to another user.
+     * <p/>
      * @return Button Create Trade button
      */
     public Button getCreateTradeButton() {
@@ -135,7 +137,7 @@ public class TradesActivity extends Activity implements Observer {
     /**
      * Returns currentTradesListView.  This method is used by the ActiveTradesController
      * to get the clicked trade on the screen.
-     *
+     * <p/>
      * @return ListView ListView of user's current trades
      */
     public ListView getCurrentTradesListView() { return currentTradesListView; }
@@ -144,7 +146,7 @@ public class TradesActivity extends Activity implements Observer {
      * This method is called if the specified {@code Observable} object's
      * {@code notifyObservers} method is called (because the {@code Observable}
      * object has been updated.
-     *
+     * <p/>
      * @param observable the {@link Observable} object.
      * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
      */
