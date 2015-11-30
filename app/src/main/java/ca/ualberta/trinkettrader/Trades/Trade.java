@@ -14,13 +14,38 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
+import ca.ualberta.trinkettrader.Elastic.SearchHit;
+import ca.ualberta.trinkettrader.Elastic.SearchResponse;
+import ca.ualberta.trinkettrader.Elastic.SimpleSearchCommand;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
+import ca.ualberta.trinkettrader.User.User;
 
 // TODO how are counter trades affected by 0 to many thing? are borrower and owner
 // TODO roles reversed?
@@ -42,10 +67,66 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     private Inventory offeredTrinkets;
     private Inventory requestedTrinkets;
 
+    private Integer numberOfTrinkets;
     private String status;
     private transient TradeManager receiver;
     private transient TradeManager sender;
-    private Integer numberOfTrinkets;
+    private String recieverUsername;
+    private String senderUsername;
+
+    /**
+     * Searches for ElasticStorable objects on the network matching the attribute and attribute
+     * value pairs. Calls onSearchResult with the results when the search completes.
+     *
+     * @param postParameters pairs of attributes to use when searching
+     * @param type
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
+        // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
+        // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
+        String username = LoggedInUser.getInstance().getProfile().getEmail();
+        final HttpGet searchRequest = new HttpGet(this.getSearchUrl() + "?q=\"recieverUsername:" + username + " OR senderUsername:" + username + "\"");
+        searchRequest.setHeader("Accept", "application/json");
+
+        final HttpClient httpClient = new DefaultHttpClient();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ArrayList<Trade> result = new ArrayList<>();
+                    HttpResponse response = httpClient.execute(searchRequest);
+                    Log.i("HttpResponse", response.getStatusLine().toString());
+                    Log.i("HttpResponse Body", EntityUtils.toString(response.getEntity(), "UTF-8"));
+
+                    Type searchResponseType = new TypeToken<SearchHit<Trade>>() {}.getType();
+                    InputStreamReader streamReader = new InputStreamReader(response.getEntity().getContent());
+                    SearchResponse<Trade> esResponse = new Gson().fromJson(streamReader, searchResponseType);
+
+                    for (SearchHit<Trade> hit: esResponse.getHits().getHits()) {
+                        result.add(hit.getSource());
+                    }
+
+                    onSearchResult(result);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    /**
+     * Attempts to find this object on the elasticsearch server. If the object
+     * cannot be found then pushes the current version to the server.
+     *
+     * @param type class of this object
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void getFromNetwork(Class<T> type) throws IOException {
+    }
 
     /**
      * Constructor that initializes the sender and receiver sides of the trade.  Both parties are initialized
@@ -66,6 +147,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         this.requestedTrinkets = requestedTrinkets;
         this.sender = sender;
         this.status = "pending"; // TODO need to clarify what status names will be
+        this.recieverUsername = receiver.getUsername();
+        this.senderUsername = sender.getUsername();
     }
 
     /**

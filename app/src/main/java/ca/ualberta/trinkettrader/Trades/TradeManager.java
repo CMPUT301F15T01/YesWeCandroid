@@ -14,6 +14,7 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,18 @@ public class TradeManager extends ElasticStorable {
     private TradeArchiver tradeArchiver;
 
     private String username;
+
+    /**
+     * Attempts to find this object on the elasticsearch server. If the object
+     * cannot be found then pushes the current version to the server.
+     *
+     * @param type class of this object
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void getFromNetwork(Class<T> type) throws IOException {
+
+    }
 
     /**
      * Default constructor.  Creates an empty {@link TradeArchiver TradeArchiver} to archive this trade

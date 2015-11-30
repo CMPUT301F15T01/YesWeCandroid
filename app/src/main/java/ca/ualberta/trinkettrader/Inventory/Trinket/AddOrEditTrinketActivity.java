@@ -49,6 +49,7 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.ImageViewArrayAdapte
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.PictureDirectoryManager;
 import ca.ualberta.trinkettrader.R;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Android activity class for adding a new trinket to the user's activity, or viewing and editing the
@@ -141,6 +142,7 @@ public class AddOrEditTrinketActivity extends Activity implements Observer {
             for (Picture picture : edited.getPictures()) {
                 try {
                     this.controller.addPicture(picture);
+                    picture.addObserver(this);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -276,6 +278,7 @@ public class AddOrEditTrinketActivity extends Activity implements Observer {
     public void addPicture(Picture newPicture) {
         try {
             this.controller.addPicture(newPicture);
+            newPicture.addObserver(this);
             this.updatePictures();
         } catch (IOException e) {
             e.printStackTrace();
@@ -305,6 +308,7 @@ public class AddOrEditTrinketActivity extends Activity implements Observer {
      */
     @Override
     public void update(Observable observable, Object data) {
+        this.updatePictures();
     }
 
     /**
