@@ -63,6 +63,7 @@ public class CreateTradeActivity extends Activity {
         controller = new CreateTradeController(this);
         controller.setFriendSpinnerItemOnClick();
         controller.updateClickedFriend();
+        updateFriendsSpinner();
 
     }
 
@@ -89,6 +90,9 @@ public class CreateTradeActivity extends Activity {
         friendAdapter = new ArrayAdapter<Friend>(this, android.R.layout.simple_list_item_1, userFriendList);
         friendAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         friendSpinner.setAdapter(friendAdapter);
+        if (userFriendList.size() > 0) {
+            friendSpinner.setSelection(ApplicationState.getInstance().getFriendSpinnerPosition());
+        }
     }
 
     public void updateFriendTradeTrinketListView() {

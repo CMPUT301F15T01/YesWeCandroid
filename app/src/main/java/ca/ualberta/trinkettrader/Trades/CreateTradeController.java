@@ -100,6 +100,7 @@ public class CreateTradeController {
                     ApplicationState.getInstance().setFriendsTradeTrinkets(new Inventory());
                     ApplicationState.getInstance().setYourTradeTrinkets(new Inventory());
                 }
+                ApplicationState.getInstance().setFriendSpinnerPosition(pos);
                 ApplicationState.getInstance().setClickedFriend(selectedFriend);
                 activity.updateFriendTradeTrinketListView();
                 activity.updateYourTradeTrinketListView();
