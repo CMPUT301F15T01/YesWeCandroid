@@ -99,7 +99,7 @@ public class CreateTradeActivity extends Activity {
     }
 
     /**
-     *
+     * Updates list of trinket friend is offering in the trade
      */
     public void updateFriendTradeTrinketListView() {
         friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
@@ -108,7 +108,7 @@ public class CreateTradeActivity extends Activity {
     }
 
     /**
-     *
+     * Updates list of trinket user is offering in the trade
      */
     public void updateYourTradeTrinketListView() {
         yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
@@ -117,7 +117,7 @@ public class CreateTradeActivity extends Activity {
     }
 
     /**
-     *
+     * Updates list of friends you can trade with
      */
     public void updateFriendsSpinner() {
         userFriendList = LoggedInUser.getInstance().getFriendsList();
@@ -168,6 +168,8 @@ public class CreateTradeActivity extends Activity {
     }
 
     /**
+     * Gets spinner with list of trinket friend is offering in the trade
+     *
      * @return
      */
     public Spinner getFriendSpinner() {
@@ -175,6 +177,8 @@ public class CreateTradeActivity extends Activity {
     }
 
     /**
+     *
+     *
      * @return
      */
     public ListView getFriendTradeTrinketListView() {
