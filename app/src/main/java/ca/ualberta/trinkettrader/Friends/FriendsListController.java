@@ -73,4 +73,12 @@ public class FriendsListController {
         Intent intent = new Intent(activity, TrackedFriendsListActivity.class);
         activity.startActivity(intent);
     }
+
+    /**
+     * OnClick Method to view and browse the inventories of all Friendsa
+     */
+    public void allInventoriesOnClick(){
+        Intent intent = new Intent(activity, AllFriendsInventoriesActivity.class);
+        activity.startActivity(intent);
+    }
 }

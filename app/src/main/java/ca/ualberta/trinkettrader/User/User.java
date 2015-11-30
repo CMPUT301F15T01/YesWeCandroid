@@ -17,11 +17,22 @@ package ca.ualberta.trinkettrader.User;
 import android.location.Location;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
+import ca.ualberta.trinkettrader.Elastic.SearchHit;
 import ca.ualberta.trinkettrader.Friends.FriendsList;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsList;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
@@ -341,5 +352,27 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
                 e.printStackTrace();
             }
         }
+    }
+
+    public void getFromNetwork() throws IOException {
+        // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
+        // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
+        final HttpGet getRequest = new HttpGet(this.getResourceUrl() + this.getUid());
+        final HttpClient httpClient = new DefaultHttpClient();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    HttpResponse response = httpClient.execute(getRequest);
+                    Log.i("HttpResponse", response.getStatusLine().toString());
+                    Type searchHitType = new TypeToken<SearchHit<User>>() {}.getType();
+                    SearchHit<User> returned = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchHitType);
+                    onGetResult(returned.getSource());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 }
