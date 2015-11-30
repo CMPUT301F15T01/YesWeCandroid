@@ -83,7 +83,7 @@ public class TradeManager extends ElasticStorable {
      * to and from the other user in the trade.  This TradeManager is initialized without a
      * {@link ca.ualberta.trinkettrader.Friends.Friend Friend}  to trade with.
      *
-     * @param String - username (email address) of the Friend this TradeManager is handling a trade with
+     * @param username (email address) of the Friend this TradeManager is handling a trade with
      */
     public TradeManager(String username) {
         this.username = username;
@@ -227,16 +227,32 @@ public class TradeManager extends ElasticStorable {
     }
 
     /**
+     * Returns the username (email) of the user the TradeManager belongs to.
+     * This method is used by the Trade class to display to display the opposite
+     * user involved in a trade when a trade is viewed in the current or past trades
+     * list.
      *
-     * @return String
+     * Upon trade acceptance, this method will be used to send a user
+     * the trade transaction completion email.
+     *
+     * @return String email of user who TradeManager belongs to
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     * 
-     * @param username
+     * Sets the username (email) of the user the TradeManager belongs to,
+     * so the email of the user can be accessed from within a trade object.
+     * It is very important that this method be called when a user logs in to
+     * the application for the first time (when their account is created).
+     * If this method is not called, a user's email will not be accessible within
+     * a trade, so trades listed in the current and past trades lists will not
+     * display correctly.  Upon trade acceptance, a user will not be able to receive
+     * the trade transaction completion email if their email has not been set in their
+     * TradeManager.
+     *
+     * @param username email of user who TradeManager belongs to
      */
     public void setUsername(String username) {
         this.username = username;

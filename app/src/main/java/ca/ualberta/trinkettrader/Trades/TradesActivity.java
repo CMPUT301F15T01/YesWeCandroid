@@ -65,8 +65,6 @@ public class TradesActivity extends Activity implements Observer {
         currentTradesListView = (ListView) findViewById(R.id.currentTradesList);
         pastTradesButton = (Button) findViewById(R.id.past_trades_button);
         createTradeButton = (Button) findViewById(R.id.create_trades_button);
-
-
         userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();
