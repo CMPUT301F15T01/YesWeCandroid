@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.Observer;
 
 /**
- * Represents a message to be read by the user.
+ * Represents a message to be read by the user.  Messages are created for the
+ * {@link ca.ualberta.trinkettrader.Trades.TradesActivity TradesActivity} to show the user when they
+ * have a new trade proposed to them, or a trade has been created.
  */
 public class Notification implements ca.ualberta.trinkettrader.Observable {
 
