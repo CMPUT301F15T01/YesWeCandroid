@@ -211,6 +211,18 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
+     * Searches for ElasticStorable objects on the network matching the attribute and attribute
+     * value pairs. Calls onSearchResult with the results when the search completes.
+     *
+     * @param postParameters pairs of attributes to use when searching
+     * @param type
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
+    }
+
+    /**
      * Attempts to find this object on the elasticsearch server. If the object
      * cannot be found then pushes the current version to the server.
      *
@@ -253,9 +265,9 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
             User user = (User) result;
             this.setFriendsList(user.getFriendsList());
             this.setInventory(user.getInventory());
-            for (Trinket trinket: user.getInventory()) {
+            for (Trinket trinket : user.getInventory()) {
                 ArrayList<Picture> pictures = new ArrayList<>();
-                for (String filename: trinket.getPictureFileNames()) {
+                for (String filename : trinket.getPictureFileNames()) {
                     try {
                         pictures.add(new Picture(filename, new PictureDirectoryManager(ApplicationState.getInstance().getActivity()), ApplicationState.getInstance().getActivity()));
                     } catch (IOException | PackageManager.NameNotFoundException e) {
@@ -287,41 +299,9 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     public <T extends ElasticStorable> void onSearchResult(Collection<T> result) {
     }
 
-    /**
-     * Returns user's UserProfle
-     *
-     * @return UserProfile
-     */
-    public UserProfile getProfile() {
-        return profile;
-    }
-
-    /**
-     * Sets user's UserProfile
-     *
-     * @param profile
-     */
-    public void setProfile(UserProfile profile) {
-        this.profile = profile;
-        this.needToSave = Boolean.TRUE;
-    }
-
-    /**
-     * Sets user's list of tracked friends
-     *
-     * @param trackedFriendsList
-     */
-    public void setTrackedFriends(TrackedFriendsList trackedFriendsList) {
-        this.trackedFriendsList = trackedFriendsList;
-    }
-
-    /**
-     * Returns user's list of tracked friends
-     *
-     * @return TrackedFriendsList
-     */
-    public TrackedFriendsList getTrackedFriendsList() {
-        return trackedFriendsList;
+    @Override
+    public String getSearchUrl() {
+        return SEARCH_URL;
     }
 
     /**
@@ -373,12 +353,40 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
-     * Sets user's notification manager
+     * Returns user's UserProfle
      *
-     * @param notificationManager
+     * @return UserProfile
      */
-    public void setNotificationManager(NotificationManager notificationManager) {
-        this.notificationManager = notificationManager;
+    public UserProfile getProfile() {
+        return profile;
+    }
+
+    /**
+     * Sets user's UserProfile
+     *
+     * @param profile
+     */
+    public void setProfile(UserProfile profile) {
+        this.profile = profile;
+        this.needToSave = Boolean.TRUE;
+    }
+
+    /**
+     * Sets user's list of tracked friends
+     *
+     * @param trackedFriendsList
+     */
+    public void setTrackedFriends(TrackedFriendsList trackedFriendsList) {
+        this.trackedFriendsList = trackedFriendsList;
+    }
+
+    /**
+     * Returns user's list of tracked friends
+     *
+     * @return TrackedFriendsList
+     */
+    public TrackedFriendsList getTrackedFriendsList() {
+        return trackedFriendsList;
     }
 
     /**
@@ -399,9 +407,13 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         this.tradeManager = tradeManager;
     }
 
-    @Override
-    public String getSearchUrl() {
-        return SEARCH_URL;
+    /**
+     * Sets user's notification manager
+     *
+     * @param notificationManager
+     */
+    public void setNotificationManager(NotificationManager notificationManager) {
+        this.notificationManager = notificationManager;
     }
 
     public Location getDefaultLocation() {
@@ -416,18 +428,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         this.getProfile().setEmail(email);
     }
 
-    /**
-     * Searches for ElasticStorable objects on the network matching the attribute and attribute
-     * value pairs. Calls onSearchResult with the results when the search completes.
-     *
-     * @param postParameters pairs of attributes to use when searching
-     * @param type
-     * @throws IOException
-     */
-    @Override
-    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
-    }
-
     public void getFromNetwork() throws IOException {
         // Alexis C.; http://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class; 2015-11-28
         // Android-Droid; http://stackoverflow.com/questions/8120220/how-to-use-parameters-with-httppost; 2015-11-18
@@ -439,7 +439,8 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
                 try {
                     HttpResponse response = httpClient.execute(getRequest);
                     Log.i("HttpResponse", response.getStatusLine().toString());
-                    Type searchHitType = new TypeToken<SearchHit<User>>() {}.getType();
+                    Type searchHitType = new TypeToken<SearchHit<User>>() {
+                    }.getType();
                     SearchHit<User> returned = new Gson().fromJson(new InputStreamReader(response.getEntity().getContent()), searchHitType);
                     onGetResult(returned.getSource());
                 } catch (IOException e) {

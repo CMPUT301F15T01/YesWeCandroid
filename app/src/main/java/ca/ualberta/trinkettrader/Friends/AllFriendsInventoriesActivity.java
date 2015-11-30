@@ -1,8 +1,8 @@
 package ca.ualberta.trinkettrader.Friends;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,7 +15,6 @@ import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
-import ca.ualberta.trinkettrader.User.User;
 
 public class AllFriendsInventoriesActivity extends Activity {
 
@@ -33,8 +32,8 @@ public class AllFriendsInventoriesActivity extends Activity {
         this.inventory = new Inventory();
         FriendsList friends = LoggedInUser.getInstance().getFriendsList();
         final HashMap<Trinket, Friend> trinketToUserMap = new HashMap<>();
-        for(Friend f: friends){
-            for(Trinket t: f.getActualFriend().getInventory()){
+        for (Friend f : friends) {
+            for (Trinket t : f.getActualFriend().getInventory()) {
                 this.inventory.add(t);
                 trinketToUserMap.put(t, f);
             }

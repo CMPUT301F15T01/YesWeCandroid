@@ -25,7 +25,7 @@ import java.util.Observer;
  * {@link ArrayList ArrayLists}, FriendsLists can be searched by the friend's email address.  Additionally,
  * the {@link ArrayList ArrayList's} add function is overridden so that the same Friend cannot be added
  * to the current user's FriendsList multiple times.
- *
+ * <p/>
  * The current user's FriendsList can be viewed, and new friends can be added to it, in the FriendsListActivity.
  * A friend can be removed from the current user's FriendsList by deleting the friend in the
  * {@link FriendsProfileActivity FriendsProfileActivity}.
@@ -48,7 +48,7 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
      * Constructor for instantiating the FriendsList of an existing user.  Constructs a FriendsList from
      * an arbitrary {@link Collection Collection} of Friends using the equivalent {@link ArrayList ArrayList}
      * constructor.  The given collection can be empty.
-     *
+     * <p/>
      * This constructor should be called when a user with an existing account logs in.  The FriendsList is
      * instantiated with the user's previous FriendsList data.  This data is retrieved from the Elastic Search
      * server if the device is online, or from the user's local phone storage if it is offline.  If the
@@ -62,6 +62,7 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
 
 
     // TODO: Can this be removed?
+
     /**
      * Initializes a FriendsList to the specified capacity.
      * Useful if the user knows the number of Friends in advance.
@@ -133,6 +134,7 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
 
 
     // TODO: When is this called?  Testing only?
+
     /**
      * Searches for the index of the Friend in the FriendsList using the specified username (the friend's
      * email address).  Returns the index of the Friend with that email address in the FriendsList if
@@ -160,7 +162,7 @@ public class FriendsList extends ArrayList<Friend> implements ca.ualberta.trinke
      * the user tries to add a friend that is already in their FriendsList.  Duplicates friends are not permitted,
      * so if the friend being added to the current user's FriendsList is already in their FriendsList then
      * that Friend will not be added again and <code>add</code> will return False.
-     *
+     * <p/>
      * This method is invoked by the FriendsListController after a user tries to add a new Friend from the
      * FriendsListActivity.
      *

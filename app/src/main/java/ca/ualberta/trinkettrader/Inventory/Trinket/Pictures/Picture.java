@@ -117,6 +117,15 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     }
 
     /**
+     * Returns the byte array containing the compressed picture.
+     *
+     * @return compressed picture in byte array
+     */
+    public byte[] getPictureByteArray() {
+        return this.pictureByteArray;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -225,6 +234,18 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     }
 
     /**
+     * Searches for ElasticStorable objects on the network matching the attribute and attribute
+     * value pairs. Calls onSearchResult with the results when the search completes.
+     *
+     * @param postParameters pairs of attributes to use when searching
+     * @param type
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
+    }
+
+    /**
      * Attempts to find this object on the elasticsearch server. If the object
      * cannot be found then pushes the current version to the server.
      *
@@ -296,26 +317,5 @@ public class Picture extends ElasticStorable implements ca.ualberta.trinkettrade
     @Override
     public String getSearchUrl() {
         return SEARCH_URL;
-    }
-
-    /**
-     * Returns the byte array containing the compressed picture.
-     *
-     * @return compressed picture in byte array
-     */
-    public byte[] getPictureByteArray() {
-        return this.pictureByteArray;
-    }
-
-    /**
-     * Searches for ElasticStorable objects on the network matching the attribute and attribute
-     * value pairs. Calls onSearchResult with the results when the search completes.
-     *
-     * @param postParameters pairs of attributes to use when searching
-     * @param type
-     * @throws IOException
-     */
-    @Override
-    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
     }
 }

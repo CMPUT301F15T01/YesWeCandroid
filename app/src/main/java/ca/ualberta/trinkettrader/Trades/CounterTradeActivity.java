@@ -20,16 +20,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Friends.Friend;
-import ca.ualberta.trinkettrader.Friends.FriendsList;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
-import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 
 /**
@@ -72,19 +69,18 @@ public class CounterTradeActivity extends Activity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        updateFriendTradeTrinketListView();
-        updateYourTradeTrinketListView();
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
         updateFriendTradeTrinketListView();
         updateYourTradeTrinketListView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateFriendTradeTrinketListView();
+        updateYourTradeTrinketListView();
+    }
 
     public void updateFriendTradeTrinketListView() {
         friendTradeTrinkets = ApplicationState.getInstance().getFriendsTradeTrinkets();
@@ -117,7 +113,6 @@ public class CounterTradeActivity extends Activity {
     }
 
     /**
-     *
      * @return Button Cancel button
      */
     public Button getCancelButton() {
@@ -138,7 +133,6 @@ public class CounterTradeActivity extends Activity {
     }
 
     /**
-     *
      * @return TextView
      */
     public TextView getFriendNameTextView() {

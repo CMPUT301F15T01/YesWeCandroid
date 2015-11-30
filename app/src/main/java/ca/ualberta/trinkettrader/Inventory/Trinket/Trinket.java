@@ -17,13 +17,9 @@ package ca.ualberta.trinkettrader.Inventory.Trinket;
 import android.location.Location;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Observer;
-import java.util.Set;
 
 import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture;
-import ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.PictureDirectoryManager;
-import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 /**
  * Class for describing one kind of trinket that a user has.  A trinket is either public or private
@@ -103,7 +99,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      * Returns the geographic location of approximately where the Trinket is currently located.  This
      * can inform other users of the app if it is feasible for them to trade for this Trinket, or if
      * it would be too far away to easily complete the trade.  The Location is optional and may not be set.
-     *
+     * <p/>
      * This method is invoked to populate the Location field in the {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}
      * when a Trinket is being edited.
      *
@@ -119,7 +115,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      * can inform other users of the app if it is feasible for them to trade for this Trinket, or if
      * it would be too far away to easily complete the trade.  The Location is optional and does
      * not need to be set.
-     *
+     * <p/>
      * This method is invoked when the user sets or changes a Trinket's location in the
      * {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}.
      *
@@ -190,7 +186,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      * is set by the user.  For example, a user could set the description of a "Red Bracelet" Trinket as
      * "A deep crimson red bracelet.  The bracelet is made of bakelite and is rather heavy.  It was bequeathed to
      * me by my great-grandmother on her deathbed.  May be cursed."  The description is an optional field and may be left blank.
-     *
+     * <p/>
      * This method is invoked to populate the Description field in the {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}
      * when a Trinket is being edited.
      *
@@ -206,7 +202,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      * set the description of a "Red Bracelet" Trinket as "A deep crimson red bracelet.  The
      * bracelet is made of bakelite and is rather heavy.  It was bequeathed to me by my great-grandmother
      * on her deathbed.  May be cursed."
-     *
+     * <p/>
      * There is no limit to the description's length.  The description is an optional field and can be left blank.
      * This method is invoked when the user sets or changes a Trinket's description in the
      * {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}.
@@ -221,7 +217,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      * Returns trinket's name.  The name is set by the user to identify the trinket.  The Trinket' name
      * can be any text the user wishes, but should ideally be a concise summary of what the trinket is.
      * For example, a silver tiara with no jewels on it could be named "Plain Silver Tiara".
-     *
+     * <p/>
      * This method is invoked to populate the Name field in the {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}
      * when a Trinket is being edited.
      *
@@ -237,7 +233,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      * can be any text the user wishes, but should ideally be a concise summary of what the trinket is.
      * For example, a silver tiara with no jewels on it could be named "Plain Silver Tiara".  There is
      * no limit to the name's length.
-     *
+     * <p/>
      * This method is invoked when the user sets or changes a Trinket's name in the
      * {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}.
      *
@@ -253,7 +249,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      * Trinket's owner in order to sow other users what the Trinket actually looks like.  The picture can
      * either be taken with the phone's camera or selected from the phone's gallery.  Adding photos is
      * optional, so there may be no photos attached to a Trinket.
-     *
+     * <p/>
      * This method is invoked to populate the photos display in the {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}
      * when a Trinket is being edited.
      *
@@ -271,7 +267,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      * Pictures are added to the Trinket by the Trinket's owner in order to sow other users what the Trinket
      * actually looks like.  The picture can either be taken with the phone's camera or selected from
      * the phone's gallery.
-     *
+     * <p/>
      * This method is invoked in the {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}
      * when a photo is attached or deleted from the Trinket being added or edited.
      *
@@ -286,7 +282,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      * "good", "average" or "poor".  The quality is determined and set by the user in the
      * {@link AddOrEditTrinketActivity AddOrEditTrinketActivity} with an Android Spinner.  The values for
      * this spinner are stored in the arrays.xml resource.
-     *
+     * <p/>
      * This method is invoked to populate the Quality field in the {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}
      * when a Trinket is being edited.
      *
@@ -300,9 +296,9 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
     /**
      * Sets trinket's quality.  The trinket's quality is represented by a string and can be either
      * "good", "average" or "poor".  The quality of the Trinket is determined and set by the user
-     *  using a spinner in the AddOrEditTrinketActivity with an Android Spinner.  The values for
+     * using a spinner in the AddOrEditTrinketActivity with an Android Spinner.  The values for
      * this spinner are stored in the arrays.xml resource.
-     *
+     * <p/>
      * This method is invoked when the user sets or changes a Trinket's quality in the
      * {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}.
      *
@@ -320,7 +316,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      * "Great Imperial Crown" and so they would leave the quantity of this Trinket as "1", but they may have
      * 5 identical "Bright Pink Plastic Bangle"s, in which case they would list the quantity of this item
      * as "5".
-     *
+     * <p/>
      * This method is invoked to populate the Quantity field in the {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}
      * when a Trinket is being edited.
      *
@@ -337,7 +333,7 @@ public class Trinket implements ca.ualberta.trinkettrader.Observable {
      * For example, a user may own only one "Great Imperial Crown" and so they would leave the quantity
      * of this Trinket as "1", but they may have 5 identical "Bright Pink Plastic Bangle"s, in which
      * case they would list the quantity of this item as "5".
-     *
+     * <p/>
      * This method is invoked when the user sets or changes a Trinket's quantity in the
      * {@link AddOrEditTrinketActivity AddOrEditTrinketActivity}.
      *

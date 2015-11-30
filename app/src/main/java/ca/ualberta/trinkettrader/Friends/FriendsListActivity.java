@@ -16,7 +16,6 @@ package ca.ualberta.trinkettrader.Friends;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,7 +25,6 @@ import android.widget.ListView;
 import java.util.Observable;
 import java.util.Observer;
 
-import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
@@ -51,7 +49,6 @@ public class FriendsListActivity extends Activity implements Observer {
     private Button viewTrackedFriendsButton;
 
 
-
     private Button allInventoriesButton;
 
     @Override
@@ -65,7 +62,7 @@ public class FriendsListActivity extends Activity implements Observer {
         userFriendList = LoggedInUser.getInstance().getFriendsList();
         controller = new FriendsListController(this);
         controller.setFriendsListViewItemOnClick();
-        allInventoriesButton = (Button)findViewById(R.id.search_all_inventories);
+        allInventoriesButton = (Button) findViewById(R.id.search_all_inventories);
         allInventoriesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,14 +84,14 @@ public class FriendsListActivity extends Activity implements Observer {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         updateFriendsListView();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         updateFriendsListView();
     }
 
@@ -162,6 +159,7 @@ public class FriendsListActivity extends Activity implements Observer {
     public void update(Observable observable, Object data) {
 
     }
+
     public Button getAllInventoriesButton() {
         return allInventoriesButton;
     }

@@ -15,26 +15,19 @@
 package ca.ualberta.trinkettrader.Trades;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
-import ca.ualberta.trinkettrader.User.User;
 
 
 /**
@@ -86,6 +79,7 @@ public class TradesActivity extends Activity implements Observer {
      * Directs user to PastTradesActivity when Past Trades button
      * is clicked.
      * <p/>
+     *
      * @param view View object used to change activities
      */
     public void openPastTrades(View view) {
@@ -102,6 +96,7 @@ public class TradesActivity extends Activity implements Observer {
      * allows a user to navigate to the PastTradesActivity where
      * they can view their past (inactive) trades.
      * <p/>
+     *
      * @return Button Links to page which displays list of user's past(inactive) trades
      */
     public Button getPastTradesButton() {
@@ -113,6 +108,7 @@ public class TradesActivity extends Activity implements Observer {
      * button allows a user to navigate to the CreateTradeActivity
      * where they can create a trade offer to send to another user.
      * <p/>
+     *
      * @return Button Create Trade button
      */
     public Button getCreateTradeButton() {
@@ -123,15 +119,19 @@ public class TradesActivity extends Activity implements Observer {
      * Returns currentTradesListView.  This method is used by the ActiveTradesController
      * to get the clicked trade on the screen.
      * <p/>
+     *
      * @return ListView ListView of user's current trades
      */
-    public ListView getCurrentTradesListView() { return currentTradesListView; }
+    public ListView getCurrentTradesListView() {
+        return currentTradesListView;
+    }
 
     /**
      * This method is called if the specified {@code Observable} object's
      * {@code notifyObservers} method is called (because the {@code Observable}
      * object has been updated.
      * <p/>
+     *
      * @param observable the {@link Observable} object.
      * @param data       the data passed to {@link Observable#notifyObservers(Object)}.
      */

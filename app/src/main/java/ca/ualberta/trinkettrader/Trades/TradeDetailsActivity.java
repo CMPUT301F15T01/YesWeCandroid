@@ -16,7 +16,6 @@ package ca.ualberta.trinkettrader.Trades;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,10 +24,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.ApplicationState;
-import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
-import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 
 /**
@@ -68,17 +65,16 @@ public class TradeDetailsActivity extends Activity implements Observer {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        updateTradeDetailsListView();
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
         updateTradeDetailsListView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateTradeDetailsListView();
+    }
 
     public void updateTradeDetailsListView() {
         yourTrinketAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_list_item_1, trade.getOfferedTrinkets());
@@ -88,8 +84,6 @@ public class TradeDetailsActivity extends Activity implements Observer {
     }
 
 
-
-
     public TextView getFriendInTradeTextView() {
         return friendInTradeTextView;
     }
@@ -97,8 +91,6 @@ public class TradeDetailsActivity extends Activity implements Observer {
     public TextView getStatusOfTradeTextView() {
         return statusOfTradeTextView;
     }
-
-
 
 
     /**
