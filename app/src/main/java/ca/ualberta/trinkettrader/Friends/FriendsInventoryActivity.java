@@ -40,6 +40,7 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
  */
 public class FriendsInventoryActivity extends Activity {
 
+
     private ArrayAdapter<Trinket> trinketArrayAdapter;
     private Inventory inventory;
     private Inventory completeInventory;
@@ -80,6 +81,12 @@ public class FriendsInventoryActivity extends Activity {
         autocompleteAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_dropdown_item_1line, completeInventory);
 
         filterButton = (Button)findViewById(R.id.friendsFilterButtton);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.friendsFilterButtonOnClick();
+            }
+        });
         categorySpinner = (Spinner)findViewById(R.id.friendsCategorySpinner);
 
     }
@@ -128,6 +135,8 @@ public class FriendsInventoryActivity extends Activity {
     public Button getFilterButton() {
         return filterButton;
     }
-
+    public ArrayAdapter<Trinket> getTrinketArrayAdapter() {
+        return trinketArrayAdapter;
+    }
 
 }
