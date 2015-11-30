@@ -56,6 +56,7 @@ public class EditUserProfileController {
             EditText postalCode = (EditText) activity.findViewById(R.id.edit_postal_code);
 
             Boolean photoDownloadEnabled = photoDownload.isChecked();
+            Log.i("photoDownloadEnabled", photoDownloadEnabled.toString());
             Double _latitude = Double.valueOf(latitude.getText().toString());
             Double _longitude = Double.valueOf(longitude.getText().toString());
             String _address = address.getText().toString();
@@ -80,7 +81,6 @@ public class EditUserProfileController {
 
             LoggedInUser.getInstance().saveInFile(activity.getBaseContext());
             Boolean cnxn = InternetConnection.getInstance().internetConnectionAvailable(activity.getBaseContext());
-            Log.i("cnxn", cnxn.toString());
             if (cnxn) {
                 try {
                     User u = LoggedInUser.getInstance();
