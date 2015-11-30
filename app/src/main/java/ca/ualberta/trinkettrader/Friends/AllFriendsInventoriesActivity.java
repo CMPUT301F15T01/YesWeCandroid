@@ -19,6 +19,9 @@ import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
+/**
+ * Activity to view all the trinkets of all the Friends in the FriendsList.
+ */
 public class AllFriendsInventoriesActivity extends Activity {
 
     private ArrayAdapter<Trinket> trinketArrayAdapter;
@@ -110,10 +113,18 @@ public class AllFriendsInventoriesActivity extends Activity {
         return inventoryItemsListView;
     }
 
+    /**
+     * Returns the view responsible for displaying the collection of Trinkets.
+     * @return ArrayAdapter<Trinket> - Layout responsible for displaying filter-valid trinkets
+     */
     public ArrayAdapter<Trinket> getTrinketArrayAdapter() {
         return trinketArrayAdapter;
     }
 
+    /**
+     * Returns the inventory containing all trinkets of all Friends.
+     * @return Inventory - contains all Trinkets of all Friends. 
+     */
     public Inventory getCompleteInventory() {
         return completeInventory;
     }

@@ -8,7 +8,7 @@ import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 
 /**
- * Created by anju on 29/11/15.
+ * Controller for Activity to view the Inventories of all Friends in FriendsList.
  */
 public class AllFriendsInventoriesController {
 
@@ -18,6 +18,12 @@ public class AllFriendsInventoriesController {
         this.activity = activity;
     }
 
+    /**
+     * Response method when user Clicks Filter Button on Inventories Activity. This method gathers
+     * any filter conditions like text queries, category and distance from current location and
+     * checks all the trinkets on this condition and then updates the ArrayAdapter that displays the
+     * trinkets.
+     */
     public void friendsFilterButtonOnClick(){
         String category = activity.getCategorySpinner().getSelectedItem().toString();
         Integer distanceTo = distanceValue(activity.getLocationSpinner().getSelectedItem().toString());

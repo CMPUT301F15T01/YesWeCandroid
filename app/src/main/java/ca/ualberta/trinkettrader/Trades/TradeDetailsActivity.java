@@ -16,8 +16,10 @@ package ca.ualberta.trinkettrader.Trades;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.Observable;
@@ -42,6 +44,7 @@ public class TradeDetailsActivity extends Activity implements Observer {
     private ListView offeredItemInTradeListView;
     private ListView requestedItemInTradeListView;
     private Trade trade;
+    private RadioButton completedRadioButton;
     private TradeDetailsController controller;
     private ArrayAdapter<Trinket> friendTrinketAdapter;
     private ArrayAdapter<Trinket> yourTrinketAdapter;
@@ -61,6 +64,16 @@ public class TradeDetailsActivity extends Activity implements Observer {
         controller = new TradeDetailsController(this);
         controller.updateTextViews();
         updateTradeDetailsListView();
+
+        completedRadioButton = (RadioButton) findViewById(R.id.tradeCompletedRadioButton);
+
+        if (trade.getStatus().equals("Accepted")) {
+            completedRadioButton.setVisibility(View.VISIBLE);
+        } else if (trade.getStatus().equals("Declined")) {
+            completedRadioButton.setVisibility(View.VISIBLE);
+        } else {
+            completedRadioButton.setVisibility(View.INVISIBLE);
+        }
 
     }
 
@@ -92,6 +105,13 @@ public class TradeDetailsActivity extends Activity implements Observer {
         return statusOfTradeTextView;
     }
 
+    public RadioButton getCompletedRadioButton() {
+        return completedRadioButton;
+    }
+
+    public void tradeCompletedRadioButtonOnClick(View v) {
+        controller.tradeCompletedRadioButtonOnClick();
+    }
 
     /**
      * This method is called if the specified {@code Observable} object's
