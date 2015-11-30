@@ -37,7 +37,6 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/trade/_search";
     private static final String TAG = "Trade";
 
-
     private ArrayList<Observer> observers;
     private Inventory offeredTrinkets;
     private Inventory requestedTrinkets;
@@ -115,7 +114,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     }
 
     /**
-     * Returns TradeManager of receiver of trade (user who receives trade offer).
+     * Returns {@link TradeManager TradeManager} of receiver of trade (user who receives trade offer).
      *
      * @return TradeManager - TradeManager of user who was offered the trade
      */
@@ -136,7 +135,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     }
 
     /**
-     * Returns TradeManager of sender of trade (user who proposes trade offer).
+     * Returns {@link TradeManager TradeManager} of sender of trade (user who proposes trade offer).
      *
      * @return TradeManager - TradeManager of user who instantiated trade
      */
@@ -145,18 +144,20 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     }
 
     /**
-     * Returns number of trinkets involved in a particular trade.
+     * Returns number of trinkets involved in a particular trade.  Depending on who this method is called on
+     * it will return the number of trinkets that either the sender or receiver has involved in the trade.
      *
-     * @return Integer Number of offered and requested trinkets in trade
+     * @return Integer Number of offered or requested trinkets in trade
      */
     public Integer getNumberOfTrinkets() {
         return numberOfTrinkets;
     }
 
     /**
-     * Sets number of trinkets in a particular trade.
+     * Sets number of trinkets in a particular trade.  Depending on who this method is called on
+     * it will set the number of trinkets that either the sender or receiver has involved in the trade.
      *
-     * @param numberOfTrinkets Number of offered and requested trinkets in a trade
+     * @param numberOfTrinkets Number of offered or requested trinkets in a trade
      */
     public void setNumberOfTrinkets(Integer numberOfTrinkets) {
         this.numberOfTrinkets = numberOfTrinkets;
