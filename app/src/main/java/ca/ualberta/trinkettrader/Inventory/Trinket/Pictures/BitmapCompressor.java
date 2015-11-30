@@ -48,7 +48,7 @@ public class BitmapCompressor {
      * bitmap will be 65535 bytes or less in size.  By specification, a picture must be less than 65536 bytes for it to be
      * attached to a trinket in the app.
      *
-     * @param bitmap - bitmap to compress and store
+     * @param bitmap  - bitmap to compress and store
      * @param outfile -  file to place resulting compressed bitmap in
      * @throws IOException
      */
