@@ -36,6 +36,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Observer;
 
@@ -321,7 +322,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * @param <T extends ElasticStorable> - result result of searchOnNetwork
      */
     @Override
-    public <T extends ElasticStorable> void onSearchResult(T result) {
+    public <T extends ElasticStorable> void onSearchResult(Collection<T> result) {
 
     }
 

@@ -14,8 +14,11 @@
 
 package ca.ualberta.trinkettrader.Trades;
 
+import org.apache.http.NameValuePair;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
@@ -240,8 +243,18 @@ public class TradeManager extends ElasticStorable {
      * @param result result of searchOnNetwork
      */
     @Override
-    public <T extends ElasticStorable> void onSearchResult(T result) {
-
+    public <T extends ElasticStorable> void onSearchResult(Collection<T> result) {
     }
 
+    /**
+     * Searches for ElasticStorable objects on the network matching the attribute and attribute
+     * value pairs. Calls onSearchResult with the results when the search completes.
+     *
+     * @param postParameters pairs of attributes to use when searching
+     * @param type
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
+    }
 }

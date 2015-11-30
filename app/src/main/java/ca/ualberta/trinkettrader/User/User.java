@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -30,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.ApplicationState;
@@ -283,15 +285,7 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
      * @param result result of searchOnNetwork
      */
     @Override
-    public <T extends ElasticStorable> void onSearchResult(T result) {
-        Log.i("RESULT", result.toString());
-        User returned = (User) result;
-        this.setProfile(returned.getProfile());
-        this.setTrackedFriends(returned.getTrackedFriendsList());
-        this.setFriendsList(returned.getFriendsList());
-        this.setInventory(returned.getInventory());
-        this.setNotificationManager(returned.getNotificationManager());
-        this.setTradeManager(returned.getTradeManager());
+    public <T extends ElasticStorable> void onSearchResult(Collection<T> result) {
     }
 
     /**
@@ -421,5 +415,17 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
 
     public void setEmail(String email) {
         this.getProfile().setEmail(email);
+    }
+
+    /**
+     * Searches for ElasticStorable objects on the network matching the attribute and attribute
+     * value pairs. Calls onSearchResult with the results when the search completes.
+     *
+     * @param postParameters pairs of attributes to use when searching
+     * @param type
+     * @throws IOException
+     */
+    @Override
+    public <T extends ElasticStorable> void searchOnNetwork(ArrayList<NameValuePair> postParameters, Class<T> type) throws IOException {
     }
 }
