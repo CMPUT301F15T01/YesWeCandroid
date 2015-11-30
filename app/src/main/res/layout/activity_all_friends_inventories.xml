@@ -12,22 +12,11 @@
     tools:context="ca.ualberta.trinkettrader.Friends.FriendsInventoryActivity">
 
 
-    <AutoCompleteTextView
-        android:id="@+id/search_box_all_friends"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionSearch"
-        android:inputType="textAutoComplete|textAutoCorrect"
-        android:layout_marginTop="10dp">
-
-        <requestFocus />
-    </AutoCompleteTextView>
-
     <Spinner
         android:id="@+id/allFriendsAccessibilitySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="65dp"
         android:entries="@array/spinner_categories"
         android:prompt="@string/activity_display_inventory_category_prompt"/>
 
