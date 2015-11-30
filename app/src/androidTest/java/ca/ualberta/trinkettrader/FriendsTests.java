@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
+import java.io.IOException;
+
 import ca.ualberta.trinkettrader.Friends.FriendsListActivity;
 import ca.ualberta.trinkettrader.Friends.FriendsProfileActivity;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsListActivity;
@@ -81,6 +83,14 @@ public class FriendsTests extends ActivityInstrumentationTestCase2<LoginActivity
             }
         });
 
+        //try {
+        //    LoggedInUser.getInstance().deleteFromNetwork();
+        //    LoggedInUser.getInstance().saveToNetwork();
+        //}
+        //catch (IOException e) {
+//
+//        }
+
         // Test that the HomePageActivity started correctly after the clicking the login button.
         homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
         getInstrumentation().waitForIdleSync();
@@ -111,6 +121,13 @@ public class FriendsTests extends ActivityInstrumentationTestCase2<LoginActivity
         viewTrackedFriendsButton = null;
         trackFriendButton = null;
         findFriendTextField = null;
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        }
+        catch (IOException e) {
+
+        }
     }
 
 
@@ -140,12 +157,13 @@ public class FriendsTests extends ActivityInstrumentationTestCase2<LoginActivity
         findFriendTextField = friendsListActivity.getFindFriendTextField();
         friendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
-                findFriendTextField.performClick();
+        //        findFriendTextField.performClick();
                 findFriendTextField.setText("test@gmail.com");
             }
         });
         getInstrumentation().waitForIdleSync();
         assertTrue(findFriendTextField.getText().toString().equals("test@gmail.com"));
+
 
         // Click the Find Friend button to add the friend to the friend list.
         // Test that the friend was successfully added.
@@ -153,6 +171,7 @@ public class FriendsTests extends ActivityInstrumentationTestCase2<LoginActivity
         friendsListActivity.runOnUiThread(new Runnable() {
             public void run() {
                 findFriendsButton.performClick();
+                int i = 0;
             }
         });
         getInstrumentation().waitForIdleSync();
