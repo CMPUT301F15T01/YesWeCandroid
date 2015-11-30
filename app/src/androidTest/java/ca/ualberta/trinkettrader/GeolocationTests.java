@@ -368,4 +368,316 @@ public class GeolocationTests extends ActivityInstrumentationTestCase2 {
         homePageActivity.finish();
         loginActivity.finish();
     }
+
+    public void testEditGeolocationOfTrinket() {
+        // Get the current activity
+        LoginActivity loginActivity = (LoginActivity) getActivity();
+
+        /******** HomePageActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor homePageActivityMonitor =
+                getInstrumentation().addMonitor(HomePageActivity.class.getName(),
+                        null, false);
+
+        // Start InventoryActivity
+        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
+        loginActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                emailTextView.setText(test_email);
+            }
+        });
+        final Button homePageButton = loginActivity.getLoginButton();
+        loginActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                homePageButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        HomePageActivity homePageActivity = (HomePageActivity)
+                homePageActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", homePageActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, homePageActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                HomePageActivity.class, homePageActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        // Delete user from network
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /******** UserProfileActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor displayUserProfileActivityMonitor =
+                getInstrumentation().addMonitor(UserProfileActivity.class.getName(),
+                        null, false);
+
+        // Start InventoryActivity
+        final Button profileButton = homePageActivity.getProfileButton();
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                profileButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        UserProfileActivity displayUserProfileActivity = (UserProfileActivity)
+                displayUserProfileActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayUserProfileActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayUserProfileActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                UserProfileActivity.class, displayUserProfileActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayUserProfileActivityMonitor);
+
+        /******** EditUserProfileActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor editProfileActivityMonitor =
+                getInstrumentation().addMonitor(EditUserProfileActivity.class.getName(),
+                        null, false);
+
+        // Start InventoryActivity
+        final Button editUserProfileButton = displayUserProfileActivity.getEditUserProfileButton();
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                editUserProfileButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        EditUserProfileActivity editUserProfileActivity = (EditUserProfileActivity)
+                editProfileActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", editUserProfileActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, editProfileActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                EditUserProfileActivity.class, editUserProfileActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(editProfileActivityMonitor);
+
+        // Set new latitude and longitude
+        final TextView latitude = editUserProfileActivity.getLatitude();
+        final TextView longitude = editUserProfileActivity.getLongitude();
+        editUserProfileActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                latitude.setText("55.5555");
+                longitude.setText("25.2525");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Start InventoryActivity
+        final Button saveButton = editUserProfileActivity.getSaveButton();
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        /******** InventoryActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor displayInventoryActivityMonitor =
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                        null, false);
+
+        // Start InventoryActivity
+        final Button inventoryButton = homePageActivity.getInventoryButton();
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                inventoryButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        InventoryActivity displayInventoryActivity = (InventoryActivity)
+                displayInventoryActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", displayInventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, displayInventoryActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                InventoryActivity.class, displayInventoryActivity.getClass());
+
+        /******** AddOrEditTrinketActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor addOrEditItemActivityMonitor =
+                getInstrumentation().addMonitor(AddOrEditTrinketActivity.class.getName(),
+                        null, false);
+
+        // Start InventoryActivity
+        final Button addItemButton = displayInventoryActivity.getAddItemButton();
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                addItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        final AddOrEditTrinketActivity addOrEditItemActivity = (AddOrEditTrinketActivity)
+                addOrEditItemActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", addOrEditItemActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, addOrEditItemActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                AddOrEditTrinketActivity.class, addOrEditItemActivity.getClass());
+
+        // Edit item name
+        final EditText editName = addOrEditItemActivity.getTrinketName();
+        final String itemName = "Test";
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                editName.setText(itemName);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        /******** InventoryActivity ********/
+        // Save the item
+        final Button saveItemButton = addOrEditItemActivity.getSaveButton();
+        addOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        InventoryActivity inventoryActivity = (InventoryActivity)
+                displayInventoryActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", inventoryActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                2, displayInventoryActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                InventoryActivity.class, inventoryActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(displayInventoryActivityMonitor);
+
+        /******** TrinketDetailsActivity ********/
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor trinketDetailsActivityMonitor =
+                getInstrumentation().addMonitor(TrinketDetailsActivity.class.getName(),
+                        null, false);
+
+        // Save the item
+        final ListView listView = inventoryActivity.getInventoryItemsList();
+        inventoryActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                assertNotSame(listView.getChildCount(), 0);
+                listView.performItemClick(listView, 1, 0);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        TrinketDetailsActivity trinketDetailsActivity = (TrinketDetailsActivity)
+                trinketDetailsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", trinketDetailsActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                1, trinketDetailsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                TrinketDetailsActivity.class, trinketDetailsActivity.getClass());
+
+        /******** AddOrEditTrinketActivity ********/
+        // Start InventoryActivity
+        final Button editButton = trinketDetailsActivity.getEditButton();
+        homePageActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                editButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        final AddOrEditTrinketActivity secondAddOrEditItemActivity = (AddOrEditTrinketActivity)
+                addOrEditItemActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", secondAddOrEditItemActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                2, addOrEditItemActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                AddOrEditTrinketActivity.class, secondAddOrEditItemActivity.getClass());
+
+        // Change latitude and longitude
+        secondAddOrEditItemActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                secondAddOrEditItemActivity.getTrinketLatitude().setText("25.2525");
+                secondAddOrEditItemActivity.getTrinketLongitude().setText("55.5555");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Save the item
+        final Button secondSaveItemButton = secondAddOrEditItemActivity.getSaveButton();
+        secondAddOrEditItemActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                secondSaveItemButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        /******** TrinketDetailsActivity ********/
+        // Save the item
+        inventoryActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                assertNotSame(listView.getChildCount(), 0);
+                listView.performItemClick(listView, 1, 0);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity is started
+        TrinketDetailsActivity secondTrinketDetailsActivity = (TrinketDetailsActivity)
+                trinketDetailsActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNotNull("ReceiverActivity is null", secondTrinketDetailsActivity);
+        assertEquals("Monitor for ReceiverActivity has not been called",
+                2, trinketDetailsActivityMonitor.getHits());
+        assertEquals("Activity is of wrong type",
+                TrinketDetailsActivity.class, secondTrinketDetailsActivity.getClass());
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(trinketDetailsActivityMonitor);
+
+        // Ensure that the default latitude and longitude are present
+        assertTrue(secondTrinketDetailsActivity.getLatitude().getText().toString().equals("25.2525"));
+        assertTrue(secondTrinketDetailsActivity.getLongitude().getText().toString().equals("55.5555"));
+
+        // Delete user from network
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Close activities
+        addOrEditItemActivity.finish();
+        displayInventoryActivity.finish();
+        displayUserProfileActivity.finish();
+        editUserProfileActivity.finish();
+        homePageActivity.finish();
+        inventoryActivity.finish();
+        loginActivity.finish();
+        secondAddOrEditItemActivity.finish();
+        secondTrinketDetailsActivity.finish();
+        trinketDetailsActivity.finish();
+    }
 }
