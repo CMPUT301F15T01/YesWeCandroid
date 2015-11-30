@@ -65,6 +65,16 @@ public class TradesActivity extends Activity implements Observer {
         currentTradesListView = (ListView) findViewById(R.id.currentTradesList);
         pastTradesButton = (Button) findViewById(R.id.past_trades_button);
         createTradeButton = (Button) findViewById(R.id.create_trades_button);
+
+        // TODO testing - will be deleted
+        // TODO test past trades list as well
+        User user = new User();
+        user.getTradeManager().setUsername("peeko@bird.ca"); // must call this to set username in tradeManager for display purposes
+        Inventory inv1 = new Inventory();
+        Inventory inv2 = new Inventory();
+        Trade trade = new Trade(inv1, LoggedInUser.getInstance().getTradeManager(),inv2, user.getTradeManager() );
+        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().addTrade(trade);
+        //
         userCurrentTradesList = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades();
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();

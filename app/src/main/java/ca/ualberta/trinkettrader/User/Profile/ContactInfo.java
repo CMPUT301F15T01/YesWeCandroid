@@ -107,7 +107,7 @@ public class ContactInfo implements ca.ualberta.trinkettrader.Observable {
      *
      * This method is used to populate fields in the {@link EditUserProfileActivity EditUserProfileActivity}.
      *
-     * @return String
+     * @return String - the user's name.  Optional, so may be an empty string
      */
     public String getName() {
         return name;
