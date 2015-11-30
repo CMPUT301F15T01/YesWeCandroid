@@ -355,7 +355,6 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      */
     @Override
     public <T extends ElasticStorable> void onGetResult(T result) {
-
     }
 
     /**

@@ -15,6 +15,7 @@
 package ca.ualberta.trinkettrader.User.Profile;
 
 import android.location.Location;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Observer;
@@ -38,7 +39,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * UserProfile Constructor for generating new attribute classes
      */
     public UserProfile() {
-        this.arePhotosDownloadable = Boolean.FALSE;
+        this.arePhotosDownloadable = Boolean.TRUE;
         this.contactInfo = new ContactInfo();
         this.defaultLocation = new Location("this");
         this.email = "";
