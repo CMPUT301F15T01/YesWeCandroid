@@ -496,7 +496,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         borrowerInventory.add(necklace);
         ownerInventory.add(ring);
 
-        // trade with self
+        // hardcoded trades - with alternating borrowers and owners
         final Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, friend.getActualFriend().getTradeManager());
         //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
         currentUser.getTradeManager().getTradeArchiver().addTrade(trade);
@@ -621,37 +621,6 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     *  Use Case: Owner/Borrower can browse all past trades involving them as the borrower or owner
     * */
     public void testViewPastTrades() {
-        /****Hardcode in trades to click****/
-        LoggedInUser currentUser = LoggedInUser.getInstance();
-
-        // create inventories of trinkets to trade
-        Inventory borrowerInventory = new Inventory();
-        Inventory ownerInventory = new Inventory();
-        Inventory secondInventory = new Inventory();
-
-        Trinket necklace = new Trinket();
-        necklace.setName("Amulet of Fire");
-        Trinket ring = new Trinket();
-        ring.setName("Ring of Swirling Mist");
-        borrowerInventory.add(necklace);
-        ownerInventory.add(ring);
-
-        // trade with self
-        final Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, currentUser.getTradeManager());
-        //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
-        currentUser.getTradeManager().getTradeArchiver().archiveTrade(trade, "declined");
-        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasPastTrade(trade));
-
-        // make one more trade
-        Trinket bracelet = new Trinket();
-        bracelet.setName("Bronze bracer");
-        secondInventory.add(bracelet);
-
-        final Trade trade1 = new Trade(borrowerInventory, currentUser.getTradeManager(), secondInventory, currentUser.getTradeManager());
-        //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
-        currentUser.getTradeManager().getTradeArchiver().archiveTrade(trade1, "accepted");
-        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasPastTrade(trade1));
-
 
         // Get the current activity
         LoginActivity loginActivity = (LoginActivity) getActivity();
@@ -661,7 +630,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
         Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
 
         // actions which lead to next activity
-        final String test_email = loginActivity.getResources().getString(R.string.test_email);
+        final String test_email = "trex@iceage.ca";
         final AutoCompleteTextView emailTextView = loginActivity.getEmailTextView();
         loginActivity.runOnUiThread(new Runnable() {
             @Override
@@ -676,6 +645,43 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
+
+        /****Hardcode in trades to click****/
+        LoggedInUser currentUser = LoggedInUser.getInstance();
+        currentUser.getTradeManager().setUsername("trex@iceage.ca");
+
+        Friend friend = new Friend("burger@ihop.ca");
+        friend.getActualFriend().getTradeManager().setUsername("burger@ihop.ca");
+        // create inventories of trinkets to trade
+        Inventory borrowerInventory = new Inventory();
+        Inventory ownerInventory = new Inventory();
+        Inventory secondInventory = new Inventory();
+
+        Trinket necklace = new Trinket();
+        necklace.setName("Amulet of Fire");
+        Trinket ring = new Trinket();
+        ring.setName("Ring of Swirling Mist");
+        borrowerInventory.add(necklace);
+        ownerInventory.add(ring);
+
+        // hardcoded trades - with alternating borrowers and owners
+        final Trade trade = new Trade(borrowerInventory, currentUser.getTradeManager(), ownerInventory, friend.getActualFriend().getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        currentUser.getTradeManager().getTradeArchiver().archiveTrade(trade, "declined");
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasPastTrade(trade));
+
+        // make one more trade
+        Trinket bracelet = new Trinket();
+        bracelet.setName("Bronze bracer");
+        secondInventory.add(bracelet);
+
+        // swapped borrower and receiver
+        final Trade trade1 = new Trade(borrowerInventory, friend.getActualFriend().getTradeManager(), secondInventory, currentUser.getTradeManager());
+        //currentUser.getTradeManager().proposeTrade(trade1); //TODO not implemented. just hardcoding into user's currentTrades ArrayList
+        currentUser.getTradeManager().getTradeArchiver().archiveTrade(trade1, "declined");
+        assertTrue(currentUser.getTradeManager().getTradeArchiver().hasPastTrade(trade1));
+
+
 
         // Validate that ReceiverActivity is started
         HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
