@@ -1,6 +1,8 @@
 package ca.ualberta.trinkettrader.Trades;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
@@ -20,6 +22,23 @@ public class TradeReceivedController {
         Trade clickedTrade = ApplicationState.getInstance().getClickedTrade();
         clickedTrade.setStatus("Accepted");
         // TODO push trade back to server ... maybe re-propose the trade
+
+
+        String senderUsername = clickedTrade.getReceiver().getUsername();
+        String receiverUsername = clickedTrade.getSender().getUsername();
+        String emailList[] = { senderUsername,receiverUsername };
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New Trade!!");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, clickedTrade.toEmailString());
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, emailList);
+        emailIntent.putExtra(Intent.EXTRA_CC, emailList);
+        emailIntent.setData(Uri.parse("mailto:" + senderUsername));
+        emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(emailIntent);
+
+
         Intent intent = new Intent(activity, TradesActivity.class);
         activity.startActivity(intent);
     }
