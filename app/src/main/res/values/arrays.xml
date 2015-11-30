@@ -18,11 +18,4 @@
         <item>Good</item>
         <item>Poor</item>
     </string-array>
-
-    <string-array name="spinner_location">
-        <item>5 km</item>
-        <item>10 km</item>
-        <item>20 km</item>
-        <item>50 km</item>
-    </string-array>
 </resources>
