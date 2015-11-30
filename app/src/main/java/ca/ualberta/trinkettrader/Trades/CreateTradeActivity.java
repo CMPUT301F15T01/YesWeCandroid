@@ -51,6 +51,8 @@ public class CreateTradeActivity extends Activity {
     private Inventory friendTradeTrinkets;
     private Inventory yourTradeTrinkets;
     private ListView friendTradeTrinketListView;
+
+
     private ListView yourTradeTrinketListView;
     private ArrayAdapter<Trinket> friendTrinketAdapter;
     private ArrayAdapter<Trinket> yourTrinketAdapter;
@@ -72,6 +74,8 @@ public class CreateTradeActivity extends Activity {
         controller = new CreateTradeController(this);
         controller.setFriendSpinnerItemOnClick();
         controller.updateClickedFriend();
+        controller.setYourTradeTrinketListViewItemOnClick();
+        controller.setFriendTradeTrinketListViewItemOnClick();
         updateFriendsSpinner();
 
     }
@@ -179,6 +183,10 @@ public class CreateTradeActivity extends Activity {
      */
     public ListView getFriendTradeTrinketListView() {
         return friendTradeTrinketListView;
+    }
+
+    public ListView getYourTradeTrinketListView() {
+        return yourTradeTrinketListView;
     }
 
     /**
