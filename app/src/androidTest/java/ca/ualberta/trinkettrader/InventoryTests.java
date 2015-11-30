@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -35,6 +36,7 @@ import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.AddOrEditTrinketActivity;
 import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.Inventory.Trinket.TrinketDetailsActivity;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
@@ -86,6 +88,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
 
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
@@ -209,12 +218,18 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
             assertEquals(trinketIterator.next().getName(), "test");
         }
 
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
         loginActivity.finish();
         addItemtoInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
         homePageActivity.finish();
         displayInventoryActivity.getInventory().clear();
         displayInventoryActivity.finish();
+
     }
 
     // Test if a user has an inventory
@@ -258,6 +273,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
 
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
+
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor invActMon =
@@ -286,6 +308,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(invActMon);
 
         assertNotNull(inventoryActivity.getInventory());
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
 
         loginActivity.finish();
         homePageActivity.finish();
@@ -332,6 +360,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
 
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
@@ -457,6 +492,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         assertTrue(inventoryActivity.getInventory().size() == 1);
 
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
+
         loginActivity.finish();
         addItemtoInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
@@ -504,6 +545,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
 
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
@@ -621,6 +669,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         assertFalse(displayInventoryActivityAgain.getInventory().isEmpty());
 
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
+
         loginActivity.finish();
         addItemtoInventoryActivity.finish();
         homePageActivity.finish();
@@ -668,6 +722,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
 
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
@@ -791,6 +852,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
             assertEquals(trinketIterator.next().getName(), "test");
         }
 
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
+
         loginActivity.finish();
         addItemtoInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
@@ -838,6 +905,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
 
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
@@ -1017,6 +1091,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         list = displayInventoryActivityAgain.getInventoryItemsList();
         assertNull(list.getChildAt(0));
 
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
+
         loginActivity.finish();
         addItemtoInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
@@ -1065,6 +1145,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
 
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
@@ -1274,6 +1361,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
             assertEquals(trinketIterator.next().getTrinketAccessibility(), "private");
         }
 
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
+
         loginActivity.finish();
         addItemtoInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
@@ -1324,6 +1417,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
 
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
@@ -1533,6 +1633,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
             assertEquals(trinketIterator.next().getName(), "Test2");
         }
 
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
+
         loginActivity.finish();
         addItemtoInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
@@ -1582,6 +1688,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
 
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
@@ -1791,6 +1904,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
             assertEquals(trinketIterator.next().getQuantity(), "4");
         }
 
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
+
         loginActivity.finish();
         addItemtoInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
@@ -1840,6 +1959,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
 
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
@@ -2049,6 +2175,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
             assertEquals(trinketIterator.next().getQuality(), "Poor");
         }
 
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
+
         loginActivity.finish();
         addItemtoInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
@@ -2098,6 +2230,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
 
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
@@ -2306,6 +2445,11 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
         while (trinketIterator.hasNext()) {
             assertEquals(trinketIterator.next().getDescription(), "new desc");
         }
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
 
         loginActivity.finish();
         addItemtoInventoryActivity.finish();
@@ -2357,6 +2501,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
 
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
@@ -2566,6 +2717,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
             assertEquals(trinketIterator.next().getCategory(), "Necklace");
         }
 
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
+
         loginActivity.finish();
         addItemtoInventoryActivity.finish();
         displayInventoryActivityAgain.finish();
@@ -2618,6 +2775,13 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(homePageActivityMonitor);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+            LoggedInUser.getInstance().saveToNetwork();
+        } catch (IOException e) {
+
+        }
 
         /******** InventoryActivity ********/
         // Set up an ActivityMonitor
@@ -2727,6 +2891,12 @@ public class InventoryTests extends ActivityInstrumentationTestCase2 {
 
         // 5 or less clicks
         assertTrue(clickCount <= 5);
+
+        try {
+            LoggedInUser.getInstance().deleteFromNetwork();
+        } catch (IOException e) {
+
+        }
 
         loginActivity.finish();
         addItemtoInventoryActivity.finish();

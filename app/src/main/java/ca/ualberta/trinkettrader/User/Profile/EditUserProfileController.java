@@ -56,8 +56,8 @@ public class EditUserProfileController {
                 _latitude = 0.0;
             }
             Double _longitude;
-            if (latitude.getText().toString().length() > 0) {
-                _longitude = Double.valueOf(latitude.getText().toString());
+            if (longitude.getText().toString().length() > 0) {
+                _longitude = Double.valueOf(longitude.getText().toString());
             } else {
                 _longitude = 0.0;
             }
