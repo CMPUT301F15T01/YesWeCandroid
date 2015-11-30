@@ -26,8 +26,8 @@ public class TradeReceivedController {
 
         String senderUsername = clickedTrade.getReceiver().getUsername();
         String receiverUsername = clickedTrade.getSender().getUsername();
-        String emailList[] = { senderUsername,receiverUsername };
 
+        // MKJParekh; http://stackoverflow.com/questions/9097080/intent-extra-email-not-populating-the-to-field; 2015-11-29
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "New Trade!!");
@@ -36,7 +36,6 @@ public class TradeReceivedController {
         emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(emailIntent);
-
 
         Intent intent = new Intent(activity, TradesActivity.class);
         activity.startActivity(intent);
