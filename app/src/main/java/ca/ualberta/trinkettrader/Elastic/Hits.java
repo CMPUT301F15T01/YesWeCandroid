@@ -17,42 +17,18 @@ package ca.ualberta.trinkettrader.Elastic;
 import java.util.List;
 
 /**
- * Taken from AndroidElasticSearch //TODO: add github link
+ * Taken from AndroidElasticSearch 
  */
 
 
 public class Hits<T> {
+    //joshua2ua; https://github.com/joshua2ua/AndroidElasticSearch; 2015-11-30
     private int total;
     private float max_score;
     private List<SearchHit<T>> hits;
 
     public Hits() {
     }
-/*
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public float getMax_score() {
-        return max_score;
-    }
-
-    public void setMax_score(float max_score) {
-        this.max_score = max_score;
-    }
-*/
-    public List<SearchHit<T>> getHits() {
-        return hits;
-    }
-/*
-    public void setHits(List<SearchHit<T>> hits) {
-        this.hits = hits;
-    }
-*/
 
     /**
      * Returns the number of hits (results) that a search query returns from elastic search
@@ -61,6 +37,16 @@ public class Hits<T> {
      */
     public Integer numHits() {
         return hits.size();
+    }
+
+    /**
+     * Returns a list of {@link ca.ualberta.trinkettrader.Elastic.SearchHit SearchHit} objects that
+     * contain the data object that the system intended to store on the server, as well as some search
+     * metric data. This method is used to access the data objects for processing by the system.
+     * @return List<SearchHit<T>>
+     */
+    public List<SearchHit<T>> getHits() {
+        return hits;
     }
 
     @Override

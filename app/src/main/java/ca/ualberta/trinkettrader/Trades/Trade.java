@@ -302,6 +302,24 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         this.isNewOfferedTrade = Boolean.FALSE;
     }
 
+
+    public String getReceiverUsername() {
+        return receiverUsername;
+    }
+
+    public void setReceiverUsername(String receiverUsername) {
+        this.receiverUsername = receiverUsername;
+    }
+
+    public String getSenderUsername() {
+        return senderUsername;
+    }
+
+    public void setSenderUsername(String senderUsername) {
+        this.senderUsername = senderUsername;
+    }
+
+
     @Override
     public String getTag() {
         return TAG;
@@ -395,7 +413,6 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      */
     @Override
     public <T extends ElasticStorable> void onSearchResult(Collection<T> result) {
-
     }
 
     /**

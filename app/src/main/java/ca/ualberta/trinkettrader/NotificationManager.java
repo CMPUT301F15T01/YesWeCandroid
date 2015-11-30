@@ -33,7 +33,7 @@ public class NotificationManager {
 
     private ArrayList<Notification> pendingNotifications = new ArrayList<Notification>();
     private Integer displayNotificationCountOnHomeScreen;
-    private User user;
+    private transient User user;
 
     /**
      * Returns if this user has a notification waiting to be read.  New notifications are displayed

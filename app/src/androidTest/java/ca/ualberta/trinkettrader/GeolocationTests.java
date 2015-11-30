@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import ca.ualberta.trinkettrader.Friends.AllFriendsInventoriesActivity;
 import ca.ualberta.trinkettrader.Friends.FriendsInventoryActivity;
 import ca.ualberta.trinkettrader.Friends.FriendsListActivity;
 import ca.ualberta.trinkettrader.Inventory.InventoryActivity;
@@ -745,7 +746,6 @@ public class GeolocationTests extends ActivityInstrumentationTestCase2 {
             e.printStackTrace();
         }
 
-        /******** UserProfileActivity ********/
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor displayFriendsMonitor =
                 getInstrumentation().addMonitor(FriendsListActivity.class.getName(),
@@ -768,13 +768,13 @@ public class GeolocationTests extends ActivityInstrumentationTestCase2 {
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, displayFriendsMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                UserProfileActivity.class, friendsListActivity.getClass());
+                FriendsListActivity.class, friendsListActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(displayFriendsMonitor);
 
         Instrumentation.ActivityMonitor friendsInventoryActivityMonitor =
-                getInstrumentation().addMonitor(FriendsInventoryActivity.class.getName(),
+                getInstrumentation().addMonitor(AllFriendsInventoriesActivity.class.getName(),
                         null, false);
 
         final Button fInvButton = friendsListActivity.getAllInventoriesButton();
@@ -786,13 +786,13 @@ public class GeolocationTests extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        FriendsInventoryActivity friendsInventoryActivity = (FriendsInventoryActivity)
+        AllFriendsInventoriesActivity friendsInventoryActivity = (AllFriendsInventoriesActivity)
                 friendsInventoryActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", friendsInventoryActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, friendsInventoryActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                UserProfileActivity.class, friendsInventoryActivity.getClass());
+                AllFriendsInventoriesActivity.class, friendsInventoryActivity.getClass());
 
         getInstrumentation().removeMonitor(friendsInventoryActivityMonitor);
 
@@ -819,5 +819,10 @@ public class GeolocationTests extends ActivityInstrumentationTestCase2 {
 
         final ListView friendsInvList = friendsListActivity.getFriendsListView();
         assertNull(friendsInvList.getChildAt(0));
+
+        friendsInventoryActivity.finish();
+        friendsListActivity.finish();
+        homePageActivity.finish();
+        loginActivity.finish();
     }
 }

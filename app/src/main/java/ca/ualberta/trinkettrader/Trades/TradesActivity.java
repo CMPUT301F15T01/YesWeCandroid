@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
 import ca.ualberta.trinkettrader.R;
 import ca.ualberta.trinkettrader.User.LoggedInUser;
 
@@ -62,9 +64,6 @@ public class TradesActivity extends Activity implements Observer {
         controller = new ActiveTradesController(this);
         controller.setCurrentTradesListViewItemOnClick();
 
-        // TODO what is this for?
-        //User user = LoggedInUser.getInstance();
-        //int i = 1;
     }
 
     @Override

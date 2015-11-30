@@ -39,7 +39,7 @@ public class TradeManager extends ElasticStorable {
     private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t01/trade/_search";
     private static final String TAG = "trade";
 
-    private NotificationManager notificationManager;
+    private transient NotificationManager notificationManager;
     private TradeArchiver tradeArchiver;
 
     private String username;

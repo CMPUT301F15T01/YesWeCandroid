@@ -74,6 +74,8 @@ public class CreateTradeController {
         TradeManager senderTradeManager = LoggedInUser.getInstance().getTradeManager();
 
         Trade proposedTrade = new Trade(yourTradeTrinkets, receiverTradeManager, friendsTradeTrinkets, senderTradeManager);
+        //proposedTrade.setSenderUsername(senderTradeManager.getUsername());
+        //proposedTrade.setReceiverUsername(receiverTradeManager.getUsername());
         LoggedInUser.getInstance().getTradeManager().proposeTrade(proposedTrade);
 
         senderTradeManager.getTradeArchiver().getCurrentTrades().add(proposedTrade);
