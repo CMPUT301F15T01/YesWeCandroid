@@ -43,58 +43,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     // TODO I think that all of the Users invloved in trades have to be made friends.
     // TODO ask about how to incorporate FriendsListController
 
-    // TODO : User Case - Be notified of a proposed trade
-    // Test method to see if user has a notification
-    public void testHasNotification() {
-        User user = LoggedInUser.getInstance();
-        Trade trade = new Trade(user.getInventory(), user.getTradeManager(), user.getInventory(), user.getTradeManager());
-        // Send a trade to yourself as a test
-        user.getTradeManager().proposeTrade(trade);
-        // Test if this trade has triggered a notification
-        assertTrue(user.getNotificationManager().hasNotification());
-        /*
-        *
-        *
-        * */
 
-        // Start the UI test from the login page (beginning of the app).
-        LoginActivity loginActivity = (LoginActivity) getActivity();
-
-        Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-        // On the login page: click the email input box and write an arbitrary email.
-        // Test that the text was successfully written.
-        loginEmailTextView = loginActivity.getEmailTextView();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginEmailTextView.performClick();
-                loginEmailTextView.setText("user@gmail.com");
-            }
-        });
-        getInstrumentation().waitForIdleSync();
-        assertTrue(loginEmailTextView.getText().toString().equals("user@gmail.com"));
-
-        // Click the login button to proceed to the home page.
-        loginButton = loginActivity.getLoginButton();
-        loginActivity.runOnUiThread(new Runnable() {
-            public void run() {
-                loginButton.performClick();
-            }
-        });
-
-        // Test that the HomePageActivity started correctly after the clicking the login button.
-        //Instrumentation.ActivityMonitor homePageActivityMonitor = getInstrumentation().addMonitor(HomePageActivity.class.getName(), null, false);
-        getInstrumentation().waitForIdleSync();
-        HomePageActivity homePageActivity = (HomePageActivity) homePageActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("HomePageActivity is null", homePageActivity);
-        assertEquals("Monitor for HomePageActivity has not been called", 1, homePageActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type; expected HomePageActivity", HomePageActivity.class, homePageActivity.getClass());
-        getInstrumentation().removeMonitor(homePageActivityMonitor);
-
-        // finish activities
-        loginActivity.finish();
-        homePageActivity.finish();
-        assertNotNull(null);
-    }
 
     // TODO User Case: Accept a proposed trade
     // Test accepting trade
@@ -487,13 +436,19 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     }
 
 
-    // User can view a list of trades they are currently involved in
     // TODO is there a way to view the current trades lists of the other person involved in the trade. not currently
     /*
     * Please note: This test only is concerned with a trade being in the currentTrades list, NOT
     * viewing the TradeDetailsActivity.  TradeDetailsActivity will not be implemented for this prototype.
     * TradeDetailsActivity just included for completeness.
-    * */
+    *
+    *  Use Case - Owner/Borrower can browse all current trades involving them
+    *
+    *  Use Case -
+    *
+    *  Use Case - Be notified of a proposed trade
+    /* Tests that user is notified when offered a new trade.
+     * Notification will be in the form of the trade being displayed with NEW! in the current trades list */
     public void testViewCurrentTrades() {
 
         /****Hardcode in trades to click****/
@@ -647,6 +602,8 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     * Please note: This test only is concerned with a trade being in the pastTrades list, NOT
     * viewing the TradeDetailsActivity.  TradeDetailsActivity will not be implemented for this prototype.
     * TradeDetailsActivity just included for completeness.
+    *
+    *  Use Case: Owner/Borrower can browse all past trades involving them
     * */
     public void testViewPastTrades() {
         /****Hardcode in trades to click****/
@@ -818,6 +775,7 @@ public class TradeWithFriendsTest extends ActivityInstrumentationTestCase2 {
     }
 
     // TODO: User Case : Notify parties of accepted trade - email; could possibly be bundled with acceptTrade test
+    /**/
     public void testNotifyPartiesOfAcceptedTrade() {
         assertNotNull(null);
     }
