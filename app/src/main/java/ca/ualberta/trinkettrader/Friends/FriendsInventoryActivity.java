@@ -21,7 +21,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import ca.ualberta.trinkettrader.ApplicationState;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
@@ -39,8 +42,12 @@ public class FriendsInventoryActivity extends Activity {
 
     private ArrayAdapter<Trinket> trinketArrayAdapter;
     private Inventory inventory;
+    private Inventory completeInventory;
     private ListView inventoryItemsList;
-
+    private ArrayAdapter<Trinket> autocompleteAdapter;
+    private Button filterButton;
+    private EditText searchBox;
+    private Spinner categorySpinner;
     private FriendsInventoryController controller;
 
     @Override
@@ -50,6 +57,7 @@ public class FriendsInventoryActivity extends Activity {
 
         this.controller = new FriendsInventoryController(this);
         this.inventory = ApplicationState.getInstance().getClickedFriend().getActualFriend().getInventory();
+        this.completeInventory = ApplicationState.getInstance().getClickedFriend().getActualFriend().getInventory();
         this.inventoryItemsList = (ListView) findViewById(R.id.friendsDisplayedTrinkets);
 
         trinketArrayAdapter = new ArrayAdapter<>(this, R.layout.activity_inventory_trinket, inventory);
@@ -67,6 +75,13 @@ public class FriendsInventoryActivity extends Activity {
                 activity.startActivity(intent);
             }
         });
+
+        //Dhawal Sodha Parmar; http://stackoverflow.com/questions/15804805/android-action-bar-searchview-as-autocomplete; 2015-29-11
+        autocompleteAdapter = new ArrayAdapter<Trinket>(this, android.R.layout.simple_dropdown_item_1line, completeInventory);
+
+        filterButton = (Button)findViewById(R.id.friendsFilterButtton);
+        categorySpinner = (Spinner)findViewById(R.id.friendsCategorySpinner);
+
     }
 
     @Override
@@ -93,5 +108,26 @@ public class FriendsInventoryActivity extends Activity {
     public ListView getInventoryItemsList() {
         return inventoryItemsList;
     }
+
+    public Inventory getCompleteInventory() {
+        return completeInventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
+    public EditText getSearchBox() {
+        return searchBox;
+    }
+
+    public Spinner getCategorySpinner() {
+        return categorySpinner;
+    }
+
+    public Button getFilterButton() {
+        return filterButton;
+    }
+
 
 }

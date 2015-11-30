@@ -11,12 +11,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.ualberta.trinkettrader.Friends.FriendsInventoryActivity">
 
-
-    <Spinner
-        android:id="@+id/friendsAccessibilitySpinner"
+    <AutoCompleteTextView
+        android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
+        android:imeOptions="actionSearch"
+        android:inputType="textAutoComplete|textAutoCorrect"
+        android:layout_marginTop="10dp">
+
+        <requestFocus />
+    </AutoCompleteTextView>
+
+    <Spinner
+        android:id="@+id/friendsCategorySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:entries="@array/spinner_categories"
         android:prompt="@string/activity_display_inventory_category_prompt"/>
 
