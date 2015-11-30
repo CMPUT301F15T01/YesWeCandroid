@@ -11,121 +11,165 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.ualberta.trinkettrader.User.Profile.UserProfileActivity">
 
-    <TextView
-        android:id="@+id/photo_download_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:phoneNumber="false"
-        android:text="Photo Download: "/>
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/view_inventory_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="115dp"
-        android:onClick="inventoryClick"
-        android:text="View Inventory"/>
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Name: "
+            android:gravity="end"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <Button
-        android:id="@+id/edit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:text="Edit"/>
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Binky BingBong"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="63dp"
-        android:layout_toStartOf="@+id/view_inventory_button"
-        android:text="Binky BingBong"/>
-
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/name"
-        android:layout_centerHorizontal="true"
-        android:text="1041 Rutherford Place SW"/>
-
-    <TextView
-        android:id="@+id/city"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/address"
-        android:layout_centerHorizontal="true"
-        android:text="Edmonton"/>
-
-    <TextView
-        android:id="@+id/postal_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/city"
-        android:layout_centerHorizontal="true"
-        android:text="T6W 1J5"/>
-
-    <Button
-        android:id="@+id/trade_button_user_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/view_inventory_button"
-        android:layout_centerVertical="true"
-        android:onClick="openCurrentTrades"
-        android:text="Trades"/>
-
-    <TextView
-        android:id="@+id/phone_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/postal_code"
-        android:layout_centerHorizontal="true"
-        android:text="780-111-1111"/>
 
     <LinearLayout
-        android:layout_width="340dp"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Address: "
+            android:gravity="end"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1041 Rutherford Place SW"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="City: "
+            android:gravity="end"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edmonton"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Postal Code: "
+            android:gravity="end"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/postal_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="T6W 1J5"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Phone Number: "
+            android:gravity="end"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="780-111-1111"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Current Latitude: "
+            android:gravity="end"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/latitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Current Longitude: "
+            android:gravity="end"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:weightSum="60"
+        android:layout_marginTop="20dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/view_inventory_button"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center">
+            android:onClick="inventoryClick"
+            android:text="View Inventory"
+            android:layout_weight="20"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Current Location"/>
-        </LinearLayout>
+        <Button
+            android:id="@+id/trade_button_user_profile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:onClick="openCurrentTrades"
+            android:text="View Trades"
+            android:layout_weight="20"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="85dp"
-                android:layout_height="match_parent"
-                android:text="Latitude: "/>
-
-            <TextView
-                android:id="@+id/latitude"
-                android:layout_width="85dp"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="85dp"
-                android:layout_height="match_parent"
-                android:text="Longitude: "/>
-
-            <TextView
-                android:id="@+id/longitude"
-                android:layout_width="85dp"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
+        <Button
+            android:id="@+id/edit_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Edit"
+            android:layout_weight="20"/>
     </LinearLayout>
 </LinearLayout>
