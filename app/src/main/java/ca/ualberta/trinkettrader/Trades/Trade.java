@@ -155,7 +155,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * For each trade in the list, it's number, the other person involved in the trade
      * (not LoggedInUser) and it's status will be displayed. The number for a trade is
      * it's index + 1 in the list it belongs to in the TradeArchiver (currentTrades or pastTrades).
-     * </p>
+     *
      * If a trade has not yet been clicked (viewed) by a user, <b>NEW!</b> will also
      * be displayed.
      *
@@ -164,10 +164,10 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      */
     @Override
     public String toString() {
-
         String otherUser;
         String status = this.getStatus();
         int tNo;
+
         // determine name of other user involved in trade
         if (LoggedInUser.getInstance().getProfile().getEmail().equals(receiver.getUsername())) {
             otherUser = sender.getUsername();
@@ -182,7 +182,6 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         } else {
             tNo = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades().indexOf(this) + 1;
         }
-
 
         // if trade hasn't been clicked (viewed) by user, display NEW! beside it
         if (isNewOfferedTrade) {
@@ -199,9 +198,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      *
      * @return String - Status of trade (pending, accepted or declined)
      */
-    public String getStatus() {
-        return status;
-    }
+    public String getStatus() { return status;  }
 
     /**
      * Sets status of a trade.  Can be pending, accepted, or declined.
@@ -210,9 +207,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      *
      * @param status - String representing status of trade (pending, accepted or declined)
      */
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public void setStatus(String status) { this.status = status; }
 
     /**
      * Creates a formatted string describing the trade.  It includes which users were involved in the
