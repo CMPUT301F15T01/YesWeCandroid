@@ -15,11 +15,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/findFriendsButton"
+        android:layout_below="@+id/addFriendsButton"
         android:layout_marginTop="50dp"/>
 
     <Button
-        android:id="@+id/findFriendsButton"
+        android:id="@+id/addFriendsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -41,16 +41,16 @@
         android:id="@+id/viewTrackedFriendsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/findFriendsButton"
         android:onClick="viewTrackedFriendsOnClick"
-        android:text="View Tracked Friends"/>
+        android:text="View Tracked Friends"
+        android:layout_below="@+id/findFriendTextField"
+        android:layout_alignEnd="@+id/friendsView" />
 
     <Button
-        android:id="@+id/search_all_inventories"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/friendsView"
-        android:layout_below="@+id/findFriendTextField"
-        android:text="Everyone&apos;s Inventories"/>
+        android:text="Everyone&apos;s Inventories"
+        android:id="@+id/search_all_inventories"
+        android:layout_below="@+id/addFriendsButton"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
