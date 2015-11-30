@@ -14,27 +14,10 @@
 
 package ca.ualberta.trinkettrader.Friends;
 
-import android.util.Log;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-
-import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
-import ca.ualberta.trinkettrader.Elastic.SearchHit;
 import ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsList;
 import ca.ualberta.trinkettrader.Inventory.Inventory;
 import ca.ualberta.trinkettrader.NotificationManager;
 import ca.ualberta.trinkettrader.Trades.TradeManager;
-import ca.ualberta.trinkettrader.User.LoggedInUser;
 import ca.ualberta.trinkettrader.User.Profile.UserProfile;
 import ca.ualberta.trinkettrader.User.User;
 
@@ -136,32 +119,6 @@ public class Friend {
         this.actualFriend.setEmail(email);
         this.actualFriend.getTradeManager().setUsername(email);
         this.isTracked = Boolean.FALSE;
-}
-
-
-    /**
-     * Returns the  User object that Friend class delegate user-like operations to.  Friends represent
-     * other users of the system and so are like users, but they do not require all properties of User as
-     * Friends do not need to keep track of their own friends lists.  To represent these user-like qualities
-     * each Friend stores a user object.  This User object is delegated to to manage the friend's
-     * inventory and profile data.
-     *
-     * @return User - the User object that stores the Friend's profile and inventory, and performs operations
-     * on them.
-     */
-    public User getActualFriend() {
-        try {
-            if(isTracked){
-                actualFriend.getFromNetwork();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return actualFriend;
-    }
-
-    public void setActualFriend(User actualFriend) {
-        this.actualFriend = actualFriend;
     }
 
     /**

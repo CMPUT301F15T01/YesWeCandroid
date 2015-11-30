@@ -59,7 +59,7 @@ public class FriendsInventoryActivity extends Activity {
         this.inventory = ApplicationState.getInstance().getClickedFriend().getActualFriend().getInventory();
         this.completeInventory = ApplicationState.getInstance().getClickedFriend().getActualFriend().getInventory();
         this.inventoryItemsList = (ListView) findViewById(R.id.friendsDisplayedTrinkets);
-        this.searchBox = (EditText) findViewById(R.id.search_box_friends);
+
         trinketArrayAdapter = new ArrayAdapter<>(this, R.layout.activity_inventory_trinket, inventory);
         inventoryItemsList.setAdapter(trinketArrayAdapter);
 
