@@ -128,9 +128,6 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         this.tradeManager.setUsername(email);
     }
 
-    protected void queueUpdate() {
-    }
-
     /**
      * Adds the specified observer to the list of observers. If it is already
      * registered, it is not added a second time.
@@ -168,10 +165,13 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
-     * Returns whether User's data needs to be locally cached. This variable is set to True when a change is
-     * made to the User's data.
+     * Returns a boolean indicating if the {@link ca.ualberta.trinkettrader.User.User User} with this
+     * contact information needs to be saved to the network.  If the contact information of the user has
+     * been changed then needToSave is set to true and the user needs to be saved.  Otherwise, this should
+     * return false indicating that the user does not need to be saved.
      *
-     * @return Boolean
+     * @return Boolean - if true then the User with this contact information needs to be re-saved to
+     * the network, if false then there is nothing new that needs to be sav
      */
 
     public Boolean getNeedToSave() {
