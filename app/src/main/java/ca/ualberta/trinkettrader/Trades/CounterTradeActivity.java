@@ -160,7 +160,8 @@ public class CounterTradeActivity extends Activity {
     }
 
     /**
-     * onClick method for button that allows you to add your friend's items to the trade
+     * onClick method for button that allows you to add your friend's items to the trade. Delegates
+     * to the {@link CounterTradeController CounterTradeController}
      *
      * @param v - the button that was clicked
      */
@@ -169,7 +170,8 @@ public class CounterTradeActivity extends Activity {
     }
 
     /**
-     * onClick method for button that allows you to add your own items to the trade
+     * onClick method for button that allows you to add your own items to the trade.  Delegates
+     * to the {@link CounterTradeController CounterTradeController}
      *
      * @param v - the button that was clicked
      */
@@ -178,7 +180,8 @@ public class CounterTradeActivity extends Activity {
     }
 
     /**
-     * onClick method for button that allows you to propose the counter trade you have created
+     * onClick method for button that allows you to propose the counter trade you have created.  Delegates
+     * to the {@link CounterTradeController CounterTradeController}
      *
      * @param v - the button that was clicked
      */
@@ -188,7 +191,8 @@ public class CounterTradeActivity extends Activity {
 
     /**
      * onClick method for button that allows you to cancel the counter trade, if the user just wants
-     * to decline the counter trade
+     * to decline the counter trade.  Delegates
+     * to the {@link CounterTradeController CounterTradeController}
      *
      * @param v - the button that was clicked
      */

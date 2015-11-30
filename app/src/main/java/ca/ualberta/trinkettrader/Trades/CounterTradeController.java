@@ -23,7 +23,8 @@ import ca.ualberta.trinkettrader.User.LoggedInUser;
 
 
 /**
- *
+ * Controller for proposing a counter trade. The activity is triggered when a user declines a trade that
+ * was proposed to them.
  */
 public class CounterTradeController {
     private CounterTradeActivity activity;
@@ -33,16 +34,25 @@ public class CounterTradeController {
         this.activity = activity;
     }
 
-    public void addFriendsItemsButtonOnClick() {
-        Intent intent = new Intent(activity, FriendsInventoryActivity.class);
-        activity.startActivity(intent);
-    }
+        /**
+         * onClick method for button that allows you to add your friend's items to the trade
+         */
+        public void addFriendsItemsButtonOnClick() {
+            Intent intent = new Intent(activity, FriendsInventoryActivity.class);
+            activity.startActivity(intent);
+        }
 
+    /**
+     * onClick method for button that allows you to add your own items to the trade
+     */
     public void addYourItemsButtonOnClick() {
         Intent intent = new Intent(activity, InventoryTradeActivity.class);
         activity.startActivity(intent);
     }
 
+    /**
+     * onClick method for button that allows you to propose the counter trade you have created
+     */
     public void proposeCounterTradeButtonOnClick() {
         ApplicationState.getInstance().setInCounterTrade(false);
         Inventory yourTradeTrinkets = ApplicationState.getInstance().getYourTradeTrinkets();
@@ -62,7 +72,10 @@ public class CounterTradeController {
         activity.startActivity(intent);
     }
 
-
+    /**
+     * onClick method for button that allows you to cancel the counter trade, if the user just wants
+     * to decline the counter trade
+     */
     public void cancelCounterTradeButtonOnClick() {
         ApplicationState.getInstance().setInCounterTrade(false);
         //TODO move to past trades
@@ -72,6 +85,9 @@ public class CounterTradeController {
 
     }
 
+    /**
+     * Update all the textviews on the CounterTradeActivity
+     */
     public void updateTextViews() {
         Trade clickedTrade = ApplicationState.getInstance().getClickedTrade();
         activity.getFriendNameTextView().setText(clickedTrade.getReceiver().getUsername());
