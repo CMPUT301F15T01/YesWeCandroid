@@ -178,7 +178,7 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * information about users involved in a trade.  It is also used to determine who to send an email to
      * in the {@link ca.ualberta.trinkettrader.Trades.TradeReceivedController TradeReceivedController}.
      *
-     * @return String
+     * @return String - the user's email address they enter to log in
      */
     public String getEmail() {
         return this.email;
@@ -188,12 +188,13 @@ public class UserProfile implements ca.ualberta.trinkettrader.Observable {
      * Sets the user's email address.  The user's email address is how they are identified in the
      * app and how other users will be able to search for and interact with them.  It is also used to email
      * confirmation of completed trades to the users involved in the trade.  At minimum, all users must
-     * have an email address attached to them.
+     * have an email address attached to them.  After setting this field then needToSave is
+     * set to true so that the change will be saved to the network.
      *
      * This method will be used when the user enters their email in the {@link ca.ualberta.trinkettrader.LoginActivity LoginActivity}
      * and logs in for the first time.
      *
-     * @param email
+     * @param email - the user's email address they enter to log in
      */
     public void setEmail(String email) {
         this.email = email;

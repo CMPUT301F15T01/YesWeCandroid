@@ -142,11 +142,24 @@ public abstract class ElasticStorable {
      */
     public abstract <T extends ElasticStorable> void onSearchResult(Collection<T> result);
 
+    /**
+     * Returns the base URL each class of ElasticStorable object can be searched on the server with.  Trades, photos,
+     * and users are all saved separately in elastic search within their own tags.  Each individual object is then stored with
+     * their own unique ids.  The search URL specifies the base URL which is composed of the server
+     * URL ("http://cmput301.softwareprocess.es:8080/cmput301f15t01/") followed by the tag of the particular class,
+     * "User" as the tag for {@link ca.ualberta.trinkettrader.User.User User} objects, "Trade" for
+     * {@link ca.ualberta.trinkettrader.Trades.Trade Trade} objects, and "picture" for
+     * {@link ca.ualberta.trinkettrader.Inventory.Trinket.Pictures.Picture Picture} objects, and then followed
+     * by "/_search/".
+     *
+     * @return String - url for searching a class of objects on elastic search
+     */
     public abstract String getSearchUrl();
 
     /**
      * This method deletes this object from the elasticsearch server. This
-     * should be called when the object is no longer needed anywhere.
+     * should be called when the object is no longer needed anywhere, for example if a user deletes a
+     * photo from an object, then that photo should be removed from the server.
      *
      * @throws IOException
      */

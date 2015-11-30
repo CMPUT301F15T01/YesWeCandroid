@@ -275,10 +275,15 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
-     * Method called after getFromNetwork gets a response. This method should
-     * be overridden to do something with the result.
+     * Method called after getFromNetwork gets a response. Implementation of the
+     * {@link ElasticStorable ElasticStorable} method.
      *
-     * @param result result of getFromNetwork
+     * When a User is retrieved from the network, a new User object is created and its attributes
+     * are set to the data returned by elastic search.  This is used when a user with data existing on
+     * the server logs in again, so that their data and setting from previous uses of the system is
+     * restored.
+     *
+     * @param result result of getFromNetwork, a User object
      */
     @Override
     public <T extends ElasticStorable> void onGetResult(T result) {
@@ -311,8 +316,9 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
-     * Method called after searchOnNetwork gets a response. This method should
-     * be overridden to do something with the result.
+     * Method called after searchOnNetwork gets a response. Implementation of the
+     * {@link ElasticStorable ElasticStorable} method.  Current app functionality does not require
+     * searching for users.
      *
      * @param result result of searchOnNetwork
      */
@@ -321,16 +327,20 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
-     * Returns user's UserProfle
+     * Returns user's UserProfile, which is an object containing the information about a user and settings
+     * for their account.
      *
-     * @return UserProfile
+     * @return UserProfile - the user's UserProfile object
      */
     public UserProfile getProfile() {
         return profile;
     }
 
     /**
-     * Sets user's UserProfile
+     * Sets user's {@link UserProfile UserProfile}, which is an object containing the information about a user and settings
+     * for their account.  This method is called after an existing user's data is pulled off the network, so
+     * that the user's existing details are repopulated.  After setting this field then needToSave is set to
+     * true so that the change will be saved to the network.
      *
      * @param profile
      */
@@ -340,27 +350,34 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
-     * Sets user's list of tracked friends
-     *
-     * @param trackedFriendsList
+     * Sets user's {@link TrackedFriendsList TrackedFriendsList}. This method is called after an existing user's data
+     * is pulled off the network, so that the user's existing details are repopulated.  After setting this field then
+     * needToSave is set to true so that the change will be saved to the network.  The list may be empty.
+\    *
+     * @param trackedFriendsList - an user's TrackedFriendsList
      */
     public void setTrackedFriends(TrackedFriendsList trackedFriendsList) {
         this.trackedFriendsList = trackedFriendsList;
     }
 
     /**
-     * Returns user's list of tracked friends
+     * Returns user's {@link TrackedFriendsList TrackedFriendsList}.  This method is used to populate
+     * which friends are displayed in the
+     * {@link ca.ualberta.trinkettrader.Friends.TrackedFriends.TrackedFriendsListActivity TrackedFriendsListActivity}.
+     * The list may be empty.
      *
-     * @return TrackedFriendsList
+     * @return TrackedFriendsList - an user's TrackedFriendsList
      */
     public TrackedFriendsList getTrackedFriendsList() {
         return trackedFriendsList;
     }
 
     /**
-     * Returns User's friends
+     * Returns User's {@link FriendsList FriendsList}.  This method is used to populate
+     * the friends displayed in the {@link ca.ualberta.trinkettrader.Friends.FriendsListActivity FriendsListActivity}.
+     * The list may be empty.
      *
-     * @return FriendList
+     * @return FriendList - a user's FriendsList
      */
 
     public FriendsList getFriendsList() {
@@ -368,9 +385,11 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
-     * Sets user's list of friends
+     * Sets User's {@link FriendsList FriendsList}.  This method is called after an existing user's data
+     * is pulled off the network, so that the user's existing details are repopulated.  After setting this field then
+     * needToSave is set to true so that the change will be saved to the network.  The list may be empty.
      *
-     * @param friendsList
+     * @param friendsList - a user's FriendsList
      */
     public void setFriendsList(FriendsList friendsList) {
         this.friendsList = friendsList;
@@ -378,18 +397,22 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
-     * Returns user's inventory
+     * Returns user's {@link Inventory Inventory}.  This method is used to populate
+     * the trinkets displayed in the {@link ca.ualberta.trinkettrader.Inventory.InventoryActivity InventoryActivity}.
+     * The Inventory may be empty.
      *
-     * @return Inventory
+     * @return Inventory - a list of the Trinkets a user has added to their account
      */
     public Inventory getInventory() {
         return inventory;
     }
 
     /**
-     * Sets user's inventory
+     * Sets user's {@link Inventory Inventory}.  This method is called after an existing user's data
+     * is pulled off the network, so that the user's existing details are repopulated.  After setting this field then
+     * needToSave is set to true so that the change will be saved to the network.  The Inventory may be empty.
      *
-     * @param inventory
+     * @param inventory - a list of the Trinkets a user has added to their account
      */
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
@@ -397,25 +420,30 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
-     * Returns user's notification manager
+     * Returns user's {@link NotificationManager NotificationManager}.  This method is used to get the NotificationManager
+     * object that handles notifications of new trades for the user, displayed in
+     * {@link ca.ualberta.trinkettrader.Trades.TradesActivity TradesActivity}.
      *
-     * @return NotificationManager
+     * @return NotificationManager - object holding and managing notifications for the user about new trades
      */
     public NotificationManager getNotificationManager() {
         return notificationManager;
     }
 
     /**
-     * Sets user's notification manager
+     * Sets user's {@link NotificationManager NotificationManager}.  This method is called after an existing user's data
+     * is pulled off the network, so that the user's existing details are repopulated.
      *
-     * @param notificationManager
+     * @param notificationManager -  object holding and managing notifications for the user about new trades
      */
     public void setNotificationManager(NotificationManager notificationManager) {
         this.notificationManager = notificationManager;
     }
 
     /**
-     * Returns user's trade manager
+     * Returns user's {@link TradeManager TradeManager}.  This method is used to get the TradeManager
+     * object that manages the trades a user is engaged in with other users, and the records of the user's
+     * previous trades.
      *
      * @return TradeManager
      */
@@ -424,7 +452,8 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
     }
 
     /**
-     * Sets user's trade manager
+     * Sets user's {@link TradeManager TradeManager}.  This method is called after an existing user's data
+     * is pulled off the network, so that the user's existing details are repopulated.
      *
      * @param tradeManager
      */
@@ -432,19 +461,59 @@ public class User extends ElasticStorable implements ca.ualberta.trinkettrader.O
         this.tradeManager = tradeManager;
     }
 
+    /**
+     * Returns the base URL each class of ElasticStorable object can be searched on the server with.  Trades, photos,
+     * and users are all saved separately in elastic search within their own tags.  Each individual object is then stored with
+     * their own unique ids.  The search URL specifies the base URL which is composed of the server
+     * URL ("http://cmput301.softwareprocess.es:8080/cmput301f15t01/") followed by the tag of the particular class,
+     * "User" as the tag for {@link ca.ualberta.trinkettrader.User.User User} objects, and then followed
+     * by "/_search/".
+     *
+     * @return - url for searching Users on elastic search
+     */
     @Override
     public String getSearchUrl() {
         return SEARCH_URL;
     }
 
+    /**
+     * Returns the default location specifying where a trinket is located.  The location is expressed as
+     * a latitude/longitude pair.  This attribute will allow other users to see if it will be convenient for
+     * them to collect a trinket if they choose to trade for it.  By default the default location is
+     * the phone's location as returned by the phone's GPS, but the user may set it to another value.
+     *
+     * @return Location - the location that a {@link ca.ualberta.trinkettrader.Inventory.Trinket.Trinket Trinket's}
+     * location will be set to by default.
+     */
     public Location getDefaultLocation() {
         return this.profile.getDefaultLocation();
     }
 
+    /**
+     * Sets the default location specifying where a trinket is located.  The location is expressed as
+     * a latitude/longitude pair.  This attribute will allow other users to see if it will be convenient for
+     * them to collect a trinket if they choose to trade for it.  By default the default location is
+     * the phone's location as returned by the phone's GPS, but the user may set it to another value.
+     *
+     * @param defaultLocation - the location that a {@link ca.ualberta.trinkettrader.Inventory.Trinket.Trinket Trinket's}
+     * location will be set to by default.
+     */
     public void setDefaultLocation(Location defaultLocation) {
         this.profile.setDefaultLocation(defaultLocation);
     }
 
+    /**
+     * Sets the user's email address.  The user's email address is how they are identified in the
+     * app and how other users will be able to search for and interact with them.  It is also used to email
+     * confirmation of completed trades to the users involved in the trade.  At minimum, all users must
+     * have an email address attached to them.  After setting this field then needToSave is
+     * set to true so that the change will be saved to the network.
+     *
+     * This method will be used when the user enters their email in the {@link ca.ualberta.trinkettrader.LoginActivity LoginActivity}
+     * and logs in for the first time.
+     *
+     * @param email - the user's email address they enter to log in
+     */
     public void setEmail(String email) {
         this.getProfile().setEmail(email);
     }
