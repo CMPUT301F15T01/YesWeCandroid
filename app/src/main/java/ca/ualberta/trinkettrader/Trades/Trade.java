@@ -214,6 +214,15 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         }
     }
 
+    /**
+     * Creates a formatted string describing the trade.  It includes which users were involved in the
+     * trade and the items they were trading.  This string is sent as an email to both users involved in
+     * the trade when the user who the trade was proposed to clicks the "Accept" button in the
+     * {@link TradeReceivedActivity TradeReceivedActivity}.
+     *
+     * @return String - a formatted string describing a trade that was just accepted.  This string is intended
+     * to be sent as a confirmation to both parties involved in an accepted trade.
+     */
     public String toEmailString() {
         String message = "New Trade!\n";
         message = message + this.getSender().getUsername() + " offers: \n";
