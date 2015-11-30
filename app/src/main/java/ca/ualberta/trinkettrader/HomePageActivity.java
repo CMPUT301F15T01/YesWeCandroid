@@ -22,6 +22,12 @@ import android.widget.Button;
 import java.util.Observable;
 import java.util.Observer;
 
+import ca.ualberta.trinkettrader.Inventory.Inventory;
+import ca.ualberta.trinkettrader.Inventory.Trinket.Trinket;
+import ca.ualberta.trinkettrader.Trades.Trade;
+import ca.ualberta.trinkettrader.Trades.TradeManager;
+import ca.ualberta.trinkettrader.User.LoggedInUser;
+
 /**
  * Activity serving as the home page of the app. This should be navigated to
  * immediately after having logged in.
@@ -46,6 +52,21 @@ public class HomePageActivity extends Activity implements Observer {
         this.inventoryButton = (Button) findViewById(R.id.inventory_button);
         this.profileButton = (Button) findViewById(R.id.profile_button);
         this.tradeButton = (Button) findViewById(R.id.trades_button);
+
+
+        Inventory incomingTrinkets = new Inventory();
+        Trinket fakeTrinket = new Trinket();
+        fakeTrinket.setName("Diamond Earrings");
+        fakeTrinket.setCategory("Earrings");
+        incomingTrinkets.add(fakeTrinket);
+        Inventory desiredTrinkets = new Inventory();
+        Trinket fakeTrinket2 = new Trinket();
+        fakeTrinket2.setName("Silver Tiara");
+        fakeTrinket2.setCategory("Tiara");
+        desiredTrinkets.add(fakeTrinket2);
+        Trade fakeIncomingTrade = new Trade(incomingTrinkets, LoggedInUser.getInstance().getTradeManager(), desiredTrinkets, new TradeManager("Abram"));
+        fakeIncomingTrade.setStatus("Pending Incoming");
+        LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades().add(fakeIncomingTrade);
     }
 
     /**
