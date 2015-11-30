@@ -15,7 +15,6 @@
 package ca.ualberta.trinkettrader.Trades;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observer;
 
 import ca.ualberta.trinkettrader.Elastic.ElasticStorable;
@@ -49,6 +48,8 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
 
     private String receiverUsername;
     private String senderUsername;
+    private Boolean isNewOfferedTrade;
+
 
     /**
      * Constructor that initializes the sender and receiver sides of the trade.  Both parties are initialized
@@ -71,6 +72,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         this.receiverUsername = receiver.getUsername();
         this.senderUsername = sender.getUsername();
         this.status = "pending"; // TODO need to clarify what status names will be
+        this.isNewOfferedTrade = Boolean.TRUE;  // TODO add comments to JavaDocs
     }
 
     /**
@@ -99,7 +101,7 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
      * If {@code hasChanged()} returns {@code true}, calls the {@code update()}
      * method for every observer in the list of observers using null as the
      * argument. Afterwards, calls {@code clearChanged()}.
-     * <p/>
+     *
      * Equivalent to calling {@code notifyObservers(null)}.
      */
     @Override
@@ -169,13 +171,13 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         this.numberOfTrinkets = numberOfTrinkets;
     }
 
+    // adarshr; http://stackoverflow.com/questions/10734106/how-to-override-tostring-properly-in-java; 2015-11-16
     /**
      * This method override is responsible for determining how trades will be shown to the
      * user when they view their Current Trades list and Past Trades list.
-     * <p/>
+     *
      * For each trade in the list, it's number, the other person involved in the trade
-     * (not LoggedInUser), it's status and the categories of the trinkets involved will be
-     * displayed.
+     * (not LoggedInUser) and it's status will be displayed.
      *
      * @return String Text displayed for each trade in current trades list of
      * ActiveTradesActivity and in past trades list of PastTradesActivity
@@ -183,9 +185,33 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
     @Override
     public String toString() {
 
-        // need to display name of other person involved in trade
-        // also need to find categories of trinkets involved
-        return "Trade No. 1 " + "with status " + LoggedInUser.getInstance().getProfile().getEmail() + " " + this.getStatus();
+        String otherUser;
+        String status = this.getStatus();
+        int tNo;
+        // determine name of other user involved in trade
+        if(LoggedInUser.getInstance().getProfile().getEmail().equals(receiver.getUsername())){
+            otherUser = sender.getUsername();
+        }else{
+            otherUser = receiver.getUsername();
+        }
+
+        // use status to determine which list the trade is in (past trades or current trades)
+        // to determine it's number in the list
+        if(status.equals("pending")){
+            tNo = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getCurrentTrades().indexOf(this) + 1;
+        }else{
+            tNo = LoggedInUser.getInstance().getTradeManager().getTradeArchiver().getPastTrades().indexOf(this) + 1;
+        }
+
+        // bold if new trade (has not been clicked/viewed yet by user)
+        //SudiptaforAndroid; http://stackoverflow.com/questions/4792260/how-do-you-change-text-to-bold-in-android; 2015-11-29
+        //TextView newTrade = (TextView) findViewById(R.layout.activity_trades_trade_box);
+        //newTrade.setTypeface(null, Typeface.BOLD);
+        if(isNewOfferedTrade) {
+            return "NEW! Trade No. " + tNo + " with " + otherUser + "\nStatus: " + status;
+        }else{
+            return "Trade No. " + tNo + " with " + otherUser + "\nStatus: " + status;
+        }
     }
 
     public String toEmailString() {
@@ -214,8 +240,6 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         return status;
     }
 
-    // TODO useful?
-
     /**
      * Sets status of a trade.  Can be pending, accepted, or declined.
      * Current(active) trades have a status of pending.  Past (inactive)
@@ -227,10 +251,14 @@ public class Trade extends ElasticStorable implements ca.ualberta.trinkettrader.
         this.status = status;
     }
 
-    // adarshr; http://stackoverflow.com/questions/10734106/how-to-override-tostring-properly-in-java; 2015-11-16
-
-    // TODO unfinished. Everything mentioned in JavaDoc comment below will be implemented in next prototype.
-    // TODO may remodel after profile page with updatable fields
+    // TODO add JavaDocs after this works
+    /**
+     *
+     *
+     */
+    public void setNotNewOfferedTrade(){
+        this.isNewOfferedTrade = Boolean.FALSE;
+    }
 
     @Override
     public String getTag() {
